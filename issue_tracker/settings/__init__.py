@@ -143,8 +143,7 @@ STATICFILES_DIRS = [
     # os.path.join(BASE_DIR, 'assets')
 ]
 
-
-
+from .allauth import *
 
 try:
     from .secrets import *
