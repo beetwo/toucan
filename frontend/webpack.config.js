@@ -31,6 +31,10 @@ module.exports = {
                 test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
                 loader: 'file'
             },
+            {
+                test: /\.json$/,
+                loader: 'json'
+            },
 
             // Use one of these to serve jQuery for Bootstrap scripts
             // Bootstrap 4

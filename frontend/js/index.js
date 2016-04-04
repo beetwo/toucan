@@ -6,8 +6,10 @@ import { GeoJsonCluster } from 'react-leaflet-geojson-cluster';
 import geojsonExtent from 'geojson-extent';
 import { Router, Route, browserHistory, IndexRoute, Link } from 'react-router'
 import { createStore } from 'redux';
+var ReactMarkdown = require('react-markdown');
 
 require('../css/app.css');
+
 
 class LeafletMap extends React.Component {
 
@@ -51,6 +53,8 @@ class Issues extends React.Component {
         </table>);
     }
 }
+
+
 class IssueDetail extends React.Component {
 
     constructor (props) {
@@ -77,7 +81,6 @@ class IssueDetail extends React.Component {
                 loading: false,
                 issue: json.properties
             }))
-        console.log(issue);
     }
 
     render() {
@@ -87,7 +90,7 @@ class IssueDetail extends React.Component {
             let issue=this.state.issue;
             return <div>
                 <h1>{issue.title}</h1>
-                <p>{issue.description}</p>
+                <ReactMarkdown source={issue.description} />
             </div>
         }
     }

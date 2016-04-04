@@ -7,9 +7,19 @@ config.output.path = path.resolve('./production/');
 config.output.filename = '[name].js';
 
 config.plugins = [
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': '"production"'
+      }
+    }),
     new BundleTracker({filename: './webpack-stats-prod.json'}),
     new webpack.ProvidePlugin({
         'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
     })
 ];
 
