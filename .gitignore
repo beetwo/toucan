@@ -65,5 +65,8 @@ b2/
 activate
 .idea/
 issue_tracker/settings/secrets.py
+frontend/build/
+frontend/webpack-stats.json
+frontend/node_modules/
 
 *.sqlite3
