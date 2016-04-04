@@ -1,0 +1,25 @@
+{% extends 'issues/base.html' %}
+{% load i18n %}
+{% block content %}
+<div class="row">
+    <div class="col-sm-12">
+        <h2>Issues</h2>
+        <hr />
+        {% for issue in issue_list %}
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>
+                    <a href="{% url 'issues:issue_detail' issue_id=issue.pk %}">
+                        {{ issue.title }}
+                    </a>
+                </h3>
+            </div>
+        </div>
+
+        {{ issue.description|linebreaks }}
+
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

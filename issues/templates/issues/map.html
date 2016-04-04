@@ -1,0 +1,12 @@
+{% extends 'default/base.html' %}
+
+{% load render_bundle from webpack_loader %}
+
+{% block main %}
+<main></main>
+{% endblock %}
+
+
+{% block before-body-close %}
+    {% render_bundle 'main' %}
+{% endblock %}

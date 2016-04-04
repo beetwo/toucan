@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{% load i18n bootstrap3 %}
+{% load render_bundle from webpack_loader %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% trans 'B2 Issue Tracker' %}</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css">
+    {% render_bundle 'bootstrap' %}
+    {% block extra-head %}{% endblock %}
+</head>
+<body style="padding-top: 50px;">
+    {% block body %}
+        {% include 'default/navbar.html' %}
+        {% bootstrap_messages %}
+        {% block main %}{% endblock %}
+    {% endblock body %}
+    {% block before-body-close %}{% endblock %}
+</body>
+</html>

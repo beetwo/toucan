@@ -60,3 +60,10 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+
+b2/
+activate
+.idea/
+issue_tracker/settings/secrets.py
+
+*.sqlite3

@@ -1,0 +1,7 @@
+Django>=1.9
+channels>=0.10
+asgi_redis>=0.9
+django-model-utils==2.4
+django-allauth==0.25.2
+django-location-field==1.6.1
+django-braces==1.8.1

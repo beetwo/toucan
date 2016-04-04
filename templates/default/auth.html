@@ -1,0 +1,12 @@
+{% extends 'default/base.html' %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="text-center">
+            {% block auth-header %}{% endblock %}
+        </h1>
+        <div class="row">
+            {% block auth-content %}{% endblock auth-content %}
+        </div>
+    </div>
+{% endblock body %}

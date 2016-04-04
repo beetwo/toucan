@@ -1,0 +1,28 @@
+{% extends 'issues/base.html' %}
+{% load i18n %}
+{% block content %}
+<div class="row">
+    <div class="col-sm-12">
+        <h2>Issue #{{ issue.pk }}</h2>
+        <hr />
+
+        <h3>{{ issue.title }}</h3>
+
+        {{ issue.description|linebreaks }}
+    </div>
+</div>
+
+{% with comments=issue.issuecomment_set.all %}
+    {% if comments|length %}
+    <h4>{% trans 'Comments' %}</h4>
+    <hr />
+    {% endif %}
+    {% for comment in comments %}
+        {% include 'issues/comment.html' with comment=comment %}
+        <hr />
+    {% endfor %}
+{% endwith %}
+
+{% include 'issues/comment_form.html' with issue=issue form=comment_form %}
+
+{% endblock %}

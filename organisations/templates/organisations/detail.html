@@ -1,0 +1,15 @@
+{% extends 'default/base.html' %}
+{% load i18n %}
+{% block main %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>{{ organisation.name }}</h2>
+            <hr />
+            <p>
+                {% trans 'Members' %}: {{ org.active_members.count }}
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

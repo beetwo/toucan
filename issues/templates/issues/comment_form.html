@@ -1,0 +1,12 @@
+{% load i18n bootstrap3 %}
+<form method="post" action="{% url 'issues:comment_create' issue_id=issue.pk %}">
+    {% csrf_token %}
+
+    {% bootstrap_form form %}
+
+    {% buttons %}
+        <button type="submit" class="btn btn-primary">
+            {% trans 'Comment' %}
+        </button>
+    {% endbuttons %}
+</form>

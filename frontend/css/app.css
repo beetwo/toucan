@@ -1,0 +1,57 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    display:flex;
+    min-height: 100vh;
+}
+
+nav {
+    flex:1;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    /*height: 100vh;*/
+}
+
+.app-container {
+    flex: 1;
+    display: flex;
+}
+
+.issues-container {
+    flex: 1;
+    overflow-y: scroll;
+    padding: 2em;
+}
+
+.map-container {
+    flex: 1;
+    display: flex;
+}
+
+.map-container > div {
+    width: 100%;
+    flex: 1;
+}
+
+
+.marker-cluster {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #3498db;
+    color: #fff;
+    text-align: center;
+    font-size: 24px;
+}
+
+.leaflet-cluster-anim .leaflet-marker-icon, .leaflet-cluster-anim .leaflet-marker-shadow {
+    -webkit-transition: -webkit-transform 0.3s ease-out, opacity 0.3s ease-in;
+    -moz-transition: -moz-transform 0.3s ease-out, opacity 0.3s ease-in;
+    -o-transition: -o-transform 0.3s ease-out, opacity 0.3s ease-in;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-in;
+}

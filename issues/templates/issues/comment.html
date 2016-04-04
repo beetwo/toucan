@@ -1,0 +1,11 @@
+{% load i18n %}
+
+<div class="comment row">
+    <div class="col-md-3">
+        <h5>{{ comment.created_by }}</h5>
+        <em>{{ comment.created|date:'SHORT_DATETIME_FORMAT' }}</em>
+    </div>
+    <div class="col-md-9">
+        {{ comment.comment|linebreaks }}
+    </div>
+</div>

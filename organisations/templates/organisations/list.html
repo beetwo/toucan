@@ -1,0 +1,23 @@
+{% extends 'default/base.html' %}
+{% load i18n %}
+{% block main %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Organisations</h2>
+            <hr />
+            {% for org in organisation_list %}
+
+            <h3>{{ org.name }}</h3>
+            <p>
+                {% trans 'Members' %}: {{ org.active_members.count }}
+            </p>
+            <a href="{% url 'organisations:organisation_detail' org_id=org.pk %}">
+                {% trans 'Details' %}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
