@@ -21,7 +21,7 @@ class LeafletMap extends React.Component {
         return (
             <Map bounds={this.props.extents}>
                 <TileLayer
-                    url='//{s}.tile.osm.org/{z}/{x}/{y}.png'
+                    url='//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 />
                 <GeoJsonCluster data={geojson} />
