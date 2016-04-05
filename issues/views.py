@@ -6,10 +6,10 @@ from django.contrib.gis.db.models import Extent
 from django.utils.translation import ugettext_lazy as _
 
 from braces.views import FormValidMessageMixin
-from organisations.models import Location
+from organisations.models import Location, Organisation
 
 from .models import Issue
-from .forms import CommentForm
+from .forms import CommentForm, IssueForm
 
 
 class HomeView(TemplateView):
@@ -48,13 +48,25 @@ class IssueDetail(DetailView):
         return ctx
 
 
-class IssueCreateView(CreateView):
+class IssueCreateView(LoginRequiredMixin, FormValidMessageMixin, CreateView):
     model = Issue
     template_name = 'issues/issue_create.html'
-    fields = [
-        'title',
-        'description',
-    ]
+    form_class = IssueForm
+    form_valid_message = _('Issue created.')
+
+    def get_form(self, *args, **kwargs):
+        form = super().get_form(*args, **kwargs)
+
+        # limit the organisations that a user can add issues to
+        orgs = Organisation.objects.filter(membership__user=self.request.user, membership__active=True)
+        form.fields['organisation'].queryset = orgs
+        form.fields['location'].queryset = Location.objects.filter(org__in=orgs)
+        return form
+
+    def form_valid(self, form):
+        issue = form.instance
+        issue.created_by = self.request.user
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse(

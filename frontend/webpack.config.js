@@ -6,10 +6,14 @@ module.exports = {
     context: __dirname,
     entry: {
         main: './js/index',
-        bootstrap: 'bootstrap-loader'
+        bootstrap: [
+            'bootstrap-loader',
+            './css/misc.css'
+        ]
     },
     output: {
         path: path.resolve('./build/'),
+        publicPath: "/static/wp/",
         filename: "[name]-[hash].js"
     },
     plugins: [

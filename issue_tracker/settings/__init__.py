@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     # custom applications
     'organisations',
     'issues',
+    'user_profile',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -58,6 +59,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.sites.middleware.CurrentSiteMiddleware',
 ]
 
 ROOT_URLCONF = 'issue_tracker.urls'

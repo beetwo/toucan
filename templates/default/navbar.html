@@ -1,5 +1,6 @@
 {% load i18n %}
-<nav class="navbar navbar-inverse navbar-fixed-top">
+{% with namespaces=request.resolver_match.namespaces %}
+<nav class="navbar navbar-default navbar-fixed-top">
 
     <div class="container-fluid">
 
@@ -11,37 +12,35 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">B2Eden</a>
+            <a class="navbar-brand" href="/">{{ request.site.name }}</a>
         </div>
 
         <div id="navbar" class="collapse navbar-collapse">
             {# navbar left #}
             <ul class="nav navbar-nav">
-                <li class="active">
+                <li {% if 'issue_app' in namespaces %}class="active"{% endif %}>
                     <a href="{% url 'issues:issue_list' %}">
                         {% trans 'Issues' %}
                     </a>
                 </li>
-                <li {% if 'organisations' in request.resolver_match.namespaces %}class="active"{% endif %}>
+
+                <li {% if 'organisations' in namespaces %}class="active"{% endif %}>
                     <a href="{% url 'organisations:organisation_list' %}">
                         {% trans 'Organisations' %}
-                    </a>
-                </li>
-                <li>
-                    <a href="#contact">
-                        {% trans 'Contact' %}
                     </a>
                 </li>
             </ul>
 
             {# navbar right #}
             <ul class="nav navbar-nav navbar-right">
-                <li>
+                <li {% if 'user_profile' in namespaces %}class="active"{% endif %}>
                     {% if user.is_authenticated %}
-                        {{ user.username }}
-                        <sub>
-                            <a href="{% url 'account_logout' %}">Logout</a>
-                        </sub>
+                        <a href="{% url 'user_profile:view_profile' %}">
+                            {{ user.username }}
+                        </a>
+{#                        <sub>#}
+{#                            <a href="{% url 'account_logout' %}">Logout</a>#}
+{#                        </sub>#}
                     {% else %}
                         <a href="{% url 'account_login' %}">{% trans 'Login' %}</a>
                     {% endif %}
@@ -53,3 +52,4 @@
 
     </div>
 </nav>
+{% endwith %}

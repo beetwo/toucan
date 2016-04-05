@@ -30,6 +30,7 @@ main {
 
 .map-container {
     flex: 1;
+    padding:1em;
     display: flex;
 }
 
@@ -37,7 +38,6 @@ main {
     width: 100%;
     flex: 1;
 }
-
 
 .marker-cluster {
     width: 40px;

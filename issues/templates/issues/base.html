@@ -2,6 +2,14 @@
 {% load i18n %}
 {% block main %}
 <div class="{% block container-class %}container{% endblock %}">
+    <div class="row text-right toolbar">
+        <div class="btn-group btn-group-lg">
+            <a href="{% url 'issues:issue_create' %}" class="btn btn-success">
+                <i class="glyphicon glyphicon-plus-sign"></i>
+                {% trans 'Add new Issue' %}
+            </a>
+        </div>
+    </div>
     {% block content %}
     {% endblock content %}
 </div>

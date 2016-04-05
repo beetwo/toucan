@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^api/', include('api.urls')),
     url(r'^org/', include('organisations.urls')),
     url(r'^$', HomeView.as_view(), name='home'),
-    url(r'^issues/', include('issues.urls', 'issue_app'))
+    url(r'^issues/', include('issues.urls', 'issue_app')),
+    url(r'^profile/', include('user_profile.urls', 'user_profile'))
     # url(r'^$', RedirectView.as_view(url='/map/')),
 ]

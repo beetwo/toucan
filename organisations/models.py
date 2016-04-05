@@ -53,10 +53,10 @@ class Membership(TimeStampedModel):
 
     def __str__(self):
 
-        base = _('%s@%s' % (str(self.user), str(self.org)))
+        base = '%s@%s' % (str(self.user), str(self.org))
 
         if not self.active:
-            return _('%s (disabled)' % (base))
+            return '%s (disabled)' % (base)
 
         return base
 

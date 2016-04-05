@@ -1,0 +1,15 @@
+{% extends 'user_profile/base.html' %}
+{% load i18n bootstrap3 %}
+
+{% block main %}
+
+<form method="post" action="{% url 'user_profile:update_profile' %}">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+    <button type="submit" class="btn btn-primary">
+        {% trans 'Create' %}
+    </button>
+    {% endbuttons %}
+</form>
+{% endblock main %}

@@ -8,7 +8,7 @@ INSTALLED_APPS += [
 ]
 
 STATICFILES_DIRS += [
-    ('build', os.path.join(BASE_DIR, 'frontend/build/'))
+    ('wp', os.path.join(BASE_DIR, 'frontend/build/'))
 ]
 
 

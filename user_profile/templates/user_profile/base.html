@@ -1,0 +1,29 @@
+{% extends 'default/base.html' %}
+{% load i18n %}
+{% block main %}
+    <div class="container">
+
+    <h1>
+        {% trans 'Profile for user:' %} {{ user.username }}
+    </h1>
+
+    <h2>{% trans 'Memberships' %}</h2>
+
+    <table class="table">
+        <tbody>
+        {% for membership in memberships %}
+            <tr>
+                <td>{{ membership.org.name }}</td>
+                <td>{{ membership.active }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{#    {{ memberships|pprint }}#}
+
+    <h2>{% trans 'Profile' %}</h2>
+    {{ profile|pprint }}
+    </div>
+
+{% endblock main %}

@@ -12,7 +12,7 @@ INSTALLED_APPS += [
 ]
 
 STATICFILES_DIRS += [
-    ('production', os.path.join(BASE_DIR, 'frontend/production/'))
+    ('wp', os.path.join(BASE_DIR, 'frontend/production/'))
 ]
 
 WEBPACK_LOADER = {

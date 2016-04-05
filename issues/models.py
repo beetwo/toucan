@@ -8,6 +8,13 @@ from model_utils.models import TimeStampedModel
 
 class Issue(TimeStampedModel):
 
+    ISSUE_TYPES = Choices(
+        (0, 'medical', _('medical')),
+        (1, 'food', _('food and drinks')),
+        (2, 'goods', _('other goods')),
+        (3, 'general', _('general'))
+    )
+
     PRIORITY_CHOICES = Choices(
         (0, 'low', _('low')),
         (1, 'normal', _('normal')),
