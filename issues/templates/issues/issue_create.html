@@ -1,9 +1,12 @@
 {% extends 'issues/base.html' %}
 {% load i18n bootstrap3 %}
+
+{% block add-issue %}{% endblock %}
+
 {% block content %}
 <div class="row">
     <div class="col-sm-12">
-        <h2>{% trans 'Create new issue' %}</h2>
+        <h3>{% trans 'Create new issue' %}</h3>
 
         <hr />
         <form method="post" action=".">

@@ -5,7 +5,9 @@ from .models import IssueComment, Issue
 class CommentForm(forms.ModelForm):
     class Meta:
         model = IssueComment
-        fields = ['comment',]
+        fields = [
+            'comment',
+        ]
         widgets = {
             'comment': forms.Textarea(attrs={'rows': 3})
         }

@@ -7,8 +7,11 @@
         <hr />
 
         <h3>{{ issue.title }}</h3>
-
-        {{ issue.description|linebreaks }}
+        {% if issue.description %}
+            {{ issue.description|linebreaks }}
+        {% else %}
+            <p class="muted">{% trans 'No description added' %}</p>
+        {% endif %}
     </div>
 </div>
 

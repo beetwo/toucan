@@ -1,25 +1,40 @@
 {% extends 'issues/base.html' %}
 {% load i18n %}
 {% block content %}
-<div class="row">
-    <div class="col-sm-12">
-        <h2>Issues</h2>
-        <hr />
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>{% trans 'Title' %}</th>
+            <th>{% trans 'User' %}</th>
+            <th>{% trans 'Organisation' %}</th>
+            <th>{% trans 'Status' %}</th>
+            <th>{% trans 'Comments' %}</th>
+        </tr>
+    </thead>
+    <tbody>
         {% for issue in issue_list %}
-        <div class="row">
-            <div class="col-sm-12">
-                <h3>
-                    <a href="{% url 'issues:issue_detail' issue_id=issue.pk %}">
-                        {{ issue.title }}
-                    </a>
-                </h3>
-            </div>
-        </div>
-
-        {{ issue.description|linebreaks }}
-
+        <tr>
+            <td>
+                <a href="{% url 'issues:issue_detail' issue_id=issue.pk %}">
+                    {{ issue.title }}
+                </a>
+            </td>
+            <td>
+                {{ issue.created_by.username }}
+            </td>
+            <td>
+                {{ issue.organisation.name }}
+            </td>
+            <td>
+                {{ issue.status }}
+            </td>
+            <td>
+                {{ issue.comment_count }}
+            </td>
+        </tr>
         {% endfor %}
-    </div>
-</div>
+    </tbody>
+</table>
 
 {% endblock %}

@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.gis.db.models import Extent
 from django.utils.translation import ugettext_lazy as _
+from django.db.models import Count
 
 from braces.views import FormValidMessageMixin
 from organisations.models import Location, Organisation
@@ -33,7 +34,11 @@ class HomeView(TemplateView):
 
 class IssueList(ListView):
     template_name = 'issues/issue_list.html'
-    model = Issue
+
+    def get_queryset(self):
+        return Issue.objects.order_by('-created')\
+            .annotate(comment_count=Count('issuecomment'))\
+            .select_related('organisation')
 
 
 class IssueDetail(DetailView):
