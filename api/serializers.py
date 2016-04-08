@@ -1,7 +1,32 @@
-from issues.models import Issue
+from issues.models import Issue, IssueComment
+from django.contrib.auth import get_user_model
 from rest_framework_gis.serializers import GeoFeatureModelSerializer, GeometrySerializerMethodField
 from rest_framework import serializers
+from rest_framework.reverse import reverse
 
+
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = get_user_model()
+        fields = [
+            'username',
+            'id'
+        ]
+
+class CommentSerializer(serializers.ModelSerializer):
+
+    created_by = UserSerializer(read_only=True)
+
+    class Meta:
+        model = IssueComment
+        fields = [
+            'id',
+            'created_by',
+            'comment',
+            'created',
+            'modified',
+        ]
 
 class IssueSerializer(GeoFeatureModelSerializer):
 
@@ -10,6 +35,8 @@ class IssueSerializer(GeoFeatureModelSerializer):
         lookup_url_kwarg='issue_id',
         lookup_field='pk'
     )
+
+    comment_count = serializers.IntegerField(read_only=True)
 
     gis_location = GeometrySerializerMethodField()
 
@@ -26,10 +53,18 @@ class IssueSerializer(GeoFeatureModelSerializer):
             'title',
             'priority',
             'visibility',
+            'comment_count',
         ]
 
 
 class FullIssueSerializer(IssueSerializer):
+
+    comments = CommentSerializer(many=True, read_only=True)
+
+    detail_url = serializers.SerializerMethodField()
+
+    def get_detail_url(self, issue):
+        return reverse('issues:issue_detail', kwargs={'issue_id': issue.pk}, request=self.context['request'])
 
     class Meta:
         model = Issue
@@ -41,4 +76,6 @@ class FullIssueSerializer(IssueSerializer):
             'description',
             'priority',
             'visibility',
+            'detail_url',
+            'comments',
         ]

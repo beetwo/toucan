@@ -57,7 +57,7 @@ class Issue(TimeStampedModel):
 
 class IssueComment(TimeStampedModel):
 
-    issue = models.ForeignKey(Issue)
+    issue = models.ForeignKey(Issue, related_name='comments')
     comment = models.TextField(blank=True, verbose_name=_('comment'))
 
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL)

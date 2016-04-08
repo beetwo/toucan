@@ -8,8 +8,8 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
     url(r'^api/', include('api.urls')),
     url(r'^org/', include('organisations.urls')),
-    url(r'^$', HomeView.as_view(), name='home'),
     url(r'^issues/', include('issues.urls', 'issue_app')),
-    url(r'^profile/', include('user_profile.urls', 'user_profile'))
-    # url(r'^$', RedirectView.as_view(url='/map/')),
+    url(r'^profile/', include('user_profile.urls', 'user_profile')),
+    # keep this at the bottom as it eats urls
+    url(r'^', HomeView.as_view(), name='home'),
 ]

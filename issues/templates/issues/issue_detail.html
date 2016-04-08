@@ -15,7 +15,7 @@
     </div>
 </div>
 
-{% with comments=issue.issuecomment_set.all %}
+{% with comments=issue.comments.all %}
     {% if comments|length %}
     <h4>{% trans 'Comments' %}</h4>
     <hr />

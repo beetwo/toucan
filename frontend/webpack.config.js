@@ -4,6 +4,7 @@ var BundleTracker = require('webpack-bundle-tracker');
 
 module.exports = {
     context: __dirname,
+    devtool: 'source-map',
     entry: {
         main: './js/index',
         bootstrap: [
@@ -36,16 +37,21 @@ module.exports = {
                 loader: 'file'
             },
             {
+                test: /\.(png|jpg|jpeg)?$/,
+                loader: "url?limit=10000"
+            },
+            {
                 test: /\.json$/,
                 loader: 'json'
             },
 
-            // Use one of these to serve jQuery for Bootstrap scripts
-            // Bootstrap 4
-            // { test: /bootstrap\/dist\/js\/umd\//, loader: 'imports?jQuery=jquery' },
-
-            // Bootstrap 3
-            {test: /bootstrap-sass\/assets\/javascripts\//, loader: 'imports?jQuery=jquery'},
+            // jquery + Bootstrap 3
+            // if jquery is required, expose globally
+            { test: require.resolve("jquery"), loader: "expose?$!expose?jQuery" },
+            {
+                test: /bootstrap-sass\/assets\/javascripts\//, loader: 'imports?jQuery=jquery'
+            },
+            // everything else
             {
                 test: /\.jsx?$/,
                 exclude: /(node_modules|bower_components)/,

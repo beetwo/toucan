@@ -1,4 +1,5 @@
 {% load i18n bootstrap3 %}
+{% if user.is_authenticated %}
 <form method="post" action="{% url 'issues:comment_create' issue_id=issue.pk %}">
     {% csrf_token %}
 
@@ -10,3 +11,11 @@
         </button>
     {% endbuttons %}
 </form>
+{% else %}
+    <p>
+        {% trans 'Please login to comment.' %}
+        <a href='{% url 'account_login' %}?next={{ request.path|urlencode}}' class="btn btn-default">
+            {% trans 'Login here' %}
+        </a>
+    </p>
+{% endif %}

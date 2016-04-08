@@ -1,7 +1,9 @@
 {% extends 'issues/base.html' %}
 {% load i18n bootstrap3 %}
 
-{% block add-issue %}{% endblock %}
+{% block extra-head %}
+{{ form.media }}
+{% endblock %}
 
 {% block content %}
 <div class="row">
@@ -22,5 +24,4 @@
         </form>
     </div>
 </div>
-
 {% endblock %}

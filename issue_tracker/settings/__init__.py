@@ -36,12 +36,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.gis',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'bootstrap3',
     'channels',
-    'location_field',
+    'location_field.apps.DefaultConfig',
     'rest_framework',
     'rest_framework_gis',
     # custom applications
@@ -146,6 +147,11 @@ STATICFILES_DIRS = [
 ]
 
 LOGIN_REDIRECT_URL = 'user_profile:view_profile'
+
+# from location_field.settings import LOCATION_FIELD
+LOCATION_FIELD= {
+    'map.provider': 'openstreetmap',
+}
 
 from .allauth import *
 

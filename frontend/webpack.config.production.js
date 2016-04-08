@@ -3,6 +3,7 @@ var path = require("path");
 var webpack = require('webpack');
 var BundleTracker = require('webpack-bundle-tracker');
 
+delete config.devtool;
 config.output.path = path.resolve('./production/');
 config.output.filename = '[name].js';
 

@@ -36,8 +36,9 @@ class IssueList(ListView):
     template_name = 'issues/issue_list.html'
 
     def get_queryset(self):
+        # TODO: limit by visibility field
         return Issue.objects.order_by('-created')\
-            .annotate(comment_count=Count('issuecomment'))\
+            .annotate(comment_count=Count('comments'))\
             .select_related('organisation')
 
 

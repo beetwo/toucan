@@ -47,6 +47,13 @@
                                 <li>
                                     <a href="{% url 'account_logout' %}">Logout</a>
                                 </li>
+                                {% if user.is_staff %}
+                                <li>
+                                    <a href="{% url 'admin:index' %}">
+                                        {% trans 'Admin' %}
+                                    </a>
+                                </li>
+                                {% endif %}
                             </ul>
                     </li>
                 {% else %}

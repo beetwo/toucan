@@ -1,5 +1,9 @@
-from django import forms
+# from django import forms
+from django.utils.translation import ugettext_lazy as _
+
 from .models import IssueComment, Issue
+
+from django.contrib.gis import forms
 
 
 class CommentForm(forms.ModelForm):
@@ -14,6 +18,12 @@ class CommentForm(forms.ModelForm):
 
 
 class IssueForm(forms.ModelForm):
+
+    custom_location = forms.PointField(
+        label=_('location'),
+        # geom_type='Point',
+        widget=forms.OSMWidget()
+    )
 
     class Meta:
         model = Issue
