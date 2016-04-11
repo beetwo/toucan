@@ -1,106 +1,16 @@
 import 'babel-polyfill';
 import React from 'react';
 import { render } from 'react-dom';
-import { Map, TileLayer, LayerGroup, GeoJson, Marker } from 'react-leaflet';
-import { GeoJsonCluster } from 'react-leaflet-geojson-cluster';
-import geojsonExtent from 'geojson-extent';
 import { Router, Route, browserHistory, IndexRoute, Link } from 'react-router'
 import { createStore } from 'redux';
-
+import { LeafletMap } from './map';
+import getCookie from './utils';
 var ReactMarkdown = require('react-markdown');
+
+console.log(getCookie);
 
 // require the css files
 require('../css/app.css');
-require('leaflet/dist/leaflet.css');
-
-class IssueMarker extends React.Component {
-    constructor (props, context) {
-        super(props);
-        this.handleMarkerClick = this.handleMarkerClick.bind(this);
-    }
-
-    handleMarkerClick () {
-        browserHistory.push('/issue/' + this.props.issue.id);
-    }
-
-    render () {
-        return <Marker position={this.props.position} map={this.props.map} onClick={this.handleMarkerClick} />;
-    }
-}
-
-class LeafletMap extends React.Component {
-
-    constructor (props) {
-        super(props);
-        this._map = null;
-        this.handleClick = this.handleClick.bind(this);
-        this.handleMove = this.handleMove.bind(this);
-    }
-
-    getMap() {
-        return this._map.getLeafletElement();
-    }
-
-    handleClick(e) {
-        // console.log(
-        //     'clicked',
-        //     e,
-        //     arguments
-        // );
-    }
-
-    handleMove() {
-        if (this._map) {
-            // console.log(this, this.getMap());
-            // console.log(this.getMap().getBounds());
-        }
-    }
-
-    componentWillReceiveProps(np) {
-        console.log('Next props', np);
-    }
-    render() {
-
-        const geojson = this.props.locations;
-
-        if (geojson === null) {
-            return <div>loading..</div>;
-        }
-
-        let locations = geojson.features.map((p) => {
-            return {
-                coordinates: p.geometry.coordinates,
-                id: p.id,
-                ...p.properties
-            };
-        });
-
-        let markers = locations.map(l => {
-            return <IssueMarker key={l.id}
-                                position={l.coordinates.slice(0,2).reverse()}
-                                issue={l}/>
-        });
-
-        let extents = geojsonExtent(JSON.parse(JSON.stringify(geojson)));
-        extents = [
-            extents.slice(0,2).reverse(),
-            extents.slice(2,4).reverse()
-        ];
-
-        return (
-            <Map bounds={extents}
-                 onClick={this.handleClick}
-                 onMoveEnd={this.handleMove}
-                 ref={(m) => this._map = m}>
-                <TileLayer
-                    url='//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                />
-                {markers}
-            </Map>
-        );
-    }
-}
 
 class Issues extends React.Component {
 
@@ -123,7 +33,45 @@ class Issues extends React.Component {
     }
 }
 
+class CommentForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      comment: ''
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  handleSubmit(e) {
+    e.preventDefault();
+    let comment = {
+      id: Date.now(),
+      comment: this.state.comment,
+      created_by: {
+        username: 'You'
+      }
+    }
+    this.props.onComment(comment);
+    this.setState({
+      comment: ''
+    });
+  }
 
+  handleChange(e) {
+    this.setState({comment: e.target.value});
+  }
+
+  render() {
+    return (<form className='form row' onSubmit={this.handleSubmit}>
+      <div className='col-md-10'>
+        <textarea rows={2} onChange={this.handleChange} className='form-control' required placeholder='Your comment goes here ...' value={this.state.comment}></textarea>
+      </div>
+      <div className='col-md-2'>
+        <button className='form-control btn btn-sm btn-primary' type='submit'>Comment</button>
+      </div>
+    </form>);
+  }
+}
 
 class Comment extends React.Component {
   render(){
@@ -138,18 +86,16 @@ class Comment extends React.Component {
 }
 
 class CommentList extends React.Component {
+
   render() {
     let comments = this.props.comments;
     if (comments.length > 0) {
       let cn = comments.map((c) => <Comment key={c.id} comment={c} />);
-      return (
-        <div>
-          <h3>Comments</h3>
+      return (<div>
           <ul className='media-list'>{cn}</ul>
-        </div>
-      );
+        </div>);
     }
-    return <h3>No comments</h3>;
+    return <small>No comments</small>;
   }
 }
 
@@ -160,8 +106,10 @@ class IssueDetail extends React.Component {
         super(props)
         this.state = {
             loading: true,
-            issue: null
+            issue: null,
+            comments: []
         }
+        this.addComment = this.addComment.bind(this);
     }
 
     componentDidMount() {
@@ -175,15 +123,46 @@ class IssueDetail extends React.Component {
         this.loadIssue();
     }
 
+
+    addComment(c) {
+      let issue = this.state.issue;
+      fetch(
+        issue.comment_url,
+        {
+          method: 'post',
+          credentials: 'same-origin',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+          },
+          body: JSON.stringify({
+            comment: c.comment
+          })
+        }
+      ).then(response => this.loadComments());
+    }
+
+    loadComments() {
+      let issue = this.state.issue,
+          url = issue.comment_url;
+      fetch(url)
+            .then(response => response.json())
+            .then(json =>  this.setState({comments: json}));
+    }
+
     loadIssue() {
         let issue_id = parseInt(this.props.routeParams.IssueID);
         let issue = this.props.issues.find(issue => issue.id === issue_id);
         fetch(issue.issue_url)
             .then(response => response.json())
-            .then(json => this.setState({
+            .then(json => {
+              this.setState({
                 loading: false,
                 issue: json.properties
-            }))
+              });
+              this.loadComments();
+            });
     }
 
     render() {
@@ -191,25 +170,24 @@ class IssueDetail extends React.Component {
             return <div>Issue</div>;
         } else {
             let issue=this.state.issue,
-                comments=issue.comments || [];
+                comments=this.state.comments;
 
-            return (<div>
-              <div className="panel panel-default">
-                  <div className="panel-heading">
-                      <h3 className="panel-title">
-                        {issue.title}
-                      </h3>
-                  </div>
-                  <div className="panel-body">
-                    <ReactMarkdown source={issue.description} />
-                  </div>
+            return (<div className='issueDetail'>
+              <div className='issueDetailMain'>
+                <div className="panel panel-default">
+                    <div className="panel-heading">
+                        <h3 className="panel-title">
+                          {issue.title}
+                        </h3>
+                    </div>
+                    <div className="panel-body">
+                      <ReactMarkdown source={issue.description} />
+                    </div>
+                </div>
+                <CommentList comments={comments} />
               </div>
-              <hr />
-              <CommentList comments={comments} />
-              <div>
-                  <a href={issue.detail_url} target='_blank' className='btn btn-primary'>
-                    Details
-                  </a>
+              <div className='issueDetailBottom'>
+                <CommentForm onComment={this.addComment}/>
               </div>
             </div>);
         }
@@ -219,7 +197,7 @@ class IssueDetail extends React.Component {
 class UI extends React.Component {
 
     render() {
-        return <div className="app-container">
+        return (<div className="app-container">
             <div className="map-container">
                 <LeafletMap locations={this.props.locations} />
             </div>
@@ -230,9 +208,8 @@ class UI extends React.Component {
                             issues: this.props.issues
                     })
                 }
-
             </div>
-        </div>
+        </div>);
     }
 }
 

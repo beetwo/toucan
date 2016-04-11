@@ -10,6 +10,6 @@ urlpatterns = [
     url(r'^org/', include('organisations.urls')),
     url(r'^issues/', include('issues.urls', 'issue_app')),
     url(r'^profile/', include('user_profile.urls', 'user_profile')),
-    # keep this at the bottom as it eats urls
+    # keep this at the bottom as it eats urls!
     url(r'^', HomeView.as_view(), name='home'),
 ]

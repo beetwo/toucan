@@ -14,6 +14,7 @@ class UserSerializer(serializers.ModelSerializer):
             'id'
         ]
 
+
 class CommentSerializer(serializers.ModelSerializer):
 
     created_by = UserSerializer(read_only=True)
@@ -27,6 +28,13 @@ class CommentSerializer(serializers.ModelSerializer):
             'created',
             'modified',
         ]
+        read_only_fields = [
+            'id',
+            'created_by',
+            'created',
+            'modified',
+        ]
+
 
 class IssueSerializer(GeoFeatureModelSerializer):
 
@@ -66,6 +74,12 @@ class FullIssueSerializer(IssueSerializer):
     def get_detail_url(self, issue):
         return reverse('issues:issue_detail', kwargs={'issue_id': issue.pk}, request=self.context['request'])
 
+    comment_url = serializers.SerializerMethodField()
+
+    def get_comment_url(self, issue):
+        return reverse('issue_tracker_api:issue_comments', kwargs={'issue_id': issue.pk}, request=self.context['request'])
+
+
     class Meta:
         model = Issue
         geo_field = 'gis_location'
@@ -77,5 +91,6 @@ class FullIssueSerializer(IssueSerializer):
             'priority',
             'visibility',
             'detail_url',
+            'comment_url',
             'comments',
         ]
