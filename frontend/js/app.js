@@ -6,12 +6,6 @@ import { LeafletMap } from './map';
 import getCookie from './utils';
 var ReactMarkdown = require('react-markdown');
 
-import { createStore } from 'redux'
-import issueTrackerApp from './reducers'
-
-let store = createStore(issueTrackerApp)
-console.log(store.getsState());
-
 // require the css files
 require('../css/app.css');
 
