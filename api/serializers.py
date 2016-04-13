@@ -1,4 +1,4 @@
-from issues.models import Issue, IssueComment
+from issues.models import Issue, IssueComment, IssueType
 from django.contrib.auth import get_user_model
 from rest_framework_gis.serializers import GeoFeatureModelSerializer, GeometrySerializerMethodField
 from rest_framework import serializers
@@ -12,6 +12,22 @@ class UserSerializer(serializers.ModelSerializer):
         fields = [
             'username',
             'id'
+        ]
+
+
+class IssueTypeSerializer(serializers.ModelSerializer):
+
+    svg = serializers.SerializerMethodField()
+
+    def get_svg(self, it):
+        return it.svg_icon.url if it.svg_icon else None
+
+    class Meta:
+        model = IssueType
+        fields = [
+            'slug',
+            'name',
+            'svg'
         ]
 
 
@@ -44,6 +60,8 @@ class IssueSerializer(GeoFeatureModelSerializer):
         lookup_field='pk'
     )
 
+    issue_type = IssueTypeSerializer(read_only=True)
+
     comment_count = serializers.IntegerField(read_only=True)
 
     gis_location = GeometrySerializerMethodField()
@@ -62,6 +80,7 @@ class IssueSerializer(GeoFeatureModelSerializer):
             'priority',
             'visibility',
             'comment_count',
+            'issue_type'
         ]
 
 

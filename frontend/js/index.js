@@ -25,18 +25,3 @@ render(
   </Provider>,
   document.getElementsByTagName('main')[0]
 );
-
-import { fetchIssues } from './actions'
-store.dispatch(fetchIssues())
-
-{/*
-  import { Router, Route, browserHistory, IndexRoute, Link } from 'react-router'
-
-
-    <Router history={browserHistory}>
-        <Route path="/" component={App}>
-            <IndexRoute component={Issues} />
-            <Route path="issue/:IssueID" component={IssueDetail} />
-        </Route>
-    </Router>
-*/}
