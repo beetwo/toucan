@@ -31,10 +31,10 @@ export function fetchIssues() {
     }
 }
 
-export function selectIssue(issue_id) {
+export function selectIssue(issue) {
     return {
       type: SELECT_ISSUE,
-      issue_id: issue_id
+      issue: issue
     }
 }
 

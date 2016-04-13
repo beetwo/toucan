@@ -9,7 +9,7 @@ class IssueList extends React.Component {
             return (
               <tr key={issue.id}>
                 <td>
-                    <a href='#' onClick={(e) => this.props.onIssueSelect(issue.id)}>
+                    <a href='#' onClick={(e) => this.props.onIssueSelect(issue)}>
                       {issue.title}
                     </a>
                 </td>

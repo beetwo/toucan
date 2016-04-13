@@ -4,25 +4,40 @@ import {REQUEST_ISSUES, RECEIVE_ISSUES, SELECT_ISSUE} from './actions';
 function issues(state=[], action) {
   switch (action.type) {
     case RECEIVE_ISSUES:
-      return action.issues
+      return action.issues.features.map((issue) => {
+        return {
+          id: issue.id,
+          ...issue.properties
+        }
+      })
     default:
       return state
   }
 }
 
 function selectedIssue(state=null, action) {
-  console.log(arguments);
   switch(action.type) {
     case SELECT_ISSUE:
-      return action.issue_id
+      return action.issue
     default:
       return state
   }
 }
 
+function geojson(state={}, action) {
+  switch(action.type){
+    case RECEIVE_ISSUES:
+      return action.issues
+    default:
+      return state
+  }
+}
+
+
 const issueTrackerApp = combineReducers({
+  geojson,
   redux_issues: issues,
-  selectedIssue
+  selectedIssue,
 })
 
 export default issueTrackerApp;

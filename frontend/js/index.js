@@ -8,6 +8,7 @@ import createLogger from 'redux-logger'
 import { createStore, applyMiddleware } from 'redux'
 import issueTrackerApp from './reducers'
 import App from './containers/app'
+import {requestIssues, fetchIssues} from './actions'
 
 const loggerMiddleware = createLogger()
 

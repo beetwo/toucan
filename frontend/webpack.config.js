@@ -4,7 +4,7 @@ var BundleTracker = require('webpack-bundle-tracker');
 
 module.exports = {
     context: __dirname,
-    devtool: 'source-map',
+    devtool: 'eval-cheap-module-source-map',
     entry: {
         main: './js/index',
         bootstrap: [
@@ -15,7 +15,7 @@ module.exports = {
     output: {
         path: path.resolve('./build/'),
         publicPath: "/static/wp/",
-        filename: "[name]-[hash].js"
+        filename: "[name].js"
     },
     plugins: [
         new BundleTracker({filename: './webpack-stats.json'}),
