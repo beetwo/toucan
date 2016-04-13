@@ -9,27 +9,6 @@ var ReactMarkdown = require('react-markdown');
 // require the css files
 require('../css/app.css');
 
-class Issues extends React.Component {
-
-    render() {
-        let issues = this.props.issues || [];
-        let rows = issues.map(function (issue, index) {
-            return (<tr key={issue.id}>
-                    <td>
-                        <Link to={"issue/" + issue.id}>{issue.title}</Link>
-                    </td>
-                    <td>{issue.priority}</td>
-                    <td>{issue.visibility}</td>
-                </tr>);
-        });
-        return (<table className="table">
-            <tbody>
-                {rows}
-            </tbody>
-        </table>);
-    }
-}
-
 class CommentForm extends React.Component {
   constructor(props) {
     super(props);
@@ -251,12 +230,4 @@ class App extends React.Component {
     }
 };
 
-
-render(
-    (<Router history={browserHistory}>
-        <Route path="/" component={App}>
-            <IndexRoute component={Issues} />
-            <Route path="issue/:IssueID" component={IssueDetail} />
-        </Route>
-    </Router>),
-    document.getElementsByTagName('main')[0]);
+export default App
