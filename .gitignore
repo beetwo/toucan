@@ -68,5 +68,5 @@ issue_tracker/settings/secrets.py
 frontend/build/
 frontend/webpack-stats.json
 frontend/node_modules/
-
+_media/
 *.sqlite3
