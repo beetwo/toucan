@@ -2,9 +2,10 @@ import React from 'react';
 
 import  Leaflet  from 'leaflet';
 import { Map, TileLayer, LayerGroup, GeoJson, Marker } from 'react-leaflet';
-import { GeoJsonCluster } from 'react-leaflet-geojson-cluster';
 import geojsonExtent from 'geojson-extent';
 import { browserHistory } from 'react-router'
+
+import getMarkerForIssue from './markers/markers';
 
 
 require('leaflet/dist/leaflet.css');
@@ -19,18 +20,19 @@ class IssueMarker extends React.Component {
         browserHistory.push('/issue/' + this.props.issue.id);
     }
 
-    componentWillMount() {
-      console.log('Marker mounting', this.props);
-      this.icon = Leaflet.divIcon({
-        html: '<h4>Car</h4>'
-      });
-
-    }
-
     render () {
-        return <Marker position={this.props.position}
-                        map={this.props.map}
-                        onClick={this.handleMarkerClick} />;
+        let props = {
+          position: this.props.position,
+          layerContainer: this.props.map,
+          onClick: this.handleMarkerClick
+        };
+        let icon = getMarkerForIssue(this.props.issue);
+        console.log(icon);
+        if (icon != undefined) {
+          props.icon = icon;
+        }
+
+        return <Marker {...props} />;
     }
 }
 
@@ -63,9 +65,8 @@ export class LeafletMap extends React.Component {
     }
 
     render() {
-
+        console.log(this.props);
         const geojson = this.props.locations;
-
         if (geojson === null) {
             return <div>loading..</div>;
         }

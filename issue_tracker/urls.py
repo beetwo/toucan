@@ -1,6 +1,7 @@
 from django.conf.urls import url, include
+from django.conf import settings
 from django.contrib import admin
-from django.views.generic import RedirectView
+
 from issues.views import HomeView
 
 urlpatterns = [
@@ -10,6 +11,16 @@ urlpatterns = [
     url(r'^org/', include('organisations.urls')),
     url(r'^issues/', include('issues.urls', 'issue_app')),
     url(r'^profile/', include('user_profile.urls', 'user_profile')),
+]
+
+if settings.DEBUG:
+    from django.conf.urls.static import static
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+urlpatterns += [
     # keep this at the bottom as it eats urls!
     url(r'^', HomeView.as_view(), name='home'),
 ]
+
+

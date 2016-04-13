@@ -6,14 +6,16 @@ from model_utils import Choices
 from model_utils.models import TimeStampedModel
 
 
-class Issue(TimeStampedModel):
+class IssueType(TimeStampedModel):
+    name = models.CharField(max_length=50)
+    slug = models.SlugField()
+    svg_icon = models.FileField(blank=True, upload_to='markers')
 
-    ISSUE_TYPES = Choices(
-        (0, 'medical', _('medical')),
-        (1, 'food', _('food and drinks')),
-        (2, 'goods', _('other goods')),
-        (3, 'general', _('general'))
-    )
+    def __str__(self):
+        return self.name
+
+
+class Issue(TimeStampedModel):
 
     PRIORITY_CHOICES = Choices(
         (0, 'low', _('low')),
@@ -43,6 +45,8 @@ class Issue(TimeStampedModel):
     priority = models.SmallIntegerField(choices=PRIORITY_CHOICES, default=1)
     visibility = models.SmallIntegerField(choices=VISIBILITY_CHOICES, default=3)
 
+    issue_type = models.ForeignKey(IssueType, null=True, blank=True)
+
     @property
     def gis_location(self):
         return self.location.location if self.location else None
@@ -65,7 +69,7 @@ class IssueComment(TimeStampedModel):
     class Meta:
         verbose_name = _('comment')
         verbose_name_plural = _('comments')
-        ordering = ['-created']
+        ordering = ['created']
 
     def __str__(self):
         return 'Comment by user %s on issue #%d' % (self.created_by.username, self.issue_id)

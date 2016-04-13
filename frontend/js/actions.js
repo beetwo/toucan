@@ -3,10 +3,9 @@ import fetch from 'isomorphic-fetch'
 export const REQUEST_ISSUES = 'REQUEST_ISSUES'
 export const RECEIVE_ISSUES = 'RECEIVE_ISSUES'
 
-
+export const SELECT_ISSUE = 'SELECT_ISSUE'
 export const REQUEST_ISSUE = 'REQUEST_ISSUE'
 export const RECEIVE_ISSUE = 'REQUEST_ISSUE'
-export const SELECT_ISSUE = 'SELECT_ISSUE'
 
 
 export function requestIssues() {
@@ -32,6 +31,12 @@ export function fetchIssues() {
     }
 }
 
+export function selectIssue(issue) {
+    return {
+      type: SELECT_ISSUE,
+      issue
+    }
+}
 
 export function requestIssue(issue) {
     return {
