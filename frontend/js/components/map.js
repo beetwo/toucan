@@ -13,6 +13,8 @@ require('leaflet/dist/leaflet.css');
 class IssueMarker extends React.Component {
 
     render () {
+      //console.log('Marker', this.props);
+
       let issue = this.props.issue
       let props = {
         position: this.props.position,
@@ -31,7 +33,7 @@ class IssueMarker extends React.Component {
 IssueMarker.propTypes = {
   issue: PropTypes.object.isRequired,
   handleMarkerClick: PropTypes.func.isRequired,
-  layerContainer: PropTypes.object.isRequired,
+  //layerContainer: PropTypes.object.isRequired,
   position: PropTypes.array.isRequired
 }
 
@@ -53,7 +55,6 @@ class LeafletMap extends React.Component {
 
     render() {
         let geojson = this.props.geojson;
-
         if (isEmpty(geojson)) {
             return null;
         }

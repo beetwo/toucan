@@ -8,7 +8,7 @@ import { selectIssue, fetchIssues } from '../actions'
 class IssueTrackerApp extends React.Component {
 
   componentDidMount() {
-    this.props.dispatch(fetchIssues())
+    this.props.fetchIssues()
   }
 
   render() {
@@ -17,8 +17,11 @@ class IssueTrackerApp extends React.Component {
 }
 
 IssueTrackerApp.propType = {
-  dispatch: PropTypes.func.isRequired,
-  issues: PropTypes.array.isRequired
+  fetchIssues: PropTypes.func.isRequired,
+  issues: PropTypes.array.isRequired,
+  // Injected by React Router
+  children: PropTypes.node,
+
 }
 
 const mapStateToProps = (state) => {
@@ -31,9 +34,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    dispatch: dispatch,
-    onIssueSelect: (issue_id) => {
-      dispatch(selectIssue(issue_id))
+    fetchIssues: () => {
+      dispatch(fetchIssues())
     }
   };
 }

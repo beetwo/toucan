@@ -55,7 +55,7 @@ export function receiveIssue(issue) {
 export function fetchIssue(issue) {
     return dispatch => {
         dispatch(requestIssue(issue))
-        return fetch(issue.properties.issue_url)
+        return fetch(issue.issue_url)
             .then(response => response.json())
             .then(json => dispatch(receiveIssue(json)))
     }

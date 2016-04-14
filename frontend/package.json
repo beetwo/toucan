@@ -55,6 +55,7 @@
     "babel-core": "^6.7.6",
     "jquery": "^2.2.3",
     "react-redux": "^4.4.2",
+    "react-router-redux": "^4.0.2",
     "redux": "^3.4.0",
     "webpack": "^1.12.15"
   }

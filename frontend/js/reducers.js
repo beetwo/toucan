@@ -34,10 +34,10 @@ function geojson(state={}, action) {
 }
 
 
-const issueTrackerApp = combineReducers({
+const reducers = {
   geojson,
   redux_issues: issues,
   selectedIssue,
-})
+}
 
-export default issueTrackerApp;
+export default reducers;

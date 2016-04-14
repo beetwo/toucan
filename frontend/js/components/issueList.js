@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import Icon from 'react-fa'
 
-class IssueList extends React.Component {
+class IssueListUI extends React.Component {
 
     render() {
         let issues = this.props.issues || [];
@@ -9,7 +9,7 @@ class IssueList extends React.Component {
             return (
               <tr key={issue.id}>
                 <td>
-                    <a href='#' onClick={(e) => this.props.onIssueSelect(issue)}>
+                    <a href='#' onClick={(e) => this.props.handleIssueChange(issue)}>
                       {issue.title}
                     </a>
                 </td>
@@ -29,4 +29,9 @@ class IssueList extends React.Component {
     }
 }
 
-export default IssueList
+IssueListUI.propTypes = {
+  handleIssueChange: PropTypes.func.isRequired,
+  issues: PropTypes.array.isRequired
+}
+
+export default IssueListUI
