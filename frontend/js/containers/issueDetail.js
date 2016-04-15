@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
 import { connect } from 'react-redux'
 import IssueDetailUI from '../components/issueDetail'
-import { selectIssue } from '../actions'
+import { fetchIssueIfNeeded } from '../actions'
 
 import isEmpty from 'lodash/isEmpty'
 
@@ -16,16 +16,21 @@ class IssueDetailContainer extends React.Component {
   }
 }
 
+IssueDetailContainer.propTypes = {
+  issue: PropTypes.object.isRequired
+}
+
 const mapStateToProps = (state, ownProps) => {
+  console.log(state);
   return {
-    issue: state.selectedIssue
+    issue: state.issueDetails[ownProps.routeParams.IssueID] || {}
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     loadIssue: (issue) => {
-      dispatch(selectIssue(issue))
+      dispatch(fetchIssueIfNeeded(issue))
     }
   }
 }

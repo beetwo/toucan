@@ -5,7 +5,7 @@ export const RECEIVE_ISSUES = 'RECEIVE_ISSUES'
 
 export const SELECT_ISSUE = 'SELECT_ISSUE'
 export const REQUEST_ISSUE = 'REQUEST_ISSUE'
-export const RECEIVE_ISSUE = 'REQUEST_ISSUE'
+export const RECEIVE_ISSUE = 'RECEIVE_ISSUE'
 
 
 export function requestIssues() {
@@ -31,32 +31,34 @@ export function fetchIssues() {
     }
 }
 
-export function selectIssue(issue) {
+export function selectIssue(issue_id) {
     return {
       type: SELECT_ISSUE,
-      issue: issue
+      issue_id
     }
 }
 
-export function requestIssue(issue) {
+export function requestIssue(issue_id) {
     return {
         type: REQUEST_ISSUE,
-        issue
+        issue_id
     }
 }
 
-export function receiveIssue(issue) {
+export function receiveIssue(issue_id, json) {
     return {
         type: RECEIVE_ISSUE,
-        issue: issue
+        issue_id,
+        payload: json
     }
 }
 
-export function fetchIssue(issue) {
-    return dispatch => {
-        dispatch(requestIssue(issue))
-        return fetch(issue.issue_url)
+export function fetchIssueIfNeeded(issue_id) {
+    return (dispatch, getState) => {
+        console.log(getState());
+        dispatch(requestIssue(issue_id))
+        return fetch(`/api/issue/${issue_id}/`)
             .then(response => response.json())
-            .then(json => dispatch(receiveIssue(json)))
+            .then(json => dispatch(receiveIssue(issue_id, json)))
     }
 }
