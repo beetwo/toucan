@@ -1,7 +1,7 @@
 import React from 'react';
 
 import  Leaflet  from 'leaflet';
-import { Map, TileLayer, LayerGroup, GeoJson, Marker } from 'react-leaflet';
+import { Map, TileLayer, LayerGroup, GeoJson, Marker, Popup } from 'react-leaflet';
 import geojsonExtent from 'geojson-extent';
 import { browserHistory } from 'react-router'
 
@@ -27,7 +27,6 @@ class IssueMarker extends React.Component {
           onClick: this.handleMarkerClick
         };
         let icon = getMarkerForIssue(this.props.issue);
-        console.log(icon);
         if (icon != undefined) {
           props.icon = icon;
         }
@@ -36,19 +35,44 @@ class IssueMarker extends React.Component {
     }
 }
 
+function PopupMarker ({layerContainer, map, position}) {
+      return (<div style={{display: 'none'}}>
+        <Popup layerContainer={layerContainer} map={map} position={position} >
+          <span>Pop!</span>
+        </Popup>
+      </div>);
+}
+
+
 export class LeafletMap extends React.Component {
 
     constructor (props) {
         super(props);
         this._map = null;
+        this.state = {
+          context: false
+        }
+
+        // bind event handlers
         this.handleClick = this.handleClick.bind(this);
         this.handleMove = this.handleMove.bind(this);
+        this.handleRightClick = this.handleRightClick.bind(this);
+        this.handlePopupClose = this.handlePopupClose.bind(this);
     }
 
     getMap() {
         return this._map.getLeafletElement();
     }
 
+    handleRightClick(e) {
+      this.setState({
+        context : {...e.latlng}
+      })
+    }
+
+    handlePopupClose(e) {
+
+    }
     handleClick(e) {
         // console.log(
         //     'clicked',
@@ -65,7 +89,6 @@ export class LeafletMap extends React.Component {
     }
 
     render() {
-        console.log(this.props);
         const geojson = this.props.locations;
         if (geojson === null) {
             return <div>loading..</div>;
@@ -94,6 +117,8 @@ export class LeafletMap extends React.Component {
         return (
             <Map bounds={extents}
                  onClick={this.handleClick}
+                 onContextmenu={this.handleRightClick}
+                 onPopupclose={this.handlePopupClose}
                  onMoveEnd={this.handleMove}
                  ref={(m) => this._map = m}>
                 <TileLayer
@@ -101,6 +126,7 @@ export class LeafletMap extends React.Component {
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 />
                 {markers}
+                {this.state.context ? <PopupMarker position={this.state.context} /> : null }
             </Map>
         );
     }
