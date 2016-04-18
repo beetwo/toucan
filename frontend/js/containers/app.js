@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react'
 import { connect } from 'react-redux'
 import UI from '../components/main'
 
-import { selectIssue, fetchIssues } from '../actions'
+import { selectIssue, fetchIssues, setCoordinates } from '../actions'
 
 
 class IssueTrackerApp extends React.Component {
@@ -18,17 +18,19 @@ class IssueTrackerApp extends React.Component {
 
 IssueTrackerApp.propType = {
   fetchIssues: PropTypes.func.isRequired,
+  setCoordinates: PropTypes.func.isRequired,
   issues: PropTypes.array.isRequired,
+  coordinates: PropTypes.object,
   // Injected by React Router
-  children: PropTypes.node,
-
+  children: PropTypes.node
 }
 
 const mapStateToProps = (state) => {
   return {
     issues: state.redux_issues,
     geojson: state.geojson,
-    selectedIssue: state.selectedIssue
+    selectedIssue: state.selectedIssue,
+    coordinates: state.coordinates
   }
 }
 
@@ -36,6 +38,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchIssues: () => {
       dispatch(fetchIssues())
+    },
+    setCoordinates: (latLng) => {
+      dispatch(setCoordinates(latLng))
     }
   };
 }

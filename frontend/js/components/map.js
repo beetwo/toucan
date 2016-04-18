@@ -1,11 +1,11 @@
 import React, { PropTypes} from 'react';
 import isEmpty from 'lodash/isEmpty'
-
+import {dispatch} from 'redux'
 import  Leaflet  from 'leaflet';
-import { Map, TileLayer, LayerGroup, GeoJson, Marker } from 'react-leaflet';
+import { Map, TileLayer, LayerGroup, GeoJson, Marker, Popup } from 'react-leaflet';
 import geojsonExtent from 'geojson-extent';
 import { browserHistory } from 'react-router'
-
+import { setCoordinates } from '../actions'
 import getMarkerForIssue from './markers/markers';
 
 require('leaflet/dist/leaflet.css');
@@ -13,8 +13,6 @@ require('leaflet/dist/leaflet.css');
 class IssueMarker extends React.Component {
 
     render () {
-      //console.log('Marker', this.props);
-
       let issue = this.props.issue
       let props = {
         position: this.props.position,
@@ -29,7 +27,6 @@ class IssueMarker extends React.Component {
     }
 }
 
-
 IssueMarker.propTypes = {
   issue: PropTypes.object.isRequired,
   handleMarkerClick: PropTypes.func.isRequired,
@@ -37,26 +34,74 @@ IssueMarker.propTypes = {
   position: PropTypes.array.isRequired
 }
 
-class LeafletMap extends React.Component {
+class AddNewMarker extends React.Component {
+  constructor (props) {
+    super(props)
+    this.handleMarkerPosition = this.handleMarkerPosition.bind(this);
+  }
+
+  handleMarkerPosition(e) {
+    this.props.handleLatLng(e.target.getLatLng());
+  }
+
+  render () {
+    const {layerContainer, map, position} = this.props;
+    let i = getMarkerForIssue({}, {markerColor: 'green', icon: 'fa-plus'});
+    return <Marker layerContainer={layerContainer}
+                   map={map}
+                   position={position}
+                   icon={i}
+                   onClick={this.props.onClickHandler}
+                   draggable={true}
+                   onDragend={this.handleMarkerPosition} />;
+  }
+}
+
+export class LeafletMap extends React.Component {
 
     constructor (props) {
         super(props);
         this._map = null;
-        this.handleMarkerClick = this.handleMarkerClick.bind(this)
+        this._add_new_marker = null;
+        this.state = {
+          context: false
+        }
+
+        // bind event handlers
+        this.handleClick = this.handleClick.bind(this);
+        this.handleMove = this.handleMove.bind(this);
+        this.handleRightClick = this.handleRightClick.bind(this);
+        this.handleMarkerClick = this.handleMarkerClick.bind(this);
+        this.handleAddMarkerPositionChange = this.handleAddMarkerPositionChange.bind(this);
+    }
+
+    // these functions deal with setting Coordinates
+    handleAddMarkerPositionChange (latLng) {
+      this.props.setCoordinates(latLng);
+    }
+
+    handleRightClick(e) {
+      this.props.setCoordinates({...e.latlng});
     }
 
     getMap() {
         return this._map.getLeafletElement();
     }
 
-    handleMarkerClick(issue) {
-      console.log(issue);
-    }
+
+
+    handlePopupClose(e) {}
+    handleClick(e) {}
+    handleMove(e) {}
+    handleMarkerClick (issue) {}
 
     render() {
-        let geojson = this.props.geojson;
+
+        const {geojson, coordinates} = this.props;
+        const has_coordinates = !isEmpty(coordinates);
+        
         if (isEmpty(geojson)) {
-            return null;
+          return null;
         }
 
         let locations = geojson.features.map((p) => {
@@ -82,19 +127,28 @@ class LeafletMap extends React.Component {
 
         return (
             <Map bounds={extents}
+                 onClick={this.handleClick}
+                 onContextmenu={this.handleRightClick}
+                 onPopupclose={this.handlePopupClose}
+                 onMoveEnd={this.handleMove}
                  ref={(m) => this._map = m}>
                 <TileLayer
                     url='//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 />
-              {markers}
+                {markers}
+                {has_coordinates ? <AddNewMarker ref={(e) => this._add_new_marker = e }
+                                                   position={coordinates}
+                                                   handleLatLng={this.handleAddMarkerPositionChange} /> : null }
             </Map>
         );
     }
 }
 
 LeafletMap.propTypes = {
-  geojson: PropTypes.object.isRequired
+  geojson: PropTypes.object.isRequired,
+  coordinates: PropTypes.object.isRequired,
+  setCoordinates: PropTypes.func
 }
 
 export default LeafletMap

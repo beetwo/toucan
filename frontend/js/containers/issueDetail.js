@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
 import { connect } from 'react-redux'
 import IssueDetailUI from '../components/issueDetail'
-import { fetchIssueIfNeeded } from '../actions'
+import { fetchIssueIfNeeded, postComment } from '../actions'
 
 import isEmpty from 'lodash/isEmpty'
 
@@ -21,7 +21,6 @@ IssueDetailContainer.propTypes = {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state);
   return {
     issue: state.issueDetails[ownProps.routeParams.IssueID] || {}
   }
@@ -31,6 +30,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     loadIssue: (issue) => {
       dispatch(fetchIssueIfNeeded(issue))
+    },
+    onComment: (comment) => {
+      dispatch(postComment(comment));
     }
   }
 }

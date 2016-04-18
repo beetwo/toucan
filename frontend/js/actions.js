@@ -7,6 +7,8 @@ export const SELECT_ISSUE = 'SELECT_ISSUE'
 export const REQUEST_ISSUE = 'REQUEST_ISSUE'
 export const RECEIVE_ISSUE = 'RECEIVE_ISSUE'
 
+export const SET_COORDINATES = 'SET_COORDINATES'
+export const POST_COMMENT = 'POST_COMMENT'
 
 export function requestIssues() {
   return {
@@ -61,4 +63,19 @@ export function fetchIssueIfNeeded(issue_id) {
             .then(response => response.json())
             .then(json => dispatch(receiveIssue(issue_id, json)))
     }
+}
+
+export function setCoordinates(latLng) {
+  let action = {
+    type: SET_COORDINATES,
+    latLng: latLng
+  };
+  return action
+}
+
+export function postComment(comment) {
+  return {
+    type: POST_COMMENT,
+    comment: comment
+  }
 }

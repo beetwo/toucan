@@ -1,17 +1,27 @@
 import  Leaflet  from 'leaflet';
 import { Marker } from 'react-leaflet';
 
-require('drmonty-leaflet-awesome-markers/css/leaflet.awesome-markers.css');
-let aws = require('drmonty-leaflet-awesome-markers/js/leaflet.awesome-markers.js');
+require('Leaflet.extra-markers/src/assets/css/leaflet.extra-markers.css')
+let extraMarkers = require('Leaflet.extra-markers/src/assets/js/leaflet.extra-markers')
 
-function getMarkerForIssue(issue) {
-  let it = issue.issue_type;
-  if (it && it.svg) {
-      return Leaflet.icon({
-        iconUrl: it.svg,
-        iconSize: [30,30]
-      });
-  };
+console.log(extraMarkers, Leaflet);
+
+const defaulIconProps = {
+    icon: 'fa-circle-o',
+    // marker colors
+    //'red', 'orange-dark', 'orange', 'yellow', 'blue-dark', 'cyan', 'purple',
+    // 'violet', 'pink', 'green-dark', 'green', 'green-light', 'black', or 'white'
+    markerColor: 'blue',
+    //'circle', 'square', 'star', or 'penta'
+    shape: 'circle',
+    prefix: 'fa'
+}
+
+function getMarkerForIssue(issue={}, opts={}) {
+  return Leaflet.ExtraMarkers.icon({
+    ...defaulIconProps,
+    ...opts
+  });
 }
 
 export default getMarkerForIssue;

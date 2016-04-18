@@ -1,5 +1,11 @@
 import { combineReducers } from 'redux';
-import {REQUEST_ISSUES, RECEIVE_ISSUES, SELECT_ISSUE, REQUEST_ISSUE, RECEIVE_ISSUE } from './actions';
+import {
+  REQUEST_ISSUES,
+  RECEIVE_ISSUES,
+  SELECT_ISSUE,
+  REQUEST_ISSUE,
+  RECEIVE_ISSUE,
+  SET_COORDINATES } from './actions';
 
 function issues(state=[], action) {
   switch (action.type) {
@@ -78,12 +84,23 @@ function geojson(state={}, action) {
   }
 }
 
+function coordinates(state={}, action) {
+  switch (action.type) {
+    case SET_COORDINATES:
+      return action.latLng
+    default:
+      return state
+  }
+}
 
 const reducers = {
   geojson,
   redux_issues: issues,
   selectedIssue,
-  issueDetails
+  issueDetails,
+  coordinates
 }
+
+console.log(reducers);
 
 export default reducers;

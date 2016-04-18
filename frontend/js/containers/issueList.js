@@ -17,7 +17,6 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  console.log(dispatch);
   return {
     handleIssueChange: (issue) => {
       browserHistory.push(`issue/${issue.id}`)
