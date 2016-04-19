@@ -1,0 +1,24 @@
+{% extends 'organisations/base.html' %}
+{% load i18n bootstrap3 %}
+
+{% block organisation_page_title %}
+    {% trans 'Create a new organisation' %}
+{% endblock %}
+
+{% block organisation_main %}
+<hr />
+
+<div class="row">
+    <div class="col-sm-12">
+        <form method="post">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% buttons %}
+            <button type="submit" class="btn btn-primary">
+                {% trans 'Create new organisation' %}
+            </button>
+            {% endbuttons %}
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -13,12 +13,35 @@ class Organisation(TimeStampedModel):
 
     name = models.CharField(max_length=200, verbose_name=_('name'))
     short_name = models.CharField(max_length=50, verbose_name=_('short name'), blank=True)
+    logo = models.ImageField(blank=True)
 
-    #TODO: website, contacts, areas of expertise, logo etc.
+    #TODO: website, social accounts, contacts, areas of expertise etc.
 
     @property
-    def active_members(self):
+    def active_memberships(self):
         return self.membership_set.filter(active=True)
+
+    def add_user_to_org(self, user, role=0, active=True):
+        membership, created = Membership.objects.get_or_create(
+            user=user, org=self,
+            defaults={'role': role, 'active': active}
+        )
+
+        if not created:
+            membership.role = role
+            membership.active = active
+            membership.save()
+
+        return membership
+
+    def add_owner(self, user, **kwargs):
+        return self.add_user_to_org(user, role=10, **kwargs)
+
+    def add_administrator(self, user, **kwargs):
+        return self.add_user_to_org(user, role=5, **kwargs)
+
+    def add_member(self, user, **kwargs):
+        return self.add_user_to_org(user, role=0, **kwargs)
 
     class Meta:
         verbose_name = _('Organisation')
@@ -30,10 +53,18 @@ class Organisation(TimeStampedModel):
 
 class Membership(TimeStampedModel):
 
+    ROLES_CHOICES = [
+        (0, _('member')),
+        (5, _('admin')),
+        (10, _('owner'))
+    ]
+
     org = models.ForeignKey(Organisation)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
 
     active = models.BooleanField(default=False, blank=True)
+
+    role = models.IntegerField(choices=ROLES_CHOICES, default=0)
 
     def activate(self):
         if not self.active:

@@ -2,9 +2,10 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from phonenumber_field.formfields import PhoneNumberField
+from django.contrib.gis.forms.widgets import OSMWidget
 
 from organisations.models import Organisation, Membership
-from .models import Profile
+from .models import Profile, NotificationSettings
 
 class UserProfileSignupForm(forms.Form):
 
@@ -31,7 +32,18 @@ class UserProfileSignupForm(forms.Form):
         )
 
 
-
+class NotificationSettingsForm(forms.ModelForm):
+    class Meta:
+        model = NotificationSettings
+        fields = [
+            'point',
+            'point_radius',
+            'organisations',
+            'issue_types'
+        ]
+        widgets = {
+            'point': OSMWidget
+        }
 
 
 

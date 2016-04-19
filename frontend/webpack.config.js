@@ -9,6 +9,7 @@ module.exports = {
         main: './js/index',
         bootstrap: [
             'bootstrap-loader',
+            'font-awesome/css/font-awesome.css',
             './css/misc.css'
         ]
     },

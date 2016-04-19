@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'location_field.apps.DefaultConfig',
     'rest_framework',
     'rest_framework_gis',
+    'imagekit',
     # custom applications
     'organisations',
     'issues',
@@ -156,7 +157,7 @@ STATICFILES_DIRS = [
 LOGIN_REDIRECT_URL = 'user_profile:view_profile'
 
 # from location_field.settings import LOCATION_FIELD
-LOCATION_FIELD= {
+LOCATION_FIELD = {
     'map.provider': 'openstreetmap',
 }
 

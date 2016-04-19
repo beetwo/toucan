@@ -1,15 +1,42 @@
-{% extends 'default/base.html' %}
-{% load i18n %}
-{% block main %}
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12">
-            <h2>{{ organisation.name }}</h2>
-            <hr />
-            <p>
-                {% trans 'Members' %}: {{ org.active_members.count }}
-            </p>
+{% extends 'organisations/base.html' %}
+{% load i18n imagekit %}
+
+{% block organisation_page_title %}
+    {{ organisation.name }}
+{% endblock %}
+
+{% block organisation_page_controls %}
+    {% if organisation.logo %}
+        {% thumbnail '200x200' organisation.logo %}
+    {% endif %}
+{% endblock %}
+
+{% block organisation_main %}
+
+<hr />
+
+<div class="row">
+    <div class="col-sm-12">
+        <h2>{% trans 'Members' %}</h2>
+        {% for membership in organisation.active_memberships %}
+        {% with user=membership.user %}
+        <div class="media">
+            <div class="media-left">
+                <a href="#">
+                    user image?
+                </a>
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading">
+                    {{ user.username }}
+                    <sub>{{ membership.get_role_display }}</sub>
+                </h4>
+
+            </div>
         </div>
+        {% endwith %}
+        {% endfor %}
+        </ul>
     </div>
 </div>
 {% endblock %}

@@ -26,6 +26,23 @@
         </tbody>
     </table>
 
+    <h2>{% trans 'Notification Filters' %}</h2>
+    <table>
+        <tbody>
+        {% for ns in notification_settings%}
+        <tr>
+            <td>
+                {{ forloop.counter }}
+            </td>
+            <td>
+                <a href="{% url 'user_profile:notification_edit' notification_id=ns.pk %}">{{ ns|pprint }}</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
     <h2>{% trans 'Subscriptions' %}</h2>
 
     <table class="table">
@@ -51,8 +68,7 @@
         </tbody>
     </table>
 
-{#    <h2>{% trans 'Profile' %}</h2>#}
-{#        {{ profile|pprint }}#}
+
 </div>
 
 {% endblock main %}

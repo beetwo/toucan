@@ -1,12 +1,12 @@
 from django.views.generic import UpdateView, TemplateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 
 from braces.views import FormValidMessageMixin
-from .models import Profile
+from .models import Profile, NotificationSettings
 from organisations.models import Membership
-
+from .forms import NotificationSettingsForm
 
 class ViewProfile(LoginRequiredMixin, TemplateView):
 
@@ -24,9 +24,12 @@ class ViewProfile(LoginRequiredMixin, TemplateView):
         except Profile.DoesNotExist:
             profile = None
 
+        notification_settings = NotificationSettings.objects.filter(user=self.request.user)
+
         ctx.update({
             'memberships': memberships,
-            'profile': profile
+            'profile': profile,
+            'notification_settings': notification_settings
         })
         return ctx
 
@@ -45,3 +48,22 @@ class UpdateProfile(LoginRequiredMixin, FormValidMessageMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return Profile.objects.get_or_create(user=self.request.user)[0]
+
+
+class NotificationEdit(PermissionRequiredMixin, FormValidMessageMixin, UpdateView):
+
+    pk_url_kwarg = 'notification_id'
+    form_class = NotificationSettingsForm
+    template_name = 'user_profile/notification_edit.html'
+    model = NotificationSettings
+    form_valid_message = _('Notification settings updated.')
+
+    def get_success_url(self):
+        return reverse(
+            'user_profile:view_profile',
+        )
+
+    def has_permission(self):
+        return self.request.user == self.get_object().user
+
+
