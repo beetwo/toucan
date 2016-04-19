@@ -28,6 +28,9 @@ class Subscription(TimeStampedModel):
     def __str__(self):
         return 'Subscription object %d' % self.pk
 
+    class Meta:
+        ordering = ('-created',)
+
 
 class NotificationSettings(TimeStampedModel):
     '''
@@ -66,4 +69,7 @@ class NotificationSettings(TimeStampedModel):
 
     def __str__(self):
         return 'Notification filter of user: %s' %(self.user.username)
+
+    class Meta:
+        ordering = ('-created',)
 

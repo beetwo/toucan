@@ -3,22 +3,14 @@
 {% block main %}
 <div class="{% block container-class %}container{% endblock %}">
     <div class="row toolbar">
-        <div class="col-md-8">
-            <h1>Issues</h1>
+        <div class="col-md-8 page-header">
+            <h1>{% block issue_heading_title %}Issues{% endblock %}</h1>
         </div>
-        <div class="col-md-4">
-            {% block add-issue %}
-            <div class="btn-group btn-group text-right">
-                <a href="{% url 'issues:issue_create' %}" class="btn btn-success">
-                    <i class="glyphicon glyphicon-plus-sign"></i>
-                    {% trans 'Add new Issue' %}
-                </a>
-            </div>
+        <div class="col-md-4 text-right">
+            {% block issue_heading_controls %}
             {% endblock %}
         </div>
     </div>
-    <hr />
-
     {% block content %}
     {% endblock content %}
 </div>

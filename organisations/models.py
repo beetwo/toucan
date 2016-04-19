@@ -46,6 +46,9 @@ class Organisation(TimeStampedModel):
     class Meta:
         verbose_name = _('Organisation')
         verbose_name_plural = _('Organisations')
+        ordering = (
+            'name',
+        )
 
     def __str__(self):
         return self.name

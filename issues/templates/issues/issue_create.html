@@ -1,16 +1,26 @@
 {% extends 'issues/base.html' %}
 {% load i18n bootstrap3 %}
+{% load render_bundle from webpack_loader %}
 
 {% block extra-head %}
-{{ form.media }}
+
+{% render_bundle 'b2MapSelector' %}
+
+<style>
+.leaflet-container { width: 100%; height: 100%;}
+</style>
+
+{% endblock %}
+
+{% block issue_heading_title %}
+  {% trans 'Create new Issue' %}
 {% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-sm-12">
-        <h3>{% trans 'Create new issue' %}</h3>
+        <div id="issueMap" style="height:300px"></div>
 
-        <hr />
         <form method="post" action=".">
             {% csrf_token %}
 
@@ -24,4 +34,20 @@
         </form>
     </div>
 </div>
+{% endblock %}
+
+{% block before-body-close %}
+<script type="application/javascript">
+var issueMap = document.getElementById('issueMap'),
+    location_field = document.getElementById('id_custom_location');
+
+function cb(e) {
+    console.log(e, e.lng, e.lat, location_field);
+    location_field.value = 'POINT(' + e.lng + ' ' + e.lat + ')'
+};
+
+var x = render_map(issueMap, cb);
+console.log(render_map, document.getElementById('issueMap'), location_field.value);
+
+</script>
 {% endblock %}

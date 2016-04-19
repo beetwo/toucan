@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView, ListView, DetailView, CreateView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
@@ -66,12 +66,18 @@ class IssueCreateView(LoginRequiredMixin, FormValidMessageMixin, CreateView):
         # limit the organisations that a user can add issues to
         orgs = Organisation.objects.filter(membership__user=self.request.user, membership__active=True)
         form.fields['organisation'].queryset = orgs
-        form.fields['location'].queryset = Location.objects.filter(org__in=orgs)
         return form
 
     def form_valid(self, form):
         issue = form.instance
         issue.created_by = self.request.user
+        custom_location = form.cleaned_data['custom_location']
+        # generate a new location
+        l = Location.objects.create(
+            org=form.cleaned_data['organisation'],
+            location=custom_location
+        )
+        issue.location = l
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -80,6 +86,15 @@ class IssueCreateView(LoginRequiredMixin, FormValidMessageMixin, CreateView):
             kwargs={'issue_id': self.object.pk},
             current_app=self.request.resolver_match.namespace
         )
+
+
+class EditIssueView(LoginRequiredMixin, FormValidMessageMixin, UpdateView):
+    model = Issue
+    template_name = 'issues/issue_edit.html'
+    form_class = IssueForm
+    form_valid_message = _('Issue updated.')
+    pk_url_kwarg = 'issue_id'
+
 
 
 class BaseIssueMixin(object):

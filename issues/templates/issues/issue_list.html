@@ -1,5 +1,15 @@
 {% extends 'issues/base.html' %}
 {% load i18n %}
+
+{% block issue_heading_controls %}
+<div class="btn-group btn-group">
+    <a href="{% url 'issues:issue_create' %}" class="btn btn-success">
+        <i class="glyphicon glyphicon-plus-sign"></i>
+        {% trans 'Add new Issue' %}
+    </a>
+</div>
+{% endblock %}
+
 {% block content %}
 
 <table class="table table-striped">
