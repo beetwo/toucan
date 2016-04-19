@@ -1,4 +1,5 @@
-from django.db import models
+# from django.db import models
+from django.contrib.gis.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from model_utils import Choices
@@ -38,7 +39,8 @@ class Issue(TimeStampedModel):
 
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
 
-    location = models.ForeignKey('organisations.Location', null=True, verbose_name='location')
+    point = models.PointField(verbose_name=_('location'), null=True)
+    # location = models.ForeignKey('organisations.Location', null=True, verbose_name='location')
 
     organisation = models.ForeignKey('organisations.Organisation', null=True, verbose_name=_('organisation'))
 
@@ -49,7 +51,7 @@ class Issue(TimeStampedModel):
 
     @property
     def gis_location(self):
-        return self.location.location if self.location else None
+        return self.point
 
     class Meta:
         verbose_name = _('issue')

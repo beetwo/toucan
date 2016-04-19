@@ -27,14 +27,13 @@ class IssueForm(forms.ModelForm):
     class Meta:
         model = Issue
         fields = [
-            # 'location',
+            'point',
             'title',
             'description',
             'organisation',
             # 'priority',
             # 'visibility'
         ]
-        # widgets = {
-        #     'visibility': forms.RadioSelect,
-        #     'priority': forms.RadioSelect
-        # }
+        widgets = {
+            'point': forms.TextInput
+        }

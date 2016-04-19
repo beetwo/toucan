@@ -1,4 +1,4 @@
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.shortcuts import get_object_or_404
 from rest_framework.generics import ListAPIView, RetrieveAPIView, ListCreateAPIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
@@ -7,7 +7,7 @@ from issues.models import Issue, IssueComment
 
 
 class LocationApi(ListAPIView):
-    queryset = Issue.objects.filter(location__isnull=False).annotate(comment_count=Count('comments'))
+    queryset = Issue.objects.filter(point__isnull=False).annotate(comment_count=Count('comments'))
     serializer_class = IssueSerializer
 
 
