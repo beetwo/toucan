@@ -6,7 +6,8 @@ django-allauth==0.25.2
 django-location-field==1.6.1
 django-braces==1.8.1
 djangorestframework==3.3.3
-djangorestframework-gis==0.10.1django-extensions==1.6.1
+djangorestframework-gis==0.10.1
+django-extensions==1.6.1
 django-webpack-loader==0.3.0
 django-phonenumber-field==1.1.0
 django-filter==0.13.0
