@@ -42,7 +42,11 @@ class Issue(TimeStampedModel):
     point = models.PointField(verbose_name=_('location'), null=True)
     # location = models.ForeignKey('organisations.Location', null=True, verbose_name='location')
 
-    organisation = models.ForeignKey('organisations.Organisation', null=True, verbose_name=_('organisation'))
+    organisation = models.ForeignKey(
+        'organisations.Organisation',
+        null=True, blank=False,
+        verbose_name=_('organisation')
+    )
 
     priority = models.SmallIntegerField(choices=PRIORITY_CHOICES, default=1)
     visibility = models.SmallIntegerField(choices=VISIBILITY_CHOICES, default=3)
@@ -59,6 +63,24 @@ class Issue(TimeStampedModel):
 
     def __str__(self):
         return self.title
+
+
+class IssueStatus(TimeStampedModel):
+
+    STATUS_CHOICES = Choices([
+        ('open', _('open')),
+        ('closed', _('closed'))
+    ])
+
+    issue = models.ForeignKey(Issue, related_name='status')
+
+    status = models.CharField(max_length=10, db_index=True, choices=STATUS_CHOICES)
+    status_message = models.TextField(blank=True, verbose_name=_('reason'))
+
+    class Meta:
+        get_latest_by = 'created'
+        verbose_name = _('issue status')
+        verbose_name_plural = _('issue statuses')
 
 
 class IssueComment(TimeStampedModel):

@@ -19,21 +19,16 @@ class CommentForm(forms.ModelForm):
 
 class IssueForm(forms.ModelForm):
 
-    custom_location = forms.PointField(
-        label=_('location'),
-        widget=forms.TextInput
-    )
-
     class Meta:
         model = Issue
         fields = [
             'point',
             'title',
+            'issue_type',
             'description',
             'organisation',
-            # 'priority',
-            # 'visibility'
         ]
         widgets = {
-            'point': forms.TextInput
+            'point': forms.HiddenInput,
+            # 'organisation': forms.RadioSelect
         }

@@ -1,16 +1,5 @@
 {% extends 'issues/base.html' %}
 {% load i18n bootstrap3 %}
-{% load render_bundle from webpack_loader %}
-
-{% block extra-head %}
-
-{% render_bundle 'b2MapSelector' %}
-
-<style>
-.leaflet-container { width: 100%; height: 100%;}
-</style>
-
-{% endblock %}
 
 {% block issue_heading_title %}
   {% trans 'Create new Issue' %}
@@ -19,8 +8,7 @@
 {% block content %}
 <div class="row">
     <div class="col-sm-12">
-        <div id="issueMap" style="height:300px"></div>
-
+        <div id="issueMap" style="height:300px; margin-bottom:2em;"></div>
         <form method="post" action=".">
             {% csrf_token %}
 
@@ -37,17 +25,32 @@
 {% endblock %}
 
 {% block before-body-close %}
+{{ block.super }}
 <script type="application/javascript">
+(function(){
+var position = false;
+{% if issue.point %}
+  {% with p=issue.point.get_coords %}
+  position = {
+      lng: {{ p.0 }},
+      lat: {{ p.1 }}
+  };
+  {% endwith %}
+{% endif %}
 var issueMap = document.getElementById('issueMap'),
-    location_field = document.getElementById('id_custom_location');
+    location_field = document.getElementById('id_point');
 
 function cb(e) {
-    console.log(e, e.lng, e.lat, location_field);
     location_field.value = 'POINT(' + e.lng + ' ' + e.lat + ')'
 };
 
-var x = render_map(issueMap, cb);
-console.log(render_map, document.getElementById('issueMap'), location_field.value);
+var props = {
+    editable: true,
+    position: position,
+    onPositionChange: cb
+}
 
+render_map(issueMap, props);
+})();
 </script>
 {% endblock %}
