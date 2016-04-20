@@ -21,8 +21,10 @@ class OrganisationDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
+        user = self.request.user
+        is_member = self.object.membership_set.filter(user=user).exists() if user.is_authenticated() else False
         ctx.update({
-            'is_member': self.object.membership_set.filter(user=self.request.user).exists()
+            'is_member': is_member
         })
         return ctx
 
@@ -65,5 +67,3 @@ class OrganisationApply(LoginRequiredMixin, FormValidMessageMixin, FormView):
 
     def get_success_url(self):
         return reverse('organisations:organisation_detail', kwargs={'org_id': self.object.org.pk})
-
-

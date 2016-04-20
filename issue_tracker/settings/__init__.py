@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'bootstrap3',
     'channels',
-    'location_field.apps.DefaultConfig',
     'rest_framework',
     'rest_framework_gis',
     'imagekit',
@@ -156,11 +155,6 @@ STATICFILES_DIRS = [
 ]
 
 LOGIN_REDIRECT_URL = 'user_profile:personal_profile'
-
-# from location_field.settings import LOCATION_FIELD
-LOCATION_FIELD = {
-    'map.provider': 'openstreetmap',
-}
 
 from .allauth import *
 

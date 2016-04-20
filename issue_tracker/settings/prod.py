@@ -15,6 +15,8 @@ STATICFILES_DIRS += [
     ('wp', os.path.join(BASE_DIR, 'frontend/production/'))
 ]
 
+STATIC_ROOT = os.path.join(BASE_DIR, '_static')
+
 WEBPACK_LOADER = {
     'DEFAULT': {
         'BUNDLE_DIR_NAME': 'production/',
