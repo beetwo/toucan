@@ -1,0 +1,51 @@
+{% extends 'user_profile/base.html' %}
+{% load render_bundle from webpack_loader %}
+
+{% block extra-head %}
+{% render_bundle 'b2MapSelector' %}
+<style>
+.leaflet-container { width: 100%; height: 100%;}
+</style>
+{% endblock %}
+
+{% block before-body-close %}
+{{ block.super }}
+<script>
+(function() {
+{% if form.instance.pk and form.instance.point %}
+    {% with coords=form.instance.point.get_coords %}
+    var position = {
+        lng: {{ coords.0 }},
+        lat: {{ coords.1 }}
+    };
+    {% endwith %}
+{% else %}
+    var position = false;
+{% endif %}
+
+var location_field = document.getElementById('id_point'),
+    radius_field = document.getElementById('id_point_radius'),
+    map = document.getElementById('issueMap');
+
+function cb(e) {
+    location_field.value = 'POINT(' + e.lng + ' ' + e.lat + ')'
+};
+
+var props = {
+    position: position,
+    editable: true,
+    onPositionChange: cb,
+    radius: (parseInt(radius_field.value, 10) || 0) * 1000
+}
+
+var update_cb = render_map(map, props);
+
+// subscribe to changes in the radius field
+radius_field.addEventListener('change', function(e) {
+  props.radius = parseInt(this.value, 10) * 1000;
+  update_cb(props);
+})
+
+})();
+</script>
+{% endblock %}

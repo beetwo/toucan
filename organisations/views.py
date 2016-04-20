@@ -1,12 +1,13 @@
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
+from django.shortcuts import get_object_or_404
 
 from braces.views import FormValidMessageMixin
 
 from .models import Organisation, Membership
-
+from .forms import ApplyForm
 
 class OrganisationList(ListView):
     model = Organisation
@@ -21,7 +22,7 @@ class OrganisationDetail(DetailView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx.update({
-            'is_member': Membership.objects.filter(user=self.request.user).exists()
+            'is_member': self.object.membership_set.filter(user=self.request.user).exists()
         })
         return ctx
 
@@ -47,19 +48,19 @@ class OrganisationCreate(LoginRequiredMixin, CreateView):
         return reverse('organisations:organisation_detail', kwargs={'org_id': self.object.pk})
 
 
-class OrganisationApply(LoginRequiredMixin, FormValidMessageMixin, CreateView):
 
-    model = Membership
-    fields = []
+class OrganisationApply(LoginRequiredMixin, FormValidMessageMixin, FormView):
+
+    form_class = ApplyForm
     template_name = 'organisations/apply.html'
 
     def get_form_valid_message(self):
         return _('Your application has been sent.')
 
     def form_valid(self, form):
-        membership = form.instance
-        membership.org = Organisation.objects.get(pk=self.kwargs['org_id'])
-        membership.user = self.request.user
+        org = get_object_or_404(Organisation, pk=self.kwargs['org_id'])
+        membership = org.add_member(user=self.request.user)
+        self.object = membership
         return super().form_valid(form)
 
     def get_success_url(self):

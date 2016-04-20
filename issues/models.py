@@ -60,6 +60,7 @@ class Issue(TimeStampedModel):
     class Meta:
         verbose_name = _('issue')
         verbose_name_plural = _('issues')
+        ordering = ('-created',)
 
     def __str__(self):
         return self.title

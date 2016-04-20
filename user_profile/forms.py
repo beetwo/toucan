@@ -2,7 +2,6 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from phonenumber_field.formfields import PhoneNumberField
-from django.contrib.gis.forms.widgets import OSMWidget
 
 from organisations.models import Organisation, Membership
 from .models import Profile, NotificationSettings
@@ -12,7 +11,7 @@ class UserProfileSignupForm(forms.Form):
     org = forms.ModelChoiceField(
         queryset=Organisation.objects.all(),
         label=_('Primary organisation'),
-        help_text=_('You will be able to add more organisations later on.')
+        help_text=_('You will be able to join more organisations later on.')
     )
 
     phone = PhoneNumberField(
@@ -24,15 +23,12 @@ class UserProfileSignupForm(forms.Form):
             user=user,
             phone_number=self.cleaned_data['phone']
         )
-
-        Membership.objects.create(
-            org=self.cleaned_data['org'],
-            user=user,
-            active=True
-        )
+        org = self.cleaned_data['org']
+        org.add_member(user)
 
 
 class NotificationSettingsForm(forms.ModelForm):
+
     class Meta:
         model = NotificationSettings
         fields = [
@@ -42,8 +38,11 @@ class NotificationSettingsForm(forms.ModelForm):
             'issue_types'
         ]
         widgets = {
-            'point': OSMWidget
+            'point': forms.HiddenInput,
+            'organisations': forms.CheckboxSelectMultiple,
+            'issue_types': forms.CheckboxSelectMultiple
         }
-
-
-
+        help_texts = {
+            'organisations': _('Notifications can be filtered by Organisation (default: all)'),
+            'issue_types': _('Filter by issue type (default: all)')
+        }

@@ -2,7 +2,7 @@ import 'babel-polyfill';
 
 import React, {PropTypes} from 'react';
 import { render } from 'react-dom';
-import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
+import { Map, Marker, Popup, TileLayer, Circle } from 'react-leaflet';
 
 require('leaflet/dist/leaflet.css');
 
@@ -25,20 +25,26 @@ class B2SelectorMap extends React.Component {
 
   render () {
     const position = this.state.position;
+    let marker = null;
+
+    if (this.state.position) {
+      let marker_props = {
+        ref: 'marker',
+        draggable: this.props.editable,
+        onDragEnd: (e) => this.onPositionChange(e.target.getLatLng())
+      };
+      marker = <Marker {...marker_props} position={position} />;
+
+      if (this.props.radius > 0) {
+        marker = (<Circle center={position} radius={this.props.radius}>{marker}</Circle>);
+      }
+    }
 
     return (
       <Map center={this.props.position || {lng: 16.369620, lat:48.2092563}} onClick={(e) => this.onPositionChange(e.latlng)} zoom={12}>
         <TileLayer url='//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' />
-                 {
-                   this.state.position ?
-                   <Marker ref='marker'
-                           position={position}
-                           draggable={this.props.editable}
-                           onDragEnd={(e) => this.onPositionChange(e.target.getLatLng())}>
-                   </Marker> :
-                   null
-                 }
+                 {marker}
       </Map>);
   }
   componentDidUpdate() {
@@ -54,18 +60,26 @@ B2SelectorMap.propTypes = {
     PropTypes.object,
     PropTypes.bool
   ]).isRequired,
-  editable: PropTypes.bool
+  editable: PropTypes.bool,
+  radius: PropTypes.number
 }
 
 B2SelectorMap.defaultProps = {
   onPositionChange: () => {},
   editable: false,
-  position: false
+  position: false,
+  radius: 0
 }
 
 
 function render_map(element, props={}) {
-  return render(<B2SelectorMap {...props} />, element);
+  let cb = function (new_props) {
+    return render(<B2SelectorMap {...new_props} />, element);
+  };
+  // call it once
+  cb(props);
+  // and return as callback
+  return cb;
 }
 window.render_map = render_map;
 

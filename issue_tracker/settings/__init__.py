@@ -155,7 +155,7 @@ STATICFILES_DIRS = [
     # os.path.join(BASE_DIR, 'assets')
 ]
 
-LOGIN_REDIRECT_URL = 'user_profile:view_profile'
+LOGIN_REDIRECT_URL = 'user_profile:personal_profile'
 
 # from location_field.settings import LOCATION_FIELD
 LOCATION_FIELD = {
@@ -169,4 +169,3 @@ try:
 except ImportError:
     import warnings
     warnings.warn('No secrets file found in settings folder. Default settings assumed -- some things might be broken.')
-
