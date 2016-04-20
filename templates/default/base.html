@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% trans 'B2 Issue Tracker' %}</title>
+    <title>{% block head_title %}{% trans 'B2 Issue Tracker' %}{% endblock %}</title>
     {% render_bundle 'bootstrap' %}
     {% block extra-head %}{% endblock %}
 </head>
