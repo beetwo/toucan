@@ -34,11 +34,13 @@ class NotificationSettingsForm(forms.ModelForm):
         fields = [
             'point',
             'point_radius',
+            'notification_type',
             'organisations',
-            'issue_types'
+            'issue_types',
         ]
         widgets = {
             'point': forms.HiddenInput,
+            'notification_type': forms.RadioSelect,
             'organisations': forms.CheckboxSelectMultiple,
             'issue_types': forms.CheckboxSelectMultiple
         }

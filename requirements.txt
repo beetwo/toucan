@@ -13,3 +13,4 @@ django-phonenumber-field==1.1.0
 django-filter==0.13.0
 django-imagekit==3.3
 Pillow==3.2.0
+nexmo==1.0.3

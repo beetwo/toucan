@@ -17,7 +17,24 @@
                 {{ forloop.counter }}
             </td>
             <td>
-                {{ ns.point }}
+                <h5>{% trans 'Issue types' %}</h5>
+                <ul>
+                    {% for it in notification_settings.issue_types.all %}
+                        <li>{{ it.name }}</li>
+                    {% empty %}
+                        <li class="text-muted">{% trans 'all' %}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+            <td>
+                <h5>{% trans 'Organisations' %}</h5>
+                <ul>
+                    {% for org in notification_settings.organisations.all %}
+                        <li>{{ org.name }}</li>
+                    {% empty %}
+                        <li class="text-muted">{% trans 'all' %}</li>
+                    {% endfor %}
+                </ul>
             </td>
             <td>
                 {{ ns.created|date:'SHORT_DATETIME_FORMAT' }}

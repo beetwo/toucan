@@ -67,9 +67,19 @@ class NotificationSettings(TimeStampedModel):
 
     enabled = models.BooleanField(default=True)
 
+    def send(self, issue):
+        if self.notification_type == 'email':
+            from .notifications.email import EmailNotification as Notification
+        elif self.notification_type == 'sms':
+            from .notifications.sms import SMSNotification as Notification
+
+        notification = Notification(self, issue)
+        return notification.send_issue_notification()
+
     def __str__(self):
         return 'Notification filter of user: %s' %(self.user.username)
 
     class Meta:
         ordering = ('-created',)
+
 

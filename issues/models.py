@@ -32,8 +32,10 @@ class Issue(TimeStampedModel):
         (3, 'public', _('public')),
     )
 
-    title = models.CharField(max_length=300,
-                             verbose_name=_('issue title'))
+    title = models.CharField(
+        max_length=300,
+        verbose_name=_('issue title')
+    )
 
     description = models.TextField(blank=False)
 
@@ -48,10 +50,11 @@ class Issue(TimeStampedModel):
         verbose_name=_('organisation')
     )
 
+    issue_type = models.ForeignKey(IssueType, null=True)
+
     priority = models.SmallIntegerField(choices=PRIORITY_CHOICES, default=1)
     visibility = models.SmallIntegerField(choices=VISIBILITY_CHOICES, default=3)
 
-    issue_type = models.ForeignKey(IssueType, null=True, blank=True)
 
     @property
     def gis_location(self):

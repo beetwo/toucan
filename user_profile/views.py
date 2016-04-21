@@ -16,27 +16,37 @@ class PublicProfile(DetailView):
     slug_url_kwarg = 'username'
     template_name = 'user_profile/public.html'
 
-
-class PersonalProfile(LoginRequiredMixin, TemplateView):
-
-    template_name = 'user_profile/private.html'
-
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         memberships = Membership.objects\
-                        .filter(user=self.request.user)\
-                        .order_by('org__name')\
-                        .select_related('org')
+                            .filter(user=self.request.user)\
+                            .order_by('org__name')\
+                            .select_related('org')
+        ctx.update({
+            'memberships': memberships,
+        })
+        return ctx
 
+
+class PersonalProfile(LoginRequiredMixin, PublicProfile):
+
+    template_name = 'user_profile/private.html'
+
+    def get_object(self):
+        return self.request.user
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
         try:
-            profile = Profile.objects.get(user=self.request.user)
+            profile = Profile.objects.get(user=self.object)
         except Profile.DoesNotExist:
             profile = None
 
-        notification_settings = NotificationSettings.objects.filter(user=self.request.user)
+        notification_settings = NotificationSettings.objects\
+            .filter(user=self.object)\
+            .prefetch_related('organisations', 'issue_types')
 
         ctx.update({
-            'memberships': memberships,
             'profile': profile,
             'notification_settings': notification_settings
         })

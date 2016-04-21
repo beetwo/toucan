@@ -4,7 +4,8 @@ DEBUG = True
 
 INSTALLED_APPS += [
     'webpack_loader',
-    'django_extensions'
+    'django_extensions',
+    'debug_toolbar',
 ]
 
 STATICFILES_DIRS += [

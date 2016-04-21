@@ -26,6 +26,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+DEFAULT_FROM_EMAIL = 'mailer@issuetracker.xyz'
 
 # Application definition
 INSTALLED_APPS = [

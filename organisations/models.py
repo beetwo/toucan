@@ -84,6 +84,9 @@ class Membership(TimeStampedModel):
     class Meta:
         verbose_name = _('organisation membership')
         verbose_name_plural = _('organisation memberships')
+        unique_together = (
+            ('org', 'user'),
+        )
 
     def __str__(self):
 
