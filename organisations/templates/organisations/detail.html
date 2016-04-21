@@ -23,12 +23,15 @@
             <tbody>
             {% for membership in memberships %}
             {% with u=membership.user %}
-                <tr {% if u == user %}class="info"{% endif %}>
+                <tr>
                     <td>
-                        <a href="#">Image?</a>
+{#                        <a href="#">Image?</a>#}
                     </td>
                     <td>
-                        <a href="{% url 'user_profile:public_profile' username=u.username %}">{{ u.username }}</a>
+                        <a href="{% url 'user_profile:public_profile' username=u.username %}">
+                            {{ u.username }}
+                            {% if u == user %}&nbsp;<i class="fa fa-user"></i>{% endif %}
+                        </a>
                     </td>
                     <td>
                         <span class="label label-default">

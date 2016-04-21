@@ -32,11 +32,11 @@ def issue_created(*args, **kwargs):
     for notification in notification_qs:
 
         # filter by organisations
-        if notification.org_count > 0 and issue.organisation not in notification.organisations:
+        if notification.org_count > 0 and issue.organisation not in notification.organisations.all():
             continue
 
         # filter by issue types
-        if notification.type_count > 0 and issue.issue_type not in notification.issue_types:
+        if notification.type_count > 0 and issue.issue_type not in notification.issue_types.all():
             continue
 
         notifications_to_send.append(notification)
