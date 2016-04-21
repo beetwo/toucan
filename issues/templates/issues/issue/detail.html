@@ -1,0 +1,68 @@
+{% extends 'issues/base.html' %}
+{% load i18n %}
+
+{% block issue_heading_title %}
+    #{{ issue.pk }}: {{ issue.title }}
+{% endblock %}
+
+{% block issue_heading_controls %}
+    {% if issue.created_by == user %}
+        <a class='btn btn-default' href="{% url 'issues:issue_edit' issue_id=issue.pk %}">
+            Edit
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div id="issueMap" style="height: 300px; margin-bottom: 2em;"></div>
+<div class="row" style="margin-bottom: 5em;">
+    <div class="col-sm-12">
+        {% if issue.description %}
+            {{ issue.description|linebreaks }}
+        {% else %}
+            <p class="muted">{% trans 'No description added' %}</p>
+        {% endif %}
+    </div>
+</div>
+
+{% with comments=issue.comments.all %}
+    {% if comments|length %}
+    <h4>{% trans 'Comments' %}</h4>
+    <hr />
+    {% endif %}
+    {% for comment in comments %}
+        {% include 'issues/comment/detail.html' with comment=comment %}
+        <hr />
+    {% endfor %}
+{% endwith %}
+
+{% include 'issues/comment/form.html' with issue=issue form=comment_form %}
+
+{% endblock %}
+
+
+{% block before-body-close %}
+{{ block.super }}
+
+{% if issue.point %}
+<script type="application/javascript">
+(function(){
+{% with p=issue.point.get_coords %}
+var position = {
+  lng: {{ p.0 }},
+  lat: {{ p.1 }}
+};
+{% endwith %}
+var issueMap = document.getElementById('issueMap');
+
+
+var props = {
+    editable: false,
+    position: position
+}
+render_map(issueMap, props);
+})();
+</script>
+{% endif %}
+
+{% endblock %}

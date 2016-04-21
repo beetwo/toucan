@@ -36,11 +36,13 @@
                 {% if user.is_authenticated %}
                     <li class="dropdown {% if 'user_profile' in namespaces %}active{% endif %}">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                {{ user.username }} <span class="caret"></span>
+                                <i class="fa fa-user"></i>&nbsp;
+                                {{ user.username }}
+                                <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="{% url 'user_profile:view_profile' %}">
+                                    <a href="{% url 'user_profile:personal_profile' %}">
                                         {% trans 'Settings and Profile' %}
                                     </a>
                                 </li>
@@ -57,7 +59,12 @@
                             </ul>
                     </li>
                 {% else %}
-                    <li><a href="{% url 'account_login' %}">{% trans 'Login' %}</a></li>
+                    <li>
+                      <a href="{% url 'account_login' %}">
+                        <i class="fa fa-user"></i>&nbsp;
+                        {% trans 'Login' %}
+                      </a>
+                    </li>
                 {% endif %}
             </ul>
 

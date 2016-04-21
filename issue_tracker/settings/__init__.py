@@ -26,6 +26,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+DEFAULT_FROM_EMAIL = 'mailer@issuetracker.xyz'
 
 # Application definition
 INSTALLED_APPS = [
@@ -42,9 +43,10 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'bootstrap3',
     'channels',
-    'location_field.apps.DefaultConfig',
     'rest_framework',
     'rest_framework_gis',
+    'imagekit',
+    'django_filters',
     # custom applications
     'organisations',
     'issues',
@@ -153,12 +155,7 @@ STATICFILES_DIRS = [
     # os.path.join(BASE_DIR, 'assets')
 ]
 
-LOGIN_REDIRECT_URL = 'user_profile:view_profile'
-
-# from location_field.settings import LOCATION_FIELD
-LOCATION_FIELD= {
-    'map.provider': 'openstreetmap',
-}
+LOGIN_REDIRECT_URL = 'user_profile:personal_profile'
 
 from .allauth import *
 
@@ -167,4 +164,3 @@ try:
 except ImportError:
     import warnings
     warnings.warn('No secrets file found in settings folder. Default settings assumed -- some things might be broken.')
-

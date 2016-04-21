@@ -2,57 +2,13 @@
 {% load i18n %}
 {% block main %}
 <div class="container">
-
-    <h1>
-        {% trans 'Profile for user:' %} {{ user.username }}
-    </h1>
-
-    <h2>{% trans 'Memberships' %}</h2>
-
-    <table class="table">
-        <tbody>
-        {% for membership in memberships %}
-            <tr>
-                <td>{{ membership.org.name }}</td>
-                <td>
-                    {% if membership.active %}
-                        {% trans 'Active' %}
-                    {% else %}
-                        {% trans 'Inactive' %}
-                    {% endif %}
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <h2>{% trans 'Subscriptions' %}</h2>
-
-    <table class="table">
-        <tbody>
-        {% for subscription in user.subscriptions.all %}
-            <tr>
-                <td>
-                    {{ subscription.issue.title }}
-                </td>
-                <td>
-                    {{ subscription.created }}
-                </td>
-            </tr>
-        {% empty %}
-            <tr>
-                <td>
-                    <span class="text-muted">
-                        {% trans 'You have no active subscriptions at this time.' %}
-                    </span>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-{#    <h2>{% trans 'Profile' %}</h2>#}
-{#        {{ profile|pprint }}#}
+    <div class="page-header">
+        <h1>
+            {% block profile-title %}
+            {% trans 'Profile for user:' %} {{ user.username }}
+            {% endblock %}
+        </h1>
+    </div>
+    {% block content %}{% endblock content %}
 </div>
-
 {% endblock main %}

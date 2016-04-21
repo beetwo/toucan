@@ -1,24 +1,49 @@
 {% extends 'issues/base.html' %}
-{% load i18n %}
+{% load i18n bootstrap3 %}
+
+{% block issue_heading_controls %}
+<div class="btn-group btn-group">
+    <a href="{% url 'issues:issue_create' %}" class="btn btn-success">
+        <i class="glyphicon glyphicon-plus-sign"></i>
+        {% trans 'Add new Issue' %}
+    </a>
+</div>
+{% endblock %}
+
 {% block content %}
+<div class="container">
+    <form class='form-inline' method="get">
+        {% bootstrap_form filter.form layout='inline' %}
+        {% buttons submit=_('Filter') layout='inline' %}{% endbuttons %}
+
+    </form>
+
+    <hr />
 
 <table class="table table-striped">
+
     <thead>
         <tr>
             <th>{% trans 'Title' %}</th>
+            <th>{% trans 'Type' %}</th>
             <th>{% trans 'User' %}</th>
             <th>{% trans 'Organisation' %}</th>
             <th>{% trans 'Status' %}</th>
             <th>{% trans 'Comments' %}</th>
         </tr>
     </thead>
+
     <tbody>
         {% for issue in issue_list %}
         <tr>
             <td>
                 <a href="{% url 'issues:issue_detail' issue_id=issue.pk %}">
                     {{ issue.title }}
-                </a>
+                </a><br />
+                <small>#{{ issue.pk }}</small>
+            </td>
+            <td>
+                {{ issue.issue_type|default_if_none:'' }}
             </td>
             <td>
                 {{ issue.created_by.username }}
@@ -27,7 +52,7 @@
                 {{ issue.organisation.name }}
             </td>
             <td>
-                {{ issue.status }}
+                {% include 'issues/issue/status.html' with status=issue.status.latest|default:None %}
             </td>
             <td>
                 {{ issue.comment_count }}
@@ -36,5 +61,5 @@
         {% endfor %}
     </tbody>
 </table>
-
+</div>
 {% endblock %}

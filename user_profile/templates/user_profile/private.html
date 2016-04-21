@@ -1,0 +1,101 @@
+{% extends 'user_profile/public.html' %}
+
+{% load i18n %}
+
+{% block content %}
+
+    {{ block.super }}
+
+    <h2>{% trans 'Notification Filters' %}</h2>
+    <hr />
+    {% if notification_settings|length %}
+    <table class="table table-striped">
+        <tbody>
+        {% for ns in notification_settings%}
+        <tr>
+            <td>
+                {{ forloop.counter }}
+            </td>
+            <td>
+                <h5>{% trans 'Issue types' %}</h5>
+                <ul>
+                    {% for it in notification_settings.issue_types.all %}
+                        <li>{{ it.name }}</li>
+                    {% empty %}
+                        <li class="text-muted">{% trans 'all' %}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+            <td>
+                <h5>{% trans 'Organisations' %}</h5>
+                <ul>
+                    {% for org in notification_settings.organisations.all %}
+                        <li>{{ org.name }}</li>
+                    {% empty %}
+                        <li class="text-muted">{% trans 'all' %}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+            <td>
+                {{ ns.created|date:'SHORT_DATETIME_FORMAT' }}
+            </td>
+            <td class="text-right">
+                <a class="btn btn-info btn-sm" href="{% url 'user_profile:notification_edit' notification_id=ns.pk %}">
+                    {% trans 'Edit' %}
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="text-muted">
+        {% blocktrans %}
+            You have no notifications configured.
+            Add your first notification filter to be notified when something happens around you.
+        {% endblocktrans %}
+    </p>
+    {% endif %}
+    <div class="text-right">
+        <a class="btn btn-success btn-sm" href="{% url 'user_profile:notification_create' %}">
+            <i class="fa fa-plus"></i>
+            {% trans 'Add notification rule' %}
+        </a>
+    </div>
+
+    <h2>{% trans 'Subscriptions' %}</h2>
+    <hr />
+    {% with subscriptions=user.subscriptions.all %}
+    {% if subscriptions|length %}
+    <table class="table">
+        <tbody>
+        {% for subscription in  subscriptions %}
+            <tr>
+                <td>
+                    {{ subscription.issue.title }}
+                </td>
+                <td>
+                    {{ subscription.created }}
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td>
+                    <span class="text-muted">
+                        {% trans 'You have no active subscriptions at this time.' %}
+                    </span>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p class="text-muted">
+        {% blocktrans %}
+            No active subscriptions. Subscriptions are always related to specific issues and are created interacting (commenting etc) with them.
+        {% endblocktrans %}
+        </p>
+    {% endif %}
+    {% endwith %}
+
+{% endblock %}

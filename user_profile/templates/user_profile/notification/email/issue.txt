@@ -1,0 +1,7 @@
+Issue: {{ issue.pk }}
+Type: {{ issue.issue_type.name|default_if_none:'' }}
+
+{{ issue.title }}
+
+{{ issue.description }}
+

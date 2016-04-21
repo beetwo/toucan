@@ -4,4 +4,4 @@ from .models import Organisation, Membership, Location
 
 admin.site.register(Organisation)
 admin.site.register(Membership)
-admin.site.register(Location)
+# admin.site.register(Location)

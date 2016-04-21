@@ -1,4 +1,4 @@
-# from django import forms
+from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from .models import IssueComment, Issue
@@ -19,24 +19,16 @@ class CommentForm(forms.ModelForm):
 
 class IssueForm(forms.ModelForm):
 
-    custom_location = forms.PointField(
-        label=_('location'),
-        # geom_type='Point',
-        widget=forms.OSMWidget()
-    )
-
     class Meta:
         model = Issue
         fields = [
+            'point',
             'title',
+            'issue_type',
             'description',
-            'location',
             'organisation',
-            'priority',
-            'visibility'
         ]
-
         widgets = {
-            'visibility': forms.RadioSelect,
-            'priority': forms.RadioSelect
+            'point': forms.HiddenInput,
+            # 'organisation': forms.RadioSelect
         }

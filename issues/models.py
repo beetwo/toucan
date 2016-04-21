@@ -1,4 +1,5 @@
-from django.db import models
+# from django.db import models
+from django.contrib.gis.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from model_utils import Choices
@@ -31,32 +32,59 @@ class Issue(TimeStampedModel):
         (3, 'public', _('public')),
     )
 
-    title = models.CharField(max_length=300,
-                             verbose_name=_('issue title'))
+    title = models.CharField(
+        max_length=300,
+        verbose_name=_('issue title')
+    )
 
     description = models.TextField(blank=False)
 
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
 
-    location = models.ForeignKey('organisations.Location', null=True, verbose_name='location')
+    point = models.PointField(verbose_name=_('location'), null=True)
+    # location = models.ForeignKey('organisations.Location', null=True, verbose_name='location')
 
-    organisation = models.ForeignKey('organisations.Organisation', null=True, verbose_name=_('organisation'))
+    organisation = models.ForeignKey(
+        'organisations.Organisation',
+        null=True, blank=False,
+        verbose_name=_('organisation')
+    )
+
+    issue_type = models.ForeignKey(IssueType, null=True)
 
     priority = models.SmallIntegerField(choices=PRIORITY_CHOICES, default=1)
     visibility = models.SmallIntegerField(choices=VISIBILITY_CHOICES, default=3)
 
-    issue_type = models.ForeignKey(IssueType, null=True, blank=True)
 
     @property
     def gis_location(self):
-        return self.location.location if self.location else None
+        return self.point
 
     class Meta:
         verbose_name = _('issue')
         verbose_name_plural = _('issues')
+        ordering = ('-created',)
 
     def __str__(self):
         return self.title
+
+
+class IssueStatus(TimeStampedModel):
+
+    STATUS_CHOICES = Choices([
+        ('open', _('open')),
+        ('closed', _('closed'))
+    ])
+
+    issue = models.ForeignKey(Issue, related_name='status')
+
+    status = models.CharField(max_length=10, db_index=True, choices=STATUS_CHOICES)
+    status_message = models.TextField(blank=True, verbose_name=_('reason'))
+
+    class Meta:
+        get_latest_by = 'created'
+        verbose_name = _('issue status')
+        verbose_name_plural = _('issue statuses')
 
 
 class IssueComment(TimeStampedModel):

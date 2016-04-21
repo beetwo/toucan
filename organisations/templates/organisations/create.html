@@ -1,24 +1,21 @@
-{% extends 'issues/base.html' %}
+{% extends 'organisations/base.html' %}
 {% load i18n bootstrap3 %}
 
-{% block extra-head %}
-{{ form.media }}
+{% block organisation_page_title %}
+    {% trans 'Create a new organisation' %}
 {% endblock %}
 
-{% block content %}
+{% block organisation_main %}
+<hr />
+
 <div class="row">
     <div class="col-sm-12">
-        <h3>{% trans 'Create new issue' %}</h3>
-
-        <hr />
-        <form method="post" action=".">
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-
             {% bootstrap_form form %}
-
             {% buttons %}
             <button type="submit" class="btn btn-primary">
-                {% trans 'Create' %}
+                {% trans 'Create new organisation' %}
             </button>
             {% endbuttons %}
         </form>

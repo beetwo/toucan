@@ -1,0 +1,31 @@
+{% extends 'user_profile/base.html' %}
+{% load i18n bootstrap3 %}
+
+{% block content %}
+   <h2>{% trans 'Memberships' %}</h2>
+    <hr />
+    <table class="table">
+        <tbody>
+        {% for membership in memberships %}
+            <tr>
+                <td>
+                    <a href="{% url 'organisations:organisation_detail' org_id=membership.org.pk %}">
+                        {{ membership.org.name }}
+                    </a>
+                </td>
+                <td>
+                    {% if membership.active %}
+                        <span class="label label-success">
+                            {% trans 'Active' %}
+                        </span>
+                    {% else %}
+                        <span class="label label-default">
+                            {% trans 'Inactive' %}
+                        </span>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

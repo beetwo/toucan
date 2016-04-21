@@ -64,18 +64,14 @@ class IssueSerializer(GeoFeatureModelSerializer):
 
     comment_count = serializers.IntegerField(read_only=True)
 
-    gis_location = GeometrySerializerMethodField()
-
-    def get_gis_location(self, obj):
-        return obj.gis_location
 
     class Meta:
         model = Issue
-        geo_field = 'gis_location'
+        geo_field = 'point'
         fields = [
             'id',
             'issue_url',
-            'gis_location',
+            # 'gis_location',
             'title',
             'priority',
             'visibility',
@@ -101,10 +97,10 @@ class FullIssueSerializer(IssueSerializer):
 
     class Meta:
         model = Issue
-        geo_field = 'gis_location'
+        geo_field = 'point'
         fields = [
             'id',
-            'gis_location',
+            'point',
             'title',
             'description',
             'priority',

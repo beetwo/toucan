@@ -4,7 +4,8 @@ DEBUG = True
 
 INSTALLED_APPS += [
     'webpack_loader',
-    'django_extensions'
+    'django_extensions',
+    'debug_toolbar',
 ]
 
 STATICFILES_DIRS += [
@@ -25,4 +26,6 @@ WEBPACK_LOADER = {
 
 
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = None
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

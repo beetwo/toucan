@@ -1,0 +1,15 @@
+{% extends 'default/base.html' %}
+{% load i18n %}
+{% block main %}
+<div class="container">
+    <div class="row toolbar">
+        <div class="col-md-8">
+            <h1>{% block organisation_page_title %}{% trans 'Organisations' %}{% endblock %}</h1>
+        </div>
+        <div class="col-md-4 text-right">
+            {% block organisation_page_controls %}{% endblock %}
+        </div>
+    </div>
+    {% block organisation_main %}{% endblock %}
+</div>
+{% endblock %}

@@ -5,8 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% trans 'B2 Issue Tracker' %}</title>
-{#    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css">#}
+    <title>{% block head_title %}{% trans 'B2 Issue Tracker' %}{% endblock %}</title>
     {% render_bundle 'bootstrap' %}
     {% block extra-head %}{% endblock %}
 </head>

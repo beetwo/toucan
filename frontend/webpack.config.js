@@ -9,8 +9,10 @@ module.exports = {
         main: './js/index',
         bootstrap: [
             'bootstrap-loader',
+            'font-awesome/css/font-awesome.css',
             './css/misc.css'
-        ]
+        ],
+        b2MapSelector: './js/location_selector'
     },
     output: {
         path: path.resolve('./build/'),
