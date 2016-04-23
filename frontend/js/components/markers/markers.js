@@ -4,8 +4,6 @@ import { Marker } from 'react-leaflet';
 require('Leaflet.extra-markers/src/assets/css/leaflet.extra-markers.css')
 let extraMarkers = require('Leaflet.extra-markers/src/assets/js/leaflet.extra-markers')
 
-console.log(extraMarkers, Leaflet);
-
 const defaulIconProps = {
     icon: 'fa-circle-o',
     // marker colors

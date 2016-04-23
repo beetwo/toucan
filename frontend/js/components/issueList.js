@@ -16,14 +16,12 @@ class IssueListUI extends React.Component {
     render() {
         let issues = this.props.issues || [];
 
-
         let rows = issues.map((issue, index) => {
             return (
               <tr key={issue.id}>
                 <td>
                     <a href='#' onClick={(e) => this.props.handleIssueChange(issue)}>
                       {issue.title}
-
                     </a>
                 </td>
                 <td>

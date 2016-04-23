@@ -10,3 +10,4 @@ Design decisions needed
     - limit selection possibilities to geographic area / organisation specific locations
     
     
+Nethope

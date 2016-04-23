@@ -17,9 +17,14 @@ class IssueMarker extends React.Component {
       let props = {
         position: this.props.position,
         layerContainer: this.props.layerContainer,
-        onClick: () => this.props.handleMarkerClick(issue)
+        onClick: () => this.props.handleMarkerClick(),
+        zIndexOffset: this.props.zIndexOffset || 0
       };
-      let icon = getMarkerForIssue(issue);
+      let opts = {};
+      if (this.props.isActive){
+        opts.markerColor = 'orange'
+      }
+      let icon = getMarkerForIssue(issue, opts);
       if (icon != undefined) {
             props.icon = icon;
       }
@@ -31,7 +36,10 @@ IssueMarker.propTypes = {
   issue: PropTypes.object.isRequired,
   handleMarkerClick: PropTypes.func.isRequired,
   //layerContainer: PropTypes.object.isRequired,
-  position: PropTypes.array.isRequired
+  position: PropTypes.array.isRequired,
+  isActive: PropTypes.bool.isRequired,
+  zIndexOffset: PropTypes.number
+
 }
 
 class AddNewMarker extends React.Component {
@@ -66,7 +74,6 @@ export class LeafletMap extends React.Component {
         this.state = {
           context: false
         }
-
         // bind event handlers
         this.handleClick = this.handleClick.bind(this);
         this.handleMove = this.handleMove.bind(this);
@@ -88,18 +95,19 @@ export class LeafletMap extends React.Component {
         return this._map.getLeafletElement();
     }
 
-
-
     handlePopupClose(e) {}
     handleClick(e) {}
     handleMove(e) {}
-    handleMarkerClick (issue) {}
+    handleMarkerClick (issue) {
+      //this.props.selectIssue(issue.id);
+      browserHistory.push(`/issue/${issue.id}`);
+    }
 
     render() {
 
         const {geojson, coordinates} = this.props;
         const has_coordinates = !isEmpty(coordinates);
-        
+
         if (isEmpty(geojson)) {
           return null;
         }
@@ -112,12 +120,23 @@ export class LeafletMap extends React.Component {
             };
         });
 
-        let markers = locations.map(l => {
-           return <IssueMarker key={l.id}
-                               position={l.coordinates.slice(0,2).reverse()}
-                               handleMarkerClick={this.handleMarkerClick}
-                               issue={l}/>
-        });
+        // optionally center the map if there is an active marker
+        let center = null;
+
+        let markers = locations.map(
+          (l) => {
+            let props = {
+              key: l.id,
+              position: l.coordinates.slice(0,2).reverse(),
+              handleMarkerClick: this.handleMarkerClick.bind(this, l),
+              issue: l,
+              isActive: l.id === this.props.selectedIssue
+            };
+            if (l.id === this.props.selectedIssue) {
+              center = props.coordinates
+            }
+            return <IssueMarker {...props} />
+          })
 
         let extents = geojsonExtent(JSON.parse(JSON.stringify(geojson)));
         extents = [
@@ -126,11 +145,13 @@ export class LeafletMap extends React.Component {
         ];
 
         return (
-            <Map bounds={extents}
+            <Map center={center}
+                 bounds={extents}
                  onClick={this.handleClick}
                  onContextmenu={this.handleRightClick}
                  onPopupclose={this.handlePopupClose}
                  onMoveEnd={this.handleMove}
+                 animate={true}
                  ref={(m) => this._map = m}>
                 <TileLayer
                     url='//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
@@ -148,7 +169,9 @@ export class LeafletMap extends React.Component {
 LeafletMap.propTypes = {
   geojson: PropTypes.object.isRequired,
   coordinates: PropTypes.object.isRequired,
-  setCoordinates: PropTypes.func
+  setCoordinates: PropTypes.func,
+  selectIssue: PropTypes.func.isRequired,
+  selectedIssue: PropTypes.number
 }
 
 export default LeafletMap

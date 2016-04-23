@@ -36,7 +36,7 @@ export function fetchIssues() {
 export function selectIssue(issue_id) {
     return {
       type: SELECT_ISSUE,
-      issue_id
+      issue_id: parseInt(issue_id, 10)
     }
 }
 
@@ -57,7 +57,7 @@ export function receiveIssue(issue_id, json) {
 
 export function fetchIssueIfNeeded(issue_id) {
     return (dispatch, getState) => {
-        console.log(getState());
+        dispatch(selectIssue(issue_id))
         dispatch(requestIssue(issue_id))
         return fetch(`/api/issue/${issue_id}/`)
             .then(response => response.json())

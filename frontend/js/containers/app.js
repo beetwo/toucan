@@ -41,6 +41,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     setCoordinates: (latLng) => {
       dispatch(setCoordinates(latLng))
+    },
+    selectIssue: (issue_id) => {
+      dispatch(selectIssue(issue_id));
     }
   };
 }

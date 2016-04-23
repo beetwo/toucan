@@ -24,7 +24,7 @@ function issues(state=[], action) {
 function selectedIssue(state=null, action) {
   switch(action.type) {
     case SELECT_ISSUE:
-      return action.issue
+      return action.issue_id
     default:
       return state
   }
@@ -35,7 +35,6 @@ function issueDetail(state = {
   didInvalidate: false,
   issue_data: {}
 }, action) {
-    console.log(action.type, state, action);
     switch(action.type) {
       case SELECT_ISSUE:
         return {
@@ -100,7 +99,5 @@ const reducers = {
   issueDetails,
   coordinates
 }
-
-console.log(reducers);
 
 export default reducers;

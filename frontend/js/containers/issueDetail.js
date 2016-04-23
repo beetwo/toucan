@@ -8,7 +8,13 @@ import isEmpty from 'lodash/isEmpty'
 class IssueDetailContainer extends React.Component {
 
   componentWillMount() {
-    this.props.loadIssue(this.props.params.IssueID)
+    this.props.loadIssue(this.props.issueID)
+  }
+
+  componentWillReceiveProps(next_props) {
+    if (next_props.issueID != this.props.issueID) {
+      this.props.loadIssue(next_props.issueID)
+    }
   }
 
   render() {
@@ -21,8 +27,11 @@ IssueDetailContainer.propTypes = {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  let issue_id = ownProps.routeParams.IssueID;
   return {
-    issue: state.issueDetails[ownProps.routeParams.IssueID] || {}
+    issue: state.issueDetails[issue_id] || {},
+    issueID: issue_id,
+    selectedIssue: state.selectedIssue
   }
 }
 
