@@ -24,9 +24,8 @@ main {
 
 .issues-container {
     flex: 1;
-    overflow-y: scroll;
     display: flex;
-    padding: 2em;
+    padding: 1em;
 }
 
 .map-container {
@@ -40,6 +39,22 @@ main {
     flex: 1;
 }
 
+.issueDetail {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.issueDetailMain {
+  flex:1;
+  overflow-y: auto;
+}
+
+.issueDetailBottom {
+  /**/
+}
+
+/* currently not used*/
 .marker-cluster {
     width: 40px;
     height: 40px;
@@ -55,19 +70,4 @@ main {
     -moz-transition: -moz-transform 0.3s ease-out, opacity 0.3s ease-in;
     -o-transition: -o-transform 0.3s ease-out, opacity 0.3s ease-in;
     transition: transform 0.3s ease-out, opacity 0.3s ease-in;
-}
-
-.issueDetail {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.issueDetailMain {
-  flex:1;
-  overflow-y: auto;
-}
-
-.issueDetailBottom {
-
 }
