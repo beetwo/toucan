@@ -82,13 +82,6 @@ class IssueSerializer(GeoFeatureModelSerializer):
 
 class FullIssueSerializer(IssueSerializer):
 
-    comments = CommentSerializer(many=True, read_only=True)
-
-    detail_url = serializers.SerializerMethodField()
-
-    def get_detail_url(self, issue):
-        return reverse('issues:issue_detail', kwargs={'issue_id': issue.pk}, request=self.context['request'])
-
     comment_url = serializers.SerializerMethodField()
 
     def get_comment_url(self, issue):
@@ -105,7 +98,5 @@ class FullIssueSerializer(IssueSerializer):
             'description',
             'priority',
             'visibility',
-            'detail_url',
             'comment_url',
-            'comments',
         ]

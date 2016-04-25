@@ -5,7 +5,11 @@ import {
   SELECT_ISSUE,
   REQUEST_ISSUE,
   RECEIVE_ISSUE,
-  SET_COORDINATES } from './actions';
+  SET_COORDINATES,
+  LOAD_COMMENTS,
+  POST_COMMENT,
+  RECEIVE_COMMENTS
+ } from './actions';
 
 function issues(state=[], action) {
   switch (action.type) {
@@ -92,12 +96,50 @@ function coordinates(state={}, action) {
   }
 }
 
+function issueComments(state={
+  isLoading: true,
+  comments: []
+}, action) {
+  switch (action.type) {
+    case LOAD_COMMENTS:
+      return {
+        isLoading: true,
+        comments: []
+      }
+    case RECEIVE_COMMENTS:
+      return {
+        isLoading: false,
+        comments: action.payload
+      }
+    default:
+      return state
+
+  }
+}
+
+function commentsByIssueID(state={}, action) {
+  switch (action.type) {
+    case LOAD_COMMENTS:
+    case RECEIVE_COMMENTS:
+    case POST_COMMENT:
+      return {
+        ...state,
+        [action.issue_id]: issueComments(state[action.issue_id], action)
+      }
+    default:
+      return state
+
+  }
+}
+
+
 const reducers = {
   geojson,
   redux_issues: issues,
   selectedIssue,
   issueDetails,
-  coordinates
+  coordinates,
+  commentsByIssueID
 }
 
 export default reducers;

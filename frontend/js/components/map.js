@@ -133,10 +133,10 @@ export class LeafletMap extends React.Component {
               isActive: l.id === this.props.selectedIssue
             };
             if (l.id === this.props.selectedIssue) {
-              center = props.coordinates
+              center = props.position
             }
             return <IssueMarker {...props} />
-          })
+        })
 
         let extents = geojsonExtent(JSON.parse(JSON.stringify(geojson)));
         extents = [

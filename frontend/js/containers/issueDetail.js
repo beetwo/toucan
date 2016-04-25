@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react'
 import { connect } from 'react-redux'
 import IssueDetailUI from '../components/issueDetail'
 import { fetchIssueIfNeeded, postComment } from '../actions'
+import Comments from './comments'
 
 import isEmpty from 'lodash/isEmpty'
 
@@ -18,7 +19,9 @@ class IssueDetailContainer extends React.Component {
   }
 
   render() {
-    return <IssueDetailUI { ...this.props } />
+    return <IssueDetailUI { ...this.props } >
+      <Comments issue_id={this.props.issueID} />
+    </IssueDetailUI>
   }
 }
 
@@ -40,8 +43,8 @@ const mapDispatchToProps = (dispatch) => {
     loadIssue: (issue) => {
       dispatch(fetchIssueIfNeeded(issue))
     },
-    onComment: (comment) => {
-      dispatch(postComment(comment));
+    onComment: (issue_id, comment) => {
+      dispatch(postComment(issue_id, comment));
     }
   }
 }

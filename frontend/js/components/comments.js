@@ -30,14 +30,15 @@ export class CommentForm extends React.Component {
   }
 
   render() {
-    return (<form className='form row' onSubmit={this.handleSubmit}>
-      <div className='col-md-10'>
-        <textarea rows={2} onChange={this.handleChange} className='form-control' required placeholder='Your comment goes here ...' value={this.state.comment}></textarea>
+    return (<form onSubmit={this.handleSubmit} ref={(e) => this._form =e }>
+      <div className="input-group">
+          <textarea className="form-control custom-control" rows="2" style={{resize: 'none'}} required value={this.state.comment} onChange={this.handleChange}></textarea>
+          <span onClick={this.handleSubmit} className="input-group-addon btn btn-primary">
+            Send
+          </span>
       </div>
-      <div className='col-md-2'>
-        <button className='form-control btn btn-sm btn-primary' type='submit'>Comment</button>
-      </div>
-    </form>);
+  </form>);
+
   }
 }
 
@@ -51,9 +52,7 @@ export class Comment extends React.Component {
     return (<li className='media'>
       <div className="media-body">
         <h4 className="media-heading">{c.created_by.username}</h4>
-        <p>
-          {c.comment}
-        </p>
+        <ReactMarkdown source={c.comment} />
       </div>
     </li>);
   }

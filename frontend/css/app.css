@@ -24,9 +24,8 @@ main {
 
 .issues-container {
     flex: 1;
-    overflow-y: scroll;
     display: flex;
-    padding: 2em;
+    padding: 1em;
 }
 
 .map-container {
@@ -52,8 +51,7 @@ main {
 }
 
 .issueDetailBottom {
-  padding: 1em;
-  padding-bottom: 3em;
+  /**/
 }
 
 /* currently not used*/

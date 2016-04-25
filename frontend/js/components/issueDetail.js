@@ -15,10 +15,7 @@ class IssueDetailUI extends React.Component {
     let gjs = issue_loader.issue_data;
     let issue = gjs.properties;
 
-    return (<div className='container'>
-      <div className='row'>
-        <div className='col-md-12'>
-          <div className='issueDetail'>
+    return (<div className='issueDetail'>
               <div className='issueDetailMain'>
                 <div className="panel panel-default">
                     <div className="panel-heading">
@@ -30,17 +27,14 @@ class IssueDetailUI extends React.Component {
                       <ReactMarkdown source={issue.description || ''} />
                     </div>
                 </div>
+
+                {this.props.children}
+
               </div>
-            </div>
-
-            { issue.comments.length > 0 ? <CommentList comments={issue.comments} /> : null }
-
             <div className='issueDetailBottom'>
-               <CommentForm onComment={this.props.onComment}/>
+              <CommentForm onComment={this.props.onComment.bind(this, this.props.issueID)}/>
             </div>
-        </div>
-      </div>
-    </div>);
+          </div>);
   }
 }
 

@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch'
+import getCookie from './utils';
 
 export const REQUEST_ISSUES = 'REQUEST_ISSUES'
 export const RECEIVE_ISSUES = 'RECEIVE_ISSUES'
@@ -8,7 +9,10 @@ export const REQUEST_ISSUE = 'REQUEST_ISSUE'
 export const RECEIVE_ISSUE = 'RECEIVE_ISSUE'
 
 export const SET_COORDINATES = 'SET_COORDINATES'
+
+export const LOAD_COMMENTS = 'LOAD_COMMENTS'
 export const POST_COMMENT = 'POST_COMMENT'
+export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS'
 
 export function requestIssues() {
   return {
@@ -73,9 +77,38 @@ export function setCoordinates(latLng) {
   return action
 }
 
-export function postComment(comment) {
+export function receiveComments(issue_id, json) {
   return {
-    type: POST_COMMENT,
-    comment: comment
+    type: RECEIVE_COMMENTS,
+    issue_id,
+    payload: json
   }
+}
+
+export function loadComments(issue_id) {
+  return (dispatch, getState) => {
+    return fetch(`/api/issue/${issue_id}/comment/`)
+      .then(response => response.json())
+      .then(json => dispatch(receiveComments(issue_id, json)))
+  }
+}
+
+export function postComment(issue_id, comment) {
+  return (dispatch, getState) => {
+    fetch(`/api/issue/${issue_id}/comment/`,
+        {
+          method: 'post',
+          credentials: 'same-origin',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+          },
+          body: JSON.stringify({
+            comment: comment.comment
+          })
+        }
+      )
+      .then(response => dispatch(loadComments(issue_id)))
+    }
 }
