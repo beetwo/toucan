@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.gis.db.models import Extent
 from django.contrib.gis.geos import Point
-
+from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import Count
 
@@ -67,6 +67,16 @@ class IssueDetail(DetailView):
         return ctx
 
 
+class LatLngForm(forms.Form):
+    lat = forms.FloatField()
+    lng = forms.FloatField()
+
+    def to_point(self):
+        return Point(
+            self.cleaned_data['lng'],
+            self.cleaned_data['lat']
+        )
+
 class IssueCreateView(LoginRequiredMixin, FormValidMessageMixin, CreateView):
     model = Issue
     template_name = 'issues/issue/create.html'
@@ -75,15 +85,12 @@ class IssueCreateView(LoginRequiredMixin, FormValidMessageMixin, CreateView):
 
     def get_initial(self):
         initial = super().get_initial()
-        get = self.request.GET
-        if 'lat' in get and 'lng' in get:
-            try:
-                initial.update({
-                    'point': Point(float(get.get('lng')), float(get.get('lat')))
-                })
-            except ValueError:
-                pass
-
+        
+        f = LatLngForm(data=self.request.GET)
+        if f.is_valid():
+            initial.update({
+                'point': f.to_point()
+            })
         return initial
 
     def get_context_data(self, **kwargs):
