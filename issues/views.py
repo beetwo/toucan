@@ -3,6 +3,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.gis.db.models import Extent
+from django.contrib.gis.geos import Point
+
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import Count
 
@@ -71,6 +73,26 @@ class IssueCreateView(LoginRequiredMixin, FormValidMessageMixin, CreateView):
     form_class = IssueForm
     form_valid_message = _('Issue created.')
 
+    def get_initial(self):
+        initial = super().get_initial()
+        get = self.request.GET
+        if 'lat' in get and 'lng' in get:
+            try:
+                initial.update({
+                    'point': Point(float(get.get('lng')), float(get.get('lat')))
+                })
+            except ValueError:
+                pass
+
+        return initial
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        p = ctx['form'].initial.get('point')
+        if p:
+            ctx.update({'initial_point': p})
+        return ctx
+
     def get_form(self, *args, **kwargs):
         form = super().get_form(*args, **kwargs)
 
@@ -98,6 +120,13 @@ class EditIssueView(LoginRequiredMixin, FormValidMessageMixin, UpdateView):
     form_class = IssueForm
     form_valid_message = _('Issue updated.')
     pk_url_kwarg = 'issue_id'
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx.update({
+            'initial_point': self.object.point
+        })
+        return ctx
 
     def get_success_url(self):
         return reverse(

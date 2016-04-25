@@ -87,7 +87,7 @@ function geojson(state={}, action) {
   }
 }
 
-function coordinates(state={}, action) {
+function coordinates(state=null, action) {
   switch (action.type) {
     case SET_COORDINATES:
       return action.latLng

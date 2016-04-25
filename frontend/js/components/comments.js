@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react'
 import ReactMarkdown from 'react-markdown'
+import Icon from 'react-fa'
 
 export class CommentForm extends React.Component {
   constructor(props) {
@@ -34,7 +35,7 @@ export class CommentForm extends React.Component {
       <div className="input-group">
           <textarea className="form-control custom-control" rows="2" style={{resize: 'none'}} required value={this.state.comment} onChange={this.handleChange}></textarea>
           <span onClick={this.handleSubmit} className="input-group-addon btn btn-primary">
-            Send
+            <Icon name="share-square-o" />
           </span>
       </div>
   </form>);

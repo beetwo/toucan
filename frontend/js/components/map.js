@@ -168,7 +168,10 @@ export class LeafletMap extends React.Component {
 
 LeafletMap.propTypes = {
   geojson: PropTypes.object.isRequired,
-  coordinates: PropTypes.object.isRequired,
+  coordinates: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.bool
+  ]),
   setCoordinates: PropTypes.func,
   selectIssue: PropTypes.func.isRequired,
   selectedIssue: PropTypes.number

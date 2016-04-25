@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react'
 import { connect } from 'react-redux'
 import UI from '../components/main'
 
-import { selectIssue, fetchIssues, setCoordinates } from '../actions'
+import { selectIssue, fetchIssues, setCoordinates, resetCoordinates } from '../actions'
 
 
 class IssueTrackerApp extends React.Component {
@@ -41,6 +41,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     setCoordinates: (latLng) => {
       dispatch(setCoordinates(latLng))
+    },
+    clearCoordinates: () => {
+      dispatch(resetCoordinates())
     },
     selectIssue: (issue_id) => {
       dispatch(selectIssue(issue_id));

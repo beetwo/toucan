@@ -29,14 +29,15 @@
 <script type="application/javascript">
 (function(){
 var position = false;
-{% if issue.point %}
-  {% with p=issue.point.get_coords %}
+{% if initial_point %}
+  {% with p=initial_point.get_coords %}
   position = {
       lng: {{ p.0 }},
       lat: {{ p.1 }}
   };
   {% endwith %}
 {% endif %}
+
 var issueMap = document.getElementById('issueMap'),
     location_field = document.getElementById('id_point');
 

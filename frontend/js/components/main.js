@@ -1,5 +1,6 @@
 import React from 'react'
 import Map from './map'
+import NewIssue from './new_issue'
 
 require('../../css/app.css');
 
@@ -15,6 +16,7 @@ class UI extends React.Component {
                    selectedIssue={this.props.selectedIssue}/>
             </div>
             <div className="issues-container">
+                { this.props.coordinates=== null ? null: <NewIssue coordinates={this.props.coordinates} removeAction={this.props.clearCoordinates} />}
                 {this.props.children}
             </div>
         </div>);

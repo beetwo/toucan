@@ -9,6 +9,7 @@ export const REQUEST_ISSUE = 'REQUEST_ISSUE'
 export const RECEIVE_ISSUE = 'RECEIVE_ISSUE'
 
 export const SET_COORDINATES = 'SET_COORDINATES'
+export const RESET_COORDINATES = 'RESET_COORDINATES'
 
 export const LOAD_COMMENTS = 'LOAD_COMMENTS'
 export const POST_COMMENT = 'POST_COMMENT'
@@ -75,6 +76,13 @@ export function setCoordinates(latLng) {
     latLng: latLng
   };
   return action
+}
+
+export function resetCoordinates() {
+  return {
+    type: SET_COORDINATES,
+    latLng: null
+  }
 }
 
 export function receiveComments(issue_id, json) {
