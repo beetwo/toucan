@@ -100,3 +100,5 @@ class FullIssueSerializer(IssueSerializer):
             'visibility',
             'comment_url',
         ]
+
+

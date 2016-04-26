@@ -85,7 +85,6 @@ class IssueCreateView(LoginRequiredMixin, FormValidMessageMixin, CreateView):
 
     def get_initial(self):
         initial = super().get_initial()
-        
         f = LatLngForm(data=self.request.GET)
         if f.is_valid():
             initial.update({
