@@ -17,17 +17,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 class IssueTypeSerializer(serializers.ModelSerializer):
 
-    svg = serializers.SerializerMethodField()
-
-    def get_svg(self, it):
-        return it.svg_icon.url if it.svg_icon else None
-
     class Meta:
         model = IssueType
         fields = [
             'slug',
             'name',
-            'svg'
         ]
 
 
