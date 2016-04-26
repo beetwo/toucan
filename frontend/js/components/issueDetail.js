@@ -3,6 +3,7 @@ import Loading from './loading'
 import ReactMarkdown from 'react-markdown'
 import isEmpty from 'lodash/isEmpty'
 import {CommentList, CommentForm} from './comments'
+import Editor from '../containers/commentBox'
 
 class IssueDetailUI extends React.Component {
   render() {
@@ -32,6 +33,7 @@ class IssueDetailUI extends React.Component {
 
               </div>
             <div className='issueDetailBottom'>
+              <Editor />
               <CommentForm onComment={this.props.onComment.bind(this, this.props.issueID)}/>
             </div>
           </div>);

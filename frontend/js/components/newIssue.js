@@ -1,13 +1,11 @@
 import React from 'react'
 import Icon from 'react-fa'
 
-var $ = require('jquery')
-
 export default function(props) {
-  console.log($);
+  let url = '/issues/create/?' + 'lat=' + encodeURIComponent(props.coordinates.lat) + '&lng=' + encodeURIComponent(props.coordinates.lng)
   return <div className='panel panel-success'>
     <div className='panel-body'>
-      <a className='btn btn-xs btn-success' href={'/issues/create/?' + $.param(props.coordinates)}>
+      <a className='btn btn-xs btn-success' href={url}>
         <Icon name='plus' /> New Issue
       </a>
       <small className='pull-right'>
