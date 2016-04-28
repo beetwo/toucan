@@ -128,10 +128,22 @@ function commentsByIssueID(state={}, action) {
       }
     default:
       return state
-
   }
 }
 
+function statusChangesByIssueID(state={}, action) {
+  switch (action.type) {
+    case RECEIVE_ISSUE:
+      console.log(action.payload);
+      return {
+        ...state,
+        [action.issue_id]: action.payload.properties.status_changes
+      }
+    default:
+      return state
+
+  }
+}
 
 const reducers = {
   geojson,
@@ -139,7 +151,8 @@ const reducers = {
   selectedIssue,
   issueDetails,
   coordinates,
-  commentsByIssueID
+  commentsByIssueID,
+  statusChangesByIssueID
 }
 
 export default reducers;

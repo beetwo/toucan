@@ -1,6 +1,10 @@
 import React, {PropTypes} from 'react'
 import ReactMarkdown from 'react-markdown'
+import Timeago from 'react-timeago'
 import Icon from 'react-fa'
+
+import concat from 'lodash/concat'
+
 
 export class CommentForm extends React.Component {
   constructor(props) {
@@ -16,7 +20,7 @@ export class CommentForm extends React.Component {
     let comment = {
       id: Date.now(),
       comment: this.state.comment,
-      created_by: {
+      user: {
         username: 'You'
       }
     }
@@ -50,12 +54,15 @@ CommentForm.propTypes = {
 export class Comment extends React.Component {
   render() {
     let c = this.props.comment
-    return (<li className='media'>
-      <div className="media-body">
-        <h4 className="media-heading">{c.created_by.username}</h4>
+    return (<div className='panel panel-default'>
+      <div className='panel-heading'>
+        {c.user.username} commented <Timeago date={c.created} />
+        {c.created}
+      </div>
+      <div className="panel-body">
         <ReactMarkdown source={c.comment} />
       </div>
-    </li>);
+    </div>);
   }
 }
 
@@ -64,21 +71,58 @@ Comment.propTypes = {
 }
 
 
+export class StatusChange extends React.Component {
+  render() {
+    let sc = this.props.statusChange;
+    return <p className='text-right text-muted'>
+      <a>{sc.user.username}</a>&nbsp;
+      { sc.status === 'open' ? <span className='label label-success'>re-opened</span> : null }
+      { sc.status === 'closed' ? <span className='label label-danger'>closed</span> : null }
+      &nbsp;this issue.
+    </p>;
+  }
+}
+
 export class CommentList extends React.Component {
+
+  flattenCommentsAndStatusChanges(comments=[], statusChanges=[]) {
+    let m_comments = comments.map((c) => {
+       return {type: 'comment', data: c, created: c.created}
+    });
+    let m_statusChanges = statusChanges.map((sc) => {
+      return { type:'status', data: sc, created: sc.created}
+    });
+    let all = concat(m_comments, m_statusChanges);
+    return all.sort(function(a,b) {
+      return a.created < b.created ? -1 : (a.created > b.created ? 1 : 0)
+    })
+  }
 
   constructor(props) {
     super(props)
   }
 
   render() {
-    let cn = this.props.comments.map((c) => <Comment key={c.id} comment={c} />);
-    return (<div>
-        <ul className='media-list'>{cn}</ul>
-      </div>);
+
+    let all = this.flattenCommentsAndStatusChanges(
+      this.props.comments,
+      this.props.statusChanges
+    );
+    let items = all.map((x) => {
+      if (x.type === 'comment') {
+        return <Comment key={'comment-' + x.data.id} comment={x.data} />
+      }
+      if (x.type === 'status') {
+        return <StatusChange key={'status-' + x.data.id} statusChange={x.data}/>
+      }
+      return null;
+    });
+    return (<div>{items}</div>);
   }
 
 }
 
 CommentList.propTypes = {
-  comments: PropTypes.array.isRequired
+  comments: PropTypes.array.isRequired,
+  statusChanges: PropTypes.array.isRequired
 }

@@ -49,10 +49,11 @@ main {
 .issueDetailMain {
   flex:1;
   overflow-y: auto;
+  padding-right: 1em;
 }
 
 .issueDetailBottom {
-  /**/
+  padding-top: 1em;
 }
 
 /* currently not used*/

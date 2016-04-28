@@ -1,3 +1,5 @@
+import isString from 'lodash/isString'
+
 export default function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie != '') {
@@ -15,3 +17,20 @@ export default function getCookie(name) {
 }
 
 export var csrftoken = getCookie('csrftoken');
+
+
+export function jsonPost(url, data) {
+  return fetch(
+    url,
+    {
+        method: 'post',
+        credentials: 'same-origin',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: isString(data) ? data : JSON.stringify(data)
+      }
+    )
+}

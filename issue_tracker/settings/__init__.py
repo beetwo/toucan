@@ -157,6 +157,15 @@ STATICFILES_DIRS = [
 
 LOGIN_REDIRECT_URL = 'user_profile:personal_profile'
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "asgi_redis.RedisChannelLayer",
+        "ROUTING": "issue_tracker.routing.channel_routing"
+    },
+}
+
+
+
 from .allauth import *
 
 try:
