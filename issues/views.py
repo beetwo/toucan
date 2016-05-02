@@ -106,8 +106,9 @@ class IssueCreateView(LoginRequiredMixin, FormValidMessageMixin, CreateView):
         orgs = Organisation.objects.filter(membership__user=self.request.user, membership__active=True)
         org_field = form.fields['organisation']
         org_field.queryset = orgs
-        org_field.empty_choice = None
+        # org_field.empty_choice = None
         org_field.initial = orgs[0].pk if len(orgs) > 0 else None
+
         return form
 
     def form_valid(self, form):
