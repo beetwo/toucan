@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch'
-import getCookie from './utils';
+import getCookie, { jsonPost } from './utils';
 
 export const REQUEST_ISSUES = 'REQUEST_ISSUES'
 export const RECEIVE_ISSUES = 'RECEIVE_ISSUES'
@@ -14,6 +14,8 @@ export const RESET_COORDINATES = 'RESET_COORDINATES'
 export const LOAD_COMMENTS = 'LOAD_COMMENTS'
 export const POST_COMMENT = 'POST_COMMENT'
 export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS'
+
+export const CHANGE_ISSUE_STATUS = 'CHANGE_ISSUE_STATUS'
 
 export function requestIssues() {
   return {
@@ -62,6 +64,7 @@ export function receiveIssue(issue_id, json) {
 
 export function fetchIssueIfNeeded(issue_id) {
     return (dispatch, getState) => {
+        console.log(getState())
         dispatch(selectIssue(issue_id))
         dispatch(requestIssue(issue_id))
         return fetch(`/api/issue/${issue_id}/`)
@@ -103,20 +106,29 @@ export function loadComments(issue_id) {
 
 export function postComment(issue_id, comment) {
   return (dispatch, getState) => {
-    fetch(`/api/issue/${issue_id}/comment/`,
-        {
-          method: 'post',
-          credentials: 'same-origin',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'X-CSRFToken': getCookie('csrftoken')
-          },
-          body: JSON.stringify({
-            comment: comment.comment
-          })
-        }
-      )
-      .then(response => dispatch(loadComments(issue_id)))
+    let url = `/api/issue/${issue_id}/comment/`
+    let data = {
+      comment: comment.comment
     }
+
+    jsonPost(url, data).then(response => dispatch(loadComments(issue_id)))
+  }
+}
+
+export function changeIssueStatus(issue_id, status) {
+  return (dispatch, getState) => {
+    let url = `/api/issue/${issue_id}/status/`
+    let data = {status: status};
+    jsonPost(url, data).then((response) => {
+      return dispatch(fetchIssueIfNeeded(issue_id));
+    })
+  }
+}
+
+export function closeIssue(issue_id) {
+  return changeIssueStatus(issue_id, 'closed')
+}
+
+export function openIssue(issue_id) {
+  return changeIssueStatus(issue_id, 'open');
 }

@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
 import { connect } from 'react-redux'
 import IssueDetailUI from '../components/issueDetail'
-import { fetchIssueIfNeeded, postComment } from '../actions'
+import { fetchIssueIfNeeded, postComment, closeIssue, openIssue } from '../actions'
 import Comments from './comments'
 
 import isEmpty from 'lodash/isEmpty'
@@ -45,7 +45,14 @@ const mapDispatchToProps = (dispatch) => {
     },
     onComment: (issue_id, comment) => {
       dispatch(postComment(issue_id, comment));
+    },
+    closeIssue: (issue_id) => {
+      dispatch(closeIssue(issue_id))
+    },
+    openIssue: (issue_id) => {
+      dispatch(openIssue(issue_id))
     }
+
   }
 }
 

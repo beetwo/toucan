@@ -30,5 +30,7 @@ class IssueForm(forms.ModelForm):
         ]
         widgets = {
             'point': forms.HiddenInput,
-            # 'organisation': forms.RadioSelect
+            'organisation': forms.RadioSelect,
+            'issue_type': forms.RadioSelect
+
         }

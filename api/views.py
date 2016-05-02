@@ -5,11 +5,12 @@ from django.contrib.auth import get_user_model
 from rest_framework.generics import ListAPIView, RetrieveAPIView, ListCreateAPIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.exceptions import ValidationError
-from issues.models import Issue, IssueComment
+from issues.models import Issue, IssueComment, IssueStatus
 
-from .serializers import IssueSerializer, FullIssueSerializer, CommentSerializer, UserSerializer
+from .serializers import IssueSerializer, FullIssueSerializer, CommentSerializer, UserSerializer, StatusSerializer
 
 User = get_user_model()
+
 
 class LocationApi(ListAPIView):
     queryset = Issue.objects.filter(point__isnull=False).annotate(comment_count=Count('comments'))
@@ -33,10 +34,27 @@ class IssueCommentView(ListCreateAPIView):
         return get_object_or_404(Issue, pk=self.kwargs['issue_id'])
 
     def perform_create(self, serializer):
-        serializer.save(created_by=self.request.user, issue=self.issue)
+        serializer.save(user=self.request.user, issue=self.issue)
 
     def get_queryset(self):
         return IssueComment.objects.filter(issue=self.issue)
+
+
+class IssueStatusView(ListCreateAPIView):
+
+    serializer_class = StatusSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+    @property
+    def issue(self):
+        return get_object_or_404(Issue, pk=self.kwargs['issue_id'])
+
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user, issue=self.issue)
+
+    def get_queryset(self):
+        return IssueStatus.objects.filter(issue=self.issue)
 
 
 class UserSearch(ListAPIView):

@@ -12,7 +12,16 @@
         <form method="post" action=".">
             {% csrf_token %}
 
-            {% bootstrap_form form %}
+            {% bootstrap_field form.title %}
+            {% bootstrap_field form.description %}
+            <div class="row">
+                <div class="col-md-6">
+                    {% bootstrap_field form.issue_type %}
+                </div>
+                <div class="col-md-6">
+                    {% bootstrap_field form.organisation %}
+                </div>
+            </div>
 
             {% buttons %}
             <button type="submit" class="btn btn-primary">

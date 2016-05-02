@@ -1,9 +1,8 @@
-# from django.db import models
 from django.contrib.gis.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
-from model_utils import Choices
 
+from model_utils import Choices
 from model_utils.models import TimeStampedModel
 
 
@@ -47,6 +46,7 @@ class Issue(TimeStampedModel):
     organisation = models.ForeignKey(
         'organisations.Organisation',
         null=True, blank=False,
+        default='',
         verbose_name=_('organisation')
     )
 
@@ -55,6 +55,12 @@ class Issue(TimeStampedModel):
     priority = models.SmallIntegerField(choices=PRIORITY_CHOICES, default=1)
     visibility = models.SmallIntegerField(choices=VISIBILITY_CHOICES, default=3)
 
+    @property
+    def status(self):
+        try:
+            return self.status_changes.latest().status
+        except IssueStatus.DoesNotExist:
+            return 'open'
 
     @property
     def gis_location(self):
@@ -69,35 +75,40 @@ class Issue(TimeStampedModel):
         return self.title
 
 
-class IssueStatus(TimeStampedModel):
+class AbstractIssueRelatedModel(TimeStampedModel):
 
-    STATUS_CHOICES = Choices([
-        ('open', _('open')),
-        ('closed', _('closed'))
-    ])
-
-    issue = models.ForeignKey(Issue, related_name='status')
-
-    status = models.CharField(max_length=10, db_index=True, choices=STATUS_CHOICES)
-    status_message = models.TextField(blank=True, verbose_name=_('reason'))
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
 
     class Meta:
-        get_latest_by = 'created'
-        verbose_name = _('issue status')
-        verbose_name_plural = _('issue statuses')
+        abstract = True
+        ordering = ('created',)
 
 
-class IssueComment(TimeStampedModel):
+class IssueComment(AbstractIssueRelatedModel):
 
     issue = models.ForeignKey(Issue, related_name='comments')
     comment = models.TextField(blank=True, verbose_name=_('comment'))
 
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL)
-
     class Meta:
         verbose_name = _('comment')
         verbose_name_plural = _('comments')
-        ordering = ['created']
 
     def __str__(self):
-        return 'Comment by user %s on issue #%d' % (self.created_by.username, self.issue_id)
+        return 'Comment by user %s on issue #%d' % (self.user.username, self.issue_id)
+
+
+class IssueStatus(AbstractIssueRelatedModel):
+
+    issue = models.ForeignKey(Issue, related_name='status_changes')
+
+    STATUS_CHOICES = Choices(
+        ('open', _('open')),
+        ('closed', _('closed'))
+    )
+
+    status = models.CharField(max_length=10, db_index=True, choices=STATUS_CHOICES)
+
+    class Meta:
+        verbose_name = _('issue status')
+        verbose_name_plural = _('issue statuses')
+        get_latest_by = ('created')

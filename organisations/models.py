@@ -1,18 +1,38 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
-
+from django.core.validators import validate_slug
 from django.contrib.gis.db import models as geo_models
-from django.contrib.gis.geos import Point
+from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 
 from model_utils.models import TimeStampedModel
 from location_field.models.spatial import LocationField
 
 
+
+def validate_organisation_slug(name):
+    User = get_user_model()
+    if User.objects.filter(username=name).exists():
+        raise ValidationError(
+            _('A user with this username already exists. Please choose another name.'),
+            code='invalid'
+        )
+
+
+
+
 class Organisation(TimeStampedModel):
 
     name = models.CharField(max_length=200, verbose_name=_('name'))
-    short_name = models.CharField(max_length=50, verbose_name=_('short name'), blank=True)
+    short_name = models.SlugField(
+        max_length=50,
+        unique=True,
+        verbose_name=_('short name'),
+        validators=models.SlugField.default_validators + [
+            validate_organisation_slug,
+        ]
+    )
     logo = models.ImageField(blank=True)
 
     #TODO: website, social accounts, contacts, areas of expertise etc.
