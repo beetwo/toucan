@@ -46,6 +46,7 @@ class Issue(TimeStampedModel):
     organisation = models.ForeignKey(
         'organisations.Organisation',
         null=True, blank=False,
+        default='',
         verbose_name=_('organisation')
     )
 

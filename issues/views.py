@@ -104,7 +104,10 @@ class IssueCreateView(LoginRequiredMixin, FormValidMessageMixin, CreateView):
 
         # limit the organisations that a user can add issues to
         orgs = Organisation.objects.filter(membership__user=self.request.user, membership__active=True)
-        form.fields['organisation'].queryset = orgs
+        org_field = form.fields['organisation']
+        org_field.queryset = orgs
+        org_field.empty_choice = None
+        org_field.initial = orgs[0].pk if len(orgs) > 0 else None
         return form
 
     def form_valid(self, form):
