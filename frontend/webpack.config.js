@@ -7,10 +7,17 @@ module.exports = {
     devtool: 'eval-cheap-module-source-map',
     entry: {
         main: './js/index',
-        bootstrap: [
+        vendor: [
             'bootstrap-loader',
             'font-awesome/css/font-awesome.css',
-            './css/misc.css'
+            './css/misc.css',
+            'react',
+            'react-dom',
+            'leaflet',
+            'react-leaflet',
+            'react-markdown',
+            'react-router',
+            'react-fa'
         ],
         b2MapSelector: './js/location_selector'
     },
@@ -23,7 +30,8 @@ module.exports = {
         new BundleTracker({filename: './webpack-stats.json'}),
         new webpack.ProvidePlugin({
             'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
-        })
+        }),
+        new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js')
     ],
     resolve: {extensions: ['', '.js']},
     module: {

@@ -36,11 +36,14 @@ export class CommentForm extends React.Component {
 
   render() {
     return (<form onSubmit={this.handleSubmit} ref={(e) => this._form =e }>
-      <div className="input-group">
-          <textarea className="form-control custom-control" rows="2" style={{resize: 'none'}} required value={this.state.comment} onChange={this.handleChange}></textarea>
-          <span onClick={this.handleSubmit} className="input-group-addon btn btn-primary">
-            <Icon name="share-square-o" />
-          </span>
+        <textarea className="form-control custom-control" rows="2" style={{resize: 'none'}} required value={this.state.comment} onChange={this.handleChange}></textarea>
+      <div className='form-group text-right'>
+        <button className='btn btn-sm btn-success' type='submit'>
+          Close and comment
+        </button>
+        <button className='btn btn-sm btn-primary' type='submit'>
+          Comment
+        </button>
       </div>
   </form>);
 
