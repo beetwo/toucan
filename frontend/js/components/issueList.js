@@ -23,9 +23,14 @@ class IssueListUI extends React.Component {
                     <a href='#' onClick={(e) => this.props.handleIssueChange(issue)}>
                       {issue.title}
                     </a>
+                    <br />
+                    {/*
+                    <pre>{JSON.stringify(issue, null, 2)}</pre>
+                    */}
                 </td>
                 <td>
-                  {issue.priority}
+                  {/*issue.priority */}
+                  {issue.issue_type.name}
                 </td>
                 <td>
                   <sup>
