@@ -1,5 +1,5 @@
 from django.conf.urls import url, include
-from .views import LocationApi, IssueView, IssueCommentView, UserSearch, IssueStatusView
+from .views import LocationApi, IssueView, IssueCommentView, UserSearch, IssueStatusView, CommentDetailView
 
 app_name = 'issue_tracker_api'
 
@@ -13,5 +13,7 @@ urlpatterns = [
             url(r'^status/$', IssueStatusView.as_view(), name='issue_status'),
         ])
     ),
-    url(r'^users/$', UserSearch.as_view(), name='user_search')
+    url(r'^users/$', UserSearch.as_view(), name='user_search'),
+    url(r'^comment/(?P<pk>\d+)/$', CommentDetailView.as_view(), name='comment_detail')
+
 ]

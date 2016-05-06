@@ -30,11 +30,10 @@ IssueDetailContainer.propTypes = {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  let issue_id = ownProps.routeParams.IssueID;
+  let issue_id = parseInt(ownProps.routeParams.IssueID, 10);
   return {
     issue: state.issueDetails[issue_id] || {},
-    issueID: issue_id,
-    selectedIssue: state.selectedIssue
+    issueID: issue_id
   }
 }
 

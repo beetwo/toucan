@@ -12,6 +12,8 @@
         <form method="post" action=".">
             {% csrf_token %}
 
+            {% for f in form.hidden_fields %}{{ f }}{% endfor %}
+
             {% bootstrap_field form.title %}
             {% bootstrap_field form.description %}
             <div class="row">

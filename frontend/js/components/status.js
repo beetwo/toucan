@@ -1,18 +1,12 @@
 import React from 'react'
 import classNames from 'classnames'
 
-export default function({status, onOpen, onClose}) {
-    let action = (e) => null;
-    if (status == 'open') {
-      action = onClose
-    } else if (status == 'closed') {
-        action = onOpen
-    }
+export default function({status}) {
     let cls = classNames('btn', {
       'btn-danger': status === 'closed',
       'btn-success': status === 'open'
     })
-    return <button className={cls} onClick={action}>
+    return <span className={cls}>
       {status}
-    </button>;
+    </span>;
 }

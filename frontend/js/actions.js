@@ -64,7 +64,6 @@ export function receiveIssue(issue_id, json) {
 
 export function fetchIssueIfNeeded(issue_id) {
     return (dispatch, getState) => {
-        console.log(getState())
         dispatch(selectIssue(issue_id))
         dispatch(requestIssue(issue_id))
         return fetch(`/api/issue/${issue_id}/`)
@@ -108,9 +107,11 @@ export function postComment(issue_id, comment) {
   return (dispatch, getState) => {
     let url = `/api/issue/${issue_id}/comment/`
     let data = {
-      comment: comment.comment
+      draft_struct: comment.draft_struct,
+      open: comment.open,
+      close: comment.close
     }
-
+    
     jsonPost(url, data).then(response => dispatch(loadComments(issue_id)))
   }
 }

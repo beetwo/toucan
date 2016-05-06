@@ -1,6 +1,6 @@
 import React from 'react'
 import Map from './map'
-import NewIssue from './new_issue'
+import NewIssue from './newIssue'
 
 require('../../css/app.css');
 

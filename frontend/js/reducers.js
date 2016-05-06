@@ -134,11 +134,24 @@ function commentsByIssueID(state={}, action) {
 function statusChangesByIssueID(state={}, action) {
   switch (action.type) {
     case RECEIVE_ISSUE:
-      console.log(action.payload);
       return {
         ...state,
         [action.issue_id]: action.payload.properties.status_changes
       }
+    default:
+      return state
+
+  }
+}
+
+
+function usersByIssueID(state={}, action) {
+  switch (action.type) {
+    case RECEIVE_ISSUE:
+        return {
+          ...state,
+          [action.issue_id]: action.payload.properties.users
+        }
     default:
       return state
 
@@ -152,7 +165,8 @@ const reducers = {
   issueDetails,
   coordinates,
   commentsByIssueID,
-  statusChangesByIssueID
+  statusChangesByIssueID,
+  usersByIssueID
 }
 
 export default reducers;

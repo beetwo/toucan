@@ -1,10 +1,13 @@
 from django.contrib.gis.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
+from django.contrib.postgres.fields import JSONField
+from django.contrib.auth import get_user_model
 
 from model_utils import Choices
 from model_utils.models import TimeStampedModel
 
+from .utils import parse_draft_struct, draft_struct_to_comment
 
 class IssueType(TimeStampedModel):
     name = models.CharField(max_length=50)
@@ -56,6 +59,12 @@ class Issue(TimeStampedModel):
     visibility = models.SmallIntegerField(choices=VISIBILITY_CHOICES, default=3)
 
     @property
+    def users(self):
+        '''Get a list of all involved users'''
+        User = get_user_model()
+        return User.objects.all()
+
+    @property
     def status(self):
         try:
             return self.status_changes.latest().status
@@ -87,7 +96,21 @@ class AbstractIssueRelatedModel(TimeStampedModel):
 class IssueComment(AbstractIssueRelatedModel):
 
     issue = models.ForeignKey(Issue, related_name='comments')
-    comment = models.TextField(blank=True, verbose_name=_('comment'))
+    comment = models.TextField(blank=False, verbose_name=_('comment'))
+
+    draft_struct = JSONField(default=dict, blank=True)
+
+    def get_mentions(self):
+        blocks, entities = parse_draft_struct(self.draft_struct)
+        entities = filter(lambda x: x.type == 'mention', entities)
+        names = set([e.data['mention']['name'] for e in entities])
+        return names
+
+    def get_comment(self):
+        if self.comment:
+            return self.comment
+        else:
+            return draft_struct_to_comment(self.draft_struct)
 
     class Meta:
         verbose_name = _('comment')

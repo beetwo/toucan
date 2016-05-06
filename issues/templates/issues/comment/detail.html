@@ -6,6 +6,10 @@
         <em>{{ comment.created|date:'SHORT_DATETIME_FORMAT' }}</em>
     </div>
     <div class="col-md-9">
-        {{ comment.comment|linebreaks }}
+        {{ comment.get_comment|linebreaks }}
+{#        <hr />#}
+{#        {{ comment.draft_struct|pprint }}#}
+{#        <hr />#}
+{#        {{ comment.comment|pprint }}#}
     </div>
 </div>

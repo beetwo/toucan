@@ -78,6 +78,7 @@ class LatLngForm(forms.Form):
         )
 
 class IssueCreateView(LoginRequiredMixin, FormValidMessageMixin, CreateView):
+
     model = Issue
     template_name = 'issues/issue/create.html'
     form_class = IssueForm
@@ -162,9 +163,14 @@ class CommentCreateView(LoginRequiredMixin, FormValidMessageMixin, BaseIssueMixi
     form_class = CommentForm
     form_valid_message = _('comment saved')
 
+    def get_form_class(self):
+        fc = super().get_form_class()
+        print(fc)
+        return fc
+
     def form_valid(self, form):
         comment = form.instance
-        comment.created_by = self.request.user
+        comment.user = self.request.user
         comment.issue = self.issue
         return super().form_valid(form)
 
