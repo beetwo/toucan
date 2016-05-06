@@ -30,7 +30,7 @@ class IssueDetailUI extends React.Component {
                 </div>
                 <hr />
                 <div className="panel panel-primary">
-                    <div className="panel-body" styles={{whiteSpace: 'pre-line'}}>
+                    <div className="panel-body" style={{whiteSpace: 'pre-line'}}>
                       {issue.description || 'This issue has no description.'}
                     </div>
                 </div>
