@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
 from rest_framework import serializers
 from rest_framework.reverse import reverse
-
+from issues.utils import draft_struct_to_comment
 
 class UserSerializer(serializers.ModelSerializer):
 
@@ -30,14 +30,34 @@ class CommentSerializer(serializers.ModelSerializer):
 
     user = UserSerializer(read_only=True)
 
+
+    comment = serializers.SerializerMethodField()
+
+    def get_comment(self, comment):
+        return draft_struct_to_comment(comment.draft_struct)
+
+
+    detail_url =  serializers.HyperlinkedIdentityField(
+        view_name='issue_tracker_api:comment_detail',
+        lookup_url_kwarg='pk',
+        lookup_field='pk'
+    )
+
+    close = serializers.BooleanField(write_only=True, required=False)
+    open = serializers.BooleanField(write_only=True, required=False)
+
     class Meta:
         model = IssueComment
         fields = [
             'id',
             'user',
+            'draft_struct',
             'comment',
+            'detail_url',
             'created',
             'modified',
+            'close',
+            'open',
         ]
         read_only_fields = [
             'id',
@@ -46,6 +66,27 @@ class CommentSerializer(serializers.ModelSerializer):
             'modified',
         ]
 
+    def create(self, validated_data):
+        close = validated_data.pop('close', False)
+        open = validated_data.pop('open', False)
+        comment = super().create(validated_data)
+
+        # open or close as a side effect
+        if close:
+            IssueStatus.objects.create(
+                user=comment.user,
+                issue=comment.issue,
+                status='closed'
+            )
+
+        if open:
+            IssueStatus.objects.create(
+                user=comment.user,
+                issue=comment.issue,
+                status='open'
+            )
+
+        return comment
 
 class StatusSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
@@ -100,6 +141,8 @@ class FullIssueSerializer(IssueSerializer):
     status_url = serializers.SerializerMethodField()
     status_changes = StatusSerializer(many=True, read_only=True)
 
+    users = UserSerializer(many=True, read_only=True)
+
     def get_comment_url(self, issue):
         return reverse(
             'issue_tracker_api:issue_comments',
@@ -129,6 +172,7 @@ class FullIssueSerializer(IssueSerializer):
             'status_url',
             'comments',
             'status_changes',
+            'users'
         ]
 
 

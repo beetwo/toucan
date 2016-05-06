@@ -57,6 +57,10 @@ class IssueStatusView(ListCreateAPIView):
         return IssueStatus.objects.filter(issue=self.issue)
 
 
+class CommentDetailView(RetrieveAPIView):
+    serializer_class = CommentSerializer
+    queryset = IssueComment.objects.all()
+
 class UserSearch(ListAPIView):
 
     serializer_class = UserSerializer

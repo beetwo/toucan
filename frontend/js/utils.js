@@ -1,4 +1,6 @@
 import isString from 'lodash/isString'
+import { Entity } from 'draft-js'
+
 
 export default function getCookie(name) {
     var cookieValue = null;
@@ -33,4 +35,22 @@ export function jsonPost(url, data) {
         body: isString(data) ? data : JSON.stringify(data)
       }
     )
+}
+
+
+export function convertDraft(contentState) {
+  console.log(contentState)
+  let blocks = contentState.getBlockMap().toArray()
+  blocks.forEach((b) => {
+    console.log('new block');
+    b.findEntityRanges(
+      (x) => {
+        let e = x.getEntity();
+        return true
+      },
+      (start, end) => { console.log(start, end) }
+    );
+  });
+  return contentState.getPlainText();
+
 }

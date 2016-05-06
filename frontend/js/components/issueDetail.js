@@ -3,13 +3,11 @@ import Loading from './loading'
 import ReactMarkdown from 'react-markdown'
 import isEmpty from 'lodash/isEmpty'
 import {CommentList, CommentForm} from './comments'
-import Editor from '../containers/commentBox'
 
 import Status from './status'
 
 class IssueDetailUI extends React.Component {
   render() {
-
     let issue_loader = this.props.issue;
     if (isEmpty(issue_loader) || issue_loader.isLoading) {
       return Loading();
@@ -35,27 +33,16 @@ class IssueDetailUI extends React.Component {
                 </div>
                 <hr />
                 <div className="panel panel-primary">
-                    {/*<div className="panel-heading">
-                        <small className='pull-right'>
-                          {issue.created}
-                        </small>
-                        <h3 className="panel-title">
-                          {issue.title}
-                        </h3>
-                    </div>*/}
                     <div className="panel-body">
                       <ReactMarkdown source={issue.description || ''} />
-                      {/*<pre>{JSON.stringify(issue, null, 2)}</pre>*/}
                     </div>
-                    {/*<div className="panel-footer">Panel Footer</div>*/}
                 </div>
 
                 {this.props.children}
 
               </div>
             <div className='issueDetailBottom'>
-              <Editor />
-              <CommentForm onComment={this.props.onComment.bind(this, this.props.issueID)}/>
+              <CommentForm onComment={this.props.onComment.bind(this, this.props.issueID)} status={issue.status}/>
             </div>
           </div>);
   }

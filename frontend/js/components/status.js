@@ -12,7 +12,7 @@ export default function({status, onOpen, onClose}) {
       'btn-danger': status === 'closed',
       'btn-success': status === 'open'
     })
-    return <button className={cls} onClick={action}>
+    return <span className={cls} onClick={action}>
       {status}
-    </button>;
+    </span>;
 }

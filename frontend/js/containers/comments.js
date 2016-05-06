@@ -15,23 +15,28 @@ export class Comments extends React.Component {
   }
 
   render() {
-    return <CommentList comments={this.props.comments.comments || []} statusChanges={this.props.statusChanges || []}/>
+    console.log(this.props)
+    return <CommentList { ...this.props }/>
   }
 }
 
 Comments.propTypes = {
-  comments: PropTypes.object.isRequired,
+  comments: PropTypes.array.isRequired,
   statusChanges: PropTypes.array.isRequired,
+  users: PropTypes.array.isRequired,
   issue_id: PropTypes.number.isRequired
 }
 
 
 const mapStateToProps = (state, ownProps) => {
-  let issue_id = parseInt(ownProps.issue_id, 10);
+
+  let issue_id = ownProps.issue_id;
+  let comment_struct = state.commentsByIssueID[issue_id] || {}
+
   return {
-    comments: state.commentsByIssueID[issue_id] || {},
+    comments: comment_struct.comments || [],
     statusChanges: state.statusChangesByIssueID[issue_id] || [],
-    issue_id: issue_id
+    users: state.usersByIssueID[issue_id] || []
   }
 }
 
