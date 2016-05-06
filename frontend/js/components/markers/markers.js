@@ -17,17 +17,20 @@ const defaulIconProps = {
 
 function getMarkerForIssue(issue={}, opts={}) {
   let attribs = {}
-  switch (issue.issue_type.slug) {
-    case 'medical':
-      attribs.icon = 'fa-plus-square';
-      break;
-    case 'general':
-      attribs.icon = 'fa-question';
-      break;
-    default:
-      console.warn('Unknown issue type encountered ', issue.issue_type.slug)
-      break;
+  if (issue.issue_type && issue.issue_type.slug) {
+    switch (issue.issue_type.slug) {
+      case 'medical':
+        attribs.icon = 'fa-plus-square';
+        break;
+      case 'general':
+        attribs.icon = 'fa-question';
+        break;
+      default:
+        console.warn('Unknown issue type encountered ', issue.issue_type.slug)
+        break;
+    }
   }
+
   return Leaflet.ExtraMarkers.icon({
     ...defaulIconProps,
     ...opts,
