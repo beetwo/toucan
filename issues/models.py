@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model
 from model_utils import Choices
 from model_utils.models import TimeStampedModel
 
-from .utils import parse_draft_struct
+from .utils import parse_draft_struct, draft_struct_to_comment
 
 class IssueType(TimeStampedModel):
     name = models.CharField(max_length=50)
@@ -105,6 +105,12 @@ class IssueComment(AbstractIssueRelatedModel):
         entities = filter(lambda x: x.type == 'mention', entities)
         names = set([e.data['mention']['name'] for e in entities])
         return names
+
+    def get_comment(self):
+        if self.comment:
+            return self.comment
+        else:
+            return draft_struct_to_comment(self.draft_struct)
 
     class Meta:
         verbose_name = _('comment')

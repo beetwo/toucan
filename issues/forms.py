@@ -7,6 +7,9 @@ from django.contrib.gis import forms
 
 
 class CommentForm(forms.ModelForm):
+
+    toggle_status = forms.BooleanField(required=False, label=_('toggle'))
+
     class Meta:
         model = IssueComment
         fields = [

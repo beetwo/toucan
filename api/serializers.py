@@ -30,34 +30,25 @@ class CommentSerializer(serializers.ModelSerializer):
 
     user = UserSerializer(read_only=True)
 
-
     comment = serializers.SerializerMethodField()
-
-    def get_comment(self, comment):
-        return draft_struct_to_comment(comment.draft_struct)
-
-
-    detail_url =  serializers.HyperlinkedIdentityField(
-        view_name='issue_tracker_api:comment_detail',
-        lookup_url_kwarg='pk',
-        lookup_field='pk'
-    )
 
     close = serializers.BooleanField(write_only=True, required=False)
     open = serializers.BooleanField(write_only=True, required=False)
+
+    def get_comment(self, comment):
+        return comment.get_comment()
 
     class Meta:
         model = IssueComment
         fields = [
             'id',
             'user',
-            'draft_struct',
-            'comment',
-            'detail_url',
             'created',
             'modified',
+            'draft_struct',
+            'comment',
             'close',
-            'open',
+            'open'
         ]
         read_only_fields = [
             'id',
@@ -88,7 +79,9 @@ class CommentSerializer(serializers.ModelSerializer):
 
         return comment
 
+
 class StatusSerializer(serializers.ModelSerializer):
+
     user = UserSerializer(read_only=True)
 
     class Meta:

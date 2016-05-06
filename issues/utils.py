@@ -4,6 +4,7 @@ Block = namedtuple('Block', ['depth', 'entityRanges', 'inlineStyleRanges',  'key
 Entity = namedtuple('Entity', ['mutability', 'type', 'data', 'key'])
 EntityRange = namedtuple('EntityRange', ['key', 'length', 'offset'])
 
+
 def parse_draft_struct(ds):
     blocks = ds.get('blocks', [])
     em = ds.get('entityMap', {})

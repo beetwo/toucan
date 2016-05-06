@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react'
-import ReactMarkdown from 'react-markdown'
 import Timeago from 'react-timeago'
 import Icon from 'react-fa'
 import CommentEditor from '../containers/commentEditor'
@@ -12,16 +11,21 @@ import { fromJS } from 'immutable'
 export class CommentForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      editorState: CommentEditor.getEmptyEditorState(),
-      toggleState: false
-    };
+
+    this.state = this._getInitialState()
+
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleEditorStateChange = this.handleEditorStateChange.bind(this)
     this.handleStatusChange = this.handleStatusChange.bind(this)
   }
 
+  _getInitialState() {
+    return {
+      editorState: CommentEditor.getEmptyEditorState(),
+      toggleState: false
+    }
+  }
   handleSubmit(e) {
     e.preventDefault();
     let comment = {
@@ -40,9 +44,9 @@ export class CommentForm extends React.Component {
       }
     }
     this.props.onComment(comment);
-    this.setState({
-      editorState: CommentEditor.getEmptyEditorState()
-    });
+    this.setState(
+      this._getInitialState()
+    );
   }
 
   handleEditorStateChange(state) {
@@ -100,7 +104,7 @@ export class Comment extends React.Component {
         {c.user.username} commented <Timeago date={c.created} />
       </div>
       <div className="panel-body" style={{whiteSpace: 'pre-line'}}>
-        {c.comment}
+        {c.comment === '' ? <em>No comment was added.</em> : c.comment }
       </div>
     </div>);
   }

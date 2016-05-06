@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react'
 import Loading from './loading'
-import ReactMarkdown from 'react-markdown'
 import isEmpty from 'lodash/isEmpty'
 import {CommentList, CommentForm} from './comments'
 
@@ -26,15 +25,13 @@ class IssueDetailUI extends React.Component {
                     </h3>
                   </div>
                   <div className='col-md-4 text-right'>
-                    <Status status={issue.status}
-                            onOpen={this.props.openIssue.bind(this, gjs.id)}
-                            onClose={this.props.closeIssue.bind(this, gjs.id)} />
+                    <Status status={issue.status} />
                   </div>
                 </div>
                 <hr />
                 <div className="panel panel-primary">
-                    <div className="panel-body">
-                      <ReactMarkdown source={issue.description || ''} />
+                    <div className="panel-body" styles={{whiteSpace: 'pre-line'}}>
+                      {issue.description || 'This issue has no description.'}
                     </div>
                 </div>
 

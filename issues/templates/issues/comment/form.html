@@ -3,14 +3,31 @@
 <form method="post" action="{% url 'issues:comment_create' issue_id=issue.pk %}">
     {% csrf_token %}
 
-    {% bootstrap_form form %}
+    {% bootstrap_field form.comment %}
 
-    {% buttons %}
-        <button type="submit" class="btn btn-primary">
-            {% trans 'Comment' %}
-        </button>
-    {% endbuttons %}
+    <div class="row">
+        <div class="col-md-6">
+            {% if issue %}
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="toggle_status">
+                    {% if issue.status == 'open' %}
+                        {% trans 'Close issue' %}
+                    {% elif issue.status == 'closed' %}
+                        {% trans 'Re-open issue' %}
+                    {% endif %}
+                </label>
+            </div>
+            {% endif %}
+        </div>
+        <div class="col-md-6 text-right">
+            <button type="submit" class="btn btn-primary">
+                {% trans 'Comment' %}
+            </button>
+        </div>
+    </div>
 </form>
+
 {% else %}
     <p>
         {% trans 'Please login to comment.' %}
