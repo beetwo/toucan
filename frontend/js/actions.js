@@ -109,9 +109,9 @@ export function postComment(issue_id, comment) {
     let data = {
       draft_struct: comment.draft_struct,
       open: comment.open,
-      close: comment.close
+      close: comment.closed
     }
-    
+    console.log('Pre-send', data);
     jsonPost(url, data).then(response => dispatch(loadComments(issue_id)))
   }
 }

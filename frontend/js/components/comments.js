@@ -37,11 +37,12 @@ export class CommentForm extends React.Component {
     }
 
     if (this.state.toggleState) {
-      if (this.state === 'open') {
+      if (this.props.status === 'open') {
         comment.closed = true;
       } else {
-        comment.open =true;
+        comment.open = true;
       }
+      console.log(comment);
     }
     this.props.onComment(comment);
     this.setState(

@@ -101,15 +101,10 @@ function issueComments(state={
   comments: []
 }, action) {
   switch (action.type) {
-    case LOAD_COMMENTS:
-      return {
-        isLoading: true,
-        comments: []
-      }
-    case RECEIVE_COMMENTS:
+    case RECEIVE_ISSUE:
       return {
         isLoading: false,
-        comments: action.payload
+        comments: action.payload.properties.comments || []
       }
     default:
       return state
@@ -119,12 +114,13 @@ function issueComments(state={
 
 function commentsByIssueID(state={}, action) {
   switch (action.type) {
-    case LOAD_COMMENTS:
-    case RECEIVE_COMMENTS:
-    case POST_COMMENT:
+    case RECEIVE_ISSUE:
       return {
         ...state,
-        [action.issue_id]: issueComments(state[action.issue_id], action)
+        [action.issue_id]: issueComments(
+          state[action.issue_id],
+          action
+        )
       }
     default:
       return state

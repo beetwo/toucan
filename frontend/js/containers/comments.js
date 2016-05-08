@@ -4,18 +4,8 @@ import { CommentList } from '../components/comments'
 import {loadComments as loadCommentsAction} from '../actions'
 
 export class Comments extends React.Component {
-  componentWillMount() {
-    this.props.loadComments(this.props.issue_id)
-  }
-
-  componentWillReceiveProps(next_props) {
-    if (this.props.issue_id != next_props.issue_id) {
-      this.props.loadComments(next_props.issue_id)
-    }
-  }
 
   render() {
-    console.log(this.props)
     return <CommentList { ...this.props }/>
   }
 }
@@ -40,12 +30,4 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    loadComments: (issue) => {
-      dispatch(loadCommentsAction(issue))
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Comments)
+export default connect(mapStateToProps)(Comments)

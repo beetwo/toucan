@@ -62,15 +62,16 @@ class CommentSerializer(serializers.ModelSerializer):
         open = validated_data.pop('open', False)
         comment = super().create(validated_data)
 
+        current_status = comment.issue.status
         # open or close as a side effect
-        if close:
+        if close and current_status != 'closed':
             IssueStatus.objects.create(
                 user=comment.user,
                 issue=comment.issue,
                 status='closed'
             )
 
-        if open:
+        if open and current_status != 'open':
             IssueStatus.objects.create(
                 user=comment.user,
                 issue=comment.issue,
