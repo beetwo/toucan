@@ -1,38 +1,35 @@
-import Editor from 'draft-js-plugins-editor'
-import createMentionPlugin from 'draft-js-mention-plugin'
-import createLinkifyPlugin from 'draft-js-linkify-plugin';
-
-import React from 'react'
-import { EditorState, ContentState, convertToRaw, convertFromRaw  } from 'draft-js'
-
-import '../../css/editor_styles.css'
-import 'draft-js-mention-plugin/lib/plugin.css'
-
-const linkifyPlugin = createLinkifyPlugin()
-
+import twitterText from 'twitter-text'
+import React, { PropTypes } from 'react'
+import { Link } from 'react-router'
 
 class Comment extends React.Component {
   render() {
-    let mentionPlugin = createMentionPlugin({
-      //entityMutability: 'IMMUTABLE',
-      mentionPrefix: `@`,
-      mentions: this.props.users
-    })
+    let {comment} = this.props;
+    let mentions = twitterText.extractMentionsWithIndices(comment);
+    let parts = [];
+    if (mentions.length > 0) {
+      mentions.sort(function(a,b){ return a.indices[0] - b.indices[0]; });
+      let begin_index = 0;
+      let counter = 0;
 
-    let { MentionSuggestions } = mentionPlugin
-    let plugins = [mentionPlugin, linkifyPlugin]
-    let struct = convertFromRaw(this.props.content);
-    let contentState = ContentState.createFromBlockArray(struct)
-    let editorState = EditorState.createWithContent(contentState)
-    return <Editor
-        editorState={editorState}
-        plugins={plugins}
-        onChange={() => null}
-        readOnly={true}
-      />
+      mentions.forEach((value, index, mentions) => {
+        parts.push(<span key={counter++}>
+          {comment.substring(begin_index, value.indices[0])}
+          </span>
+        )
+        let username = comment.substring(value.indices[0], value.indices[1]);
+        parts.push(<Link key={counter++} to={`/users/${username}`}>{username}</Link>)
+        begin_index = value.indices[1]
+      })
+      parts.push(<span key={counter++}>{comment.substring(begin_index, comment.length)}</span>);
 
-  ;
+    }
+    return <div>{parts.length > 0 ? parts : comment}</div>;
   }
+}
+
+Comment.propTypes = {
+  comment: PropTypes.string.isRequired
 }
 
 export default Comment

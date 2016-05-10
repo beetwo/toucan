@@ -6,6 +6,7 @@ import DraftEditor, { convertToRaw, convertFromRaw } from 'draft-js'
 import concat from 'lodash/concat'
 import isEmpty from 'lodash/isEmpty'
 import { fromJS } from 'immutable'
+import CommentView from './commentView'
 
 
 export class CommentForm extends React.Component {
@@ -44,8 +45,6 @@ export class CommentForm extends React.Component {
       }
     }
 
-    console.log(comment);
-    
     this.props.onComment(comment);
     this.setState(
       this._getInitialState()
@@ -107,7 +106,7 @@ export class Comment extends React.Component {
         {c.user.username} commented <Timeago date={c.created} />
       </div>
       <div className="panel-body" style={{whiteSpace: 'pre-line'}}>
-        {c.comment === '' ? <em>No comment was added.</em> : c.comment }
+        {c.comment === '' ? <em>No comment was added.</em> : <CommentView comment={c.comment} /> }
       </div>
     </div>);
   }
