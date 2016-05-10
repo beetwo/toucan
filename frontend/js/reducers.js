@@ -5,6 +5,7 @@ import {
   SELECT_ISSUE,
   REQUEST_ISSUE,
   RECEIVE_ISSUE,
+  INVALIDATE_ISSUE,
   SET_COORDINATES,
   LOAD_COMMENTS,
   POST_COMMENT,
@@ -59,6 +60,11 @@ function issueDetail(state = {
           didInvalidate: false,
           issue_data: action.payload
         }
+      case INVALIDATE_ISSUE:
+        return {
+          ...state,
+          didInvalidate: true
+        }
       default:
         return state
     }
@@ -69,6 +75,7 @@ function issueDetails(state={}, action) {
     case SELECT_ISSUE:
     case REQUEST_ISSUE:
     case RECEIVE_ISSUE:
+    case INVALIDATE_ISSUE:
       return {
         ...state,
         [action.issue_id]: issueDetail(state[action.issue_id], action)

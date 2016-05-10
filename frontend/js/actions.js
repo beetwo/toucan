@@ -7,6 +7,7 @@ export const RECEIVE_ISSUES = 'RECEIVE_ISSUES'
 export const SELECT_ISSUE = 'SELECT_ISSUE'
 export const REQUEST_ISSUE = 'REQUEST_ISSUE'
 export const RECEIVE_ISSUE = 'RECEIVE_ISSUE'
+export const INVALIDATE_ISSUE = 'INVALIDATE_ISSUE'
 
 export const SET_COORDINATES = 'SET_COORDINATES'
 export const RESET_COORDINATES = 'RESET_COORDINATES'
@@ -62,6 +63,13 @@ export function receiveIssue(issue_id, json) {
     }
 }
 
+export function invalidateIssue(issue_id) {
+    return {
+        type: INVALIDATE_ISSUE,
+        issue_id
+    }
+}
+
 export function fetchIssueIfNeeded(issue_id) {
     return (dispatch, getState) => {
         dispatch(selectIssue(issue_id))
@@ -111,8 +119,10 @@ export function postComment(issue_id, comment) {
       open: comment.open,
       close: comment.closed
     }
-    console.log('Pre-send', data);
-    jsonPost(url, data).then(response => dispatch(loadComments(issue_id)))
+    jsonPost(url, data)
+      .then(
+        response => dispatch(invalidateIssue(issue_id))
+      )
   }
 }
 

@@ -1,6 +1,8 @@
 var path = require("path");
 var webpack = require('webpack');
 var BundleTracker = require('webpack-bundle-tracker');
+var precss       = require('precss');
+var autoprefixer = require('autoprefixer');
 
 module.exports = {
     context: __dirname,
@@ -37,8 +39,8 @@ module.exports = {
     resolve: {extensions: ['', '.js']},
     module: {
         loaders: [
-            {test: /\.css$/, loaders: ['style', 'css']},
-            {test: /\.scss$/, loaders: ['style', 'css','sass']},
+            {test: /\.css$/, loaders: ['style', 'css', 'postcss']},
+            {test: /\.scss$/, loaders: ['style', 'css', 'postcss', 'sass']},
             {
                 test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                 loader: "url?limit=10000"
@@ -73,4 +75,7 @@ module.exports = {
             }
         ],
     },
+    postcss: function () {
+      return [precss, autoprefixer];
+    }
 }

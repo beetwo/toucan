@@ -40,9 +40,9 @@ const history = syncHistoryWithStore(browserHistory, store)
 render(
   <Provider store={store}>
     <Router history={history}>
-      <Route path="/" component={App}>
-        <IndexRoute component={IssueList} />
-        <Route path="issue/:IssueID" component={IssueDetail} />
+      <Route path="/" component={App} name='issueList' >
+        <IndexRoute component={IssueList} name='issueListIndex'/>
+        <Route path="issue/:IssueID" component={IssueDetail} name='issueDetail'/>
       </Route>
     </Router>
   </Provider>,

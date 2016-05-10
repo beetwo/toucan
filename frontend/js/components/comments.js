@@ -42,8 +42,10 @@ export class CommentForm extends React.Component {
       } else {
         comment.open = true;
       }
-      console.log(comment);
     }
+
+    console.log(comment);
+    
     this.props.onComment(comment);
     this.setState(
       this._getInitialState()

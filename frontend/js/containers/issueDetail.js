@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
 import { connect } from 'react-redux'
 import IssueDetailUI from '../components/issueDetail'
-import { fetchIssueIfNeeded, postComment, closeIssue, openIssue } from '../actions'
+import { fetchIssueIfNeeded, postComment, invalidateIssue } from '../actions'
 import Comments from './comments'
 
 import isEmpty from 'lodash/isEmpty'
@@ -9,12 +9,15 @@ import isEmpty from 'lodash/isEmpty'
 class IssueDetailContainer extends React.Component {
 
   componentWillMount() {
-    this.props.loadIssue(this.props.issueID)
+    this.props.loadIssue()
   }
 
   componentWillReceiveProps(next_props) {
-    if (next_props.issueID != this.props.issueID) {
-      this.props.loadIssue(next_props.issueID)
+    if (
+      (next_props.issueID != this.props.issueID) ||
+      next_props.issue.didInvalidate
+    ) {
+      this.props.loadIssue()
     }
   }
 
@@ -37,19 +40,18 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
+  let issue_id = parseInt(ownProps.routeParams.IssueID, 10);
+
   return {
-    loadIssue: (issue) => {
-      dispatch(fetchIssueIfNeeded(issue))
+    loadIssue: () => {
+      dispatch(fetchIssueIfNeeded(issue_id))
     },
-    onComment: (issue_id, comment) => {
+    onComment: (comment) => {
       dispatch(postComment(issue_id, comment));
     },
-    closeIssue: (issue_id) => {
-      dispatch(closeIssue(issue_id))
-    },
-    openIssue: (issue_id) => {
-      dispatch(openIssue(issue_id))
+    invalidateIssue: () => {
+      dispatch(invalidateIssue(issue_id));
     }
 
   }
