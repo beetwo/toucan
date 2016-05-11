@@ -5,7 +5,7 @@ DEBUG = True
 INSTALLED_APPS += [
     'webpack_loader',
     'django_extensions',
-    'debug_toolbar',
+    # 'debug_toolbar',
 ]
 
 STATICFILES_DIRS += [
@@ -24,6 +24,21 @@ WEBPACK_LOADER = {
 }
 
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO'
+        },
+    },
+}
 
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'

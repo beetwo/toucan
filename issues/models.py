@@ -7,7 +7,12 @@ from django.contrib.auth import get_user_model
 from model_utils import Choices
 from model_utils.models import TimeStampedModel
 
+from ttp import ttp
+
 from .utils import parse_draft_struct, draft_struct_to_comment
+
+
+TwitterParser = ttp.Parser()
 
 class IssueType(TimeStampedModel):
     name = models.CharField(max_length=50)
@@ -79,6 +84,7 @@ class Issue(TimeStampedModel):
         verbose_name = _('issue')
         verbose_name_plural = _('issues')
         ordering = ('-created',)
+        get_latest_by = 'created'
 
     def __str__(self):
         return self.title
@@ -101,10 +107,9 @@ class IssueComment(AbstractIssueRelatedModel):
     draft_struct = JSONField(default=dict, blank=True)
 
     def get_mentions(self):
-        blocks, entities = parse_draft_struct(self.draft_struct)
-        entities = filter(lambda x: x.type == 'mention', entities)
-        names = set([e.data['mention']['name'] for e in entities])
-        return names
+        text = self.get_comment()
+        results = TwitterParser.parse(text)
+        return results.users
 
     def get_comment(self):
         if self.comment:
@@ -115,6 +120,7 @@ class IssueComment(AbstractIssueRelatedModel):
     class Meta:
         verbose_name = _('comment')
         verbose_name_plural = _('comments')
+        get_latest_by = 'created'
 
     def __str__(self):
         return 'Comment by user %s on issue #%d' % (self.user.username, self.issue_id)
@@ -134,4 +140,4 @@ class IssueStatus(AbstractIssueRelatedModel):
     class Meta:
         verbose_name = _('issue status')
         verbose_name_plural = _('issue statuses')
-        get_latest_by = ('created')
+        get_latest_by = 'created'

@@ -1,8 +1,7 @@
 from channels.routing import route
-from notifications.consumers import ws_message, ws_add, ws_disconnect
+from notifications.consumers import parse_mentions, send_comment_notification
 
 channel_routing = [
-    route("websocket.receive", ws_message),
-    route("websocket.connect", ws_add),
-    route("websocket.disconnect", ws_disconnect),
+    route("notifications.parse_mentions", parse_mentions),
+    route("notifications.send_comment_notification", send_comment_notification)
 ]

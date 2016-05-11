@@ -21,8 +21,7 @@ module.exports = {
             'react-router',
             'react-fa'
         ],
-        b2MapSelector: './js/location_selector',
-        editor: './js/misc/mention'
+        b2MapSelector: './js/location_selector'
     },
     output: {
         path: path.resolve('./build/'),

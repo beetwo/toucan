@@ -69,7 +69,8 @@ export class CommentForm extends React.Component {
 
   render() {
 
-    return (<form onSubmit={this.handleSubmit} ref={(e) => this._form =e }>
+    return (<div className='commentForm'>
+    <form onSubmit={this.handleSubmit} ref={(e) => this._form =e }>
         <CommentEditor onStateChange={this.handleEditorStateChange} editorState={this.state.editorState}/>
       <div className='form-group text-right'>
         <div className="checkbox pull-left">
@@ -84,8 +85,8 @@ export class CommentForm extends React.Component {
            Comment
          </button>
       </div>
-  </form>);
-
+  </form>
+  </div>);
   }
 }
 

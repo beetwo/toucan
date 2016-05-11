@@ -1,6 +1,5 @@
-Django>=1.9
-channels>=0.10
-asgi_redis>=0.9
+Django==1.9.6
+channels==0.13.0
 django-model-utils==2.4
 django-allauth==0.25.2
 django-location-field==1.6.1
@@ -14,3 +13,4 @@ django-filter==0.13.0
 django-imagekit==3.3
 Pillow==3.2.0
 nexmo==1.0.3
+twitter-text-python==1.1.0

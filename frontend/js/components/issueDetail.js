@@ -9,9 +9,6 @@ import Status from './status'
 
 
 class IssueDetailsMain extends React.Component {
-  constructor(props) {
-    super(props)
-  }
 
   render() {
     let {gjs, issue, children} = this.props;
@@ -65,10 +62,8 @@ class IssueDetailUI extends React.Component {
             </ol>
 
             <IssueDetailsMain {...this.props} gjs={gjs} issue={issue} />
-
-            <div className='issueDetailBottom'>
-              <CommentForm onComment={this.props.onComment} status={issue.status}/>
-            </div>
+            <CommentForm onComment={this.props.onComment} status={issue.status}/>
+            
           </div>);
   }
 }

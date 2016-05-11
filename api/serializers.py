@@ -4,6 +4,7 @@ from rest_framework_gis.serializers import GeoFeatureModelSerializer
 from rest_framework import serializers
 from rest_framework.reverse import reverse
 from issues.utils import draft_struct_to_comment
+from channels import Channel
 
 class UserSerializer(serializers.ModelSerializer):
 
@@ -77,6 +78,12 @@ class CommentSerializer(serializers.ModelSerializer):
                 issue=comment.issue,
                 status='open'
             )
+
+        msg = {
+            'pk': comment.pk
+        }
+
+        Channel('notifications.parse_mentions').send(msg)
 
         return comment
 
@@ -168,5 +175,3 @@ class FullIssueSerializer(IssueSerializer):
             'status_changes',
             'users'
         ]
-
-
