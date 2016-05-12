@@ -63,7 +63,7 @@ class IssueDetailUI extends React.Component {
 
             <IssueDetailsMain {...this.props} gjs={gjs} issue={issue} />
             <CommentForm onComment={this.props.onComment} status={issue.status}/>
-            
+
           </div>);
   }
 }

@@ -78,7 +78,6 @@ export class LeafletMap extends React.Component {
         this.handleClick = this.handleClick.bind(this);
         this.handleMove = this.handleMove.bind(this);
         this.handleRightClick = this.handleRightClick.bind(this);
-        this.handleMarkerClick = this.handleMarkerClick.bind(this);
         this.handleAddMarkerPositionChange = this.handleAddMarkerPositionChange.bind(this);
     }
 
@@ -98,8 +97,8 @@ export class LeafletMap extends React.Component {
     handlePopupClose(e) {}
     handleClick(e) {}
     handleMove(e) {}
+
     handleMarkerClick (issue) {
-      //this.props.selectIssue(issue.id);
       browserHistory.push(`/issue/${issue.id}`);
     }
 

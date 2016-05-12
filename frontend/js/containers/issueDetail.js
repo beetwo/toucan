@@ -9,7 +9,7 @@ import isEmpty from 'lodash/isEmpty'
 class IssueDetailContainer extends React.Component {
 
   componentWillMount() {
-    this.props.loadIssue()
+    this.props.loadIssue(this.props.issueID);
   }
 
   componentWillReceiveProps(next_props) {
@@ -17,7 +17,7 @@ class IssueDetailContainer extends React.Component {
       (next_props.issueID != this.props.issueID) ||
       next_props.issue.didInvalidate
     ) {
-      this.props.loadIssue()
+      this.props.loadIssue(next_props.issueID)
     }
   }
 
@@ -29,7 +29,8 @@ class IssueDetailContainer extends React.Component {
 }
 
 IssueDetailContainer.propTypes = {
-  issue: PropTypes.object.isRequired
+  issue: PropTypes.object.isRequired,
+  issueID: PropTypes.number.isRequired
 }
 
 const mapStateToProps = (state, ownProps) => {
@@ -41,10 +42,8 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  let issue_id = parseInt(ownProps.routeParams.IssueID, 10);
-
   return {
-    loadIssue: () => {
+    loadIssue: (issue_id) => {
       dispatch(fetchIssueIfNeeded(issue_id))
     },
     onComment: (comment) => {

@@ -6,7 +6,6 @@ require('../../css/app.css');
 class UI extends React.Component {
 
     render() {
-        console.log(this.props);
         return (<div className="app-container">
             <div className="map-container">
               <Map geojson={this.props.geojson}
