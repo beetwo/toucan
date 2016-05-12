@@ -14,6 +14,11 @@ from .utils import parse_draft_struct, draft_struct_to_comment
 
 TwitterParser = ttp.Parser()
 
+ISSUE_STATUS_CHOICES = Choices(
+    ('open', _('open')),
+    ('closed', _('closed'))
+)
+
 class IssueType(TimeStampedModel):
     name = models.CharField(max_length=50)
     slug = models.SlugField()
@@ -39,6 +44,8 @@ class Issue(TimeStampedModel):
         (3, 'public', _('public')),
     )
 
+    STATUS_CHOICES = ISSUE_STATUS_CHOICES
+
     title = models.CharField(
         max_length=300,
         verbose_name=_('issue title')
@@ -62,6 +69,20 @@ class Issue(TimeStampedModel):
 
     priority = models.SmallIntegerField(choices=PRIORITY_CHOICES, default=1)
     visibility = models.SmallIntegerField(choices=VISIBILITY_CHOICES, default=3)
+
+    current_status = models.CharField(
+        choices=STATUS_CHOICES,
+        max_length=10,
+        db_index=True,
+        default='open',
+        verbose_name=_('issue status')
+    )
+
+    def update_status(self):
+        status = self.status
+        if self.current_status != status:
+            self.current_status = status
+            self.save()
 
     @property
     def users(self):
@@ -130,10 +151,7 @@ class IssueStatus(AbstractIssueRelatedModel):
 
     issue = models.ForeignKey(Issue, related_name='status_changes')
 
-    STATUS_CHOICES = Choices(
-        ('open', _('open')),
-        ('closed', _('closed'))
-    )
+    STATUS_CHOICES = ISSUE_STATUS_CHOICES
 
     status = models.CharField(max_length=10, db_index=True, choices=STATUS_CHOICES)
 

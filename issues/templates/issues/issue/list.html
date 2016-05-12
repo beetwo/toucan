@@ -52,7 +52,7 @@
                 {{ issue.organisation.name }}
             </td>
             <td>
-                {% include 'issues/issue/status.html' with status=issue.status.latest|default:None %}
+                {% include 'issues/issue/status.html' with status=issue.current_status|default:'open' %}
             </td>
             <td>
                 {{ issue.comment_count }}

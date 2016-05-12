@@ -38,9 +38,18 @@ class HomeView(TemplateView):
 
 class IssueFilter(django_filters.FilterSet):
 
+    current_status = django_filters.ChoiceFilter(
+        choices=Issue.STATUS_CHOICES,
+        initial='open'
+    )
+
     class Meta:
         model = Issue
-        fields = ['issue_type', 'organisation']
+        fields = [
+            'issue_type',
+            'organisation',
+            'current_status'
+        ]
 
 
 class IssueList(FilterView):
@@ -165,7 +174,6 @@ class CommentCreateView(LoginRequiredMixin, FormValidMessageMixin, BaseIssueMixi
 
     def get_form_class(self):
         fc = super().get_form_class()
-        print(fc)
         return fc
 
     def form_valid(self, form):
