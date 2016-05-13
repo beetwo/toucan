@@ -97,6 +97,9 @@ class IssueListUI extends React.Component {
                 <td>
                   {issue.issue_type.name}
                 </td>
+                {/*}<td>
+                  {JSON.stringify(issue)}
+                </td>*/}
                 <td>
                   <sup>
                     { CommentCount(issue.comment_count) }

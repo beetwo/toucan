@@ -11,8 +11,13 @@ def set_status_choice(apps, schema_editor):
         IssueStatus = apps.get_model('issues', 'IssueStatus')
 
         for issue in Issue.objects.all():
-            issue_status = IssueStatus.objects.filter(issue=issue).latest('created')
-            issue.current_status = issue_status.status
+            try:
+                issue_status = IssueStatus.objects.filter(issue=issue).latest('created')
+            except IssueStatus.DoesNotExist:
+                issue.current_status = 'open'
+            else:
+                issue.current_status = issue_status.status
+                
             issue.save()
 
 
