@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react'
 import { connect } from 'react-redux'
 import UI from '../components/main'
+import getFilteredIssues from '../issueSelector'
 
 import { selectIssue, fetchIssues, setCoordinates, resetCoordinates } from '../actions'
 
@@ -27,7 +28,8 @@ IssueTrackerApp.propType = {
 
 const mapStateToProps = (state) => {
   return {
-    issues: state.redux_issues,
+    allIssues: state.redux_issues,
+    issues: getFilteredIssues(state.redux_issues, state.issueFilters.selections),
     geojson: state.geojson,
     selectedIssue: state.selectedIssue,
     coordinates: state.coordinates

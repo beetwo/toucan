@@ -104,12 +104,13 @@ export class LeafletMap extends React.Component {
 
     render() {
 
-        const {geojson, coordinates} = this.props;
+        const {geojson, coordinates, visibleIssueIDs} = this.props;
         const has_coordinates = !isEmpty(coordinates);
 
         if (isEmpty(geojson)) {
           return null;
         }
+
 
         let locations = geojson.features.map((p) => {
             return {
@@ -118,6 +119,7 @@ export class LeafletMap extends React.Component {
                 ...p.properties
             };
         });
+        locations = locations.filter((l) => visibleIssueIDs.indexOf(l.id) != -1);
 
         // optionally center the map if there is an active marker
         let center = null;
@@ -167,6 +169,7 @@ export class LeafletMap extends React.Component {
 
 LeafletMap.propTypes = {
   geojson: PropTypes.object.isRequired,
+  visibleIssueIDs: PropTypes.array.isRequired,
   coordinates: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.bool

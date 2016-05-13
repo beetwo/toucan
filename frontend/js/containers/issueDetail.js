@@ -2,7 +2,10 @@ import React, {PropTypes} from 'react'
 import { connect } from 'react-redux'
 import IssueDetailUI from '../components/issueDetail'
 import { fetchIssueIfNeeded, postComment, invalidateIssue } from '../actions'
+import { addIssueFilter, removeIssueFilter} from '../actions'
+
 import Comments from './comments'
+import IssuesFilter from './issuesFilter'
 
 import isEmpty from 'lodash/isEmpty'
 
@@ -46,13 +49,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     loadIssue: (issue_id) => {
       dispatch(fetchIssueIfNeeded(issue_id))
     },
-    onComment: (comment) => {
+    onComment: (issue_id, comment) => {
       dispatch(postComment(issue_id, comment));
     },
-    invalidateIssue: () => {
+    invalidateIssue: (issue_id) => {
       dispatch(invalidateIssue(issue_id));
     }
-
   }
 }
 

@@ -9,8 +9,12 @@ import {
   SET_COORDINATES,
   LOAD_COMMENTS,
   POST_COMMENT,
-  RECEIVE_COMMENTS
+  RECEIVE_COMMENTS,
+  ADD_ISSUES_FILTER,
+  REMOVE_ISSUES_FILTER
  } from './actions';
+
+import uniq from 'lodash/uniq'
 
 function issues(state=[], action) {
   switch (action.type) {
@@ -161,9 +165,73 @@ function usersByIssueID(state={}, action) {
   }
 }
 
+
+function issueFiltersOptions(state={}, action) {
+  switch (action.type) {
+    case RECEIVE_ISSUES:
+      return {
+          ...state,
+          status: uniq(action.issues.features.map((i) => i.properties.status)),
+          type: uniq(action.issues.features.map((i) =>  i.properties.issue_type.slug))
+      }
+    default:
+      return state
+  }
+}
+
+function issueFiltersSelections(state, action) {
+  let {property, value} = action.filter;
+  let cs = [...state[property]];
+  let s = {
+    ...state
+  };
+  switch (action.type) {
+    case ADD_ISSUES_FILTER:
+        if (cs.indexOf(value) === -1) {
+          cs.push(value)
+        }
+        s[property] = cs
+        return s
+    case REMOVE_ISSUES_FILTER:
+        s[property] = cs.filter((x) => x != value)
+        return s
+    default:
+      return state
+  }
+}
+
+function issueFilters(state={
+    options: {
+      status: [],
+      type: []
+    },
+    selections: {
+      status: ['open'],
+      type: []
+    }
+  }, action) {
+  switch (action.type) {
+    case RECEIVE_ISSUES:
+      return {
+        ...state,
+        options: issueFiltersOptions(state.options, action)
+      }
+    case ADD_ISSUES_FILTER:
+    case REMOVE_ISSUES_FILTER:
+      return {
+        ...state,
+        selections: issueFiltersSelections(state.selections, action)
+      }
+    default:
+      return state
+  }
+}
+
+
 const reducers = {
   geojson,
   redux_issues: issues,
+  issueFilters,
   selectedIssue,
   issueDetails,
   coordinates,

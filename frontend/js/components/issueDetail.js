@@ -21,7 +21,9 @@ class IssueDetailsMain extends React.Component {
           </h3>
         </div>
         <div className='col-md-4 text-right'>
-          <Status status={issue.status} />
+          <h3>
+            <Status status={issue.status} />
+          </h3>
         </div>
       </div>
       <hr />
@@ -62,7 +64,7 @@ class IssueDetailUI extends React.Component {
             </ol>
 
             <IssueDetailsMain {...this.props} gjs={gjs} issue={issue} />
-            <CommentForm onComment={this.props.onComment} status={issue.status}/>
+            <CommentForm onComment={this.props.onComment.bind(this, gjs.id)} status={issue.status}/>
 
           </div>);
   }

@@ -70,23 +70,23 @@ export class CommentForm extends React.Component {
   render() {
 
     return (<div className='commentForm'>
-    <form onSubmit={this.handleSubmit} ref={(e) => this._form =e }>
+      <form onSubmit={this.handleSubmit} ref={(e) => this._form =e }>
         <CommentEditor onStateChange={this.handleEditorStateChange} editorState={this.state.editorState}/>
-      <div className='form-group text-right'>
-        <div className="checkbox pull-left">
-                     <label>
-                       <input type="checkbox" checked={this.state.toggleState} onChange={this.handleStatusChange}/>
-                       <small>
-                         { this.props.status == 'open' ? 'close issue' : 're-open issue' }
-                       </small>
-                     </label>
-         </div>
-         <button className='btn btn-sm btn-primary' type='submit'>
-           Comment
-         </button>
-      </div>
-  </form>
-  </div>);
+        <div className='form-group text-right'>
+          <div className="checkbox pull-left">
+                       <label>
+                         <input type="checkbox" checked={this.state.toggleState} onChange={this.handleStatusChange}/>
+                         <small>
+                           { this.props.status == 'open' ? 'close issue' : 're-open issue' }
+                         </small>
+                       </label>
+           </div>
+           <button className='btn btn-sm btn-primary' type='submit'>
+             Comment
+           </button>
+        </div>
+      </form>
+    </div>);
   }
 }
 
@@ -153,10 +153,6 @@ export class CommentList extends React.Component {
         }
       })
     )
-  }
-
-  constructor(props) {
-    super(props)
   }
 
   render() {

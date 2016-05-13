@@ -18,6 +18,9 @@ export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS'
 
 export const CHANGE_ISSUE_STATUS = 'CHANGE_ISSUE_STATUS'
 
+export const ADD_ISSUES_FILTER = 'ADD_ISSUES_FILTER'
+export const REMOVE_ISSUES_FILTER = 'REMOVE_ISSUES_FILTER'
+
 export function requestIssues() {
   return {
     type: REQUEST_ISSUES
@@ -39,6 +42,26 @@ export function fetchIssues() {
             .then(response => response.json())
             .then(json => dispatch(receiveIssues(json)))
     }
+}
+
+export function addIssueFilter(property, value) {
+  return {
+    type: ADD_ISSUES_FILTER,
+    filter: {
+      'property': property,
+      'value': value
+    }
+  }
+}
+
+export function removeIssueFilter(property, value) {
+  return {
+    type: REMOVE_ISSUES_FILTER,
+    filter: {
+      'property': property,
+      'value': value
+    }
+  }
 }
 
 export function selectIssue(issue_id) {
