@@ -17,7 +17,7 @@ def set_status_choice(apps, schema_editor):
                 issue.current_status = 'open'
             else:
                 issue.current_status = issue_status.status
-                
+
             issue.save()
 
 

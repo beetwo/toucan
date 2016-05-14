@@ -4,14 +4,11 @@ import classNames from 'classnames'
 import Status from './status'
 
 
-function CommentCount(count) {
-  if (count > 0) {
-    return (<span className="fa-stack fa-lg">
-      <Icon name='comment-o' stack='2x' />
-      <strong className="fa-stack-1x">{count}</strong>
+function CommentCount({count}) {
+    return (<span className={classNames({'text-muted': count === 0})}>
+        <Icon name='comment-o' size='lg'/>
+        { count === 0 ? count : <strong>{count}</strong>}
     </span>);
-  }
-  return null;
 }
 
 
@@ -88,9 +85,9 @@ class IssueListUI extends React.Component {
 
         let rows = issues.map((issue, index) => {
             return (
-              <tr key={issue.id}>
+              <tr key={issue.id} onClick={(e) => {e.preventDefault(); this.props.handleIssueChange(issue)}}>
                 <td>
-                    <a href='#' onClick={(e) => {e.preventDefault(); this.props.handleIssueChange(issue)}}>
+                    <a href='#'>
                       {issue.title}
                     </a>
                 </td>
@@ -101,9 +98,7 @@ class IssueListUI extends React.Component {
                   {JSON.stringify(issue)}
                 </td>*/}
                 <td>
-                  <sup>
-                    { CommentCount(issue.comment_count) }
-                  </sup>
+                    <CommentCount count={issue.comment_count} />
                 </td>
                 <td>
                   <Status status={issue.status} />
@@ -114,7 +109,7 @@ class IssueListUI extends React.Component {
           <div>
             <IssueFilter {...this.props} filterOptions={this.props.filterOptions}/>
             <hr />
-            <table className="table">
+            <table className="issues table table-hover">
             <tbody>
                 {rows}
             </tbody>
