@@ -7,6 +7,7 @@ import concat from 'lodash/concat'
 import isEmpty from 'lodash/isEmpty'
 import { fromJS } from 'immutable'
 import CommentView from './commentView'
+import UserLink from './userLink'
 
 
 export class CommentForm extends React.Component {
@@ -104,7 +105,7 @@ export class Comment extends React.Component {
     let lines = c.comment.split('\n')
     return (<div className='panel panel-default'>
       <div className='panel-heading'>
-        {c.user.username} commented <Timeago date={c.created} />
+        <UserLink username={c.user.username} /> commented <Timeago date={c.created} />
       </div>
       <div className="panel-body" style={{whiteSpace: 'pre-line'}}>
         {c.comment === '' ? <em>No comment was added.</em> : <CommentView comment={c.comment} /> }

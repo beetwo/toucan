@@ -1,12 +1,13 @@
 import twitterText from 'twitter-text'
 import React, { PropTypes } from 'react'
-import { Link } from 'react-router'
+import UserLink from './userLink'
 
 class Comment extends React.Component {
   render() {
     let {comment} = this.props;
     let mentions = twitterText.extractMentionsWithIndices(comment);
     let parts = [];
+    
     if (mentions.length > 0) {
       mentions.sort(function(a,b){ return a.indices[0] - b.indices[0]; });
       let begin_index = 0;
@@ -18,7 +19,7 @@ class Comment extends React.Component {
           </span>
         )
         let username = comment.substring(value.indices[0], value.indices[1]);
-        parts.push(<Link key={counter++} to={`/users/${username}`}>{username}</Link>)
+        parts.push(<UserLink key={counter++} username={username} />)
         begin_index = value.indices[1]
       })
       parts.push(<span key={counter++}>{comment.substring(begin_index, comment.length)}</span>);

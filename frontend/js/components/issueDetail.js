@@ -4,7 +4,8 @@ import Loading from './loading'
 import isEmpty from 'lodash/isEmpty'
 import {CommentList, CommentForm} from './comments'
 import { Link } from 'react-router'
-
+import Timeago from 'react-timeago'
+import UserLink from './userLink'
 import Status from './status'
 
 
@@ -12,6 +13,7 @@ class IssueDetailsMain extends React.Component {
 
   render() {
     let {gjs, issue, children} = this.props;
+
     return <div className='issueDetailMain' ref='scrollbar'>
       <div className='row'>
         <div className='col-md-8'>
@@ -28,6 +30,9 @@ class IssueDetailsMain extends React.Component {
       </div>
       <hr />
       <div className="panel panel-primary">
+          <div className="panel-heading">
+            created by <UserLink username={ issue.creator.username } /> <Timeago date={issue.created} />
+          </div>
           <div className="panel-body" style={{whiteSpace: 'pre-line'}}>
             {issue.description || 'This issue has no description.'}
           </div>
