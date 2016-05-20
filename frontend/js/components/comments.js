@@ -13,7 +13,6 @@ import UserLink from './userLink'
 export class CommentForm extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = this._getInitialState()
 
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -98,11 +97,7 @@ CommentForm.propTypes = {
 
 export class Comment extends React.Component {
   render() {
-    let c = this.props.comment
-    if (isEmpty(c.draft_struct)) {
-      return null;
-    }
-    let lines = c.comment.split('\n')
+    let c = this.props.comment;
     return (<div className='panel panel-default'>
       <div className='panel-heading'>
         <UserLink username={c.user.username} /> commented <Timeago date={c.created} />

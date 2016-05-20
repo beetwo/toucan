@@ -33,8 +33,14 @@
             <h4 class="media-heading">
                 <a href="{{ org_detail_url }}">
                 {{ org.name }}
+                {% if org.short_name %}
+                    (@{{ org.short_name }})
+                {% endif %}
                 </a>
+
             </h4>
+
+
 
             <p>
                 {% trans 'Members' %}: {{ org.active_memberships.count }}

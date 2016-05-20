@@ -156,6 +156,8 @@ class IssueSerializer(GeoFeatureModelSerializer):
 
 class FullIssueSerializer(IssueSerializer):
 
+    issue_type = IssueTypeSerializer(read_only=True)
+
     comment_url = serializers.SerializerMethodField()
     comments = CommentSerializer(many=True, read_only=True)
 
@@ -199,4 +201,5 @@ class FullIssueSerializer(IssueSerializer):
             'users',
             'creator',
             'created',
+            'issue_type',
         ]

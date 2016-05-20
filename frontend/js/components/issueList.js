@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import Icon from 'react-fa'
 import classNames from 'classnames'
 import Status from './status'
-
+import getIconClassForIssueType from './icons/issueType'
 
 function CommentCount({count}) {
     return (<span className={classNames({'text-muted': count === 0})}>
@@ -41,7 +41,8 @@ class IssueFilter extends React.Component {
           return <li key={k + '-choice-' + c}>
             <a href='#' onClick={this.handleToggle.bind(this, k, c, !active)}>
               { active ? <Icon name='check' /> : ' ' } &nbsp;
-              {c}
+              {c}&nbsp;
+              { k === 'type' ? <Icon name={getIconClassForIssueType({slug: c})} /> : null }
             </a>
           </li>
         })
@@ -86,6 +87,9 @@ class IssueListUI extends React.Component {
         let rows = issues.map((issue, index) => {
             return (
               <tr key={issue.id} onClick={(e) => {e.preventDefault(); this.props.handleIssueChange(issue)}}>
+                <td>
+                  { issue.issue_type ? <Icon name={getIconClassForIssueType(issue.issue_type)} /> : null }
+                </td>
                 <td>
                     <a href='#'>
                       {issue.title}

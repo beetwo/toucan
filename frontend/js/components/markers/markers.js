@@ -1,5 +1,6 @@
 import  Leaflet  from 'leaflet';
 import { Marker } from 'react-leaflet';
+import getIconClassForIssueType from '../icons/issueType'
 
 require('Leaflet.extra-markers/src/assets/css/leaflet.extra-markers.css')
 let extraMarkers = require('Leaflet.extra-markers/src/assets/js/leaflet.extra-markers')
@@ -17,19 +18,7 @@ const defaulIconProps = {
 
 function getMarkerForIssue(issue={}, opts={}) {
   let attribs = {}
-  if (issue.issue_type && issue.issue_type.slug) {
-    switch (issue.issue_type.slug) {
-      case 'medical':
-        attribs.icon = 'fa-plus-square';
-        break;
-      case 'general':
-        attribs.icon = 'fa-question';
-        break;
-      default:
-        console.warn('Unknown issue type encountered ', issue.issue_type.slug)
-        break;
-    }
-  }
+  attribs.icon = getIconClassForIssueType(issue.issue_type, 'fa-');
 
   return Leaflet.ExtraMarkers.icon({
     ...defaulIconProps,

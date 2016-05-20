@@ -7,24 +7,26 @@ import { Link } from 'react-router'
 import Timeago from 'react-timeago'
 import UserLink from './userLink'
 import Status from './status'
+import Icon from 'react-fa'
+import getIconClassForIssueType from './icons/issueType'
 
 
 class IssueDetailsMain extends React.Component {
 
   render() {
     let {gjs, issue, children} = this.props;
-
     return <div className='issueDetailMain' ref='scrollbar'>
       <div className='row'>
         <div className='col-md-8'>
           <h3>
             <span className='text-muted'>#{gjs.id}:</span>&nbsp;
+            { issue.issue_type ? <Icon name={getIconClassForIssueType(issue.issue_type)} /> : null }&nbsp;
             {issue.title}
           </h3>
         </div>
         <div className='col-md-4 text-right'>
           <h3>
-            <Status status={issue.status} />
+            <Status status={issue.status} />&nbsp;
           </h3>
         </div>
       </div>
