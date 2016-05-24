@@ -26,21 +26,24 @@ class IssueDetailContainer extends React.Component {
 
   render() {
     return <IssueDetailUI { ...this.props } >
-      <Comments issue_id={this.props.issueID} />
+      <Comments issue_id={this.props.issueID} users={this.props.usernames}/>
     </IssueDetailUI>
   }
 }
 
 IssueDetailContainer.propTypes = {
   issue: PropTypes.object.isRequired,
-  issueID: PropTypes.number.isRequired
+  issueID: PropTypes.number.isRequired,
+  users: PropTypes.array.isRequired
 }
 
 const mapStateToProps = (state, ownProps) => {
   let issue_id = parseInt(ownProps.routeParams.IssueID, 10);
+  let issue = state.issueDetails[issue_id] || {};
   return {
-    issue: state.issueDetails[issue_id] || {},
-    issueID: issue_id
+    issue ,
+    issueID: issue_id,
+    users: state.allUsers
   }
 }
 

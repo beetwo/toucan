@@ -26,7 +26,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     comments: comment_struct.comments || [],
     statusChanges: state.statusChangesByIssueID[issue_id] || [],
-    users: state.usersByIssueID[issue_id] || []
+    users: state.allUsers
   }
 }
 

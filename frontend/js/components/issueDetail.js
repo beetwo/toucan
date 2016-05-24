@@ -19,8 +19,8 @@ class IssueDetailsMain extends React.Component {
       <div className='row'>
         <div className='col-md-8'>
           <h3>
-            <span className='text-muted'>#{gjs.id}:</span>&nbsp;
             { issue.issue_type ? <Icon name={getIconClassForIssueType(issue.issue_type)} /> : null }&nbsp;
+            <span className='text-muted'>#{gjs.id}:</span>&nbsp;
             {issue.title}
           </h3>
         </div>
@@ -71,8 +71,7 @@ class IssueDetailUI extends React.Component {
             </ol>
 
             <IssueDetailsMain {...this.props} gjs={gjs} issue={issue} />
-            <CommentForm onComment={this.props.onComment.bind(this, gjs.id)} status={issue.status}/>
-
+            <CommentForm onComment={this.props.onComment.bind(this, gjs.id)} status={issue.status} users={this.props.users}/>
           </div>);
   }
 }

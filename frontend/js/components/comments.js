@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react'
 import Timeago from 'react-timeago'
 import Icon from 'react-fa'
 import CommentEditor from '../containers/commentEditor'
-import DraftEditor, { convertToRaw, convertFromRaw } from 'draft-js'
+import DraftEditor, { convertToRaw, convertFromRaw, EditorState, ContentState } from 'draft-js'
 import concat from 'lodash/concat'
 import isEmpty from 'lodash/isEmpty'
 import { fromJS } from 'immutable'
@@ -14,7 +14,6 @@ export class CommentForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = this._getInitialState()
-
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleEditorStateChange = this.handleEditorStateChange.bind(this)
@@ -27,6 +26,17 @@ export class CommentForm extends React.Component {
       toggleState: false
     }
   }
+
+  resetEditorState() {
+    let editorState = EditorState.push(
+      this.state.editorState,
+      ContentState.createFromText('')
+    );
+    this.setState({
+      editorState
+    })
+  }
+
   handleSubmit(e) {
     e.preventDefault();
     let comment = {
@@ -46,9 +56,7 @@ export class CommentForm extends React.Component {
     }
 
     this.props.onComment(comment);
-    this.setState(
-      this._getInitialState()
-    );
+    this.resetEditorState();
   }
 
   handleEditorStateChange(state) {
@@ -68,10 +76,11 @@ export class CommentForm extends React.Component {
   }
 
   render() {
-
     return (<div className='commentForm'>
       <form onSubmit={this.handleSubmit} ref={(e) => this._form =e }>
-        <CommentEditor onStateChange={this.handleEditorStateChange} editorState={this.state.editorState}/>
+        <CommentEditor onStateChange={this.handleEditorStateChange}
+                       mention_suggestions={this.props.users}
+                       editorState={this.state.editorState} />
         <div className='form-group text-right'>
           <div className="checkbox pull-left">
                        <label>
@@ -92,7 +101,8 @@ export class CommentForm extends React.Component {
 
 CommentForm.propTypes = {
   onComment: PropTypes.func.isRequired,
-  status: PropTypes.string.isRequired
+  status: PropTypes.string.isRequired,
+  users: PropTypes.array.isRequired
 }
 
 export class Comment extends React.Component {

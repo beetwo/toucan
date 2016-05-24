@@ -227,6 +227,20 @@ function issueFilters(state={
   }
 }
 
+function allUsers(
+  state = [],
+  action
+) {
+  switch (action.type) {
+    case RECEIVE_ISSUE:
+      let users = new Set(action.payload.properties.users || []);
+      state.forEach((u) => users.add(u));
+      return Array.from(users.values())
+    default:
+      return state
+  }
+}
+
 
 const reducers = {
   geojson,
@@ -237,7 +251,8 @@ const reducers = {
   coordinates,
   commentsByIssueID,
   statusChangesByIssueID,
-  usersByIssueID
+  usersByIssueID,
+  allUsers
 }
 
 export default reducers;

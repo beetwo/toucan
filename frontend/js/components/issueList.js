@@ -88,19 +88,13 @@ class IssueListUI extends React.Component {
             return (
               <tr key={issue.id} onClick={(e) => {e.preventDefault(); this.props.handleIssueChange(issue)}}>
                 <td>
-                  { issue.issue_type ? <Icon name={getIconClassForIssueType(issue.issue_type)} /> : null }
+                  { issue.issue_type ? <Icon name={getIconClassForIssueType(issue.issue_type)} title={issue.issue_type.name} /> : null }
                 </td>
                 <td>
                     <a href='#'>
                       {issue.title}
                     </a>
                 </td>
-                <td>
-                  {issue.issue_type.name}
-                </td>
-                {/*}<td>
-                  {JSON.stringify(issue)}
-                </td>*/}
                 <td>
                     <CommentCount count={issue.comment_count} />
                 </td>
