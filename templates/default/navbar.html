@@ -18,11 +18,11 @@
         <div id="navbar" class="collapse navbar-collapse">
             {# navbar left #}
             <ul class="nav navbar-nav">
-                <li {% if 'issue_app' in namespaces %}class="active"{% endif %}>
-                    <a href="{% url 'issues:issue_list' %}">
-                        {% trans 'Issues' %}
-                    </a>
-                </li>
+{#                <li {% if 'issue_app' in namespaces %}class="active"{% endif %}>#}
+{#                    <a href="{% url 'issues:issue_list' %}">#}
+{#                        {% trans 'Issues' %}#}
+{#                    </a>#}
+{#                </li>#}
 
                 <li {% if 'organisations' in namespaces %}class="active"{% endif %}>
                     <a href="{% url 'organisations:organisation_list' %}">
