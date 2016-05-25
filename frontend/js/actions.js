@@ -99,7 +99,12 @@ export function fetchIssueIfNeeded(issue_id) {
         dispatch(requestIssue(issue_id))
         return fetch(`/api/issue/${issue_id}/`)
             .then(response => response.json())
-            .then(json => dispatch(receiveIssue(issue_id, json)))
+            .then(json => {
+              dispatch(receiveIssue(issue_id, json))
+              // fetch all issues again, as the comment
+              // count will have changed
+              dispatch(fetchIssues())
+            })
     }
 }
 

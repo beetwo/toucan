@@ -4,6 +4,41 @@
 
 {% block content %}
 
+    <h2>{% trans 'Contact data' %}</h2>
+    <hr />
+
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <td>
+                    {% trans 'Email' %}
+                </td>
+                <td>
+                    {{ user.email }}
+                </td>
+            </tr>
+            <tr>
+                <td>{% trans 'Telephone' %}</td>
+                <td>
+                    {{ profile.phone_number|default:'-' }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {% trans 'Notification when mentioned' %}
+                </td>
+                <td>
+                    {{ profile.get_user_mention_notification_display }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="text-right">
+        <a class='btn btn-primary btn-sm' href="{% url 'user_profile:update_profile' %}">
+            {% trans 'Edit profile' %}
+        </a>
+    </div>
+
     {{ block.super }}
 
     <h2>{% trans 'Notification Filters' %}</h2>
@@ -57,7 +92,7 @@
     </p>
     {% endif %}
     <div class="text-right">
-        <a class="btn btn-success btn-sm" href="{% url 'user_profile:notification_create' %}">
+        <a class="btn btn-primary btn-sm" href="{% url 'user_profile:notification_create' %}">
             <i class="fa fa-plus"></i>
             {% trans 'Add notification rule' %}
         </a>

@@ -233,7 +233,7 @@ function allUsers(
 ) {
   switch (action.type) {
     case RECEIVE_ISSUE:
-      let users = new Set(action.payload.properties.users || []);
+      let users = new Set(action.payload.properties.users.map((u) => u.username) || []);
       state.forEach((u) => users.add(u));
       return Array.from(users.values())
     default:

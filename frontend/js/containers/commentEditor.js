@@ -25,7 +25,7 @@ class CommentEditor extends React.Component {
 
   constructor(props) {
     super(props)
-    let initial_suggestions = this.props.mention_suggestions.map((u) => {return {name: u.username}});
+    let initial_suggestions = this.props.mention_suggestions.map((u) => {return {name: u}});
     this.state = {
       mentions: fromJS(initial_suggestions),
       suggestions: fromJS([])

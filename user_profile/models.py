@@ -10,15 +10,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 from issues.models import Issue, IssueType
 from organisations.models import Organisation
 
-
-class Profile(models.Model):
-
-    user = models.OneToOneField(settings.AUTH_USER_MODEL)
-
-    phone_number = PhoneNumberField(
-        blank=True,
-        verbose_name=_('phone number')
-    )
+from notifications.fields import NotificationTypeField
 
 
 class Subscription(TimeStampedModel):
@@ -83,3 +75,17 @@ class NotificationSettings(TimeStampedModel):
         ordering = ('-created',)
 
 
+class Profile(models.Model):
+
+    user = models.OneToOneField(settings.AUTH_USER_MODEL)
+
+    phone_number = PhoneNumberField(
+        blank=True,
+        verbose_name=_('phone number')
+    )
+
+    user_mention_notification = NotificationTypeField(
+        blank=True,
+        default='',
+        verbose_name=_('Notification when mentioned')
+    )

@@ -50,13 +50,16 @@ class PersonalProfile(LoginRequiredMixin, PublicProfile):
             'profile': profile,
             'notification_settings': notification_settings
         })
+        print(ctx)
         return ctx
 
 
 class UpdateProfile(LoginRequiredMixin, FormValidMessageMixin, UpdateView):
     fields = [
         'phone_number',
+        'user_mention_notification'
     ]
+
     template_name = 'user_profile/edit_profile.html'
     form_valid_message = _('Profile updated')
 

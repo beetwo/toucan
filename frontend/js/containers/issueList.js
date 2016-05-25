@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import IssueListUI from '../components/issueList'
 import { browserHistory } from 'react-router'
 import getFilteredIssues from '../issueSelector'
-import { addIssueFilter, removeIssueFilter} from '../actions'
+import { addIssueFilter, removeIssueFilter, fetchIssues} from '../actions'
 
 class IssueListContainer extends React.Component {
   render() {
@@ -22,6 +22,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     handleIssueChange: (issue) => {
       browserHistory.push(`issue/${issue.id}`)
+    },
+    refreshIssueList: () => {
+      dispatch(fetchIssues());
     },
     addIssueFilter: (prop, value) => dispatch(addIssueFilter(prop, value)),
     removeIssueFilter: (prop, value) => dispatch(removeIssueFilter(prop, value))

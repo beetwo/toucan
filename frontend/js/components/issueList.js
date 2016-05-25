@@ -105,7 +105,16 @@ class IssueListUI extends React.Component {
         });
         return (
           <div>
-            <IssueFilter {...this.props} filterOptions={this.props.filterOptions}/>
+            <div className='row'>
+              <div className='col-md-10'>
+                <IssueFilter {...this.props} filterOptions={this.props.filterOptions}/>
+              </div>
+              <div className='col-md-2 text-right'>
+                <button className='btn' onClick={this.props.refreshIssueList}>
+                  <Icon name='refresh' size='lg'/>
+                </button>
+              </div>
+            </div>
             <hr />
             <table className="issues table table-hover">
             <tbody>
