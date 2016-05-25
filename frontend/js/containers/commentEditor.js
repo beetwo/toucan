@@ -10,6 +10,7 @@ import '../../css/editor_styles.css'
 import 'draft-js-mention-plugin/lib/plugin.css'
 
 import isEmpty from 'lodash/isEmpty'
+import uniq from 'lodash/uniq'
 
 const mentionPlugin = createMentionPlugin({
   entityMutability: 'IMMUTABLE',
@@ -58,9 +59,10 @@ class CommentEditor extends React.Component {
       fetch(url)
         .then((response) => response.json())
         .then((data) => {
-          let mentions = data.map((mention) => {
+          let slugs = uniq(data.map((mention) => mention.slug));
+          let mentions = slugs.map((slug) => {
             return {
-              name: mention.slug
+              name: slug
             }
           })
           this.setState({

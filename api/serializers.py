@@ -43,7 +43,6 @@ class IssueTypeSerializer(serializers.ModelSerializer):
         ]
 
 
-
 class CommentSerializer(serializers.ModelSerializer):
 
     user = UserSerializer(read_only=True)
