@@ -94,6 +94,8 @@ class IssueListUI extends React.Component {
                     <a href='#'>
                       {issue.title}
                     </a>
+                    <br />
+                    <small>{issue.organisation.name}</small>
                 </td>
                 <td>
                     <CommentCount count={issue.comment_count} />

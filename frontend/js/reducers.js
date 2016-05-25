@@ -172,7 +172,8 @@ function issueFiltersOptions(state={}, action) {
       return {
           ...state,
           status: uniq(action.issues.features.map((i) => i.properties.status)),
-          type: uniq(action.issues.features.map((i) =>  i.properties.issue_type.slug))
+          type: uniq(action.issues.features.map((i) =>  i.properties.issue_type.slug)),
+          organisation: uniq(action.issues.features.map((i) => i.properties.organisation.name))
       }
     default:
       return state
@@ -203,11 +204,13 @@ function issueFiltersSelections(state, action) {
 function issueFilters(state={
     options: {
       status: [],
-      type: []
+      type: [],
+      organisation: []
     },
     selections: {
       status: ['open'],
-      type: []
+      type: [],
+      organisation: []
     }
   }, action) {
   switch (action.type) {

@@ -14,7 +14,10 @@ const getFilteredIssues = function(issues, filters){
       let prop = i[fp];
       if (fp === 'type') {
         prop = i.issue_type.slug
+      } else if (fp === 'organisation') {
+        prop = i.organisation.name
       }
+
       if (filters[fp].indexOf(prop) === -1) {
         return false;
       }
