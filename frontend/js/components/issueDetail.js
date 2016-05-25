@@ -71,7 +71,7 @@ class IssueDetailUI extends React.Component {
             </ol>
 
             <IssueDetailsMain {...this.props} gjs={gjs} issue={issue} />
-            <CommentForm onComment={this.props.onComment.bind(this, gjs.id)} status={issue.status} users={this.props.users}/>
+            <CommentForm onComment={this.props.onComment.bind(this, gjs.id)} status={issue.status} users={this.props.mentions}/>
           </div>);
   }
 }

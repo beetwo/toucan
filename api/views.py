@@ -5,9 +5,13 @@ from django.contrib.auth import get_user_model
 from rest_framework.generics import ListAPIView, RetrieveAPIView, ListCreateAPIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.exceptions import ValidationError
-from issues.models import Issue, IssueComment, IssueStatus
 
-from .serializers import IssueSerializer, FullIssueSerializer, CommentSerializer, UserSerializer, StatusSerializer
+from drf_multiple_model.views import MultipleModelAPIView
+
+from issues.models import Issue, IssueComment, IssueStatus
+from organisations.models import Organisation
+from .serializers import IssueSerializer, FullIssueSerializer, CommentSerializer, \
+    UserSerializer, StatusSerializer, OrgMentionSerializer, UserMentionSerializer
 
 User = get_user_model()
 
@@ -60,6 +64,21 @@ class IssueStatusView(ListCreateAPIView):
 class CommentDetailView(RetrieveAPIView):
     serializer_class = CommentSerializer
     queryset = IssueComment.objects.all()
+
+
+class MentionView(MultipleModelAPIView):
+    flat = True
+
+    def get_queryList(self):
+        query = self.request.query_params.get('search', '')
+
+        return (
+            (User.objects.filter(username__istartswith=query), UserMentionSerializer),
+            (Organisation.objects.filter(short_name__istartswith=query), OrgMentionSerializer)
+        )
+
+
+
 
 class UserSearch(ListAPIView):
 

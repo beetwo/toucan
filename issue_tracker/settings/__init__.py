@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'channels',
     'rest_framework',
     'rest_framework_gis',
+    'drf_multiple_model',
     'imagekit',
     'django_filters',
     # custom applications

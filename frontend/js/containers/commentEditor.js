@@ -54,17 +54,17 @@ class CommentEditor extends React.Component {
         suggestions: defaultSuggestionsFilter(value, this.state.mentions)
       });
     } else if (value.length >= this.minLengthSearch){
-      let url = '/api/users/?search=' + encodeURIComponent(value);
+      let url = '/api/mentions/?search=' + encodeURIComponent(value);
       fetch(url)
         .then((response) => response.json())
         .then((data) => {
-          let users = data.map((u) => {
+          let mentions = data.map((mention) => {
             return {
-              name: u.username
+              name: mention.slug
             }
           })
           this.setState({
-            suggestions: fromJS(users)
+            suggestions: fromJS(mentions)
           })
         })
     }

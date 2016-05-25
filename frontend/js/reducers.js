@@ -245,6 +245,24 @@ function allUsers(
 }
 
 
+function allOrganisations(
+  state=[],
+  action
+) {
+  switch (action.type) {
+    case RECEIVE_ISSUE:
+      let org_slug = action.payload.properties.organisation.short_name;
+      return uniq([...state, org_slug])
+    case RECEIVE_ISSUES:
+      let org_slugs = action.issues.features.map((i) => i.properties.organisation.short_name)
+      return uniq([...state, ...org_slugs])
+    default:
+      return state
+
+  }
+}
+
+
 const reducers = {
   geojson,
   redux_issues: issues,
@@ -255,7 +273,8 @@ const reducers = {
   commentsByIssueID,
   statusChangesByIssueID,
   usersByIssueID,
-  allUsers
+  allUsers,
+  allOrganisations
 }
 
 export default reducers;

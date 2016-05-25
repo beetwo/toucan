@@ -202,4 +202,29 @@ class FullIssueSerializer(IssueSerializer):
             'creator',
             'created',
             'issue_type',
+            'organisation'
         ]
+
+
+class OrgMentionSerializer(serializers.ModelSerializer):
+
+    name = serializers.CharField()
+    slug = serializers.CharField(source='short_name')
+
+    class Meta:
+        model = Organisation
+        fields = ['name', 'slug']
+
+
+class UserMentionSerializer(serializers.ModelSerializer):
+
+    name = serializers.SerializerMethodField()
+    slug = serializers.CharField(source='username')
+
+    def get_name(self, u):
+        return u.username
+
+    class Meta:
+        model = UserSerializer.Meta.model
+        fields = ['name', 'slug']
+

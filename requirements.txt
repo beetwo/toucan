@@ -14,3 +14,4 @@ django-imagekit==3.3
 Pillow==3.2.0
 nexmo==1.0.3
 twitter-text-python==1.1.0
+django-rest-multiple-models==1.6.3

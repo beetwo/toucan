@@ -34,16 +34,24 @@ class IssueDetailContainer extends React.Component {
 IssueDetailContainer.propTypes = {
   issue: PropTypes.object.isRequired,
   issueID: PropTypes.number.isRequired,
-  users: PropTypes.array.isRequired
+  users: PropTypes.array.isRequired,
+  orgs: PropTypes.array.isRequired,
+  mentions: PropTypes.array.isRequired
 }
 
 const mapStateToProps = (state, ownProps) => {
   let issue_id = parseInt(ownProps.routeParams.IssueID, 10);
   let issue = state.issueDetails[issue_id] || {};
+  let mentions = [
+    ...state.allUsers,
+    ...state.allOrganisations
+  ];
   return {
     issue ,
     issueID: issue_id,
-    users: state.allUsers
+    users: state.allUsers,
+    orgs: state.allOrganisations,
+    mentions: mentions
   }
 }
 
