@@ -8,7 +8,7 @@ from django.core.exceptions import ValidationError
 
 from model_utils.models import TimeStampedModel
 from location_field.models.spatial import LocationField
-
+from notifications.fields import NotificationTypeField
 
 
 def validate_organisation_slug(name):
@@ -88,6 +88,8 @@ class Membership(TimeStampedModel):
     active = models.BooleanField(default=False, blank=True)
 
     role = models.IntegerField(choices=ROLES_CHOICES, default=0)
+
+    mention_notification = NotificationTypeField(blank=False, default='email')
 
     def activate(self):
         if not self.active:

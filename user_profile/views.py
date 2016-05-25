@@ -50,7 +50,6 @@ class PersonalProfile(LoginRequiredMixin, PublicProfile):
             'profile': profile,
             'notification_settings': notification_settings
         })
-        print(ctx)
         return ctx
 
 
@@ -105,4 +104,3 @@ class NotificationEdit(PermissionRequiredMixin, UpdateView):
             'user_profile:personal_profile',
         )
 
-# class DeleteNotfication(PermissionRequiredMixin, DeleteView):

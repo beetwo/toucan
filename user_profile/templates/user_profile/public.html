@@ -5,6 +5,13 @@
    <h2>{% trans 'Memberships' %}</h2>
     <hr />
     <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>{% trans 'Organisation' %}</th>
+                <th>{% trans 'Notifications via' %}</th>
+                <th>{% trans 'Membership status' %}</th>
+            </tr>
+        </thead>
         <tbody>
         {% for membership in memberships %}
             <tr>
@@ -12,6 +19,9 @@
                     <a href="{% url 'organisations:organisation_detail' org_id=membership.org.pk %}">
                         {{ membership.org.name }}
                     </a>
+                </td>
+                <td>
+                    {{ membership.get_mention_notification_display }}
                 </td>
                 <td>
                     {% if membership.active %}
