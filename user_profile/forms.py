@@ -8,6 +8,13 @@ from .models import Profile, NotificationSettings
 
 class UserProfileSignupForm(forms.Form):
 
+    org = forms.ModelChoiceField(
+        queryset=Organisation.objects.all(),
+        label=_('Primary organisation'),
+        help_text=_('You will be able to join more organisations later on.'),
+        required=False
+    )
+
     phone = PhoneNumberField(
         label=_('Your mobile phone number')
     )
@@ -17,7 +24,9 @@ class UserProfileSignupForm(forms.Form):
             user=user,
             phone_number=self.cleaned_data['phone']
         )
-
+        org = self.cleaned_data.get('org', None)
+        if org:
+            org.add_member(user)
 
 
 class NotificationSettingsForm(forms.ModelForm):

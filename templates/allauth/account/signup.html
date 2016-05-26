@@ -27,7 +27,6 @@
         <form id="signup_form" method="post" action="{% url 'account_signup' %}">
             {% csrf_token %}
 
-
             {% bootstrap_field form.username %}
 
             {% bootstrap_field form.password1 %}
@@ -38,6 +37,10 @@
             {% bootstrap_field form.email %}
             {% bootstrap_field form.phone %}
 
+            <hr />
+            {% bootstrap_field form.org %}
+
+
             {%  for field in form.hidden_field %}
                 {{ field }}
             {% endfor %}
@@ -46,7 +49,7 @@
                 <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
             {% endif %}
 
-            <div class="form-actions">
+            <div class="form-actions text-right">
                 <button class="btn btn-primary" type="submit">{% trans "Sign Up" %}</button>
             </div>
 
