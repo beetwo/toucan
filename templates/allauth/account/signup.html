@@ -27,8 +27,6 @@
         <form id="signup_form" method="post" action="{% url 'account_signup' %}">
             {% csrf_token %}
 
-            {% bootstrap_field form.org %}
-            <hr />
 
             {% bootstrap_field form.username %}
 

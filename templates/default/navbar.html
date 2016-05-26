@@ -18,12 +18,12 @@
         <div id="navbar" class="collapse navbar-collapse">
             {# navbar left #}
             <ul class="nav navbar-nav">
-{#                <li {% if 'issue_app' in namespaces %}class="active"{% endif %}>#}
-{#                    <a href="{% url 'issues:issue_list' %}">#}
-{#                        {% trans 'Issues' %}#}
-{#                    </a>#}
-{#                </li>#}
-
+                <li {% if request.resolver_match.url_name == 'home' %}class="active"{% endif %}>
+                    <a href="{% url 'home' %}">
+                        <i class="fa fa-globe"></i>
+                        {% trans 'All Issues' %}
+                    </a>
+                </li>
                 <li {% if 'organisations' in namespaces %}class="active"{% endif %}>
                     <a href="{% url 'organisations:organisation_list' %}">
                         {% trans 'Organisations' %}
@@ -33,6 +33,12 @@
 
             {# navbar right #}
             <ul class="nav navbar-nav navbar-right">
+                <li {% if 'issue_app' in namespaces %}class="active"{% endif %}>
+                    <a href="{% url 'issues:issue_create' %}">
+                        <i class="fa fa-plus"></i>
+                        {% trans 'Add Issue' %}
+                    </a>
+                </li>
                 {% if user.is_authenticated %}
                     <li class="dropdown {% if 'user_profile' in namespaces %}active{% endif %}">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">

@@ -4,6 +4,7 @@
 {% block content %}
    <h2>{% trans 'Memberships' %}</h2>
     <hr />
+    {% if memberships|length %}
     <table class="table table-striped">
         <thead>
             <tr>
@@ -38,4 +39,9 @@
         {% endfor %}
         </tbody>
     </table>
+    {% else %}
+        <p class="text-muted">
+        {% trans 'Not a member of an organisation.' %}
+        </p>
+    {% endif %}
 {% endblock %}
