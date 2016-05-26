@@ -49,12 +49,12 @@
         {% for ns in notification_settings%}
         <tr>
             <td>
-                {{ forloop.counter }}
+                <h5>{{ forloop.counter }}.</h5>
             </td>
             <td>
                 <h5>{% trans 'Issue types' %}</h5>
                 <ul>
-                    {% for it in notification_settings.issue_types.all %}
+                    {% for it in ns.issue_types.all %}
                         <li>{{ it.name }}</li>
                     {% empty %}
                         <li class="text-muted">{% trans 'all' %}</li>
@@ -64,7 +64,7 @@
             <td>
                 <h5>{% trans 'Organisations' %}</h5>
                 <ul>
-                    {% for org in notification_settings.organisations.all %}
+                    {% for org in ns.organisations.all %}
                         <li>{{ org.name }}</li>
                     {% empty %}
                         <li class="text-muted">{% trans 'all' %}</li>
@@ -72,7 +72,7 @@
                 </ul>
             </td>
             <td>
-                {{ ns.created|date:'SHORT_DATETIME_FORMAT' }}
+                <h5>{{ ns.created|date:'SHORT_DATETIME_FORMAT' }}</h5>
             </td>
             <td class="text-right">
                 <a class="btn btn-info btn-sm" href="{% url 'user_profile:notification_edit' notification_id=ns.pk %}">
