@@ -91,13 +91,15 @@
         {% endblocktrans %}
     </p>
     {% endif %}
-    <div class="text-right">
+
+    <div class="text-right" style="margin-bottom: 3em">
         <a class="btn btn-primary btn-sm" href="{% url 'user_profile:notification_create' %}">
             <i class="fa fa-plus"></i>
             {% trans 'Add notification rule' %}
         </a>
     </div>
 
+    {%  comment %}
     <h2>{% trans 'Subscriptions' %}</h2>
     <hr />
     {% with subscriptions=user.subscriptions.all %}
@@ -132,5 +134,6 @@
         </p>
     {% endif %}
     {% endwith %}
+    {% endcomment %}
 
 {% endblock %}
