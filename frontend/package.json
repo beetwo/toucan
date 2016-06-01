@@ -9,7 +9,7 @@
   "author": "Sean Mc Allister",
   "license": "ISC",
   "devDependencies": {
-    "leaflet.extra-markers": "https://github.com/coryasilva/Leaflet.ExtraMarkers/archive/v1.0.6.tar.gz",
+    "Leaflet.extra-markers": "https://github.com/coryasilva/Leaflet.ExtraMarkers/archive/v1.0.6.tar.gz",
     "autoprefixer": "^6.3.6",
     "babel-core": "^6.7.4",
     "babel-loader": "^6.2.4",

@@ -11,7 +11,10 @@ django-webpack-loader==0.3.0
 django-phonenumber-field==1.1.0
 django-filter==0.13.0
 django-imagekit==3.3
+django-bootstrap3==7.0.1
 Pillow==3.2.0
+psycopg2==2.6.1
 nexmo==1.0.3
 twitter-text-python==1.1.0
 django-rest-multiple-models==1.6.3
+asgi_redis==0.12.0
