@@ -83,7 +83,7 @@ class Membership(TimeStampedModel):
     ]
 
     org = models.ForeignKey(Organisation)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL)
 
     active = models.BooleanField(default=False, blank=True)
 
