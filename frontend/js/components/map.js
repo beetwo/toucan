@@ -65,7 +65,6 @@ class AddNewMarker extends React.Component {
   }
 }
 
-const europeBounds = [[57.64, -10.44], [36.81, 44.98]]
 export class LeafletMap extends React.Component {
 
     constructor (props) {
@@ -104,12 +103,14 @@ export class LeafletMap extends React.Component {
     }
 
     render() {
+
         const {geojson, coordinates, visibleIssueIDs} = this.props;
         const has_coordinates = !isEmpty(coordinates);
 
         if (isEmpty(geojson)) {
           return null;
         }
+
 
         let locations = geojson.features.map((p) => {
             return {
@@ -138,11 +139,15 @@ export class LeafletMap extends React.Component {
             return <IssueMarker {...props} />
         })
 
-        let bounds = this._computeBounds(geojson)
+        let extents = geojsonExtent(JSON.parse(JSON.stringify(geojson)));
+        extents = [
+            extents.slice(0,2).reverse(),
+            extents.slice(2,4).reverse()
+        ];
 
         return (
             <Map center={center}
-                 bounds={bounds}
+                 bounds={extents}
                  onClick={this.handleClick}
                  onContextmenu={this.handleRightClick}
                  onPopupclose={this.handlePopupClose}
@@ -159,21 +164,6 @@ export class LeafletMap extends React.Component {
                                                    handleLatLng={this.handleAddMarkerPositionChange} /> : null }
             </Map>
         );
-    }
-
-    _computeBounds(geojson) {
-        let extents = geojsonExtent(geojson);
-        if (extents == null) {
-            return europeBounds
-        }
-        let point1 = extents.slice(0, 2).reverse()
-        let point2 = extents.slice(2, 4).reverse()
-        if (point1[0] === point2[0] && point1[1] === point2[1]) {
-            // zoom out if point1 and point2 are equal
-            const x = 0.01
-            return [[point1[0] - x, point1[1] - x], [point2[0] + x, [point2[1] + x]]]
-        }
-        return [point1, point2]
     }
 }
 
