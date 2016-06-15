@@ -46,15 +46,15 @@
     </div>
 </div>
 
-{##}
-{#{% if not is_member %}#}
-{#<div class="row">#}
-{#    <a href="{% url 'organisations:organisation_apply' org_id=organisation.pk %}" class="btn btn-success">#}
-{#        {% trans 'Become a member' %}#}
-{#    </a>#}
-{#</div>#}
-{#{% endif %}#}
-{#    #}
+
+{% if not is_member %}
+<div class="row">
+    <a href="{% url 'organisations:organisation_apply' org_id=organisation.pk %}" class="btn btn-success">
+        {% trans 'Become a member' %}
+    </a>
+</div>
+{% endif %}
+
 
 {% endwith %}
 {% endblock %}

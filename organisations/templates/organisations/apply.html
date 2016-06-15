@@ -2,7 +2,7 @@
 {% load i18n bootstrap3 %}
 
 {% block organisation_page_title %}
-    {% trans 'Create a new organisation' %}
+    {% trans 'Become a member' %}
 {% endblock %}
 
 {% block organisation_main %}
@@ -14,8 +14,13 @@
             {% csrf_token %}
             {% bootstrap_form form %}
             <p>
-                {% trans 'Are you sure that you want to apply for membership?' %}
+                {% blocktrans with name=organisation.name %}
+                    Are you sure that you want to become a member of <em>{{ name }}</em>?
+                {% endblocktrans %}
             </p>
+            {% if user.membership %}
+                {% include 'organisations/apply_warning.html' %}
+            {% endif %}
             {% buttons %}
             <button type="submit" class="btn btn-primary">
                 {% trans 'Yes!' %}
