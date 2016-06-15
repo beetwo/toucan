@@ -10,9 +10,8 @@ class UserProfileSignupForm(forms.Form):
 
     org = forms.ModelChoiceField(
         queryset=Organisation.objects.all(),
-        label=_('Primary organisation'),
-        help_text=_('You will be able to join more organisations later on.'),
-        required=False
+        label=_('Organisation'),
+        required=True
     )
 
     phone = PhoneNumberField(
