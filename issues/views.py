@@ -2,6 +2,7 @@ from django.views.generic import TemplateView, ListView, DetailView, CreateView,
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.gis.db.models import Extent
 from django.contrib.gis.geos import Point
 from django import forms
@@ -109,21 +110,16 @@ class IssueCreateView(LoginRequiredMixin, FormValidMessageMixin, CreateView):
             ctx.update({'initial_point': p})
         return ctx
 
-    def get_form(self, *args, **kwargs):
-        form = super().get_form(*args, **kwargs)
-
-        # limit the organisations that a user can add issues to
-        orgs = Organisation.objects.filter(membership__user=self.request.user, membership__active=True)
-        org_field = form.fields['organisation']
-        org_field.queryset = orgs
-        # org_field.empty_choice = None
-        org_field.initial = orgs[0].pk if len(orgs) > 0 else None
-
-        return form
-
     def form_valid(self, form):
         issue = form.instance
-        issue.created_by = self.request.user
+        user = self.request.user
+        issue.created_by = user
+
+        try:
+            issue.organisation = self.request.user.membership.org
+        except ObjectDoesNotExist:
+            issue.organisation = None
+
         return super().form_valid(form)
 
     def get_success_url(self):

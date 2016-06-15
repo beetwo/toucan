@@ -6,12 +6,13 @@ from phonenumber_field.formfields import PhoneNumberField
 from organisations.models import Organisation, Membership
 from .models import Profile, NotificationSettings
 
+
 class UserProfileSignupForm(forms.Form):
 
     org = forms.ModelChoiceField(
         queryset=Organisation.objects.all(),
-        label=_('Primary organisation'),
-        help_text=_('You will be able to join more organisations later on.'),
+        label=_('Organisation'),
+        help_text=_('You can become a member of an existing organisation now or create your own at a later point.'),
         required=False
     )
 
@@ -24,7 +25,7 @@ class UserProfileSignupForm(forms.Form):
             user=user,
             phone_number=self.cleaned_data['phone']
         )
-        org = self.cleaned_data.get('org', None)
+        org = self.cleaned_data.get('org')
         if org:
             org.add_member(user)
 

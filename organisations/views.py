@@ -56,6 +56,13 @@ class OrganisationApply(LoginRequiredMixin, FormValidMessageMixin, FormView):
     form_class = ApplyForm
     template_name = 'organisations/apply.html'
 
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx.update({
+            'organisation': get_object_or_404(Organisation, pk=self.kwargs.get('org_id'))
+        })
+        return ctx
+
     def get_form_valid_message(self):
         return _('Your application has been sent.')
 

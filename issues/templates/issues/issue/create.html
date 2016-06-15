@@ -8,22 +8,18 @@
 {% block content %}
 <div class="row">
     <div class="col-sm-12">
-        <div id="issueMap" style="height:300px; margin-bottom:2em;"></div>
         <form method="post" action=".">
             {% csrf_token %}
 
             {% for f in form.hidden_fields %}{{ f }}{% endfor %}
 
+            {% bootstrap_field form.point %}
+            <div id="issueMap" style="height:300px; margin-bottom:2em;"></div>
+
+
             {% bootstrap_field form.title %}
             {% bootstrap_field form.description %}
-            <div class="row">
-                <div class="col-md-6">
-                    {% bootstrap_field form.issue_type %}
-                </div>
-                <div class="col-md-6">
-                    {% bootstrap_field form.organisation %}
-                </div>
-            </div>
+            {% bootstrap_field form.issue_type %}
 
             {% buttons %}
             <button type="submit" class="btn btn-primary">
@@ -51,6 +47,8 @@ var position = false;
 
 var issueMap = document.getElementById('issueMap'),
     location_field = document.getElementById('id_point');
+
+$(location_field).hide();
 
 function cb(e) {
     location_field.value = 'POINT(' + e.lng + ' ' + e.lat + ')'

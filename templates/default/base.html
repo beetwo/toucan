@@ -13,7 +13,11 @@
 <body>
     {% block body %}
         {% include 'default/navbar.html' %}
-        {% bootstrap_messages %}
+        {% if messages %}
+        <div class="container">
+            {% bootstrap_messages %}
+        </div>
+        {% endif %}
         {% block main %}{% endblock %}
     {% endblock body %}
     {% block before-body-close %}{% endblock %}

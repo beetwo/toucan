@@ -46,6 +46,7 @@
     </div>
 </div>
 
+
 {% if not is_member %}
 <div class="row">
     <a href="{% url 'organisations:organisation_apply' org_id=organisation.pk %}" class="btn btn-success">
@@ -53,5 +54,7 @@
     </a>
 </div>
 {% endif %}
+
+
 {% endwith %}
 {% endblock %}

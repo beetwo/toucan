@@ -29,11 +29,10 @@ class IssueForm(forms.ModelForm):
             'title',
             'issue_type',
             'description',
-            'organisation',
+            # 'organisation',
         ]
         widgets = {
-            'point': forms.HiddenInput,
-            'organisation': forms.RadioSelect,
+            'point': forms.TextInput,
+            # 'organisation': forms.RadioSelect,
             'issue_type': forms.RadioSelect
-
         }

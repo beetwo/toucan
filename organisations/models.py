@@ -43,14 +43,13 @@ class Organisation(TimeStampedModel):
 
     def add_user_to_org(self, user, role=0, active=True):
         membership, created = Membership.objects.get_or_create(
-            user=user, org=self,
-            defaults={'role': role, 'active': active}
+            user=user
         )
 
-        if not created:
-            membership.role = role
-            membership.active = active
-            membership.save()
+        membership.org = self
+        membership.role = role
+        membership.active = active
+        membership.save()
 
         return membership
 
@@ -83,7 +82,7 @@ class Membership(TimeStampedModel):
     ]
 
     org = models.ForeignKey(Organisation)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL)
 
     active = models.BooleanField(default=False, blank=True)
 
