@@ -162,7 +162,7 @@ export class LeafletMap extends React.Component {
     }
 
     _computeBounds(geojson) {
-        let extents = geojsonExtent(geojson);
+        let extents = geojsonExtent(Object.assign({}, geojson));
         if (extents == null) {
             return europeBounds
         }
