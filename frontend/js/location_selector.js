@@ -6,13 +6,24 @@ import { Map, Marker, Popup, TileLayer, Circle } from 'react-leaflet';
 
 require('leaflet/dist/leaflet.css');
 
+const vienna = {lng: 16.369620, lat:48.2092563};
 class B2SelectorMap extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      position: this.props.position
-    }
+    this.state = { position: this.props.position || vienna }
     this.onPositionChange = this.onPositionChange.bind(this);
+  }
+
+  componentDidMount() {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition((p) => this.setPosition({ lng: p.coords.longitude, lat: p.coords.latitude }));
+    }   
+  }
+
+  setPosition(position) {
+    this.setState({
+      position: position
+    });
   }
 
   onPositionChange(latLng) {
@@ -41,7 +52,7 @@ class B2SelectorMap extends React.Component {
     }
 
     return (
-      <Map center={this.props.position || {lng: 16.369620, lat:48.2092563}} onClick={(e) => this.onPositionChange(e.latlng)} zoom={12}>
+      <Map center={position} onClick={(e) => this.onPositionChange(e.latlng)} zoom={12}>
         <TileLayer url='//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' />
                  {marker}
