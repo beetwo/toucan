@@ -4,6 +4,7 @@ import React, {PropTypes} from 'react';
 import { render } from 'react-dom';
 import { Map, Marker, Popup, TileLayer, Circle } from 'react-leaflet';
 
+import LocationControl from './components/locationControl';
 import { defaultIssueLocation } from './globals';
 
 require('leaflet/dist/leaflet.css');
@@ -72,6 +73,7 @@ class B2SelectorMap extends React.Component {
         <TileLayer url='//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' />
                  {marker}
+         <LocationControl locate={()=> this._map.getLeafletElement().locate()} />
       </Map>);
   }
   componentDidUpdate() {
