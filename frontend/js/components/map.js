@@ -8,6 +8,7 @@ import { browserHistory } from 'react-router'
 import { setCoordinates } from '../actions'
 import getMarkerForIssue from './markers/markers';
 import LocationControl from './locationControl';
+import { defaultMapBounds } from '../globals';
 
 require('leaflet/dist/leaflet.css');
 
@@ -67,7 +68,6 @@ class AddNewMarker extends React.Component {
 }
 
 
-const europeBounds = [[57.64, -10.44], [36.81, 44.98]]
 export class LeafletMap extends React.Component {
 
     constructor (props) {
@@ -155,7 +155,7 @@ export class LeafletMap extends React.Component {
         })
 
         let bounds = this._computeBounds(geojson)
-        
+
         return (
             <Map center={center}
                  bounds={bounds}
@@ -184,7 +184,7 @@ export class LeafletMap extends React.Component {
     _computeBounds(geojson) {
         let extents = geojsonExtent(Object.assign({}, geojson));
         if (extents == null) {
-            return europeBounds
+            return defaultMapBounds;
         }
         let point1 = extents.slice(0, 2).reverse()
         let point2 = extents.slice(2, 4).reverse()

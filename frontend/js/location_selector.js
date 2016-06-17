@@ -4,20 +4,21 @@ import React, {PropTypes} from 'react';
 import { render } from 'react-dom';
 import { Map, Marker, Popup, TileLayer, Circle } from 'react-leaflet';
 
+import { defaultIssueLocation } from './globals';
+
 require('leaflet/dist/leaflet.css');
 
-const vienna = {lng: 16.369620, lat:48.2092563};
 class B2SelectorMap extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { position: this.props.position || vienna }
+    this.state = { position: this.props.position || defaultIssueLocation }
     this.onPositionChange = this.onPositionChange.bind(this);
   }
 
   componentDidMount() {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition((p) => this.setPosition({ lng: p.coords.longitude, lat: p.coords.latitude }));
-    }   
+    }
   }
 
   setPosition(position) {
