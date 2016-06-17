@@ -4,15 +4,39 @@ import React, {PropTypes} from 'react';
 import { render } from 'react-dom';
 import { Map, Marker, Popup, TileLayer, Circle } from 'react-leaflet';
 
+import { defaultIssueLocation } from './globals';
+
 require('leaflet/dist/leaflet.css');
 
 class B2SelectorMap extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      position: this.props.position
-    }
+    this._map = null
+    this.state = { position: this.props.position || defaultIssueLocation }
+
     this.onPositionChange = this.onPositionChange.bind(this);
+    this.handleLocationFound = this.handleLocationFound.bind(this);
+    this.handleLocationError = this.handleLocationError.bind(this);
+  }
+
+  componentDidMount() {
+    if (this.state.position === defaultIssueLocation) {
+      this._map.getLeafletElement().locate();
+    }
+  }
+
+  handleLocationFound(e) {
+    this.setPosition(e.latlng);
+  }
+
+  handleLocationError() {
+    this.setPosition(defaultIssueLocation);
+  }
+
+  setPosition(position) {
+    this.setState({
+      position: position
+    });
   }
 
   onPositionChange(latLng) {
@@ -41,7 +65,8 @@ class B2SelectorMap extends React.Component {
     }
 
     return (
-      <Map center={this.props.position || {lng: 16.369620, lat:48.2092563}} onClick={(e) => this.onPositionChange(e.latlng)} zoom={12}>
+      <Map center={position} onClick={(e) => this.onPositionChange(e.latlng)} zoom={12} ref={(m) => this._map = m}
+            onLocationfound={this.handleLocationFound} onLocationerror={this.handleLocationError} >
         <TileLayer url='//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' />
                  {marker}
