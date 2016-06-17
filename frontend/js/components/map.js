@@ -76,7 +76,8 @@ export class LeafletMap extends React.Component {
         this._add_new_marker = null;
         this.state = {
           context: false,
-          center: null
+          center: null,
+          zoom: 10
         }
 
         // bind event handlers
@@ -111,12 +112,14 @@ export class LeafletMap extends React.Component {
 
     handleLocationFound(e) {
       this.setState({
-        center: e.latlng,
-        zoom: 15
+        center: e.latlng
       });
     }
 
     handleMarkerClick (issue) {
+      this.setState({
+        zoom: this.getMap().getZoom()
+      })
       browserHistory.push(`/issue/${issue.id}`);
     }
 
@@ -166,7 +169,7 @@ export class LeafletMap extends React.Component {
                  onLocationfound={this.handleLocationFound}
                  animate={true}
                  ref={(m) => this._map = m}
-                 zoom={this.state.zoom || null}
+                 zoom={this.state.zoom}
                  >
                 <TileLayer
                     url='//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
