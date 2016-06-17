@@ -12,7 +12,10 @@ class B2SelectorMap extends React.Component {
   constructor(props) {
     super(props)
     this._map = null
-    this.state = { position: this.props.position || defaultIssueLocation }
+    this.state = {
+      position: this.props.position || defaultIssueLocation,
+      zoom: 12
+    }
 
     this.onPositionChange = this.onPositionChange.bind(this);
     this.handleLocationFound = this.handleLocationFound.bind(this);
@@ -35,15 +38,14 @@ class B2SelectorMap extends React.Component {
 
   setPosition(position) {
     this.setState({
-      position: position
+      position: position,
+      zoom: this._map.getLeafletElement().getZoom()
     });
   }
 
   onPositionChange(latLng) {
     if (this.props.editable) {
-      this.setState({
-        position: latLng
-      })
+      this.setPosition(latLng)
     }
   }
 
@@ -65,8 +67,8 @@ class B2SelectorMap extends React.Component {
     }
 
     return (
-      <Map center={position} onClick={(e) => this.onPositionChange(e.latlng)} zoom={12} ref={(m) => this._map = m}
-            onLocationfound={this.handleLocationFound} onLocationerror={this.handleLocationError} >
+      <Map center={position} onClick={(e) => this.onPositionChange(e.latlng)} zoom={this.state.zoom} ref={(m) => this._map = m}
+            onLocationfound={this.handleLocationFound} onLocationerror={this.handleLocationError} animate={true}>
         <TileLayer url='//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' />
                  {marker}
