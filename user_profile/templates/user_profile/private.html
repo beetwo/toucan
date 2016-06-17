@@ -41,7 +41,7 @@
 
     {{ block.super }}
 
-    <h2>{% trans 'Notification Filters' %}</h2>
+    <h2>{% trans 'Notification Rules' %}</h2>
     <hr />
     {% if notification_settings|length %}
     <table class="table table-striped">
@@ -87,7 +87,7 @@
     <p class="text-muted">
         {% blocktrans %}
             You have no notifications configured.
-            Add your first notification filter to be notified when something happens around you.
+            Add your first notification rule to be notified when something happens around you.
         {% endblocktrans %}
     </p>
     {% endif %}

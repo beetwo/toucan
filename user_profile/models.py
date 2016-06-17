@@ -69,7 +69,7 @@ class NotificationSettings(TimeStampedModel):
         return notification.send_issue_notification()
 
     def __str__(self):
-        return 'Notification filter of user: %s' %(self.user.username)
+        return 'Notification rule of user: %s' %(self.user.username)
 
     class Meta:
         ordering = ('-created',)
