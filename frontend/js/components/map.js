@@ -74,6 +74,10 @@ export class LeafletMap extends React.Component {
         super(props);
         this._map = null;
         this._add_new_marker = null;
+        // this will be set to true when user clicks the locate button
+        // and reset during the render method
+        this._panToUserLocation = false;
+
         this.state = {
           context: false,
           center: null,
@@ -111,8 +115,10 @@ export class LeafletMap extends React.Component {
     }
 
     handleLocationFound(e) {
+      this._panToUserLocation = true;
       this.setState({
-        center: e.latlng
+        center: e.latlng,
+        zoom: this.getMap().getZoom()
       });
     }
 
@@ -156,6 +162,11 @@ export class LeafletMap extends React.Component {
             }
             return <IssueMarker {...props} />
         })
+
+        if (this._panToUserLocation) {
+          this._panToUserLocation = false;
+          center = this.state.center;
+        }
 
         let bounds = this._computeBounds(geojson)
 
