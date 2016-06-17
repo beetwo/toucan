@@ -56,7 +56,8 @@ class PersonalProfile(LoginRequiredMixin, PublicProfile):
 class UpdateProfile(LoginRequiredMixin, FormValidMessageMixin, UpdateView):
     fields = [
         'phone_number',
-        'user_mention_notification'
+        'user_mention_notification',
+        'org_mention_notification'
     ]
 
     template_name = 'user_profile/edit_profile.html'

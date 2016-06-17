@@ -31,6 +31,14 @@
                     {{ profile.get_user_mention_notification_display }}
                 </td>
             </tr>
+            <tr>
+                <td>
+                    {% trans 'Notification when your organisation is mentioned' %}
+                </td>
+                <td>
+                    {{ profile.get_org_mention_notification_display }}
+                </td>
+            </tr>
         </tbody>
     </table>
     <div class="text-right">

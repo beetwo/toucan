@@ -89,3 +89,9 @@ class Profile(models.Model):
         default='',
         verbose_name=_('Notification when mentioned')
     )
+
+    org_mention_notification = NotificationTypeField(
+        blank=True,
+        default='',
+        verbose_name=_('Notification when your organisation is mentioned')
+    )
