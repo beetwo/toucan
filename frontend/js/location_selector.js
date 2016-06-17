@@ -11,14 +11,26 @@ require('leaflet/dist/leaflet.css');
 class B2SelectorMap extends React.Component {
   constructor(props) {
     super(props)
+    this._map = null
     this.state = { position: this.props.position || defaultIssueLocation }
+
     this.onPositionChange = this.onPositionChange.bind(this);
+    this.handleLocationFound = this.handleLocationFound.bind(this);
+    this.handleLocationError = this.handleLocationError.bind(this);
   }
 
   componentDidMount() {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition((p) => this.setPosition({ lng: p.coords.longitude, lat: p.coords.latitude }));
+    if (this.state.position === defaultIssueLocation) {
+      this._map.getLeafletElement().locate();
     }
+  }
+
+  handleLocationFound(e) {
+    this.setPosition(e.latlng);
+  }
+
+  handleLocationError() {
+    this.setPosition(defaultIssueLocation);
   }
 
   setPosition(position) {
@@ -53,7 +65,8 @@ class B2SelectorMap extends React.Component {
     }
 
     return (
-      <Map center={position} onClick={(e) => this.onPositionChange(e.latlng)} zoom={12}>
+      <Map center={position} onClick={(e) => this.onPositionChange(e.latlng)} zoom={12} ref={(m) => this._map = m}
+            onLocationfound={this.handleLocationFound} onLocationerror={this.handleLocationError} >
         <TileLayer url='//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' />
                  {marker}
