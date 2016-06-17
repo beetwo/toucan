@@ -7,6 +7,7 @@ import geojsonExtent from 'geojson-extent';
 import { browserHistory } from 'react-router'
 import { setCoordinates } from '../actions'
 import getMarkerForIssue from './markers/markers';
+import LocationControl from './locationControl';
 
 require('leaflet/dist/leaflet.css');
 
@@ -65,6 +66,7 @@ class AddNewMarker extends React.Component {
   }
 }
 
+
 const europeBounds = [[57.64, -10.44], [36.81, 44.98]]
 export class LeafletMap extends React.Component {
 
@@ -73,13 +75,17 @@ export class LeafletMap extends React.Component {
         this._map = null;
         this._add_new_marker = null;
         this.state = {
-          context: false
+          context: false,
+          center: null
         }
+
         // bind event handlers
         this.handleClick = this.handleClick.bind(this);
         this.handleMove = this.handleMove.bind(this);
         this.handleRightClick = this.handleRightClick.bind(this);
         this.handleAddMarkerPositionChange = this.handleAddMarkerPositionChange.bind(this);
+        this.handleLocate = this.handleLocate.bind(this);
+        this.handleLocationFound = this.handleLocationFound.bind(this);
     }
 
     // these functions deal with setting Coordinates
@@ -98,6 +104,17 @@ export class LeafletMap extends React.Component {
     handlePopupClose(e) {}
     handleClick(e) {}
     handleMove(e) {}
+
+    handleLocate() {
+      this.getMap().locate();
+    }
+
+    handleLocationFound(e) {
+      this.setState({
+        center: e.latlng,
+        zoom: 15
+      });
+    }
 
     handleMarkerClick (issue) {
       browserHistory.push(`/issue/${issue.id}`);
@@ -120,9 +137,7 @@ export class LeafletMap extends React.Component {
         });
         locations = locations.filter((l) => visibleIssueIDs.indexOf(l.id) != -1);
 
-        // optionally center the map if there is an active marker
-        let center = null;
-
+        let center = this.state.center;
         let markers = locations.map(
           (l) => {
             let props = {
@@ -133,13 +148,14 @@ export class LeafletMap extends React.Component {
               isActive: l.id === this.props.selectedIssue
             };
             if (l.id === this.props.selectedIssue) {
+              // optionally center the map if there is an active marker
               center = props.position
             }
             return <IssueMarker {...props} />
         })
 
         let bounds = this._computeBounds(geojson)
-
+        
         return (
             <Map center={center}
                  bounds={bounds}
@@ -147,8 +163,11 @@ export class LeafletMap extends React.Component {
                  onContextmenu={this.handleRightClick}
                  onPopupclose={this.handlePopupClose}
                  onMoveEnd={this.handleMove}
+                 onLocationfound={this.handleLocationFound}
                  animate={true}
-                 ref={(m) => this._map = m}>
+                 ref={(m) => this._map = m}
+                 zoom={this.state.zoom || null}
+                 >
                 <TileLayer
                     url='//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -157,6 +176,7 @@ export class LeafletMap extends React.Component {
                 {has_coordinates ? <AddNewMarker ref={(e) => this._add_new_marker = e }
                                                    position={coordinates}
                                                    handleLatLng={this.handleAddMarkerPositionChange} /> : null }
+                <LocationControl locate={this.handleLocate}/>
             </Map>
         );
     }
