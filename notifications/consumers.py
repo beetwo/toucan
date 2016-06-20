@@ -5,6 +5,9 @@ from django.db.models import Q, ObjectDoesNotExist
 from channels import Channel
 from issues.models import IssueComment
 from organisations.models import Organisation, Membership
+from user_profile.models import Profile
+
+from .notifications import send_email_notification, send_sms_notification
 
 User = get_user_model()
 
@@ -27,6 +30,7 @@ def parse_mentions(message):
 
     channel = Channel('notifications.send_comment_notification')
 
+    # handle user name mentions
     for u in users:
         user_ids.add(u.pk)
         channel.send({
@@ -35,40 +39,92 @@ def parse_mentions(message):
             'user_mention': True
         })
 
+    # handle org name mentions
     for org in orgs:
-        memberships = Membership.objects\
-            .filter(org=org)\
-            .exclude(Q(mention_notification='') | Q(user_id__in=user_ids))\
+        profiles = Profile.objects.filter(user__membership__org=org)\
+            .exclude(user_id__in=user_ids)\
             .select_related('user')
 
-        for m in memberships:
-            u = m.user
+        for p in profiles:
+            u = p.user
             if u.pk not in user_ids:
                 user_ids.add(u.pk)
                 channel.send({
                     'comment_pk': comment.pk,
                     'user_pk': u.pk,
                     'organisation_mention': True,
-                    'organisation_pk': org.pk
+                    'organisation_pk': org.pk,
                 })
-
     return
 
 
-def send_comment_notification(msg):
+def send_comment_notification(channel_message):
+
+    msg = {
+        'user_mention': False,
+        'organisation_mention': False
+    }
+
+    msg.update(channel_message.content)
+    comment_id = msg.get('comment_pk')
+    user_pk = msg.get('user_pk')
+
+    is_user_mention = msg.get('user_mention')
+    is_org_mention = msg.get('organisation_mention')
+    assert(is_user_mention != is_org_mention)
 
     try:
-        user = User.objects.get(pk=msg.content.get('user_pk'))
-        comment = IssueComment.objects.select_related('issue').get(pk=msg.content.get('comment_pk'))
-        issue = comment.issue
-        logger.info(
-            'Sending mention notification from comment %d to user %s (pk: %d)'
-            % (comment.pk, user.username, user.pk)
-        )
-        user.email_user(
-            subject='You were mentioned: %s' % issue.title,
-            message='''
-                This mail is to tell you that you (or one of your organisations) were mentioned in a recent comment:
+        user = User.objects.select_related('profile').get(pk=user_pk)
+        profile = user.profile
+        comment = IssueComment.objects.select_related('issue').get(pk=comment_id)
+    except ObjectDoesNotExist:
+        logger.error('Comment notification could not be resolved.')
+        return
+
+    # All resolved, send notifications
+    logger.info('Processing notification for user %s (%d) and comment id:%d' % (user.username, user.pk, comment_id))
+
+    # resolve the message type or return if notifications are disabled
+    msg_type = None
+
+    # filter out users who have disabled user/org notifications
+    if is_user_mention:
+        if not profile.user_mention_notification:
+            logger.info('Skipping notification because user has disabled user mention notifications')
+            return
+        else:
+            msg_type = profile.user_mention_notification
+
+    if is_org_mention:
+        if not profile.org_mention_notification:
+            logger.info('Skipping notification because user has disabled organisation mention notifications')
+            return
+        else:
+            msg_type = profile.org_mention_notification
+
+    assert(msg_type is not None)
+
+    issue = comment.issue
+
+    logger.info(
+        'Sending mention notification from comment %d to user %s (pk: %d), message type is %s'
+        % (comment.pk, user.username, user.pk, msg_type)
+    )
+
+    issue_url = 'https://b2it.brickwall.at/issue/' + str(comment.issue.pk)
+
+    if msg_type == 'email':
+
+        if is_user_mention:
+            msg = 'you '
+        elif is_org_mention:
+            msg = 'your organisation'
+
+        send_email_notification(
+            user.email,
+            'You were mentioned: %s' % issue.title,
+            '''
+                This mail is to tell you that %s were mentioned in a recent comment:
 
                 -----------------
                 %s
@@ -79,15 +135,23 @@ def send_comment_notification(msg):
                 You can view the comment and the issue here:
                 %s
                 ''' % (
-                    comment.get_comment(),
-                    comment.issue.title,
-                    'https://b2it.brickwall.at/issue/' + str(comment.issue.pk)
-                )
+                msg,
+                comment.get_comment(),
+                comment.issue.title,
+                issue_url
+            )
+
         )
-    except ObjectDoesNotExist:
-        logger.error('Comment notification could not be resolved.')
-        return
+    elif msg_type == 'sms':
+        if is_org_mention:
+            msg = 'Your organisation was mentioned in a recent comment: \n'
+        elif is_user_mention:
+            msg = 'You were mentioned in a recent comment: \n'
 
+        msg = msg + issue_url
+        send_sms_notification(
+            user.profile.phone_number.as_e164,
+            msg
+        )
 
-    print(msg, msg.content)
 

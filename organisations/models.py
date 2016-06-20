@@ -88,6 +88,8 @@ class Membership(TimeStampedModel):
 
     role = models.IntegerField(choices=ROLES_CHOICES, default=0)
 
+    # this is currently not used, because there is only one membership and
+    # this (global) setting is in the user_profile model
     mention_notification = NotificationTypeField(blank=False, default='email')
 
     def activate(self):
