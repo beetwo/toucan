@@ -1,82 +1,32 @@
-var path = require("path");
-var webpack = require('webpack');
-var BundleTracker = require('webpack-bundle-tracker');
-var precss       = require('precss');
-var autoprefixer = require('autoprefixer');
+/**
+ * The main webpack configuration.
+ *
+ * By default webpack commands will look for this file unless the --config [path] argument is used.
+ * This config routes to other configs using, process.env.NODE_ENV to determine which config is being requested.
+ *
+ * Adding more configs:
+ *  Just add the NODE_ENV=<config> prefix to your command or export to the environment.
+ *  Add a case for your <config> value that returns the path to your config file.
+ *
+ * @returns {object} - returns a webpack config object
+ */
 
-module.exports = {
-    context: __dirname,
-    devtool: 'eval-cheap-module-source-map',
-    entry: {
-        main: './js/index',
-        vendor: [
-            'bootstrap-loader',
-            'font-awesome/css/font-awesome.css',
-            './css/misc.css',
-            'react',
-            'react-dom',
-            'leaflet',
-            'react-leaflet',
-            'react-markdown',
-            'react-router',
-            'react-fa'
-        ],
-        b2MapSelector: './js/location_selector',
-        editor: './js/editor'
-    },
-    output: {
-        path: path.resolve('./build/'),
-        publicPath: "/static/wp/",
-        filename: "[name].js"
-    },
-    plugins: [
-        new BundleTracker({filename: './webpack-stats.json'}),
-        new webpack.ProvidePlugin({
-            'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
-        }),
-        new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js')
-    ],
-    resolve: {extensions: ['', '.js']},
-    module: {
-        loaders: [
-            {test: /\.css$/, loaders: ['style', 'css', 'postcss']},
-            {test: /\.scss$/, loaders: ['style', 'css', 'postcss', 'sass']},
-            {
-                test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "url?limit=10000"
-            },
-            {
-                test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
-                loader: 'file'
-            },
-            {
-                test: /\.(png|jpg|jpeg)?$/,
-                loader: "url?limit=10000"
-            },
-            {
-                test: /\.json$/,
-                loader: 'json'
-            },
+const OPTIONS = {
+  PROJECT_ROOT: __dirname,
+  NODE_ENV: process.env.NODE_ENV,
+  CDN_PATH: process.env.CDN_PATH,
+};
 
-            // jquery + Bootstrap 3
-            // if jquery is required, expose globally
-            { test: require.resolve("jquery"), loader: "expose?$!expose?jQuery" },
-            {
-                test: /bootstrap-sass\/assets\/javascripts\//, loader: 'imports?jQuery=jquery'
-            },
-            // everything else
-            {
-                test: /\.jsx?$/,
-                exclude: /(node_modules|bower_components)/,
-                loader: 'babel', // 'babel-loader' is also a legal name to reference
-                query: {
-                    presets: ['react', 'es2015', 'stage-2'],
-                    cacheDirectory: true
-                }
-            }
-        ],
-    },
-    postcss: function () {
-      return [precss, autoprefixer];
-    }
-}
+module.exports = (() => {
+  console.log(process.env.NODE_ENV);
+  switch (process.env.NODE_ENV) {
+    case 'production':
+      return require('./config/webpack.production.config.js');
+    // case 'local':
+    //   return require('./config/webpack.local.config.js');
+    // case 'test':
+    //   return require('./config/webpack.test.config.js');
+    default:
+      return require('./config/webpack.local.config.js');
+  }
+})()(OPTIONS);

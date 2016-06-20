@@ -1,0 +1,16 @@
+{
+  "presets": ["es2015-webpack", "stage-0", "react"],
+  "env": {
+    "local": {
+      "plugins": [["react-transform", {
+        "transforms": [{
+          "transform": "react-transform-hmr",
+          "imports": ["react"],
+          "locals": ["module"]
+        }]
+      }]]
+    },
+    "production": {},
+    "test": {}
+  }
+}

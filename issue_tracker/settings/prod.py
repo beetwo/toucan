@@ -20,6 +20,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, '_static')
 WEBPACK_LOADER = {
     'DEFAULT': {
         'BUNDLE_DIR_NAME': 'production/',
-        'STATS_FILE': os.path.join(BASE_DIR, 'frontend/webpack-stats-prod.json')
+        'STATS_FILE': os.path.join(BASE_DIR, 'frontend/webpack-stats-production.json')
     }
 }
