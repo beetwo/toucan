@@ -7,7 +7,7 @@ class Comment extends React.Component {
     let {comment} = this.props;
     let mentions = twitterText.extractMentionsWithIndices(comment);
     let parts = [];
-
+    
     if (mentions.length > 0) {
       mentions.sort(function(a,b){ return a.indices[0] - b.indices[0]; });
       let begin_index = 0;
