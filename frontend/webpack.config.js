@@ -18,7 +18,6 @@ const OPTIONS = {
 };
 
 module.exports = (() => {
-  console.log(process.env.NODE_ENV);
   switch (process.env.NODE_ENV) {
     case 'production':
       return require('./config/webpack.production.config.js');

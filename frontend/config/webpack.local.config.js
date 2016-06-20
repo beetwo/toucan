@@ -8,7 +8,7 @@ module.exports = (opts) => {
 
   const {CDN_PATH, PROJECT_ROOT} = opts,
       config = baseConfig(opts);
-
+  console.log(config);
   return {
     ...config,
     output: {
@@ -19,7 +19,8 @@ module.exports = (opts) => {
       ...config.plugins,
       // local bundle stats file
       new BundleTracker({
-        filename: path.resolve(PROJECT_ROOT, 'webpack-stats.json')
+        path: PROJECT_ROOT,
+        filename: 'webpack-stats-development.json'
       }),
       new webpack.NoErrorsPlugin(),
     ]
