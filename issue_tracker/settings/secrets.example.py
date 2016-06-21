@@ -1,5 +1,5 @@
 # Change this to a nice long string
-SECRET_KEY = None
+SECRET_KEY = 'verySecretKey'
 
 # Emails are at least used for user auth flow
 EMAIL_HOST = ''
