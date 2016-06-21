@@ -7,19 +7,21 @@ import baseConfig from './webpack.base.config.js';
 module.exports = (opts) => {
 
   const {CDN_PATH, PROJECT_ROOT} = opts,
-      config = baseConfig(opts);
-  console.log(config);
+      config = baseConfig(opts),
+      output_path = path.resolve(PROJECT_ROOT, 'build/');
+
   return {
     ...config,
     output: {
       ...config.output,
-      publicPath: 'http://localhost:8080/bundles/',
+      publicPath: '/static/wp/',
+
     },
     plugins: [
       ...config.plugins,
       // local bundle stats file
       new BundleTracker({
-        path: PROJECT_ROOT,
+        path: output_path,
         filename: 'webpack-stats-development.json'
       }),
       new webpack.NoErrorsPlugin(),

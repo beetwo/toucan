@@ -9,13 +9,15 @@ module.exports = (opts) => {
 
   const
     {CDN_PATH, PROJECT_ROOT} = opts,
-    config = baseConfig(opts);
+    config = baseConfig(opts),
+    output_path = path.resolve(PROJECT_ROOT, 'production/');
+
 
   return {
     ...config,
     output: {
       ...config.output,
-      path: path.resolve(PROJECT_ROOT, 'production/'),
+      path: output_path,
       // set CDN_PATH to your cdn static file directory
       publicPath: CDN_PATH || '/_static/wp/',
     },
@@ -23,7 +25,7 @@ module.exports = (opts) => {
       ...config.plugins,
       // production bundle stats file
       new BundleTracker({
-        path: PROJECT_ROOT,
+        path: output_path,
         filename: 'webpack-stats-production.json'
       }),
       // pass options to uglify
@@ -43,7 +45,10 @@ module.exports = (opts) => {
       }),
       // removes duplicate modules
       new webpack.optimize.DedupePlugin(),
-      new WebpackCleanupPlugin()
+      // this cleans up the build directory
+      new WebpackCleanupPlugin({
+        exclude: ["webpack-stats-production.json"]
+      })
     ],
   };
 };

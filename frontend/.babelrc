@@ -1,7 +1,7 @@
 {
   "presets": ["es2015-webpack", "stage-0", "react"],
   "env": {
-    "local": {
+    "local-hmr": {
       "plugins": [["react-transform", {
         "transforms": [{
           "transform": "react-transform-hmr",
@@ -10,6 +10,7 @@
         }]
       }]]
     },
+    "local": {},
     "production": {},
     "test": {}
   }

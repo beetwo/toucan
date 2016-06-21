@@ -21,8 +21,10 @@ module.exports = (() => {
   switch (process.env.NODE_ENV) {
     case 'production':
       return require('./config/webpack.production.config.js');
-    // case 'local':
-    //   return require('./config/webpack.local.config.js');
+    case 'local':
+      return require('./config/webpack.local.config.js');
+    case 'local-hmr':
+        return require('./config/webpack.local.hmr.config.js');
     // case 'test':
     //   return require('./config/webpack.test.config.js');
     default:
