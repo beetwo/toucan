@@ -144,6 +144,7 @@ class IssueSerializer(GeoFeatureModelSerializer):
             # model fields
             'id',
             'title',
+            'description',
             'priority',
             'visibility',
             'status',

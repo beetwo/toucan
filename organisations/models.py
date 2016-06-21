@@ -20,8 +20,6 @@ def validate_organisation_slug(name):
         )
 
 
-
-
 class Organisation(TimeStampedModel):
 
     name = models.CharField(max_length=200, verbose_name=_('name'))
@@ -42,16 +40,12 @@ class Organisation(TimeStampedModel):
         return self.membership_set.filter(active=True)
 
     def add_user_to_org(self, user, role=0, active=True):
-        membership, created = Membership.objects.get_or_create(
-            user=user
+        return Membership.objects.create(
+            user=user,
+            org=self,
+            role=role,
+            active=True
         )
-
-        membership.org = self
-        membership.role = role
-        membership.active = active
-        membership.save()
-
-        return membership
 
     def add_owner(self, user, **kwargs):
         return self.add_user_to_org(user, role=10, **kwargs)

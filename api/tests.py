@@ -1,3 +1,29 @@
 from django.test import TestCase
 
-# Create your tests here.
+from issues.models import Issue
+from django.contrib.auth.models import User
+from django.contrib.gis.geos import Point
+from organisations.models import Organisation
+
+
+class ReadApiTestCase(TestCase):
+
+    def setUp(self):
+        self.org = Organisation.objects.create(
+            name='TestingOrganisation',
+            short_name='testing_org'
+        )
+        self.user = User.objects.create(username='testUser')
+        self.org.add_member(self.user)
+        self.issue = Issue.objects.create(
+            title='This being a test issue',
+            description='''
+            This is the description of the test issue.
+            ''',
+            point=Point((16, 48)),
+            organisation=self.org,
+            created_by=self.user
+        )
+
+    def testIssueList(self):
+        self.assertTrue(True)
