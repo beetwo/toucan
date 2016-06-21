@@ -25,6 +25,19 @@ function issues(state=[], action) {
           ...issue.properties
         }
       })
+    case RECEIVE_ISSUE:
+      // update the issues array with the properties from the issue details
+      let index = state.findIndex((i)=> { return i.id === action.issue_id; })
+      if (index != -1) {
+        let issue =  {
+          ...state[index],
+          ...action.payload.properties
+        }
+        return [].concat(...state.slice(0, index), issue, ...state.slice(index+1));
+      }
+      else {
+        return state;
+      }
     default:
       return state
   }

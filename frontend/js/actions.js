@@ -103,7 +103,7 @@ export function fetchIssueIfNeeded(issue_id) {
               dispatch(receiveIssue(issue_id, json))
               // fetch all issues again, as the comment
               // count will have changed
-              dispatch(fetchIssues())
+              //dispatch(fetchIssues())
             })
     }
 }

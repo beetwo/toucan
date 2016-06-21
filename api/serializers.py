@@ -141,15 +141,18 @@ class IssueSerializer(GeoFeatureModelSerializer):
         model = Issue
         geo_field = 'point'
         fields = [
+            # model fields
             'id',
-            'issue_url',
             'title',
             'priority',
             'visibility',
-            'comment_count',
-            'issue_type',
             'status',
-            'organisation'
+            'created',
+            # defined fields
+            'issue_url',
+            'issue_type',
+            'comment_count',
+            'organisation',
         ]
 
 
@@ -185,23 +188,16 @@ class FullIssueSerializer(IssueSerializer):
     class Meta:
         model = Issue
         geo_field = 'point'
-        fields = [
-            'id',
-            'point',
-            'title',
-            'description',
-            'status',
-            'priority',
-            'visibility',
-            'comment_url',
-            'status_url',
-            'comments',
-            'status_changes',
-            'users',
-            'creator',
-            'created',
+
+        fields = IssueSerializer.Meta.fields + [
             'issue_type',
-            'organisation'
+            'comment_url',
+            'comments',
+            'status_url',
+            'status_changes',
+            'creator',
+            'organisation',
+            'users',
         ]
 
 
