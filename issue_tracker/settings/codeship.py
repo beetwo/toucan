@@ -7,6 +7,6 @@ DATABASES = {
     'USER': os.environ.get('PG_USER'),
     'PASSWORD': os.environ.get('PG_PASSWORD'),
     'HOST': '127.0.0.1',
-    'POST': 5434
+    'PORT': 5434
   }
 }
