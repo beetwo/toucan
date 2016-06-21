@@ -4,13 +4,12 @@ from django.core.mail import send_mail
 
 import nexmo
 
-def send_sms_notification(phone_number, msg):
 
+def send_sms_notification(phone_number, msg):
     try:
         nexmo_settings = settings.NEXMO
     except AttributeError:
         raise ImproperlyConfigured('Your nexmo settings are not configured correctly.')
-
 
     phone_number = phone_number.replace('+', '').replace(' ', '')
     client = nexmo.Client(
@@ -23,6 +22,7 @@ def send_sms_notification(phone_number, msg):
         'to': phone_number,
         'text': msg
     })
+
 
 def send_email_notification(email, subject, message):
     return send_mail(

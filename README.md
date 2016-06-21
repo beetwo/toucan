@@ -62,7 +62,7 @@ To create the database scheme run the migrations (requires PostgreSQL superuser 
 ./manage.py migrate
 ```
 
-### Frontend
+### Build Frontend
 
 The frontend part of the code is to be found in the 'frontend' folder. To install the build tools and dependencies of the frontend issue the following command from within that folder:
 
@@ -70,19 +70,34 @@ The frontend part of the code is to be found in the 'frontend' folder. To instal
 npm install
 ```
 
-Then build the frontend once using webpack:
+Finally build the frontend assets
 
 ```
-webpack
+npm build-dev
 ```
+
 
 ## Development
 
-Start the webpack watcher so that the frontend is automatically rebuilt when a file is modified:
+### Frontend
+
+Start the development server so that the frontend is automatically rebuilt when a file is modified.
+In the ./frontend folder run the following command
 
 ```
-webpack --watch
+npm run dev
 ```
+
+
+For fearless frontend developers there is also the option to enable hot module replacement.
+```
+npm run hmr
+```
+
+This will start a server to do the static file hosting on 127.0.0.1:8080 and skip the django dev server for the built frontend files.
+
+
+### Backend
 
 Make sure you have activated the virtual environment:
 

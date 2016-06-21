@@ -8,16 +8,17 @@ INSTALLED_APPS += [
     # 'debug_toolbar',
 ]
 
-STATICFILES_DIRS += [
-    ('wp', os.path.join(BASE_DIR, 'frontend/build/'))
-]
+WEBPACK_BUILD_DIR = os.path.join(BASE_DIR, 'frontend/build/')
 
+STATICFILES_DIRS += [
+    ('wp', WEBPACK_BUILD_DIR)
+]
 
 WEBPACK_LOADER = {
     'DEFAULT': {
         'CACHE': not DEBUG,
         'BUNDLE_DIR_NAME': 'build/',
-        'STATS_FILE': os.path.join(BASE_DIR, 'frontend/webpack-stats.json'),
+        'STATS_FILE': os.path.join(WEBPACK_BUILD_DIR, 'webpack-stats-development.json'),
         'POLL_INTERVAL': 0.1,
         'IGNORE': ['.+\.hot-update.js', '.+\.map']
     }
