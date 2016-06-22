@@ -19,7 +19,7 @@ module.exports = (opts) => {
       ...config.output,
       path: output_path,
       // set CDN_PATH to your cdn static file directory
-      publicPath: CDN_PATH || '/_static/wp/',
+      publicPath: CDN_PATH || '/static/wp/',
     },
     plugins: [
       ...config.plugins,
