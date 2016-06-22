@@ -19,3 +19,4 @@ twitter-text-python==1.1.0
 django-rest-multiple-models==1.6.3
 asgi_redis==0.12.0
 factory-boy==2.7.0
+raven==5.21.0

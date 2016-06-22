@@ -28,3 +28,16 @@ WEBPACK_LOADER = {
         )
     }
 }
+
+try:
+    from .secrets import RAVEN_DSN
+    import raven
+    INSTALLED_APPS += ['raven',]
+    RAVEN_CONFIG = {
+        'dsn': RAVEN_DSN,
+        # If you are using git, you can also automatically configure the
+        # release based on the git info.
+        'release': raven.fetch_git_sha(os.path.dirname(__file__)),
+    }
+except ImportError:
+    pass
