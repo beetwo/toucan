@@ -7,7 +7,6 @@ module.exports = (opts) => {
 
   return {
     ...config,
-    devtool: 'source-map',
     output: {
       ...config.output,
       publicPath: 'http://localhost:8080/bundles/'
