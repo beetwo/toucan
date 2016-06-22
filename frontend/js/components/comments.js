@@ -15,9 +15,8 @@ export class CommentForm extends React.Component {
     super(props);
     this.state = this._getInitialState()
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleChange = this.handleChange.bind(this)
     this.handleEditorStateChange = this.handleEditorStateChange.bind(this)
-    this.handleStatusChange = this.handleStatusChange.bind(this)
+    this.handleStatusChangeAndSubmit = this.handleStatusChangeAndSubmit.bind(this)
   }
 
   _getInitialState() {
@@ -39,22 +38,19 @@ export class CommentForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    this.postComment();
+  }
+
+  postComment() {
     let comment = {
       id: Date.now(),
       draft_struct: convertToRaw(this.state.editorState.getCurrentContent()),
       user: {
         username: 'You'
-      }
+      },
+      toggleState: this.state.toggleState
     }
-
-    if (this.state.toggleState) {
-      if (this.props.status === 'open') {
-        comment.closed = true;
-      } else {
-        comment.open = true;
-      }
-    }
-
+    console.log(comment);
     this.props.onComment(comment);
     this.resetEditorState();
   }
@@ -65,14 +61,14 @@ export class CommentForm extends React.Component {
     })
   }
 
-  handleStatusChange(e) {
+  handleStatusChangeAndSubmit(e) {
     this.setState({
-      toggleState: !this.state.toggleState
-    })
-  }
-
-  handleChange(e) {
-    this.setState({comment: e.target.value});
+        toggleState: true
+      },
+      () => {
+        this.postComment()
+      }
+    );
   }
 
   render() {
@@ -81,19 +77,16 @@ export class CommentForm extends React.Component {
         <CommentEditor onStateChange={this.handleEditorStateChange}
                        mention_suggestions={this.props.users}
                        editorState={this.state.editorState} />
-        <div className='form-group text-right'>
-          <div className="checkbox pull-left">
-                       <label>
-                         <input type="checkbox" checked={this.state.toggleState} onChange={this.handleStatusChange}/>
-                         <small>
-                           { this.props.status == 'open' ? 'close issue' : 're-open issue' }
-                         </small>
-                       </label>
-           </div>
-           <button className='btn btn-sm btn-primary' type='submit'>
+
+        <div className='btn-toolbar pull-right'>
+           <button className='btn btn-sm btn-default' type='button' onClick={this.handleStatusChangeAndSubmit}>
+             { this.props.status == 'open' ? 'Close' : 'Reopen issue' }
+           </button>
+           <button className='btn btn-sm btn-success' type='submit'>
              Comment
            </button>
         </div>
+
       </form>
     </div>);
   }

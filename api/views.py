@@ -53,7 +53,6 @@ class IssueStatusView(ListCreateAPIView):
     def issue(self):
         return get_object_or_404(Issue, pk=self.kwargs['issue_id'])
 
-
     def perform_create(self, serializer):
         serializer.save(user=self.request.user, issue=self.issue)
 
@@ -76,8 +75,6 @@ class MentionView(MultipleModelAPIView):
             (User.objects.filter(username__istartswith=query), UserMentionSerializer),
             (Organisation.objects.filter(short_name__istartswith=query), OrgMentionSerializer)
         )
-
-
 
 
 class UserSearch(ListAPIView):

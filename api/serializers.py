@@ -49,8 +49,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
     comment = serializers.SerializerMethodField()
 
-    close = serializers.BooleanField(write_only=True, required=False)
-    open = serializers.BooleanField(write_only=True, required=False)
+    toggleState = serializers.BooleanField(write_only=True, required=False)
 
     def get_comment(self, comment):
         return comment.get_comment()
@@ -64,8 +63,7 @@ class CommentSerializer(serializers.ModelSerializer):
             'modified',
             'draft_struct',
             'comment',
-            'close',
-            'open'
+            'toggleState'
         ]
         read_only_fields = [
             'id',
@@ -75,24 +73,18 @@ class CommentSerializer(serializers.ModelSerializer):
         ]
 
     def create(self, validated_data):
-        close = validated_data.pop('close', False)
-        open = validated_data.pop('open', False)
+
+        toggle = validated_data.pop('toggleState', False)
         comment = super().create(validated_data)
 
-        current_status = comment.issue.status
         # open or close as a side effect
-        if close and current_status != 'closed':
+        if toggle:
+            cs = comment.issue.status
+            status = 'open' if cs == 'closed' else 'closed'
             IssueStatus.objects.create(
                 user=comment.user,
                 issue=comment.issue,
-                status='closed'
-            )
-
-        if open and current_status != 'open':
-            IssueStatus.objects.create(
-                user=comment.user,
-                issue=comment.issue,
-                status='open'
+                status=status
             )
 
         msg = {
@@ -100,7 +92,6 @@ class CommentSerializer(serializers.ModelSerializer):
         }
 
         Channel('notifications.parse_mentions').send(msg)
-
         return comment
 
 

@@ -144,9 +144,10 @@ export function postComment(issue_id, comment) {
     let url = `/api/issue/${issue_id}/comment/`
     let data = {
       draft_struct: comment.draft_struct,
-      open: comment.open,
-      close: comment.closed
+      toggleState: comment.toggleState || false
     }
+    console.log(comment, data);
+
     jsonPost(url, data)
       .then(
         response => dispatch(invalidateIssue(issue_id))
