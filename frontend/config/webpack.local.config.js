@@ -12,6 +12,7 @@ module.exports = (opts) => {
 
   return {
     ...config,
+    devtool: 'source-map',
     output: {
       ...config.output,
       publicPath: '/static/wp/',
