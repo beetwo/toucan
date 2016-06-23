@@ -20,6 +20,10 @@ main {
   overflow: hidden;
 }
 
+.hide-overflow {
+    overflow: hidden;
+}
+
 /* this is the react root */
 .app-container {
   flex: 1;

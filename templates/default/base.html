@@ -10,7 +10,7 @@
     {% block extra-head %}{% endblock %}
 </head>
 
-<body>
+<body class="{% block body-classes %}{% endblock %}">
     {% block body %}
         {% include 'default/navbar.html' %}
         {% if messages %}
