@@ -21,6 +21,11 @@ export const CHANGE_ISSUE_STATUS = 'CHANGE_ISSUE_STATUS'
 export const ADD_ISSUES_FILTER = 'ADD_ISSUES_FILTER'
 export const REMOVE_ISSUES_FILTER = 'REMOVE_ISSUES_FILTER'
 
+
+export FETCH_CURRENT_USER_DATA = 'FETCH_CURRENT_USER_DATA'
+
+
+
 export function requestIssues() {
   return {
     type: REQUEST_ISSUES
@@ -77,10 +82,8 @@ export function requestIssue(issue_id) {
         issue_id
     }
 }
+  FETCH_CURRENT_USER_DATA
 
-export function receiveIssue(issue_id, json) {
-    return {
-        type: RECEIVE_ISSUE,
         issue_id,
         payload: json
     }
@@ -146,12 +149,27 @@ export function postComment(issue_id, comment) {
       draft_struct: comment.draft_struct,
       toggleState: comment.toggleState || false
     }
-    console.log(comment, data);
 
     jsonPost(url, data)
       .then(
         response => dispatch(invalidateIssue(issue_id))
       )
+  }
+}
+
+// 2 actions to fetch and dipatch the current user information
+export function receiveCurrentUserInformation(json) {
+  return {
+    type: FETCH_CURRENT_USER_DATA,
+    payload: json
+  }
+}
+
+export function loadCurrentUserInformation() {
+  return (dispatch, getState) => {
+    return fetch('/api/aboutme/')
+      .then(response => response.json())
+      .then(json => dispatch(receiveComments(issue_id, json)))
   }
 }
 

@@ -5,15 +5,43 @@ from django.contrib.auth import get_user_model
 from rest_framework.generics import ListAPIView, RetrieveAPIView, ListCreateAPIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.exceptions import ValidationError
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 from drf_multiple_model.views import MultipleModelAPIView
 
 from issues.models import Issue, IssueComment, IssueStatus
 from organisations.models import Organisation
+from user_profile.models import NotificationSettings
 from .serializers import IssueSerializer, FullIssueSerializer, CommentSerializer, \
-    UserSerializer, StatusSerializer, OrgMentionSerializer, UserMentionSerializer
+    UserSerializer, StatusSerializer, OrgMentionSerializer, UserMentionSerializer, \
+    NotificationAreaSerializer
+
+
 
 User = get_user_model()
+
+
+class UserInformationApi(APIView):
+
+    def get(self, request, format=None):
+        response = {
+            'user': None,
+            'notification_areas': []
+        }
+        if request.user.is_authenticated():
+            response.update({
+                'user': UserSerializer(request.user).data,
+                'notification_areas': NotificationAreaSerializer(
+                    NotificationSettings.objects.filter(user=request.user), many=True
+                ).data
+
+            })
+
+        return Response(response)
+
+
+
 
 
 class LocationApi(ListAPIView):

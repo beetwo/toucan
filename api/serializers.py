@@ -6,6 +6,7 @@ from rest_framework.reverse import reverse
 from issues.models import Issue, IssueComment, IssueType, IssueStatus
 from issues.utils import draft_struct_to_comment
 from organisations.models import Organisation
+from user_profile.models import NotificationSettings
 
 from channels import Channel
 
@@ -17,6 +18,18 @@ class UserSerializer(serializers.ModelSerializer):
         fields = [
             'username',
             'id'
+        ]
+
+
+class NotificationAreaSerializer(GeoFeatureModelSerializer):
+
+    class Meta:
+        model = NotificationSettings
+        geo_field = 'point'
+        fields = [
+            'id',
+            'point',
+            'point_radius',
         ]
 
 
