@@ -51,7 +51,8 @@ const mapStateToProps = (state, ownProps) => {
     issueID: issue_id,
     users: state.allUsers,
     orgs: state.allOrganisations,
-    mentions: mentions
+    mentions: mentions,
+    canComment: state.currentUser.canComment || false
   }
 }
 

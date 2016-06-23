@@ -11,7 +11,8 @@ import {
   POST_COMMENT,
   RECEIVE_COMMENTS,
   ADD_ISSUES_FILTER,
-  REMOVE_ISSUES_FILTER
+  REMOVE_ISSUES_FILTER,
+  FETCH_CURRENT_USER_DATA
  } from './actions';
 
 import uniq from 'lodash/uniq'
@@ -276,6 +277,23 @@ function allOrganisations(
 }
 
 
+function currentUser(
+  state={
+    user: null,
+    notificationAreas: [],
+    canComment: false
+  },
+  action
+) {
+  switch (action.type) {
+    case FETCH_CURRENT_USER_DATA:
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
+
 const reducers = {
   geojson,
   redux_issues: issues,
@@ -287,7 +305,8 @@ const reducers = {
   statusChangesByIssueID,
   usersByIssueID,
   allUsers,
-  allOrganisations
+  allOrganisations,
+  currentUser
 }
 
 export default reducers;

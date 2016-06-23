@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch'
-import getCookie, { jsonPost } from './utils';
+import getCookie, { jsonPost, jsonGet } from './utils';
 
 export const REQUEST_ISSUES = 'REQUEST_ISSUES'
 export const RECEIVE_ISSUES = 'RECEIVE_ISSUES'
@@ -20,6 +20,11 @@ export const CHANGE_ISSUE_STATUS = 'CHANGE_ISSUE_STATUS'
 
 export const ADD_ISSUES_FILTER = 'ADD_ISSUES_FILTER'
 export const REMOVE_ISSUES_FILTER = 'REMOVE_ISSUES_FILTER'
+
+
+export const FETCH_CURRENT_USER_DATA = 'FETCH_CURRENT_USER_DATA'
+
+
 
 export function requestIssues() {
   return {
@@ -146,7 +151,6 @@ export function postComment(issue_id, comment) {
       draft_struct: comment.draft_struct,
       toggleState: comment.toggleState || false
     }
-    console.log(comment, data);
 
     jsonPost(url, data)
       .then(
@@ -155,6 +159,24 @@ export function postComment(issue_id, comment) {
   }
 }
 
+// 2 actions to fetch and dipatch the current user information
+export function receiveCurrentUserInformation(json) {
+  return {
+    type: FETCH_CURRENT_USER_DATA,
+    payload: json
+  }
+}
+
+export function loadCurrentUserInformation() {
+  return (dispatch, getState) => {
+    return jsonGet('/api/aboutme/')
+      .then(response => response.json())
+      .then(json => dispatch(receiveCurrentUserInformation(json)))
+  }
+}
+
+
+// these are currently not used
 export function changeIssueStatus(issue_id, status) {
   return (dispatch, getState) => {
     let url = `/api/issue/${issue_id}/status/`

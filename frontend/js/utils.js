@@ -21,22 +21,37 @@ export default function getCookie(name) {
 export var csrftoken = getCookie('csrftoken');
 
 
+function getHeaders () {
+  return {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'X-CSRFToken': getCookie('csrftoken')
+  }
+}
+
 export function jsonPost(url, data) {
   return fetch(
     url,
     {
         method: 'post',
         credentials: 'same-origin',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'X-CSRFToken': getCookie('csrftoken')
-        },
+        headers: getHeaders(),
         body: isString(data) ? data : JSON.stringify(data)
       }
     )
 }
 
+
+export function jsonGet(url) {
+  return fetch(
+    url,
+    {
+      method: 'get',
+      credentials: 'same-origin',
+      headers: getHeaders()
+    }
+  )
+}
 
 export function convertDraft(contentState) {
   console.log(contentState)

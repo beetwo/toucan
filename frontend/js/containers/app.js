@@ -3,13 +3,15 @@ import { connect } from 'react-redux'
 import UI from '../components/main'
 import getFilteredIssues from '../issueSelector'
 
-import { selectIssue, fetchIssues, setCoordinates, resetCoordinates } from '../actions'
+import { selectIssue, fetchIssues, setCoordinates,
+         resetCoordinates, loadCurrentUserInformation } from '../actions'
 
 
 class IssueTrackerApp extends React.Component {
 
   componentDidMount() {
     this.props.fetchIssues()
+    this.props.loadCurrentUserInformation()
   }
 
   render() {
@@ -22,6 +24,7 @@ IssueTrackerApp.propType = {
   setCoordinates: PropTypes.func.isRequired,
   issues: PropTypes.array.isRequired,
   coordinates: PropTypes.object,
+  loadCurrentUserInformation: PropTypes.func.isRequired,
   // Injected by React Router
   children: PropTypes.node
 }
@@ -49,6 +52,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     selectIssue: (issue_id) => {
       dispatch(selectIssue(issue_id));
+    },
+    loadCurrentUserInformation: () => {
+      dispatch(loadCurrentUserInformation())
     }
   };
 }
