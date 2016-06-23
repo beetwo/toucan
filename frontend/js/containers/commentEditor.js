@@ -6,6 +6,7 @@ import React, { PropTypes } from 'react'
 import { EditorState, ContentState, convertToRaw, convertFromRaw  } from 'draft-js'
 import { fromJS } from 'immutable';
 
+import 'draft-js/dist/Draft.css'
 import '../../css/editor_styles.css'
 import 'draft-js-mention-plugin/lib/plugin.css'
 
