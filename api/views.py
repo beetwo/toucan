@@ -27,14 +27,17 @@ class UserInformationApi(APIView):
     def get(self, request, format=None):
         response = {
             'user': None,
-            'notification_areas': []
+            'notificationAreas': [],
+            'canComment': False
         }
+
         if request.user.is_authenticated():
             response.update({
                 'user': UserSerializer(request.user).data,
-                'notification_areas': NotificationAreaSerializer(
+                'notificationAreas': NotificationAreaSerializer(
                     NotificationSettings.objects.filter(user=request.user), many=True
-                ).data
+                ).data,
+                'canComment': True
 
             })
 

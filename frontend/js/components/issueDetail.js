@@ -71,13 +71,28 @@ class IssueDetailUI extends React.Component {
             </ol>
 
             <IssueDetailsMain {...this.props} gjs={gjs} issue={issue} />
-            <CommentForm onComment={this.props.onComment.bind(this, gjs.id)} status={issue.status} users={this.props.mentions}/>
+
+            {
+              this.props.canComment ?
+                <CommentForm onComment={this.props.onComment.bind(this, gjs.id)}
+                             status={issue.status}
+                             users={this.props.mentions}
+                             />
+                :
+                  <p className='text-center text-muted'>
+                    <em>Please login to comment.</em>
+                  </p>
+
+
+             }
+
           </div>);
   }
 }
 
 IssueDetailUI.propType = {
-  onComment: PropTypes.func.isRequired
+  onComment: PropTypes.func.isRequired,
+  canComment: PropTypes.bool.isRequired
 }
 
 export default IssueDetailUI

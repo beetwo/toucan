@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch'
-import getCookie, { jsonPost } from './utils';
+import getCookie, { jsonPost, jsonGet } from './utils';
 
 export const REQUEST_ISSUES = 'REQUEST_ISSUES'
 export const RECEIVE_ISSUES = 'RECEIVE_ISSUES'
@@ -22,7 +22,7 @@ export const ADD_ISSUES_FILTER = 'ADD_ISSUES_FILTER'
 export const REMOVE_ISSUES_FILTER = 'REMOVE_ISSUES_FILTER'
 
 
-export FETCH_CURRENT_USER_DATA = 'FETCH_CURRENT_USER_DATA'
+export const FETCH_CURRENT_USER_DATA = 'FETCH_CURRENT_USER_DATA'
 
 
 
@@ -82,8 +82,10 @@ export function requestIssue(issue_id) {
         issue_id
     }
 }
-  FETCH_CURRENT_USER_DATA
 
+export function receiveIssue(issue_id, json) {
+    return {
+        type: RECEIVE_ISSUE,
         issue_id,
         payload: json
     }
@@ -167,12 +169,14 @@ export function receiveCurrentUserInformation(json) {
 
 export function loadCurrentUserInformation() {
   return (dispatch, getState) => {
-    return fetch('/api/aboutme/')
+    return jsonGet('/api/aboutme/')
       .then(response => response.json())
-      .then(json => dispatch(receiveComments(issue_id, json)))
+      .then(json => dispatch(receiveCurrentUserInformation(json)))
   }
 }
 
+
+// these are currently not used
 export function changeIssueStatus(issue_id, status) {
   return (dispatch, getState) => {
     let url = `/api/issue/${issue_id}/status/`
