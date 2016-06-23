@@ -50,8 +50,8 @@ module.exports = (opts) => {
     resolve: {extensions: ['', '.js']},
     module: {
         loaders: [
-            {test: /\.css$/, loaders: ['style', 'css', 'postcss']},
-            {test: /\.scss$/, loaders: ['style', 'css', 'postcss', 'sass']},
+            {test: /\.css$/, loaders: ['style', 'css?-autoprefixer', 'postcss']},
+            {test: /\.scss$/, loaders: ['style', 'css?-autoprefixer', 'postcss', 'sass']},
             {
                 test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                 loader: "url?limit=10000"
@@ -90,7 +90,7 @@ module.exports = (opts) => {
     postcss: function () {
       return [
         precss,
-        autoprefixer({ browsers: ['last 2 versions', 'Safari 8'] })
+        autoprefixer
       ];
     }
 
