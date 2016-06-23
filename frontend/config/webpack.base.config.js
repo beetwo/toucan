@@ -88,7 +88,10 @@ module.exports = (opts) => {
         ],
     },
     postcss: function () {
-      return [precss, autoprefixer];
+      return [
+        precss,
+        autoprefixer({ browsers: ['last 2 versions', 'Safari 8'] })
+      ];
     }
 
   };
