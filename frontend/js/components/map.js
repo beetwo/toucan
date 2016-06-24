@@ -9,6 +9,7 @@ import { setCoordinates } from '../actions'
 import getMarkerForIssue from './markers/markers';
 import LocationControl from './locationControl';
 import { defaultMapBounds } from '../globals';
+import urls from '../urls';
 
 require('leaflet/dist/leaflet.css');
 
@@ -54,6 +55,11 @@ class AddNewMarker extends React.Component {
     this.props.handleLatLng(e.target.getLatLng());
   }
 
+  handleOnClick(e) {
+    const latLng = e.target.getLatLng();
+    document.location = urls.createIssue(latLng.lat, latLng.lng);
+  }
+
   render () {
     const {layerContainer, map, position} = this.props;
     let i = getMarkerForIssue({}, {markerColor: 'green', icon: 'fa-plus'});
@@ -61,8 +67,10 @@ class AddNewMarker extends React.Component {
                    map={map}
                    position={position}
                    icon={i}
-                   onClick={this.props.onClickHandler}
+                   onClick={this.handleOnClick}
                    draggable={true}
+                   clickable={true}
+                   title="Left-click to create issue"
                    onDragend={this.handleMarkerPosition} />;
   }
 }
