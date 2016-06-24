@@ -81,7 +81,6 @@ export class LeafletMap extends React.Component {
         this.state = {
           context: false,
           center: null,
-          zoom: 10
         }
 
         // bind event handlers
