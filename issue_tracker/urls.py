@@ -23,8 +23,9 @@ if settings.DEBUG:
     urlpatterns += staticfiles_urlpatterns()
 
 urlpatterns += [
+    url(r'^issue/(?P<issue_id>\d+)', HomeView.as_view(), name='home_issue'),
     # keep this at the bottom as it eats urls!
-    url(r'^', HomeView.as_view(), name='home'),
+    url(r'^', HomeView.as_view(), name='home')
 ]
 
 
