@@ -1,8 +1,9 @@
 import React from 'react'
 import Icon from 'react-fa'
+import urls from '../urls'
 
 export default function(props) {
-  let url = '/issues/create/?' + 'lat=' + encodeURIComponent(props.coordinates.lat) + '&lng=' + encodeURIComponent(props.coordinates.lng)
+  let url = urls.createIssue(props.coordinates.lat, props.coordinates.lng);
   return <div className='panel panel-success'>
     <div className='panel-body'>
       <a className='btn btn-xs btn-success' href={url}>
