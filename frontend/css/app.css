@@ -1,13 +1,13 @@
 html, body {
-    height: 100%;
-    width: 100%;
-    margin: 0;
+  height: 100%;
+  width: 100%;
+  margin: 0;
 }
 
 body {
-    height: 100vh;
-    display:flex;
-    flex-direction: column;
+  height: 100vh;
+  display:flex;
+  flex-direction: column;
 }
 
 nav {
@@ -37,19 +37,19 @@ main {
 }
 
 .map-container {
-    padding:1em;
-    display: flex;
+  padding:1em;
+  display: flex;
 }
 
 .map-container > div {
-    width: 100%;
-    flex: 1;
+  width: 100%;
+  flex: 1;
 }
 
 .issues-container {
-    display: flex;
-    flex-direction: column;
-    padding: 1em;
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
 }
 
 
@@ -75,13 +75,13 @@ main {
 
 /* currently not used*/
 .marker-cluster {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #3498db;
-    color: #fff;
-    text-align: center;
-    font-size: 24px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #3498db;
+  color: #fff;
+  text-align: center;
+  font-size: 24px;
 }
 
 .leaflet-cluster-anim .leaflet-marker-icon, .leaflet-cluster-anim .leaflet-marker-shadow {
@@ -93,4 +93,19 @@ main {
 
 .issues tr:hover {
   cursor: pointer;
+}
+
+.issue-list-form {
+  display: flex;
+  flex-direction: row;
+}
+
+.issue-filter {
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
 }
