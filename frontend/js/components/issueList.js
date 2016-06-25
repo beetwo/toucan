@@ -107,11 +107,11 @@ class IssueListUI extends React.Component {
         });
         return (
           <div>
-            <div className='row'>
-              <div className='col-md-10'>
+            <div className="issue-list-form">
+              <div className="issue-filter">
                 <IssueFilter {...this.props} filterOptions={this.props.filterOptions}/>
               </div>
-              <div className='col-md-2 text-right'>
+              <div className='issue-refresh'>
                 <button className='btn' onClick={this.props.refreshIssueList}>
                   <Icon name='refresh' size='lg'/>
                 </button>
