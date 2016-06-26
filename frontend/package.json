@@ -32,7 +32,7 @@
     "css-loader": "^0.23.1",
     "draft-js": "^0.7.0",
     "draft-js-linkify-plugin": "^1.0.1",
-    "draft-js-mention-plugin": "^1.1.1",
+    "draft-js-mention-plugin": "^1.1.2",
     "draft-js-plugins-editor": "^1.0.1",
     "drmonty-leaflet-awesome-markers": "^2.0.2",
     "exports-loader": "^0.6.3",
