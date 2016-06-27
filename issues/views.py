@@ -124,7 +124,7 @@ class IssueCreateView(LoginRequiredMixin, FormValidMessageMixin, CreateView):
 
     def get_success_url(self):
         return reverse(
-            'issues:issue_detail',
+            'home_issue',
             kwargs={'issue_id': self.object.pk},
             current_app=self.request.resolver_match.namespace
         )
