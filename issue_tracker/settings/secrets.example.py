@@ -10,3 +10,18 @@ EMAIL_HOST_PASSWORD = ''
 
 
 DEFAULT_FROM_EMAIL = 'do-not-reply@b2issuetracker.at'
+
+
+# NEXMO = {
+#   'key': 'key',
+#   'secret': 'secret'
+# }
+#
+# RAVEN_DSN = 'sentry dsn url'
+#
+# OPBEAT = {
+#   'ORGANIZATION_ID': '',
+#   'APP_ID': '',
+#   'SECRET_TOKEN': '',
+# }
+
