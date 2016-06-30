@@ -13,7 +13,9 @@
 
 <body class="{% block body-classes %}{% endblock %}">
     {% block body %}
-        {% include 'default/navbar.html' %}
+        {% block navbar %}
+            {% include 'default/navbar.html' %}
+        {% endblock navbar %}
         {% if messages %}
         <div class="container">
             {% bootstrap_messages %}

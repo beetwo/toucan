@@ -19,7 +19,7 @@ class PublicProfile(DetailView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         memberships = Membership.objects\
-                            .filter(user=self.request.user)\
+                            .filter(user=self.object)\
                             .order_by('org__name')\
                             .select_related('org')
         ctx.update({

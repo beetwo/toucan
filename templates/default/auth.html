@@ -1,6 +1,9 @@
 {% extends 'default/base.html' %}
 
-{% block body %}
+{# hide navbar #}
+{% block navbar %}{% endblock navbar %}
+
+{% block main %}
     <div class="container">
         <h1 class="text-center">
             {% block auth-header %}{% endblock %}
@@ -10,4 +13,4 @@
             {% block auth-content %}{% endblock auth-content %}
         </div>
     </div>
-{% endblock body %}
+{% endblock main %}
