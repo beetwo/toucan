@@ -9,6 +9,7 @@ class UI extends React.Component {
         return (<div className="app-container">
             <div className="map-container">
               <Map geojson={this.props.geojson}
+                   bounds={this.props.bounds}
                    visibleIssueIDs={this.props.issues.map(i => i.id)}
                    setCoordinates={this.props.setCoordinates}
                    coordinates={this.props.coordinates}

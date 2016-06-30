@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'organisations',
     'issues',
     'user_profile',
+    'site_config',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -172,3 +173,9 @@ try:
 except ImportError:
     import warnings
     warnings.warn('No secrets file found in settings folder. Default settings assumed -- some things might be broken.')
+
+
+
+
+
+
