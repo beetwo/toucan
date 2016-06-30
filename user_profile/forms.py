@@ -21,10 +21,14 @@ class UserProfileSignupForm(forms.Form):
     )
 
     def signup(self, request, user):
-        profile = Profile.objects.create(
-            user=user,
-            phone_number=self.cleaned_data['phone']
+        # save phone number to profile
+        profile, created = Profile.objects.get_or_create(
+            user=user
         )
+        profile.phone_number = self.cleaned_data['phone']
+        profile.save()
+
+        # if given add to organisation
         org = self.cleaned_data.get('org')
         if org:
             org.add_member(user)
