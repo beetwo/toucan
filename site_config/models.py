@@ -8,7 +8,13 @@ class SiteConfig(models.Model):
 
     site = models.OneToOneField(Site)
     issue_point = geomodels.PointField()
+
     area = geomodels.PolygonField()
+    enforce_issue_location_in_area = models.BooleanField(
+        default=False,
+        help_text=_('Enforce issues to be in this sites area')
+    )
+
 
     def get_extents(self):
         return self.area.extent

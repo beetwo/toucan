@@ -33,6 +33,7 @@ class UserInformationApi(APIView):
             'bbox': B2_ISSUE_TRACKER['MAP_BOUNDS']
         }
 
+        # get the extents from the current site
         site = get_current_site(request)
         extents = site.siteconfig.get_extents()
         response.update({
@@ -57,18 +58,24 @@ class UserInformationApi(APIView):
 
 
 
+class BaseIssueMixin(object):
+
+    def get_queryset(self):
+        return Issue.objects\
+            .filter(site=get_current_site(self.request), point__isnull=False)\
+            .annotate(comment_count=Count('comments'))
 
 
-class LocationApi(ListAPIView):
-    queryset = Issue.objects.filter(point__isnull=False).annotate(comment_count=Count('comments'))
+class LocationApi(BaseIssueMixin, ListAPIView):
+
     serializer_class = IssueSerializer
 
 
-class IssueView(RetrieveAPIView):
+class IssueView(BaseIssueMixin, RetrieveAPIView):
 
-    queryset = LocationApi.queryset
     serializer_class = FullIssueSerializer
     lookup_url_kwarg = 'issue_id'
+
 
 
 class IssueCommentView(ListCreateAPIView):
