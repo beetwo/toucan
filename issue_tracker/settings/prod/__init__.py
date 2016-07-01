@@ -2,6 +2,8 @@ from .. import *
 
 DEBUG = False
 
+DEFAULT_FROM_EMAIL = 'issuetracker@brickwall.at'
+
 ALLOWED_HOSTS = [
     '127.0.0.1',
     '.brickwall.at',
