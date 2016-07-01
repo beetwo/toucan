@@ -15,6 +15,7 @@ import {
   FETCH_CURRENT_USER_DATA
  } from './actions';
 
+import {defaultMapBounds} from './globals'
 import uniq from 'lodash/uniq'
 
 function issues(state=[], action) {
@@ -281,7 +282,8 @@ function currentUser(
   state={
     user: null,
     notificationAreas: [],
-    canComment: false
+    canComment: false,
+    bbox: defaultMapBounds
   },
   action
 ) {

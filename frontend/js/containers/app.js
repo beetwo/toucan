@@ -10,8 +10,8 @@ import { selectIssue, fetchIssues, setCoordinates,
 class IssueTrackerApp extends React.Component {
 
   componentDidMount() {
-    this.props.fetchIssues()
     this.props.loadCurrentUserInformation()
+    this.props.fetchIssues()
   }
 
   render() {
@@ -25,6 +25,7 @@ IssueTrackerApp.propType = {
   issues: PropTypes.array.isRequired,
   coordinates: PropTypes.object,
   loadCurrentUserInformation: PropTypes.func.isRequired,
+  bounds: PropTypes.array.isRequired,
   // Injected by React Router
   children: PropTypes.node
 }
@@ -35,6 +36,7 @@ const mapStateToProps = (state) => {
     issues: getFilteredIssues(state.redux_issues, state.issueFilters.selections),
     geojson: state.geojson,
     selectedIssue: state.selectedIssue,
+    bounds: state.currentUser.bbox,
     coordinates: state.coordinates
   }
 }

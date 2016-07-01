@@ -175,7 +175,8 @@ export class LeafletMap extends React.Component {
           center = this.state.center;
         }
 
-        let bounds = this._computeBounds(geojson)
+        console.log(this._computeBounds(geojson));
+        let bounds = this.props.bounds || this._computeBounds(geojson);
 
         return (
             <Map center={center}
