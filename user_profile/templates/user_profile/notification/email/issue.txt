@@ -5,3 +5,4 @@ Type: {{ issue.issue_type.name|default_if_none:'' }}
 
 {{ issue.description }}
 
+{{ issue.get_absolute_url }}

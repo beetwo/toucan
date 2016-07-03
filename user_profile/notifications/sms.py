@@ -16,8 +16,16 @@ except AttributeError:
 class SMSNotification(BaseNotification):
 
     def get_message(self):
-        txt = '%s Issue #%d was created.' % (self.issue.issue_type.name if self.issue.issue_type else '', self.issue.pk)
-        return txt.strip()
+        txt = '%s issue #%d was created:' % (self.issue.issue_type.name if self.issue.issue_type else '', self.issue.pk)
+        subject = self.issue.title
+        link = self.issue.get_absolute_url()
+
+        if sum(len(txt), len(subject), len(link)) > 137:
+            subject_length = 137 - sum(len(txt), len(link))
+            subject = subject[:subject_length - 3] + '...'
+
+        final_txt = ' '.join(txt, subject, link)
+        return final_txt.strip()
 
     def send_issue_notification(self):
         phone_number = self.notification.user.profile.phone_number.as_e164.replace('+', '').replace(' ', '')

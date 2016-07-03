@@ -111,7 +111,7 @@ def send_comment_notification(channel_message):
         % (comment.pk, user.username, user.pk, msg_type)
     )
 
-    issue_url = 'https://b2it.brickwall.at/issue/' + str(comment.issue.pk)
+    issue_url = comment.issue.get_absolute_url()
 
     if msg_type == 'email':
 
