@@ -184,11 +184,14 @@ function usersByIssueID(state={}, action) {
 function issueFiltersOptions(state={}, action) {
   switch (action.type) {
     case RECEIVE_ISSUES:
+      let issues_with_orgs = action.issues.features.filter((i) => { return i.properties.organisation !== null;})
+      let org_names =  uniq(issues_with_orgs.map((i) => i.properties.organisation.name))
+
       return {
           ...state,
           status: uniq(action.issues.features.map((i) => i.properties.status)),
           type: uniq(action.issues.features.map((i) =>  i.properties.issue_type.slug)),
-          organisation: uniq(action.issues.features.map((i) => i.properties.organisation.name))
+          organisation: org_names
       }
     default:
       return state
@@ -266,10 +269,14 @@ function allOrganisations(
 ) {
   switch (action.type) {
     case RECEIVE_ISSUE:
-      let org_slug = action.payload.properties.organisation.short_name;
-      return uniq([...state, org_slug])
+      if (action.payload.properties.organisation !== null) {
+        let org_slug = action.payload.properties.organisation.short_name;
+        return uniq([...state, org_slug])
+      }
+      return state
     case RECEIVE_ISSUES:
-      let org_slugs = action.issues.features.map((i) => i.properties.organisation.short_name)
+      let issues_with_orgs = action.issues.features.filter((i) => i.properties.organisation !== null)
+      let org_slugs = issues_with_orgs.map((i) => i.properties.organisation.short_name)
       return uniq([...state, ...org_slugs])
     default:
       return state
