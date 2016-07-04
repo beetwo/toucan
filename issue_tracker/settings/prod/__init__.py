@@ -33,7 +33,7 @@ WEBPACK_LOADER = {
 
 # install opbeat if available
 try:
-    from .secrets import OPBEAT
+    from ..secrets import OPBEAT
 except ImportError:
     pass
 else:
@@ -54,8 +54,8 @@ else:
 
 # install raven handler if configured
 try:
-    from .secrets import RAVEN_DSN
     import raven
+    from ..secrets import RAVEN_DSN
 except ImportError:
     pass
 else:
