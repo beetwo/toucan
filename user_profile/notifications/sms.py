@@ -20,7 +20,7 @@ class SMSNotification(BaseNotification):
         subject = self.issue.title
         link = self.issue.get_absolute_url()
 
-        if sum(len(txt), len(subject), len(link)) > 137:
+        if sum([len(txt), len(subject), len(link)]) > 137:
             subject_length = 137 - sum(len(txt), len(link))
             subject = subject[:subject_length - 3] + '...'
 
