@@ -40,12 +40,24 @@ class Organisation(TimeStampedModel):
         return self.membership_set.filter(active=True)
 
     def add_user_to_org(self, user, role=0, active=True):
-        return Membership.objects.create(
-            user=user,
-            org=self,
-            role=role,
-            active=True
-        )
+        try:
+            membership = Membership.objects.get(
+                user=user
+            )
+        except Membership.DoesNotExist:
+            membership = Membership.objects.create(
+                user=user,
+                org=self,
+                role=role,
+                active=True
+            )
+        else:
+            membership.org = self
+            membership.role = role
+            membership.active = active
+            membership.save()
+            
+        return membership
 
     def add_owner(self, user, **kwargs):
         return self.add_user_to_org(user, role=10, **kwargs)
