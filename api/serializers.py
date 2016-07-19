@@ -148,7 +148,6 @@ class IssueSerializer(GeoFeatureModelSerializer):
             # model fields
             'id',
             'title',
-            'description',
             'priority',
             'visibility',
             'status',
@@ -195,7 +194,8 @@ class FullIssueSerializer(IssueSerializer):
         geo_field = 'point'
 
         fields = IssueSerializer.Meta.fields + [
-            'issue_type',
+            'description',
+            'description_format',
             'comment_url',
             'comments',
             'status_url',
@@ -203,6 +203,10 @@ class FullIssueSerializer(IssueSerializer):
             'creator',
             'organisation',
             'users',
+        ]
+
+        readonly_fields = [
+            'description_format',
         ]
 
 

@@ -9,12 +9,41 @@ import UserLink from './userLink'
 import Status from './status'
 import Icon from 'react-fa'
 import getIconClassForIssueType from './icons/issueType'
+import Remarkable from 'remarkable'
 
+function MarkdownBody (props) {
+  let md = new Remarkable();
+  return <HtmlBody html={md.render(props.text)} />;
+}
+
+function HtmlBody (props) {
+  return <div dangerouslySetInnerHTML={{'__html': props.html}}></div>;
+}
+
+function RawTextBody (props) {
+  return <div style={{whiteSpace: 'pre-line'}}>{props.text}</div>;
+}
 
 class IssueDetailsMain extends React.Component {
 
   render() {
     let {gjs, issue, children} = this.props;
+    let description = issue.description;
+    let body = null;
+
+    switch(issue.description_format) {
+      case 'html':
+        body = <HtmlBody html={description} />;
+        break;
+      case 'markdown':
+        body = <MarkdownBody text={description} />;
+        break;
+      default:
+        body = <RawTextBody text={description} />;
+    }
+
+    console.log(body, description, issue);
+
     return <div className='issueDetailMain' ref='scrollbar'>
       <div className='row'>
         <div className='col-md-8'>
@@ -35,8 +64,8 @@ class IssueDetailsMain extends React.Component {
           <div className="panel-heading">
             created by <UserLink username={ issue.creator.username } /> <Timeago date={issue.created} />
           </div>
-          <div className="panel-body" style={{whiteSpace: 'pre-line'}}>
-            {issue.description || 'This issue has no description.'}
+          <div className='panel-body'>
+            {body}
           </div>
       </div>
       {children}

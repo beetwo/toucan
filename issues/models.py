@@ -55,6 +55,13 @@ class Issue(TimeStampedModel):
 
     description = models.TextField(blank=False)
 
+    FORMAT_CHOICES = Choices(
+        ('', _('Just text')),
+        ('markdown', _('Markdown')),
+        ('html', _('HTML'))
+    )
+    description_format = models.CharField(blank=True, choices=FORMAT_CHOICES, default='', max_length=20)
+
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
 
     point = models.PointField(verbose_name=_('location'), null=True)
