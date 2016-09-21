@@ -21,3 +21,4 @@ asgi_redis==0.12.0
 factory-boy==2.7.0
 opbeat==3.3.4
 raven==5.24.1
+django-lockdown==1.3

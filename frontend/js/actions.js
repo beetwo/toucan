@@ -43,7 +43,7 @@ export function receiveIssues(issues) {
 export function fetchIssues() {
     return dispatch => {
         dispatch(requestIssues())
-        return fetch('/api/')
+        return fetch('/api/', {credentials: 'same-origin'})
             .then(response => response.json())
             .then(json => dispatch(receiveIssues(json)))
     }
@@ -102,7 +102,7 @@ export function fetchIssueIfNeeded(issue_id) {
     return (dispatch, getState) => {
         dispatch(selectIssue(issue_id))
         dispatch(requestIssue(issue_id))
-        return fetch(`/api/issue/${issue_id}/`)
+        return fetch(`/api/issue/${issue_id}/`, {credentials: 'same-origin'})
             .then(response => response.json())
             .then(json => {
               dispatch(receiveIssue(issue_id, json))
