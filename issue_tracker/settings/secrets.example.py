@@ -25,3 +25,6 @@ DEFAULT_FROM_EMAIL = 'do-not-reply@b2issuetracker.at'
 #   'SECRET_TOKEN': '',
 # }
 
+# Uncomment the following lines to enable global password auth
+# LOCKDOWN_ENABLED = True
+# LOCKDOWN_PASSWORDS = ('letmein', )
