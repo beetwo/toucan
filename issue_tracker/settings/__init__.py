@@ -142,8 +142,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-SITE_ID = 1
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
@@ -169,7 +167,8 @@ CHANNEL_LAYERS = {
     },
 }
 
-# Lockdown disabled by default, set to true in secrets.py
+# Lockdown disabled by default
+# set to True in secrets.py
 LOCKDOWN_ENABLED = False
 
 from .allauth import *
