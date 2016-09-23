@@ -80,7 +80,7 @@ export class CommentForm extends React.Component {
 
         <div className='btn-toolbar pull-right'>
            <button className='btn btn-sm btn-default' type='button' onClick={this.handleStatusChangeAndSubmit}>
-             { this.props.status == 'open' ? 'Resolve issue' : 'Reopen issue' } 
+             { this.props.status == 'open' ? 'Resolve issue' : 'Reopen issue' }
            </button>
            <button className='btn btn-sm btn-success' type='submit'>
              Comment
@@ -120,11 +120,25 @@ Comment.propTypes = {
 export class StatusChange extends React.Component {
   render() {
     let sc = this.props.statusChange;
+    let txt = null;
+
+    if (sc.status === 'open') {
+      txt = <span>
+        <span className='label label-danger'>re-opened</span>
+        <span>this issue.</span>
+      </span>;
+
+    } else if (sc.status === 'closed') {
+      txt = <span>
+        <span>marked this issue as </span>
+        <span className='label label-success'>resolved</span>
+      </span>;
+    };
+
+    console.log(txt);
     return <p className='text-right text-muted'>
       <a>{sc.user.username}</a>&nbsp;
-      { sc.status === 'open' ? <span className='label label-success'>re-opened</span> : null }
-      { sc.status === 'closed' ? <span className='label label-danger'>closed</span> : null }
-      &nbsp;this issue.
+      {txt}
     </p>;
   }
 }
