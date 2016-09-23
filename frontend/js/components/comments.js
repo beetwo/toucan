@@ -80,7 +80,7 @@ export class CommentForm extends React.Component {
 
         <div className='btn-toolbar pull-right'>
            <button className='btn btn-sm btn-default' type='button' onClick={this.handleStatusChangeAndSubmit}>
-             { this.props.status == 'open' ? 'Close' : 'Reopen issue' }
+             { this.props.status == 'open' ? 'Resolve issue' : 'Reopen issue' } 
            </button>
            <button className='btn btn-sm btn-success' type='submit'>
              Comment
