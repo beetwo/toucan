@@ -65,9 +65,6 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.sites.middleware.CurrentSiteMiddleware',
 ]
 
-
-
-
 ROOT_URLCONF = 'issue_tracker.urls'
 
 TEMPLATES = [
