@@ -165,10 +165,6 @@ CHANNEL_LAYERS = {
     },
 }
 
-# Lockdown disabled by default
-# set to True in secrets.py
-LOCKDOWN_ENABLED = False
-
 from .allauth import *
 
 try:
