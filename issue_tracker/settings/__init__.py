@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     'issues',
     'user_profile',
     'site_config',
-    'lockdown'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -64,7 +63,6 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.sites.middleware.CurrentSiteMiddleware',
-    'lockdown.middleware.LockdownMiddleware',
 ]
 
 
