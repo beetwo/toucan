@@ -1,0 +1,14 @@
+{% extends "default/auth.html" %}
+
+{% load i18n %}
+{% load bootstrap3 %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Sign Up Closed" %}{% endblock %}
+
+{% block auth-header %}{% trans "Sign Up currently closed" %}{% endblock %}
+
+{% block content %}
+<h1>{% trans "Sign Up Closed" %}</h1>
+<p>{% trans "We are sorry, but the sign up is currently closed. You will need an invite to access the site." %}</p>
+{% endblock %}
