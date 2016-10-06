@@ -8,7 +8,8 @@
 
 {% block auth-header %}{% trans "Sign Up currently closed" %}{% endblock %}
 
-{% block content %}
-<h1>{% trans "Sign Up Closed" %}</h1>
-<p>{% trans "We are sorry, but the sign up is currently closed. You will need an invite to access the site." %}</p>
+{% block auth-content %}
+<div class="alert alert-warning">
+    <p>{% trans "We are sorry, but the signup is currently closed. You will need an invitation to access the site." %}</p>
+</div>
 {% endblock %}

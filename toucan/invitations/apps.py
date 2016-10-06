@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class InvitationConfig(AppConfig):
-    name = 'invitation'
+    name = 'toucan.invitations'

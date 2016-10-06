@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'issues',
     'user_profile',
     'site_config',
+    'toucan.invitations',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -124,6 +125,7 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
@@ -161,6 +163,10 @@ CHANNEL_LAYERS = {
         "ROUTING": "issue_tracker.routing.channel_routing"
     },
 }
+
+# configure invitation system
+INVITATION_REQUIRED = True
+INVITATION_VALID_DAYS = 2
 
 from .allauth import *
 
