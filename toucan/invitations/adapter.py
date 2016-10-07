@@ -1,6 +1,6 @@
-from django.conf import settings
 from allauth.account.adapter import DefaultAccountAdapter
 from .settings import INVITATION_SESSION_KEY, INVITATION_REQUIRED
+
 
 class InvitationAdapter(DefaultAccountAdapter):
 

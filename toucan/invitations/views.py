@@ -9,7 +9,7 @@ from django.shortcuts import get_object_or_404
 
 from allauth.account.adapter import get_adapter
 from allauth.account.views import SignupView
-from braces.views import UserPassesTestMixin
+from braces.views import UserPassesTestMixin, AnonymousRequiredMixin
 
 from organisations.models import Organisation
 from .models import ToucanInvitation, create_invitation_from_request
@@ -18,10 +18,23 @@ from .forms import InviteUserForm
 from .permissions import can_invite_to_org
 
 
-class InvitationAcceptedView(DetailView):
+class InvitationAcceptedView(AnonymousRequiredMixin, DetailView):
+
     queryset = ToucanInvitation.active.all()
     slug_field = 'secret_key'
     slug_url_kwarg = 'secret_key'
+
+    def get_authenticated_redirect_url(self):
+        messages.error(
+            self.request,
+            _('''
+                You have tried to accept an invitation to Toucan but you are already logged in.
+                Please log out first and then try again by visiting the link in the invitation email.
+                Or just ignore the email. Your choice.
+            ''')
+        )
+        return super().get_authenticated_redirect_url()
+
 
     def get(self, request, *args, **kwargs):
         invitation = self.get_object()
