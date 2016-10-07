@@ -17,8 +17,8 @@ def send_invitation_mail(invitation, ctx={}):
         'email': invitation.email,
         'organisation_name': invitation.organisation.name
     }
-    context.update(ctx)
-    message = render_to_string('invitations/email/invitation.txt', context)
+    ctx.update(context)
+    message = render_to_string('invitations/email/invitation.txt', ctx)
     send_mail(
         subject,
         message,

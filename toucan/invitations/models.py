@@ -105,6 +105,11 @@ class ToucanInvitation(models.Model):
             send_invitation_mail(self, context)
         self.mark_sent()
 
+    class Meta:
+        ordering = [
+            '-pk',
+        ]
+
 
 def create_invitation(email, inviter, organisation, site,
                       role=0, send_invite=False):
@@ -124,18 +129,17 @@ def create_invitation(email, inviter, organisation, site,
     return invitation
 
 
-def create_invitation_from_request(request, email):
+def create_invitation_from_request(request, email, organisation=None):
     if request.user.is_anonymous:
         raise ValueError('This method need an authenticated user for the request.')
 
     invitation = create_invitation(
         email,
         request.user,
-        request.user.membership.org,
+        organisation or request.user.membership.org,
         request.site,
         send_invite=False
     )
-
     invitation.send(context=RequestContext(request, {}), request=request)
     return invitation
 

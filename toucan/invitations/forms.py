@@ -49,3 +49,7 @@ class InvitedUserSignupForm(BaseUserProfileSignupForm):
             user,
             role=self.invitation.role
         )
+
+
+class InviteUserForm(forms.Form):
+    email = forms.EmailField()
