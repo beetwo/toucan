@@ -56,7 +56,7 @@
     {% if is_member %}
         {% if can_invite %}
         <p class="text-right">
-            <a class="btn btn-primary">
+            <a class="btn btn-primary" href="{% url 'invite_to_org' organisation_id=organisation.pk %}">
                 {% trans 'Invite new members' %} <i class="fa fa-envelope"></i>
             </a>
         </p>

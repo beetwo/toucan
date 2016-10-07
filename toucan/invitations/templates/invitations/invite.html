@@ -10,14 +10,15 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <form method="post">
+        <form class="form-inline" method="post">
             {% csrf_token %}
-            {% bootstrap_form form %}
-            {% buttons %}
-            <button type="submit" class="btn btn-primary">
-                {% trans 'Invite' %}
-            </button>
-            {% endbuttons %}
+            {% bootstrap_form form layout="inline" %}
+            {% buttons submit='Invite'  layout='inline' %}{% endbuttons %}
+{#            {% buttons %}#}
+{#            <button type="submit" class="btn btn-primary">#}
+{#                {% trans 'Invite' %}#}
+{#            </button>#}
+{#            {% endbuttons %}#}
         </form>
     </div>
 </div>
