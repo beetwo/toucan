@@ -1,3 +1,5 @@
+import intersection from 'lodash/intersection'
+
 const getFilteredIssues = function(issues, filters){
   let active_filters = {};
 
@@ -12,13 +14,16 @@ const getFilteredIssues = function(issues, filters){
   let filtered_issues = issues.filter((i) => {
     for (let fp in active_filters) {
       let prop = i[fp];
-      if (fp === 'type') {
-        prop = i.issue_type.slug
-      } else if (fp === 'organisation') {
-        prop = i.organisation.name
-      }
+      let filter_values = filters[fp];
 
-      if (filters[fp].indexOf(prop) === -1) {
+      if (fp === 'type') {
+        prop = i.issue_types.map((it) => it.slug);
+        console.log(filter_values, prop);
+        return intersection(filter_values, prop).length;
+      } else if (fp === 'organisation') {
+        prop = i.organisation.name;
+      }
+      if (filter_values.indexOf(prop) === -1) {
         return false;
       }
     }

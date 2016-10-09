@@ -48,7 +48,7 @@ class IssueFilter(django_filters.FilterSet):
     class Meta:
         model = Issue
         fields = [
-            'issue_type',
+            'issue_types',
             'organisation',
             'current_status'
         ]

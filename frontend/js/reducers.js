@@ -17,6 +17,7 @@ import {
 
 import {defaultMapBounds} from './globals'
 import uniq from 'lodash/uniq'
+import flattenDeep from 'lodash/flattenDeep'
 
 function issues(state=[], action) {
   switch (action.type) {
@@ -186,14 +187,22 @@ function issueFiltersOptions(state={}, action) {
     case RECEIVE_ISSUES:
       let issues_with_orgs = action.issues.features.filter((i) => { return i.properties.organisation !== null;})
       let org_names =  uniq(issues_with_orgs.map((i) => i.properties.organisation.name))
-
       return {
           ...state,
           status: uniq(action.issues.features.map((i) => i.properties.status)),
-          type: uniq(action.issues.features.map((i) =>  i.properties.issue_type.slug)),
+          type: uniq(
+            flattenDeep(
+              action.issues.features.map(
+                (i) =>  i.properties.issue_types.map(
+                    (issue_type) => issue_type.slug
+                )
+              )
+            )
+          ),
           organisation: org_names
       }
     default:
+      console.log(state.type);
       return state
   }
 }

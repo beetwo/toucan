@@ -82,13 +82,13 @@ IssueFilter.propType = {
 class IssueListUI extends React.Component {
 
     render() {
-        let issues = this.props.issues || [];
 
+        let issues = this.props.issues || [];
         let rows = issues.map((issue, index) => {
             return (
               <tr key={issue.id} onClick={(e) => {e.preventDefault(); this.props.handleIssueChange(issue)}}>
                 <td>
-                  { issue.issue_type ? <Icon name={getIconClassForIssueType(issue.issue_type)} title={issue.issue_type.name} /> : null }
+                    {issue.issue_types.map((it) => <Icon key={it.slug} name={getIconClassForIssueType(it)} title={it.name} /> )}
                 </td>
                 <td>
                     <a href='#'>
