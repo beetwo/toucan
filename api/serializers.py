@@ -135,7 +135,7 @@ class IssueSerializer(GeoFeatureModelSerializer):
         lookup_field='pk'
     )
 
-    issue_type = IssueTypeSerializer(read_only=True)
+    issue_types = IssueTypeSerializer(many=True, read_only=True)
 
     comment_count = serializers.IntegerField(read_only=True)
 
@@ -154,15 +154,13 @@ class IssueSerializer(GeoFeatureModelSerializer):
             'created',
             # defined fields
             'issue_url',
-            'issue_type',
+            'issue_types',
             'comment_count',
             'organisation',
         ]
 
 
 class FullIssueSerializer(IssueSerializer):
-
-    issue_type = IssueTypeSerializer(read_only=True)
 
     comment_url = serializers.SerializerMethodField()
     comments = CommentSerializer(many=True, read_only=True)

@@ -11,7 +11,6 @@
 {% block auth-content %}
     {% get_providers as socialaccount_providers %}
 
-
       {% if socialaccount_providers  %}
       <div class="col-md-5 col-lg-5">
         {% include "allauth/account/provider_panel.html" with process="login" %}

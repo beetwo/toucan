@@ -1,0 +1,14 @@
+{% load i18n %}{% autoescape off %}
+{% trans "Hello," %}
+
+{% blocktrans %}You ({{ email }}) have been invited to join the organisation '{{ organisation_name }}' on Toucan.{% endblocktrans %}
+{% if invitation.personal_message %}{% trans "The user who sent you this invitation has left you a personal message:" %}
+---------------------------------------
+{{ invitation.personal_message }}
+---------------------------------------{% endif %}
+{% blocktrans %}If you'd like to join, please go to {{ invite_url }} and sign up there.
+You have {{ invitation_valid_days }} day(s) to sign up until this invitation expires.
+
+Have a nice day!
+{% endblocktrans %}
+{% endautoescape %}

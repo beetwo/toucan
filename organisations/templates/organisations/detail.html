@@ -43,18 +43,31 @@
             {% endfor %}
             </tbody>
         </table>
+
+
+
     </div>
 </div>
 
 
-{% if not is_member %}
-<div class="row">
-    <a href="{% url 'organisations:organisation_apply' org_id=organisation.pk %}" class="btn btn-success">
-        {% trans 'Become a member' %}
-    </a>
-</div>
-{% endif %}
 
+<div class="row">
+
+    {% if is_member %}
+        {% if can_invite %}
+        <p class="text-right">
+            <a class="btn btn-primary" href="{% url 'invite_to_org' organisation_id=organisation.pk %}">
+                {% trans 'Invite new members' %} <i class="fa fa-envelope"></i>
+            </a>
+        </p>
+        {% endif %}
+    {% else %}
+{# Applications are currently disabled #}
+{#        <a href="{% url 'organisations:organisation_apply' org_id=organisation.pk %}" class="btn btn-success">#}
+{#            {% trans 'Become a member by applying' %}#}
+{#        </a>#}
+    {% endif %}
+</div>
 
 {% endwith %}
 {% endblock %}

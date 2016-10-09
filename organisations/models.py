@@ -68,6 +68,9 @@ class Organisation(TimeStampedModel):
     def add_member(self, user, **kwargs):
         return self.add_user_to_org(user, role=0, **kwargs)
 
+    def can_invite(self, user):
+        return
+
     class Meta:
         verbose_name = _('Organisation')
         verbose_name_plural = _('Organisations')

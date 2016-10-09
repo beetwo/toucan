@@ -19,7 +19,7 @@ from .models import Issue
 from .forms import CommentForm, IssueForm
 
 
-class HomeView(TemplateView):
+class HomeView(LoginRequiredMixin, TemplateView):
 
     template_name = 'issues/map.html'
 
@@ -48,7 +48,7 @@ class IssueFilter(django_filters.FilterSet):
     class Meta:
         model = Issue
         fields = [
-            'issue_type',
+            'issue_types',
             'organisation',
             'current_status'
         ]
@@ -66,7 +66,7 @@ class IssueList(FilterView):
             .select_related('organisation')
 
 
-class IssueDetail(DetailView):
+class IssueDetail(LoginRequiredMixin, DetailView):
 
     template_name = 'issues/issue/detail.html'
     model = Issue
@@ -87,6 +87,7 @@ class LatLngForm(forms.Form):
             self.cleaned_data['lng'],
             self.cleaned_data['lat']
         )
+
 
 class IssueCreateView(LoginRequiredMixin, FormValidMessageMixin, CreateView):
 
