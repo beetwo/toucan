@@ -6,6 +6,8 @@ from django.shortcuts import get_object_or_404
 
 from braces.views import FormValidMessageMixin
 
+from toucan.invitations.permissions import can_invite_to_org
+
 from .models import Organisation, Membership
 from .forms import ApplyForm
 
@@ -24,8 +26,10 @@ class OrganisationDetail(DetailView):
         user = self.request.user
         is_member = self.object.membership_set.filter(user=user).exists() if user.is_authenticated() else False
         ctx.update({
-            'is_member': is_member
+            'is_member': is_member,
+            'can_invite': can_invite_to_org(user, self.object)
         })
+
         return ctx
 
 

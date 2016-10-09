@@ -4,14 +4,14 @@ django-model-utils==2.4
 django-allauth==0.27.0
 django-location-field==1.6.1
 django-braces==1.8.1
-djangorestframework==3.3.3
+djangorestframework==3.4.7
 djangorestframework-gis==0.10.1
-django-extensions==1.6.1
+django-extensions==1.7.4
 django-webpack-loader==0.3.0
 django-phonenumber-field==1.1.0
 django-filter==0.13.0
 django-imagekit==3.3
-django-bootstrap3==7.0.1
+django-bootstrap3==7.1.0
 Pillow==3.2.0
 psycopg2==2.6.1
 nexmo==1.0.3

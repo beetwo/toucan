@@ -7,7 +7,25 @@ from organisations.models import Organisation, Membership
 from .models import Profile, NotificationSettings
 
 
-class UserProfileSignupForm(forms.Form):
+class BaseUserProfileSignupForm(forms.Form):
+
+    phone = PhoneNumberField(
+        label=_('Your mobile phone number'),
+        required=False
+    )
+
+    def signup(self, request, user):
+        # save phone number to profile
+        profile, created = Profile.objects.get_or_create(
+            user=user
+        )
+        phone_number = self.cleaned_data['phone']
+        if phone_number:
+            profile.phone_number = phone_number
+            profile.save()
+
+
+class UserProfileSignupForm(BaseUserProfileSignupForm):
 
     org = forms.ModelChoiceField(
         queryset=Organisation.objects.all(),
@@ -16,17 +34,8 @@ class UserProfileSignupForm(forms.Form):
         required=False
     )
 
-    phone = PhoneNumberField(
-        label=_('Your mobile phone number')
-    )
-
     def signup(self, request, user):
-        # save phone number to profile
-        profile, created = Profile.objects.get_or_create(
-            user=user
-        )
-        profile.phone_number = self.cleaned_data['phone']
-        profile.save()
+        super().signup(request, user)
 
         # if given add to organisation
         org = self.cleaned_data.get('org')

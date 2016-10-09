@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'issues',
     'user_profile',
     'site_config',
+    'toucan.invitations',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -64,9 +65,6 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.sites.middleware.CurrentSiteMiddleware',
 ]
-
-
-
 
 ROOT_URLCONF = 'issue_tracker.urls'
 
@@ -127,6 +125,7 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
@@ -144,6 +143,9 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
     )
 }
 
@@ -164,6 +166,10 @@ CHANNEL_LAYERS = {
         "ROUTING": "issue_tracker.routing.channel_routing"
     },
 }
+
+# configure invitation system
+INVITATION_REQUIRED = True
+INVITATION_VALID_DAYS = 2
 
 from .allauth import *
 

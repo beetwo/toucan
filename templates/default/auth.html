@@ -1,10 +1,14 @@
 {% extends 'default/base.html' %}
-
+{% load static from staticfiles %}
 {# hide navbar #}
 {% block navbar %}{% endblock navbar %}
 
 {% block main %}
     <div class="container">
+        <img alt="Toucan Logo"
+             class="center-block img-responsive"
+             src="{% static 'toucan_logo.png' %}"
+             style="margin-top:1em; margin-bottom: 1em;">
         <h1 class="text-center">
             {% block auth-header %}{% endblock %}
         </h1>

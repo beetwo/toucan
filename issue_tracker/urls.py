@@ -3,10 +3,14 @@ from django.conf import settings
 from django.contrib import admin
 
 from issues.views import HomeView
+from toucan.invitations.views import InvitedSignupView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    # these next 2 lines are important!
+    url(r'^accounts/signup/', InvitedSignupView.as_view(), name='account_signup'),
     url(r'^accounts/', include('allauth.urls')),
+    url(r'^invitations/', include('toucan.invitations.urls')),
     url(r'^api/', include('api.urls')),
     url(r'^org/', include('organisations.urls')),
     url(r'^issues/', include('issues.urls', 'issue_app')),

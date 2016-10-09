@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.sites.shortcuts import get_current_site
 
 from rest_framework.generics import ListAPIView, RetrieveAPIView, ListCreateAPIView
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ValidationError
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -81,7 +81,7 @@ class IssueView(BaseIssueMixin, RetrieveAPIView):
 class IssueCommentView(ListCreateAPIView):
 
     serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
     @property
     def issue(self):
@@ -97,7 +97,7 @@ class IssueCommentView(ListCreateAPIView):
 class IssueStatusView(ListCreateAPIView):
 
     serializer_class = StatusSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
     @property
     def issue(self):
