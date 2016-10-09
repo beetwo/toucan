@@ -74,12 +74,9 @@ class Issue(TimeStampedModel):
         verbose_name=_('organisation')
     )
 
-    issue_type = models.ForeignKey(
+    issue_types = models.ManyToManyField(
         IssueType,
-        null=True,
         blank=False,
-        default=1,
-        on_delete=models.SET_NULL,
         verbose_name=_('issue type')
     )
 
