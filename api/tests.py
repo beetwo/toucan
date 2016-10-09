@@ -27,8 +27,8 @@ class ReadApiTestCase(TestCase):
             point=Point((16, 48)),
             organisation=self.org,
             created_by=self.user,
-            issue_type=self.issue_type
         )
+        self.issue.issue_types.add(self.issue_type)
 
     def testIssueList(self):
         self.assertTrue(True)
