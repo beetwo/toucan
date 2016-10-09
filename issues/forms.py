@@ -34,5 +34,5 @@ class IssueForm(forms.ModelForm):
         widgets = {
             'point': forms.TextInput,
             # 'organisation': forms.RadioSelect,
-            'issue_types': forms.CheckboxInput
+            'issue_types': forms.CheckboxSelectMultiple
         }

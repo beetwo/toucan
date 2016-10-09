@@ -109,3 +109,7 @@ main {
     flex-direction: column;
   }
 }
+
+table.issues span.fa {
+  padding-right: 1em;
+}
