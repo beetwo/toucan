@@ -26,8 +26,9 @@ def issue_created(*args, **kwargs):
             distance__lte=F('point_radius') * 1000
         )\
         .order_by('-created')
-
+    
     notifications_to_send = []
+    issue_types = set(issue.issue_types.values_list('pk', flat=True))
 
     for notification in notification_qs:
 
@@ -36,8 +37,12 @@ def issue_created(*args, **kwargs):
             continue
 
         # filter by issue types
-        if notification.type_count > 0 and issue.issue_type not in notification.issue_types.all():
-            continue
+        # type count greater zero means that not all types of issues were subscribed to
+        if notification.type_count > 0:
+            notification_issue_types = set(notification.issue_types.values_list('pk', flat=True))
+            # if no intersection, skip
+            if not issue_types.intersection(notification_issue_types):
+                continue
 
         notifications_to_send.append(notification)
 

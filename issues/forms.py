@@ -29,10 +29,8 @@ class IssueForm(forms.ModelForm):
             'title',
             'issue_types',
             'description',
-            # 'organisation',
         ]
         widgets = {
             'point': forms.TextInput,
-            # 'organisation': forms.RadioSelect,
             'issue_types': forms.CheckboxSelectMultiple
         }
