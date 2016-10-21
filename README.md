@@ -73,7 +73,7 @@ npm install
 Finally build the frontend assets
 
 ```
-npm build-dev
+npm run build-dev
 ```
 
 
