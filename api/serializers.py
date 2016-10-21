@@ -25,9 +25,9 @@ class NotificationAreaSerializer(GeoFeatureModelSerializer):
 class OrganisationSerializer(serializers.ModelSerializer):
 
     logo = serializers.ImageField()
-    detail_url = serializers.SerializerMethodField()
+    profile_url = serializers.SerializerMethodField()
 
-    def get_detail_url(self, org):
+    def get_profile_url(self, org):
 
         return reverse(
             'organisations:organisation_detail',
@@ -41,7 +41,7 @@ class OrganisationSerializer(serializers.ModelSerializer):
             'name',
             'short_name',
             'logo',
-            'detail_url'
+            'profile_url'
         ]
 
 
@@ -54,15 +54,16 @@ class MembershipSerializer(serializers.ModelSerializer):
         fields = ['org']
 
 
-
 class UserSerializer(serializers.ModelSerializer):
 
-    detail_url = serializers.SerializerMethodField()
+    url = serializers.SerializerMethodField()
 
-    def get_detail_url(self, user):
+    def get_url(self, user):
         return reverse(
             'issue_tracker_api:user_detail',
-            kwargs={'username': user.username},
+            kwargs={
+                'username': user.username
+            },
             request=self.context['request']
         )
 
@@ -71,7 +72,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = [
             'username',
             'id',
-            'detail_url'
+            'url'
         ]
 
 
@@ -173,7 +174,7 @@ class StatusSerializer(serializers.ModelSerializer):
 
 class IssueSerializer(GeoFeatureModelSerializer):
 
-    issue_url = serializers.HyperlinkedIdentityField(
+    url = serializers.HyperlinkedIdentityField(
         view_name='issue_tracker_api:issue_detail',
         lookup_url_kwarg='issue_id',
         lookup_field='pk'
@@ -197,7 +198,7 @@ class IssueSerializer(GeoFeatureModelSerializer):
             'status',
             'created',
             # defined fields
-            'issue_url',
+            'url',
             'issue_types',
             'comment_count',
             'organisation',

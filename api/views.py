@@ -34,7 +34,7 @@ class UserInformationApi(APIView):
 
         if request.user.is_authenticated():
             response.update({
-                'user': UserSerializer(request.user).data,
+                'user': UserSerializer(request.user, context={'request': request}).data,
                 'notificationAreas': NotificationAreaSerializer(
                     NotificationSettings.objects.filter(user=request.user), many=True
                 ).data,
