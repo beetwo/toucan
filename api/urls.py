@@ -14,9 +14,13 @@ urlpatterns = [
             url(r'^status/$', IssueStatusView.as_view(), name='issue_status'),
         ])
     ),
-    url(r'aboutme/$', UserInformationApi.as_view(), name='aboutme'),
-    url(r'^users/$', UserSearch.as_view(), name='user_search'),
-    url(r'users/(?P<username>[\w@.]+)/$', UserDetailView.as_view(), name='user_detail'),
+    url(r'^aboutme/$', UserInformationApi.as_view(), name='aboutme'),
+    url(r'^user/',
+        include([
+            url(r'^$', UserSearch.as_view(), name='user_search'),
+            url(r'^(?P<username>[\w@.]+)/$', UserDetailView.as_view(), name='user_detail'),
+        ])
+    ),
     url(r'^mentions/$', MentionView.as_view(), name='mention_search'),
-    url(r'^comment/(?P<pk>\d+)/$', CommentDetailView.as_view(), name='comment_detail')
+    url(r'^comment/(?P<pk>\d+)/$', CommentDetailView.as_view(), name='comment_detail'),
 ]

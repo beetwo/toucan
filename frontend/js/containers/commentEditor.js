@@ -57,7 +57,7 @@ class CommentEditor extends React.Component {
       });
     } else if (value.length >= this.minLengthSearch){
       let url = '/api/mentions/?search=' + encodeURIComponent(value);
-      fetch(url)
+      fetch(url,  {credentials: 'same-origin'})
         .then((response) => response.json())
         .then((data) => {
           let slugs = uniq(data.map((mention) => mention.slug));
