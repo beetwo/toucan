@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
-from django.core.validators import validate_slug
 from django.contrib.gis.db import models as geo_models
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError

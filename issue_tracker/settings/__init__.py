@@ -50,7 +50,6 @@ INSTALLED_APPS = [
     'organisations',
     'issues',
     'user_profile',
-    'site_config',
     'toucan.invitations',
 ]
 
@@ -125,6 +124,7 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
+SITE_ID = 1
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
