@@ -15,7 +15,7 @@ from organisations.models import Organisation
 from user_profile.models import NotificationSettings
 from .serializers import IssueSerializer, FullIssueSerializer, CommentSerializer, \
     UserSerializer, StatusSerializer, OrgMentionSerializer, UserMentionSerializer, \
-    NotificationAreaSerializer
+    NotificationAreaSerializer, FullUserSerializer
 
 from issue_tracker.defaults import B2_ISSUE_TRACKER
 
@@ -112,6 +112,14 @@ class MentionView(MultipleModelAPIView):
             (User.objects.filter(username__istartswith=query), UserMentionSerializer),
             (Organisation.objects.filter(short_name__istartswith=query), OrgMentionSerializer)
         )
+
+
+class UserDetailView(RetrieveAPIView):
+    serializer_class = FullUserSerializer
+    lookup_url_kwarg = 'username'
+    lookup_field = 'username'
+
+    queryset = User.objects.all()
 
 
 class UserSearch(ListAPIView):

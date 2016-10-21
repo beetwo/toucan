@@ -13,9 +13,10 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
     url(r'^invitations/', include('toucan.invitations.urls')),
     url(r'^api/', include('api.urls')),
-    url(r'^org/', include('organisations.urls')),
+    url(r'^org/', include('organisations.urls', 'organisations')),
     url(r'^issues/', include('issues.urls', 'issue_app')),
     url(r'^profile/', include('user_profile.urls', 'user_profile')),
+    url(r'^about/$', TemplateView.as_view(template_name='default/landing_page.html'), name='landing_page'),
 ]
 
 
@@ -29,7 +30,6 @@ if settings.DEBUG:
 
 urlpatterns += [
     url(r'^issue/(?P<issue_id>\d+)', HomeView.as_view(), name='home_issue'),
-    url(r'^about/$', TemplateView.as_view(template_name='default/landing_page.html'), name='landing_page'),
     url(r'^', HomeView.as_view(), name='home'),  # => Single Page App
 
 ]
