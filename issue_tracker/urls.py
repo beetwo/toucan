@@ -1,6 +1,7 @@
 from django.conf.urls import url, include
 from django.conf import settings
 from django.contrib import admin
+from django.views.generic import TemplateView
 
 from issues.views import HomeView
 from toucan.invitations.views import InvitedSignupView
@@ -28,8 +29,9 @@ if settings.DEBUG:
 
 urlpatterns += [
     url(r'^issue/(?P<issue_id>\d+)', HomeView.as_view(), name='home_issue'),
-    # keep this at the bottom as it eats urls!
-    url(r'^', HomeView.as_view(), name='home')
+    url(r'^about/$', TemplateView.as_view(template_name='default/landing_page.html'), name='landing_page'),
+    url(r'^', HomeView.as_view(), name='home'),  # => Single Page App
+
 ]
 
 
