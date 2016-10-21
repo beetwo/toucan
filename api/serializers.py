@@ -4,42 +4,10 @@ from rest_framework import serializers
 from rest_framework.reverse import reverse
 
 from issues.models import Issue, IssueComment, IssueType, IssueStatus
-from organisations.models import Organisation
+from organisations.models import Organisation, Membership
 from user_profile.models import NotificationSettings
 
 from channels import Channel
-
-class UserSerializer(serializers.ModelSerializer):
-
-    detail_url = serializers.SerializerMethodField()
-
-    def get_detail_url(self, user):
-        return reverse(
-            'issue_tracker_api:user_detail',
-            kwargs={'username': user.username},
-            request=self.context['request']
-        )
-
-    class Meta:
-        model = get_user_model()
-        fields = [
-            'username',
-            'id',
-            'detail_url'
-        ]
-
-
-class FullUserSerializer(serializers.ModelSerializer):
-
-
-    class Meta:
-        model = get_user_model()
-        fields = [
-            'username',
-            'first_name',
-            'last_name',
-            'email'
-        ]
 
 
 class NotificationAreaSerializer(GeoFeatureModelSerializer):
@@ -74,6 +42,51 @@ class OrganisationSerializer(serializers.ModelSerializer):
             'short_name',
             'logo',
             'detail_url'
+        ]
+
+
+class MembershipSerializer(serializers.ModelSerializer):
+
+    org = OrganisationSerializer(many=False, read_only=True)
+
+    class Meta:
+        model = Membership
+        fields = ['org']
+
+
+
+class UserSerializer(serializers.ModelSerializer):
+
+    detail_url = serializers.SerializerMethodField()
+
+    def get_detail_url(self, user):
+        return reverse(
+            'issue_tracker_api:user_detail',
+            kwargs={'username': user.username},
+            request=self.context['request']
+        )
+
+    class Meta:
+        model = get_user_model()
+        fields = [
+            'username',
+            'id',
+            'detail_url'
+        ]
+
+
+class FullUserSerializer(serializers.ModelSerializer):
+
+    membership = MembershipSerializer(many=False, read_only=True)
+
+    class Meta:
+        model = get_user_model()
+        fields = [
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+            'membership'
         ]
 
 
