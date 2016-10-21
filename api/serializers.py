@@ -36,13 +36,23 @@ class NotificationAreaSerializer(GeoFeatureModelSerializer):
 class OrganisationSerializer(serializers.ModelSerializer):
 
     logo = serializers.ImageField()
+    detail_url = serializers.SerializerMethodField()
+
+    def get_detail_url(self, org):
+
+        return reverse(
+            'organisations:organisation_detail',
+            kwargs={'org_id': org.pk},
+            request=self.context['request']
+        )
 
     class Meta:
         model = Organisation
         fields = [
             'name',
             'short_name',
-            'logo'
+            'logo',
+            'detail_url'
         ]
 
 
