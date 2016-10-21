@@ -1,5 +1,6 @@
 {% extends 'default/base.html' %}
 {% load static from staticfiles %}
+{% load i18n %}
 {# hide navbar #}
 {% block navbar %}{% endblock navbar %}
 
@@ -9,12 +10,22 @@
              class="center-block img-responsive"
              src="{% static 'toucan_logo.png' %}"
              style="margin-top:1em; margin-bottom: 1em;">
-        <h1 class="text-center">
+
+        <h1 class="text-center" style="margin-top: 3em;">
             {% block auth-header %}{% endblock %}
         </h1>
         <hr />
         <div class="row">
             {% block auth-content %}{% endblock auth-content %}
         </div>
+
+        {% block public-links %}
+        <hr style="margin-top: 3em;" />
+        <p class="text-center">
+            <a href="{% url 'landing_page' %}">
+                {% trans 'About Toucan' %}
+            </a>
+        </p>
+        {% endblock %}
     </div>
 {% endblock main %}

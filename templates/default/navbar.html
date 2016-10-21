@@ -56,15 +56,22 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{% url 'account_logout' %}">Logout</a>
+                                    <a href="{% url 'account_logout' %}">
+                                        {% trans 'Logout' %}
+                                    </a>
                                 </li>
                                 {% if user.is_staff %}
                                 <li>
                                     <a href="{% url 'admin:index' %}">
-                                        {% trans 'Admin' %}
+                                        {% trans 'Administration Interface' %}
                                     </a>
                                 </li>
                                 {% endif %}
+                                <li>
+                                    <a href="{% url 'landing_page' %}">
+                                        {% trans 'About Toucan' %}
+                                    </a>
+                                </li>
                             </ul>
                     </li>
                 {% else %}
