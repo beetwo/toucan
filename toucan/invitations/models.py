@@ -34,8 +34,9 @@ class ToucanInvitation(models.Model):
     organisation = models.ForeignKey(Organisation, on_delete=models.SET_NULL, null=True)
     # and this role within the organisation
     role = models.IntegerField(choices=Membership.ROLES_CHOICES, default=0)
+
     # the invitation is also valid for a single site
-    site = models.ForeignKey(Site)
+    site = models.ForeignKey(Site, null=True)
 
     # this holds the secret that will be sent out via mail
     secret_key = models.CharField(max_length=64, validators=[MinLengthValidator(64)], editable=False, unique=True)
@@ -51,8 +52,12 @@ class ToucanInvitation(models.Model):
         location = reverse('accept_invitation', kwargs={'secret_key': self.secret_key})
         if request:
             return request.build_absolute_uri(location)
-        else:
-            return 'https://{host}{location}'.format(host=self.site.domain, location=location)
+
+        # this is where it gets hard ...
+        site = self.site or Site.objects.get_current()
+        return 'https://{host}{location}'.format(host=site.domain, location=location)
+
+
 
     def accept(self, user):
         self.user = user

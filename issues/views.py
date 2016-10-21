@@ -8,7 +8,6 @@ from django.contrib.gis.geos import Point
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import Count
-from django.contrib.sites.shortcuts import get_current_site
 
 import django_filters
 from django_filters.views import FilterView
@@ -122,7 +121,6 @@ class IssueCreateView(LoginRequiredMixin, FormValidMessageMixin, CreateView):
         except ObjectDoesNotExist:
             issue.organisation = None
 
-        issue.site = get_current_site(self.request)
         return super().form_valid(form)
 
     def get_success_url(self):

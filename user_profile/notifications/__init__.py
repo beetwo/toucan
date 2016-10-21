@@ -1,7 +1,6 @@
 from ..models import NotificationSettings
 
 from django.core.urlresolvers import reverse
-from django.contrib.sites.shortcuts import get_current_site
 
 class BaseNotification(object):
 
