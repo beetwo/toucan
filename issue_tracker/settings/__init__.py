@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'issues',
     'user_profile',
     'toucan.invitations',
+    'toucan.media',
 ]
 
 MIDDLEWARE_CLASSES = [

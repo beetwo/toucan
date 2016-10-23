@@ -6,7 +6,7 @@ from rest_framework.reverse import reverse
 from issues.models import Issue, IssueComment, IssueType, IssueStatus
 from organisations.models import Organisation, Membership
 from user_profile.models import NotificationSettings
-
+from toucan.media.models import ImageFile
 from channels import Channel
 
 
@@ -275,3 +275,10 @@ class UserMentionSerializer(serializers.ModelSerializer):
         model = UserSerializer.Meta.model
         fields = ['name', 'slug']
 
+class ImageUploadSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ImageFile
+        fields = [
+            'image'
+        ]

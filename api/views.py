@@ -2,7 +2,7 @@ from django.db.models import Count, Q
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
 
-from rest_framework.generics import ListAPIView, RetrieveAPIView, ListCreateAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView, ListCreateAPIView, CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ValidationError
 from rest_framework.views import APIView
@@ -15,7 +15,7 @@ from organisations.models import Organisation
 from user_profile.models import NotificationSettings
 from .serializers import IssueSerializer, FullIssueSerializer, CommentSerializer, \
     UserSerializer, StatusSerializer, OrgMentionSerializer, UserMentionSerializer, \
-    NotificationAreaSerializer, FullUserSerializer
+    NotificationAreaSerializer, FullUserSerializer, ImageUploadSerializer
 
 from issue_tracker.defaults import B2_ISSUE_TRACKER
 
@@ -136,4 +136,12 @@ class UserSearch(ListAPIView):
             })
 
         return queryset.filter(username__istartswith=username)
+
+
+class ImageCreateView(CreateAPIView):
+
+    serializer_class = ImageUploadSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(uploader=self.request.user)
 
