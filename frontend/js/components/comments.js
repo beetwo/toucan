@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react'
 import Timeago from 'react-timeago'
 import Icon from 'react-fa'
 import CommentEditor from '../containers/commentEditor'
+import {ToucanUploader} from '../containers/fileUploader';
 import DraftEditor, { convertToRaw, convertFromRaw, EditorState, ContentState } from 'draft-js'
 import concat from 'lodash/concat'
 import isEmpty from 'lodash/isEmpty'
@@ -50,7 +51,6 @@ export class CommentForm extends React.Component {
       },
       toggleState: this.state.toggleState
     }
-    console.log(comment);
     this.props.onComment(comment);
     this.resetEditorState();
   }
@@ -74,9 +74,13 @@ export class CommentForm extends React.Component {
   render() {
     return (<div className='commentForm'>
       <form onSubmit={this.handleSubmit} ref={(e) => this._form =e }>
+
         <CommentEditor onStateChange={this.handleEditorStateChange}
                        mention_suggestions={this.props.users}
-                       editorState={this.state.editorState} />
+                       editorState={this.state.editorState}
+                       />
+
+        <div><ToucanUploader /></div>
 
         <div className='btn-toolbar pull-right'>
            <button className='btn btn-sm btn-default' type='button' onClick={this.handleStatusChangeAndSubmit}>
@@ -135,7 +139,6 @@ export class StatusChange extends React.Component {
       </span>;
     };
 
-    console.log(txt);
     return <p className='text-right text-muted'>
       <a>{sc.user.username}</a>&nbsp;
       {txt}

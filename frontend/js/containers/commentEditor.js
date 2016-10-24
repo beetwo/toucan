@@ -13,6 +13,7 @@ import 'draft-js-mention-plugin/lib/plugin.css'
 import isEmpty from 'lodash/isEmpty'
 import uniq from 'lodash/uniq'
 
+
 const mentionPlugin = createMentionPlugin({
   entityMutability: 'IMMUTABLE',
   mentionPrefix: `@`

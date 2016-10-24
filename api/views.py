@@ -145,3 +145,7 @@ class ImageCreateView(CreateAPIView):
     def perform_create(self, serializer):
         serializer.save(uploader=self.request.user)
 
+    def post(self, request, *args, **kwargs):
+        print(request.data)
+        return super().post(request, *args, **kwargs)
+
