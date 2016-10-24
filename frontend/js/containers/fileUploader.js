@@ -6,13 +6,8 @@ import Icon from 'react-fa'
 import Dropzone from 'react-dropzone';
 import {csrftoken} from '../utils';
 
-function ProgressBar({progress}) {
-  progress = progress || 50;
-  let s = {'width': progress + '%'};
-  return (<div className="progress">
-    <div className="progress-bar" style={s} />
-  </div>)
-}
+import ImageUploader from '../components/fileUploader';
+
 
 export class SingleFileUpload extends React.Component {
     constructor(props) {
@@ -55,25 +50,20 @@ export class SingleFileUpload extends React.Component {
       request.addEventListener('load', this.transferComplete);
       request.send(formData);
       this.request = request;
+      
+      this.setState({started: true});
     }
 
     render() {
       let file = this.props.file;
-
-      return <div className="media">
-        <div className="media-left media-middle">
-          { file.preview ?
-            <img className="media-object"
-                 src={file.preview}
-                 alt='file preview'
-                 style={{maxWidth: '5em'}} /> : null }
-        </div>
-        <div className="media-body">
-            <span className='text-muted'>{this.props.file.name}</span>
-            <br />
-            <ProgressBar progress={this.state.progress || 0} />
-        </div>
-      </div>;
+      let widgetProps = {
+          preview: file.preview,
+          progress: this.state.progress,
+          finished: this.state.finished,
+          filename: file.name,
+          started: this.state.started
+      };
+      return <ImageUploader {...widgetProps} />;
     }
 }
 
