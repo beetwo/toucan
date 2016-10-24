@@ -11,12 +11,13 @@ from toucan.invitations.permissions import can_invite_to_org
 from .models import Organisation, Membership
 from .forms import ApplyForm
 
-class OrganisationList(ListView):
+
+class OrganisationList(LoginRequiredMixin, ListView):
     model = Organisation
     template_name = 'organisations/list.html'
 
 
-class OrganisationDetail(DetailView):
+class OrganisationDetail(LoginRequiredMixin, DetailView):
     model = Organisation
     pk_url_kwarg = 'org_id'
     template_name = 'organisations/detail.html'
