@@ -53,7 +53,7 @@ class IssueFilter(django_filters.FilterSet):
         ]
 
 
-class IssueList(FilterView):
+class IssueList(LoginRequiredMixin, FilterView):
 
     template_name = 'issues/issue/list.html'
     filterset_class = IssueFilter
