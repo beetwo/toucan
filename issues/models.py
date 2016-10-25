@@ -155,7 +155,6 @@ class IssueComment(AbstractIssueRelatedModel):
             return draft_struct_to_comment(self.draft_struct)
 
     def get_attachments(self):
-        print('getting attachments', self)
         from toucan.media.models import MediaFile
         return MediaFile.objects.filter(comment=self).select_subclasses()
 
