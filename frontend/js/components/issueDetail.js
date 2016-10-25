@@ -42,8 +42,6 @@ class IssueDetailsMain extends React.Component {
         body = <RawTextBody text={description} />;
     }
 
-    console.log(body, description, issue);
-
     return <div className='issueDetailMain' ref='scrollbar'>
       <div className='row'>
         <div className='col-md-8'>

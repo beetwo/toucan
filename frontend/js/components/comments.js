@@ -10,7 +10,7 @@ import { fromJS } from 'immutable'
 import CommentView from './commentView'
 import UserLink from './userLink'
 import {ToucanUploader} from '../containers/fileUploader';
-
+import Gallery from './gallery'
 
 export class CommentForm extends React.Component {
   constructor(props) {
@@ -59,7 +59,6 @@ export class CommentForm extends React.Component {
     }
     this.props.onComment(comment);
     this.resetEditorState();
-    console.log(this.uploader);
     this.uploader.reset();
   }
 
@@ -136,13 +135,14 @@ export class Attachments extends React.Component {
       maxWidth: '70px',
       paddingBottom: '0.5em'
     }
-    return <ul className="list-inline">
-      {attachments.map((attachment, index) => {
-        return <li key={index}>
-          <img style={imgStyles} src={attachment.thumbnail_url} alt='thumbnail'/>
-        </li>
-      })}
-    </ul>
+    return <Gallery images={attachments} />;
+    // <ul className="list-inline">
+    //   {attachments.map((attachment, index) => {
+    //     return <li key={index}>
+    //       <img style={imgStyles} src={attachment.thumbnail_url} alt='thumbnail'/>
+    //     </li>
+    //   })}
+    // </ul>
   }
 }
 

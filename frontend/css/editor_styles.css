@@ -22,3 +22,8 @@
 .image-upload img {
   max-width: 100%;
 }
+
+.gallery img {
+  max-width: 5em;
+  padding: 0.2em;
+}

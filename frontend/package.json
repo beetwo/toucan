@@ -51,6 +51,7 @@
     "react-dom": "^15.0.1",
     "react-fa": "^4.0.1",
     "react-hot-loader": "^3.0.0-beta.2",
+    "react-images": "^0.5.1",
     "react-leaflet": "^0.11.1",
     "react-markdown": "^2.1.1",
     "react-redux": "^4.4.1",
