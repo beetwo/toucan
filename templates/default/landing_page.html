@@ -4,18 +4,36 @@
 {% block auth-header %}{% endblock %}
 
 {% block auth-content %}
+
 <p>
+{% blocktrans %}
 Toucan is an online emergency relief platform.
 It enables communication among humanitarian actors in emergency situations.
 Toucan facilitates sharing information and coordinating resources,
 whether supplying food or urgent medical assistance.
 Organisations become more aware of who provides what services where.
+{% endblocktrans %}
 </p>
 
 <p>
-Toucan was developed by <a href="http://www.beetwo.at">BeeTwo</a>.
+{% blocktrans %}
+Toucan is currently in active development by <a href="http://www.beetwo.at">BeeTwo</a>.
+{% endblocktrans %}
 </p>
 
+<hr />
+
+<p class="text-center">
+{% if request.user.is_authenticated %}
+    <a class="btn btn-primary" href="{% url 'home' %}">
+        {% trans 'Go to issue tracker' %}
+    </a>
+{% else %}
+    <a class='btn btn-primary' href="{% url 'account_login' %}">
+        Login
+    </a>
+{% endif %}
+</p>
 
 {% endblock auth-content %}
 

@@ -5,7 +5,6 @@ import UserLink from './userLink'
 class Comment extends React.Component {
   render() {
     let {comment} = this.props;
-    console.log(comment);
     let mentions = twitterText.extractMentionsWithIndices(comment);
     let parts = [];
 

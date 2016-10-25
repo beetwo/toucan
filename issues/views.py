@@ -22,19 +22,6 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
     template_name = 'issues/map.html'
 
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-
-        # get the extents for the locations to be viewed
-        extent = Location.objects.aggregate(ext=Extent('location'))['ext']
-        ctx['initial_map_extent'] = extent
-
-        # get all location object
-        ctx['locations'] = Location.objects.all()
-        # annotate(json=AsGeoJSON('location'))
-        ctx['issues'] = Issue.objects.all().select_related('created_by', 'organisation')
-
-        return ctx
 
 
 class IssueFilter(django_filters.FilterSet):

@@ -10,8 +10,8 @@ import { selectIssue, fetchIssues, setCoordinates,
 class IssueTrackerApp extends React.Component {
 
   componentDidMount() {
-    this.props.loadCurrentUserInformation()
-    this.props.fetchIssues()
+    this.props.loadCurrentUserInformation();
+    this.props.fetchIssues();
   }
 
   render() {

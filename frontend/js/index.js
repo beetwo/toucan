@@ -14,8 +14,9 @@ import UserDetail from './containers/userDetail'
 import {requestIssues, fetchIssues} from './actions'
 
 
-import { Router, Route, IndexRoute, browserHistory } from 'react-router'
+import { Router, Route, IndexRoute, useRouterHistory } from 'react-router'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
+import { createHistory } from 'history'
 
 const loggerMiddleware = createLogger()
 
@@ -35,7 +36,10 @@ let store = createStore(
 )
 
 // Create an enhanced history that syncs navigation events with the store
-const history = syncHistoryWithStore(browserHistory, store)
+let bHistory = useRouterHistory(createHistory)({
+  basename: '/map'
+})
+export const history = syncHistoryWithStore(bHistory, store);
 
 render(
   <Provider store={store}>

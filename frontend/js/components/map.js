@@ -4,13 +4,12 @@ import {dispatch} from 'redux'
 import  Leaflet  from 'leaflet';
 import { Map, TileLayer, LayerGroup, GeoJson, Marker, Popup } from 'react-leaflet';
 import geojsonExtent from 'geojson-extent';
-import { browserHistory } from 'react-router'
 import { setCoordinates } from '../actions'
 import getMarkerForIssue from './markers/markers';
 import LocationControl from './locationControl';
 import { defaultMapBounds } from '../globals';
 import urls from '../urls';
-
+import {history} from '../index'
 require('leaflet/dist/leaflet.css');
 
 class IssueMarker extends React.Component {
@@ -133,7 +132,7 @@ export class LeafletMap extends React.Component {
       this.setState({
         zoom: this.getMap().getZoom()
       })
-      browserHistory.push(`/issue/${issue.id}`);
+      history.push(`/issue/${issue.id}`);
     }
 
     render() {
@@ -175,7 +174,6 @@ export class LeafletMap extends React.Component {
           center = this.state.center;
         }
 
-        console.log(this._computeBounds(geojson));
         let bounds = this.props.bounds || this._computeBounds(geojson);
 
         return (

@@ -18,7 +18,6 @@ const getFilteredIssues = function(issues, filters){
 
       if (fp === 'type') {
         prop = i.issue_types.map((it) => it.slug);
-        console.log(filter_values, prop);
         return intersection(filter_values, prop).length;
       } else if (fp === 'organisation') {
         prop = i.organisation.name;

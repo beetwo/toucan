@@ -16,7 +16,6 @@ urlpatterns = [
     url(r'^org/', include('organisations.urls', 'organisations')),
     url(r'^issues/', include('issues.urls', 'issue_app')),
     url(r'^profile/', include('user_profile.urls', 'user_profile')),
-    url(r'^about/$', TemplateView.as_view(template_name='default/landing_page.html'), name='landing_page'),
 ]
 
 
@@ -29,9 +28,12 @@ if settings.DEBUG:
     urlpatterns += staticfiles_urlpatterns()
 
 urlpatterns += [
-    url(r'^issue/(?P<issue_id>\d+)', HomeView.as_view(), name='home_issue'),
-    url(r'^', HomeView.as_view(), name='home'),  # => Single Page App
-
+    url(r'^map/', include([
+        # this is needed for reversing the issue url in the notifications
+        url(r'^issue/(?P<issue_id>\d+)', HomeView.as_view(), name='home_issue'),
+        url(r'', HomeView.as_view(), name='home'),  # => Single Page App
+    ])),
+    url(r'^$', TemplateView.as_view(template_name='default/landing_page.html'), name='landing_page'),
 ]
 
 
