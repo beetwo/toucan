@@ -50,7 +50,10 @@ class BaseIssueMixin(object):
 
     def get_queryset(self):
         return Issue.objects\
-            .annotate(comment_count=Count('comments'))
+            .annotate(
+                comment_count=Count('comments'),
+                attachment_count=Count('comments__mediafile')
+            )
 
 
 class LocationApi(BaseIssueMixin, ListAPIView):

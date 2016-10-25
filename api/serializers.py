@@ -2,11 +2,10 @@ from django.contrib.auth import get_user_model
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
 from rest_framework import serializers
 from rest_framework.reverse import reverse
-
 from issues.models import Issue, IssueComment, IssueType, IssueStatus
 from organisations.models import Organisation, Membership
 from user_profile.models import NotificationSettings
-from toucan.media.models import ImageFile
+from toucan.media.models import ImageFile, MediaFile
 from channels import Channel
 
 
@@ -101,13 +100,47 @@ class IssueTypeSerializer(serializers.ModelSerializer):
         ]
 
 
+class SimpleImageSerializer(serializers.ModelSerializer):
+
+    thumbnail_url = serializers.SerializerMethodField()
+
+    def get_thumbnail_url(self, image):
+        return image.thumbnail.url
+
+    class Meta:
+        model = ImageFile
+        fields = [
+            'pk',
+            'image',
+            'thumbnail_url'
+        ]
+
+
 class CommentSerializer(serializers.ModelSerializer):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        try:
+            request = kwargs['context']['request']
+        except KeyError:
+            return
+
+        user = request.user if request.user.is_authenticated else None
+        choices = list(MediaFile.objects.filter(uploader=user, comment__isnull=True).values_list('pk', flat=True))
+        if request.method in ['POST', 'PATCH']:
+            self.fields['attachments'] = serializers.MultipleChoiceField(
+                choices=choices,
+                required=False,
+                write_only=True
+            )
 
     user = UserSerializer(read_only=True)
 
     comment = serializers.SerializerMethodField()
 
     toggleState = serializers.BooleanField(write_only=True, required=False)
+
+    attachments = SimpleImageSerializer(many=True, read_only=True, source='get_attachments')
 
     def get_comment(self, comment):
         return comment.get_comment()
@@ -121,7 +154,8 @@ class CommentSerializer(serializers.ModelSerializer):
             'modified',
             'draft_struct',
             'comment',
-            'toggleState'
+            'toggleState',
+            'attachments',
         ]
         read_only_fields = [
             'id',
@@ -133,7 +167,14 @@ class CommentSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
 
         toggle = validated_data.pop('toggleState', False)
+        attachments = validated_data.pop('attachments', [])
         comment = super().create(validated_data)
+
+        # link the mediafiles to the comment
+        MediaFile.objects.filter(
+            comment__isnull=True,
+            uploader=comment.user,
+            pk__in=attachments).update(comment=comment.pk)
 
         # open or close as a side effect
         if toggle:
@@ -183,6 +224,7 @@ class IssueSerializer(GeoFeatureModelSerializer):
     issue_types = IssueTypeSerializer(many=True, read_only=True)
 
     comment_count = serializers.IntegerField(read_only=True)
+    attachment_count = serializers.IntegerField(read_only=True)
 
     organisation = OrganisationSerializer()
 
@@ -201,6 +243,7 @@ class IssueSerializer(GeoFeatureModelSerializer):
             'url',
             'issue_types',
             'comment_count',
+            'attachment_count',
             'organisation',
         ]
 
@@ -280,5 +323,6 @@ class ImageUploadSerializer(serializers.ModelSerializer):
     class Meta:
         model = ImageFile
         fields = [
+            'pk',
             'image'
         ]
