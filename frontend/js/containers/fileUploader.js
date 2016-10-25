@@ -32,7 +32,7 @@ export class SingleFileUpload extends React.Component {
 
     transferComplete(evt) {
       let data = JSON.parse(this.request.response);
-      this.props.onAdded(data.pk);      
+      this.props.onAdded(data.pk);
       this.setState({
         finished: true,
         progress: 100
@@ -75,6 +75,12 @@ export class ToucanUploader extends React.Component {
         files: []
       }
       this.onDrop = this.onDrop.bind(this);
+    }
+
+    reset() {
+      this.setState({
+        files: []
+      });
     }
 
     onDrop(acceptedFiles, rejectedFiles) {

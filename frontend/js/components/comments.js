@@ -59,6 +59,8 @@ export class CommentForm extends React.Component {
     }
     this.props.onComment(comment);
     this.resetEditorState();
+    console.log(this.uploader);
+    this.uploader.reset();
   }
 
   handleEditorStateChange(state) {
@@ -101,7 +103,7 @@ export class CommentForm extends React.Component {
                        editorState={this.state.editorState} />
 
         <div>
-          <ToucanUploader onAdded={this.handleAttachmentAdded} onRemove={this.handleAttachmentRemoved} />
+          <ToucanUploader ref={(uploader) => this.uploader = uploader} onAdded={this.handleAttachmentAdded} onRemove={this.handleAttachmentRemoved} />
         </div>
 
         <div className='btn-toolbar pull-right'>
