@@ -149,7 +149,8 @@ export function postComment(issue_id, comment) {
     let url = `/api/issue/${issue_id}/comment/`
     let data = {
       draft_struct: comment.draft_struct,
-      toggleState: comment.toggleState || false
+      toggleState: comment.toggleState || false,
+      attachments: comment.attachments || []
     }
 
     jsonPost(url, data)
