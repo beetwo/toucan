@@ -5,9 +5,11 @@ import CommentEditor from '../containers/commentEditor'
 import DraftEditor, { convertToRaw, convertFromRaw, EditorState, ContentState } from 'draft-js'
 import concat from 'lodash/concat'
 import isEmpty from 'lodash/isEmpty'
+import without from 'lodash/without'
 import { fromJS } from 'immutable'
 import CommentView from './commentView'
 import UserLink from './userLink'
+import {ToucanUploader} from '../containers/fileUploader';
 
 
 export class CommentForm extends React.Component {
@@ -17,12 +19,15 @@ export class CommentForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleEditorStateChange = this.handleEditorStateChange.bind(this)
     this.handleStatusChangeAndSubmit = this.handleStatusChangeAndSubmit.bind(this)
+    this.handleAttachmentAdded = this.handleAttachmentAdded.bind(this);
+    this.handleAttachmentRemoved = this.handleAttachmentRemoved.bind(this)
   }
 
   _getInitialState() {
     return {
       editorState: CommentEditor.getEmptyEditorState(),
-      toggleState: false
+      toggleState: false,
+      attachments: []
     }
   }
 
@@ -32,7 +37,8 @@ export class CommentForm extends React.Component {
       ContentState.createFromText('')
     );
     this.setState({
-      editorState
+      editorState,
+      attachments: []
     })
   }
 
@@ -48,9 +54,9 @@ export class CommentForm extends React.Component {
       user: {
         username: 'You'
       },
-      toggleState: this.state.toggleState
+      toggleState: this.state.toggleState,
+      attachments: this.state.attachments
     }
-    console.log(comment);
     this.props.onComment(comment);
     this.resetEditorState();
   }
@@ -71,12 +77,32 @@ export class CommentForm extends React.Component {
     );
   }
 
+  handleAttachmentAdded(attachmentID) {
+    this.setState((prevState, props) => {
+      return {
+        attachments: [...prevState.attachments, attachmentID]
+      };
+    });
+  }
+
+  handleAttachmentRemoved(attachment) {
+    this.setState((prevState, props) => {
+      return {
+        attachments: without(prevState.attachments, attachmentID)
+      };
+    });
+  }
+
   render() {
     return (<div className='commentForm'>
       <form onSubmit={this.handleSubmit} ref={(e) => this._form =e }>
         <CommentEditor onStateChange={this.handleEditorStateChange}
                        mention_suggestions={this.props.users}
                        editorState={this.state.editorState} />
+
+        <div>
+          <ToucanUploader onAdded={this.handleAttachmentAdded} onRemove={this.handleAttachmentRemoved} />
+        </div>
 
         <div className='btn-toolbar pull-right'>
            <button className='btn btn-sm btn-default' type='button' onClick={this.handleStatusChangeAndSubmit}>
@@ -98,16 +124,41 @@ CommentForm.propTypes = {
   users: PropTypes.array.isRequired
 }
 
+export class Attachments extends React.Component {
+  render() {
+    let {attachments} = this.props;
+    let imgStyles = {
+      maxWidth: '70px',
+      paddingBottom: '0.5em'
+    }
+    return <ul className="list-inline">
+      {attachments.map((attachment, index) => {
+        return <li key={index}>
+          <img style={imgStyles} src={attachment.thumbnail_url} alt='thumbnail'/>
+        </li>
+      })}
+    </ul>
+  }
+}
+
+
 export class Comment extends React.Component {
   render() {
-    let c = this.props.comment;
+    let comment = this.props.comment;
+    let hasAttachments = (comment.attachments || []).length > 0;
     return (<div className='panel panel-default'>
       <div className='panel-heading'>
-        <UserLink username={c.user.username} /> commented <Timeago date={c.created} />
+        <UserLink username={comment.user.username} /> commented <Timeago date={comment.created} />
       </div>
       <div className="panel-body" style={{whiteSpace: 'pre-line'}}>
-        {c.comment === '' ? <em>No comment was added.</em> : <CommentView comment={c.comment} /> }
+        {comment.comment === '' ?
+          <em>No comment was added.</em> :
+           <CommentView comment={comment.comment} /> }
       </div>
+      { hasAttachments ?
+        <div className='panel-footer'>
+          <Attachments attachments={comment.attachments} />
+        </div> : null }
     </div>);
   }
 }
@@ -135,7 +186,6 @@ export class StatusChange extends React.Component {
       </span>;
     };
 
-    console.log(txt);
     return <p className='text-right text-muted'>
       <a>{sc.user.username}</a>&nbsp;
       {txt}

@@ -2,7 +2,7 @@ from django.db.models import Count, Q
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
 
-from rest_framework.generics import ListAPIView, RetrieveAPIView, ListCreateAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView, ListCreateAPIView, CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ValidationError
 from rest_framework.views import APIView
@@ -15,7 +15,7 @@ from organisations.models import Organisation
 from user_profile.models import NotificationSettings
 from .serializers import IssueSerializer, FullIssueSerializer, CommentSerializer, \
     UserSerializer, StatusSerializer, OrgMentionSerializer, UserMentionSerializer, \
-    NotificationAreaSerializer, FullUserSerializer
+    NotificationAreaSerializer, FullUserSerializer, ImageUploadSerializer
 
 from issue_tracker.defaults import B2_ISSUE_TRACKER
 
@@ -50,7 +50,10 @@ class BaseIssueMixin(object):
 
     def get_queryset(self):
         return Issue.objects\
-            .annotate(comment_count=Count('comments'))
+            .annotate(
+                comment_count=Count('comments'),
+                attachment_count=Count('comments__mediafile')
+            )
 
 
 class LocationApi(BaseIssueMixin, ListAPIView):
@@ -136,4 +139,16 @@ class UserSearch(ListAPIView):
             })
 
         return queryset.filter(username__istartswith=username)
+
+
+class ImageCreateView(CreateAPIView):
+
+    serializer_class = ImageUploadSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(uploader=self.request.user)
+
+    def post(self, request, *args, **kwargs):
+        print(request.data)
+        return super().post(request, *args, **kwargs)
 
