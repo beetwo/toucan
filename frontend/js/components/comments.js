@@ -96,27 +96,30 @@ export class CommentForm extends React.Component {
   }
 
   render() {
-    return (<div className='commentForm'>
-      <form onSubmit={this.handleSubmit} ref={(e) => this._form =e }>
-        <CommentEditor onStateChange={this.handleEditorStateChange}
-                       mention_suggestions={this.props.users}
-                       editorState={this.state.editorState} />
+    return (<form onSubmit={this.handleSubmit} ref={(e) => this._form =e }>
+        <div className='panel panel-default'>
+          <div className='panel-heading'>
+            Add comment
+          </div>
+          <div className='panel-body'>
+            <CommentEditor onStateChange={this.handleEditorStateChange}
+                         mention_suggestions={this.props.users}
+                         editorState={this.state.editorState} />
+          </div>
+          <div className='panel-footer clearfix'>
+            <ToucanUploader ref={(uploader) => this.uploader = uploader} onAdded={this.handleAttachmentAdded} onRemove={this.handleAttachmentRemoved} />
 
-        <div>
-          <ToucanUploader ref={(uploader) => this.uploader = uploader} onAdded={this.handleAttachmentAdded} onRemove={this.handleAttachmentRemoved} />
+            <div className='btn-toolbar pull-right' style={{marginTop: '0.3em'}}>
+             <button className='btn btn-sm btn-default' type='button' onClick={this.handleStatusChangeAndSubmit}>
+               { this.props.status == 'open' ? 'Resolve issue' : 'Reopen issue' }
+             </button>
+             <button className='btn btn-sm btn-success' type='submit'>
+               Comment
+             </button>
+           </div>
         </div>
-
-        <div className='btn-toolbar pull-right'>
-           <button className='btn btn-sm btn-default' type='button' onClick={this.handleStatusChangeAndSubmit}>
-             { this.props.status == 'open' ? 'Resolve issue' : 'Reopen issue' }
-           </button>
-           <button className='btn btn-sm btn-success' type='submit'>
-             Comment
-           </button>
-        </div>
-
-      </form>
-    </div>);
+    </div>
+  </form>);
   }
 }
 

@@ -91,16 +91,20 @@ export class ToucanUploader extends React.Component {
     }
 
     render() {
-        return (
-          <div>
-            {this.state.files.map((f, index) => <SingleFileUpload key={index} file={f} onAdded={this.props.onAdded} />)}
-            {this.state.files.length >= 0 ? <hr /> : null}
+        return <div>
+            <ul className='list-inline'>
+              {this.state.files.map((f, index) => {
+                return (<li key={index}>
+                  <SingleFileUpload file={f} onAdded={this.props.onAdded} />
+                </li>); })}
+            </ul>
+
             <Dropzone
               className='form-control'
               onDrop={this.onDrop}>
               <Icon name="paperclip"/>&nbsp;
               Drop files here to add as attachments
             </Dropzone>
-          </div>);
+        </div>;
     }
 }

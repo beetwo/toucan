@@ -4,11 +4,21 @@
   cursor: text;
   padding: 16px;
   border-radius: 2px;
-  margin-bottom: 2em;
   box-shadow: inset 0px 1px 8px -3px #ABABAB;
   background: #fefefe;
 }
 
 .b2editor :global(.public-DraftEditor-content) {
   min-height: 140px;
+}
+
+
+.image-upload {
+  max-width: 5em;
+  margin: 0.3em;
+  text-overflow: ellipsis;
+}
+
+.image-upload img {
+  max-width: 100%;
 }

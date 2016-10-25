@@ -9,18 +9,18 @@ export function ProgressBar({progress}) {
 }
 
 export default function ImageUploader({preview, filename, progress, finished}) {
-  return <div className="media">
-    <div className="media-left media-middle">
-      { preview ?
-        <img className="media-object"
-             src={preview}
-             alt='file preview'
-             style={{maxWidth: '5em'}} /> : null }
-    </div>
-    <div className="media-body">
-        <span className='text-muted'>{filename}</span>
-        <br />
-        <ProgressBar progress={progress || 0} />
-    </div>
+  return <div className='image-upload'>
+      {
+        preview ?
+        <img src={preview} alt='file preview' />
+        : null
+      }
+      {
+        finished ?
+         null
+         : <ProgressBar progress={progress || 0} />
+      }
+      <br />
+      <span className='text-muted'>{filename}</span>
   </div>;
 }
