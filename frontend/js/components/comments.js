@@ -98,8 +98,8 @@ export class CommentForm extends React.Component {
   render() {
     return (<form onSubmit={this.handleSubmit} ref={(e) => this._form =e }>
         <div className='panel panel-default'>
-          <div className='panel-heading'>
-            Add comment
+          <div className='panel-heading text-muted'>
+            <Icon name='comment-o' />  Add comment
           </div>
           <div className='panel-body'>
             <CommentEditor onStateChange={this.handleEditorStateChange}
