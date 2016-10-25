@@ -31,6 +31,8 @@ export class SingleFileUpload extends React.Component {
     }
 
     transferComplete(evt) {
+      let data = JSON.parse(this.request.response);
+      this.props.onAdded(data.pk);      
       this.setState({
         finished: true,
         progress: 100
@@ -50,18 +52,16 @@ export class SingleFileUpload extends React.Component {
       request.addEventListener('load', this.transferComplete);
       request.send(formData);
       this.request = request;
-      
+
       this.setState({started: true});
     }
 
     render() {
       let file = this.props.file;
       let widgetProps = {
+          ...this.state,
           preview: file.preview,
-          progress: this.state.progress,
-          finished: this.state.finished,
           filename: file.name,
-          started: this.state.started
       };
       return <ImageUploader {...widgetProps} />;
     }
@@ -87,7 +87,7 @@ export class ToucanUploader extends React.Component {
     render() {
         return (
           <div>
-            {this.state.files.map((f, index) => <SingleFileUpload key={index} file={f} />)}
+            {this.state.files.map((f, index) => <SingleFileUpload key={index} file={f} onAdded={this.props.onAdded} />)}
             {this.state.files.length >= 0 ? <hr /> : null}
             <Dropzone
               className='form-control'
