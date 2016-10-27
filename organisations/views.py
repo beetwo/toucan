@@ -1,9 +1,10 @@
-from django.views.generic import ListView, DetailView, CreateView, FormView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView, DetailView, CreateView, FormView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.shortcuts import get_object_or_404
-
+from django.db.models import Count
+from django.db.models.functions import Lower
 from braces.views import FormValidMessageMixin
 
 from toucan.invitations.permissions import can_invite_to_org
@@ -13,11 +14,26 @@ from .forms import ApplyForm
 
 
 class OrganisationList(LoginRequiredMixin, ListView):
-    model = Organisation
+
     template_name = 'organisations/list.html'
+
+    def get_queryset(self):
+        # only select organisations with at least one member and order by
+        # lowercased name
+        return Organisation.objects\
+            .annotate(Count('membership')).filter(membership__count__gt=0)\
+            .order_by(Lower('name'))
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx.update({
+            'user_organisation': self.request.user.membership.org
+        })
+        return ctx
 
 
 class OrganisationDetail(LoginRequiredMixin, DetailView):
+
     model = Organisation
     pk_url_kwarg = 'org_id'
     template_name = 'organisations/detail.html'
@@ -28,10 +44,35 @@ class OrganisationDetail(LoginRequiredMixin, DetailView):
         is_member = self.object.membership_set.filter(user=user).exists() if user.is_authenticated() else False
         ctx.update({
             'is_member': is_member,
-            'can_invite': can_invite_to_org(user, self.object)
+            'can_invite': can_invite_to_org(user, self.object),
+            'can_edit_details': self.object.can_edit_details(user),
+            'organisation_members': self.object.membership_set
+                .select_related('user').order_by('-role', Lower('user__username'))
         })
 
         return ctx
+
+
+class OrganisationEdit(PermissionRequiredMixin, FormValidMessageMixin, UpdateView):
+
+    model = Organisation
+    pk_url_kwarg = 'org_id'
+    template_name = 'organisations/update.html'
+    fields = [
+        'name',
+        'logo',
+        'description',
+        'homepage'
+    ]
+    form_valid_message = _('Organisation details updated')
+
+    def get_success_url(self):
+        return reverse('organisations:organisation_detail', kwargs={'org_id': self.object.pk})
+
+    def has_permission(self, *args, **kwarg):
+        org = self.get_object()
+        return org.can_edit_details(self.request.user)
+
 
 
 class OrganisationCreate(LoginRequiredMixin, CreateView):

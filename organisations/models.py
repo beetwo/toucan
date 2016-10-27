@@ -30,9 +30,10 @@ class Organisation(TimeStampedModel):
             validate_organisation_slug,
         ]
     )
-    logo = models.ImageField(blank=True)
 
-    #TODO: website, social accounts, contacts, areas of expertise etc.
+    logo = models.ImageField(blank=True)
+    description = models.TextField(blank=True)
+    homepage = models.URLField(blank=True)
 
     @property
     def active_memberships(self):
@@ -68,7 +69,11 @@ class Organisation(TimeStampedModel):
         return self.add_user_to_org(user, role=0, **kwargs)
 
     def can_invite(self, user):
-        return
+        from toucan.invitations.permissions import can_invite_to_org
+        return can_invite_to_org(user, self)
+
+    def can_edit_details(self, user):
+        return self.membership_set.filter(user=user, role__in=[10]).exists()
 
     class Meta:
         verbose_name = _('Organisation')

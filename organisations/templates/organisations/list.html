@@ -15,42 +15,30 @@
 {% endblock %}
 
 {% block organisation_main %}
+
+<h2>
+    {% trans 'Your organisation'%}
+</h2>
+
 <hr />
+
+{% include 'organisations/list_item.html' with organisation=user_organisation %}
+
+<hr />
+
+<h2 style="margin-top: 3em;">{% trans 'All organisations' %}</h2>
+
+<hr />
+
 
 <table class="table table-striped">
 <tbody>
 {% for org in organisation_list %}
-{% url 'organisations:organisation_detail' org_id=org.pk as org_detail_url %}
-    <tr>
-        <td>
-            {% if org.logo %}
-                {% thumbnail '100x100' org.logo %}
-            {% else %}
-                <i class="fa fa-users fa-5x disabled"></i>
-            {% endif %}
-        </td>
-        <td>
-            <h4 class="media-heading">
-                <a href="{{ org_detail_url }}">
-                {{ org.name }}
-                {% if org.short_name %}
-                    (@{{ org.short_name }})
-                {% endif %}
-                </a>
-
-            </h4>
-
-
-
-            <p>
-                {% trans 'Members' %}: {{ org.active_memberships.count }}
-            </p>
-
-            <a class='btn btn-default btn-sm' href="{{ org_detail_url }}">
-                {% trans 'Details' %}
-            </a>
-        </td>
-    </tr>
+<tr>
+    <td>
+        {% include 'organisations/list_item.html' with organisation=org %}
+    </td>
+</tr>
 {% endfor %}
 </tbody>
 </table>

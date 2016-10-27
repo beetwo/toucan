@@ -5,13 +5,45 @@
     {{ organisation.name }}
 {% endblock %}
 
-{% block organisation_page_controls %}
-    {% if organisation.logo %}
-        {% thumbnail '200x200' organisation.logo %}
+{% block organisation_details %}
+
+{{ organisation.description|linebreaks}}
+
+<dl>
+    {% if organisation.homepage %}
+    <dt>{% trans 'Homepage' %}</dt>
+    <dd>{{ organisation.homepage|urlize }}</dd>
     {% endif %}
+</dl>
+
+
 {% endblock %}
 
+{% block organisation_page_controls %}
+
+    {% if organisation.logo %}
+        <p>
+        {% thumbnail '200x200' organisation.logo %}
+        </p>
+    {% endif %}
+
+    {% if can_edit_details %}
+    <br />
+    <p class="text-right">
+        <a href="{% url 'organisations:organisation_edit' org_id=organisation.pk %}"
+            class="btn btn-primary">
+            {% trans 'Edit organisation details' %}
+            <i class="fa fa-edit"></i>
+        </a>
+    </p>
+    {% endif %}
+
+{% endblock %}
+
+
 {% block organisation_main %}
+
+
 {% with memberships=organisation.active_memberships %}
 <hr />
 
