@@ -46,21 +46,28 @@ class IssueDetailsMain extends React.Component {
       <div className='row'>
         <div className='col-md-8'>
           <h3>
-            { issue.issue_type ? <Icon name={getIconClassForIssueType(issue.issue_type)} /> : null }&nbsp;
-            <span className='text-muted'>#{gjs.id}:</span>&nbsp;
+            <span className='text-muted'>#{gjs.id}</span>&nbsp;
             {issue.title}
           </h3>
+
+          <p>
+            { issue.issue_types.map((issue_type, index) => <Icon key={index} name={getIconClassForIssueType(issue_type)} />) }
+          </p>
+          <p>
+            {issue.organisation.name}
+          </p>
         </div>
         <div className='col-md-4 text-right'>
           <h3>
-            <Status status={issue.status} />&nbsp;
+            <Status status={issue.status} />
           </h3>
         </div>
       </div>
       <hr />
       <div className="panel panel-primary">
           <div className="panel-heading">
-            created by <UserLink username={ issue.creator.username } /> <Timeago date={issue.created} />
+            created by <UserLink username={ issue.creator.username } />
+            <Timeago date={issue.created} />
           </div>
           <div className='panel-body'>
             {body}

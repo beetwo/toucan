@@ -202,7 +202,6 @@ function issueFiltersOptions(state={}, action) {
           organisation: org_names
       }
     default:
-      console.log(state.type);
       return state
   }
 }
@@ -311,6 +310,27 @@ function currentUser(
   }
 }
 
+function loadingStatus(
+  state={
+    issues: false
+  }, action
+) {
+  switch (action.type) {
+    case REQUEST_ISSUES:
+      return {
+        ...state,
+        issues: true
+      };
+    case RECEIVE_ISSUES:
+      return {
+        ...state,
+        issues: false
+      }
+    default:
+      return state;
+  }
+}
+
 
 const reducers = {
   geojson,
@@ -324,7 +344,8 @@ const reducers = {
   usersByIssueID,
   allUsers,
   allOrganisations,
-  currentUser
+  currentUser,
+  loadingStatus
 }
 
 export default reducers;

@@ -4,7 +4,6 @@ import { render } from 'react-dom'
 
 import { Provider } from 'react-redux'
 import thunkMiddleware from 'redux-thunk'
-import createLogger from 'redux-logger'
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import reducers from './reducers'
 import App from './containers/app'
@@ -17,8 +16,7 @@ import {requestIssues, fetchIssues} from './actions'
 import { Router, Route, IndexRoute, useRouterHistory } from 'react-router'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 import { createHistory } from 'history'
-
-const loggerMiddleware = createLogger()
+import createLogger from 'redux-logger'
 
 // create the root reducer
 let issueTrackerApp = combineReducers({
@@ -26,13 +24,19 @@ let issueTrackerApp = combineReducers({
   routing: routerReducer
 })
 
+// construct middleWare
+let middleware = [thunkMiddleware];
+
+// some more middleware in development mode
+if (process.env.NODE_ENV !== 'production') {
+  const loggerMiddleware = createLogger();
+  middleware = [...middleware, loggerMiddleware];
+}
+
 // and create the store
 let store = createStore(
   issueTrackerApp,
-  applyMiddleware(
-    thunkMiddleware,
-    loggerMiddleware
-  )
+  applyMiddleware(...middleware)
 )
 
 // Create an enhanced history that syncs navigation events with the store

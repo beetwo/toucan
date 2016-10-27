@@ -57,8 +57,7 @@ class IssueFilter extends React.Component {
     }
     input_textual = input_textual.join(', ')
 
-
-    return (<div className='input-group'>
+    return (<div className="input-group">
       <div className="input-group-btn">
         <button className="btn btn-default dropdown-toggle" data-toggle="dropdown">
           <Icon name='filter' />&nbsp;
@@ -69,20 +68,24 @@ class IssueFilter extends React.Component {
         </ul>
       </div>
       <input type="text" disabled className="form-control" value={input_textual}/>
-    </div>)
+      <span className="input-group-addon" onClick={this.props.refreshIssueList}>
+        <Icon spin={this.props.loading} name='refresh' />
+      </span>
+    </div>);
   }
 }
 
-IssueFilter.propType = {
+IssueFilter.propTypes = {
   addIssueFilter: PropTypes.func.isRequired,
-  removeIssueFilter: PropTypes.func.isRequired
+  removeIssueFilter: PropTypes.func.isRequired,
+  refreshIssueList: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired
 }
 
 
 class IssueListUI extends React.Component {
 
     render() {
-
         let issues = this.props.issues || [];
         let rows = issues.map((issue, index) => {
             return (
@@ -108,14 +111,7 @@ class IssueListUI extends React.Component {
         return (
           <div>
             <div className="issue-list-form">
-              <div className="issue-filter">
                 <IssueFilter {...this.props} filterOptions={this.props.filterOptions}/>
-              </div>
-              <div className='issue-refresh'>
-                <button className='btn' onClick={this.props.refreshIssueList}>
-                  <Icon name='refresh' size='lg'/>
-                </button>
-              </div>
             </div>
             <hr />
             <table className="issues table table-hover">
