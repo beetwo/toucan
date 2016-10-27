@@ -98,7 +98,7 @@ class IssueListUI extends React.Component {
                       {issue.title}
                     </a>
                     <br />
-                    <small>{issue.organisation !== null ? issue.organisation.name : null}</small>
+                    <small>{issue.organisation ? issue.organisation.name : null}</small>
                 </td>
                 <td>
                     <CommentCount count={issue.comment_count} />

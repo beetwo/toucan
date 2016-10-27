@@ -53,9 +53,7 @@ class IssueDetailsMain extends React.Component {
           <p>
             { issue.issue_types.map((issue_type, index) => <Icon key={index} name={getIconClassForIssueType(issue_type)} />) }
           </p>
-          <p>
-            {issue.organisation.name}
-          </p>
+          { issue.organisation ? <p>issue.organisation.name</p> : null}
         </div>
         <div className='col-md-4 text-right'>
           <h3>
