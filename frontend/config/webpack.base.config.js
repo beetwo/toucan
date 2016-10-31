@@ -68,7 +68,6 @@ module.exports = (opts) => {
                 test: /\.json$/,
                 loader: 'json'
             },
-
             // jquery + Bootstrap 3
             // if jquery is required, expose globally
             { test: require.resolve("jquery"), loader: "expose?$!expose?jQuery" },

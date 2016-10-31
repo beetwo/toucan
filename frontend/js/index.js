@@ -16,7 +16,6 @@ import {requestIssues, fetchIssues} from './actions'
 import { Router, Route, IndexRoute, useRouterHistory } from 'react-router'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 import { createHistory } from 'history'
-import createLogger from 'redux-logger'
 
 // create the root reducer
 let issueTrackerApp = combineReducers({
@@ -29,9 +28,11 @@ let middleware = [thunkMiddleware];
 
 // some more middleware in development mode
 if (process.env.NODE_ENV !== 'production') {
+  const createLogger = require('redux-logger');
   const loggerMiddleware = createLogger();
   middleware = [...middleware, loggerMiddleware];
 }
+
 
 // and create the store
 let store = createStore(
