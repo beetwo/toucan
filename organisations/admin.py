@@ -1,7 +1,17 @@
 from django.contrib import admin
+from .models import Organisation, Membership
 
-from .models import Organisation, Membership, Location
 
-admin.site.register(Organisation)
-admin.site.register(Membership)
-# admin.site.register(Location)
+class OrganisationAdmin(admin.ModelAdmin):
+    list_display = ('name', 'short_name', 'created', 'modified')
+
+
+admin.site.register(Organisation, OrganisationAdmin)
+
+class MembershipAdmin(admin.ModelAdmin):
+    list_display = ('user', 'org', 'role', 'created', 'modified')
+    list_filter = ('role',)
+
+
+admin.site.register(Membership, MembershipAdmin)
+
