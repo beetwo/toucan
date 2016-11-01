@@ -57,8 +57,6 @@ class ToucanInvitation(models.Model):
         site = self.site or Site.objects.get_current()
         return 'https://{host}{location}'.format(host=site.domain, location=location)
 
-
-
     def accept(self, user):
         self.user = user
         self.save()
@@ -75,6 +73,9 @@ class ToucanInvitation(models.Model):
         if not self.invitation_sent:
             self.invitation_sent = timezone.now()
             self.save()
+
+    def clean(self):
+        self.prepare_save()
 
     def is_active(self, at=None):
         # if already accepted return immediately
