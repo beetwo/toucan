@@ -5,7 +5,7 @@
 <div class="media">
   <div class="media-left">
     {% if organisation.logo %}
-        {% thumbnail '150x150' organisation.logo %}
+        {% thumbnail '150x150' organisation.logo crop=0 %}
     {% else %}
         <i class="fa fa-users fa-5x disabled" style="width: 150px"></i>
     {% endif %}
