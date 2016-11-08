@@ -20,9 +20,11 @@ from .permissions import can_invite_to_org
 
 class InvitationAcceptedView(AnonymousRequiredMixin, DetailView):
 
-    queryset = ToucanInvitation.active.all()
     slug_field = 'secret_key'
     slug_url_kwarg = 'secret_key'
+
+    def get_queryset(self):
+        return ToucanInvitation.active.all()
 
     def get_authenticated_redirect_url(self):
         messages.error(
@@ -34,7 +36,6 @@ class InvitationAcceptedView(AnonymousRequiredMixin, DetailView):
             ''')
         )
         return super().get_authenticated_redirect_url()
-
 
     def get(self, request, *args, **kwargs):
         invitation = self.get_object()
@@ -98,5 +99,4 @@ class InviteToOrgView(UserPassesTestMixin, FormView):
             _('An email was sent to %(email)s inviting him to join you on Toucan' % {'email': email})
         )
         invitation = create_invitation_from_request(self.request, email)
-        print(invitation)
         return super().form_valid(form)

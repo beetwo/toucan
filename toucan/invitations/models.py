@@ -5,20 +5,19 @@ from django.utils.crypto import get_random_string
 from django.utils import timezone
 from django.core.urlresolvers import reverse
 from django.contrib.postgres.fields import DateTimeRangeField
-from django.contrib.sites.models import Site
-from django.contrib.sites.shortcuts import get_current_site
 from django.template.context import RequestContext
 from datetime import timedelta
-
+from django.contrib.sites.models import Site
 from organisations.models import Organisation, Membership
 from .settings import INVITATION_VALID_DAYS
 
 
 class ActiveInvitationManager(models.Manager):
     def get_queryset(self):
+        now = timezone.now()
         return super().get_queryset().filter(
             user__isnull=True,
-            invitation_valid_range__contains=timezone.now()
+            invitation_valid_range__contains=now
         )
 
 
@@ -34,9 +33,6 @@ class ToucanInvitation(models.Model):
     organisation = models.ForeignKey(Organisation, on_delete=models.SET_NULL, null=True)
     # and this role within the organisation
     role = models.IntegerField(choices=Membership.ROLES_CHOICES, default=0)
-
-    # the invitation is also valid for a single site
-    site = models.ForeignKey(Site, null=True)
 
     # this holds the secret that will be sent out via mail
     secret_key = models.CharField(max_length=64, validators=[MinLengthValidator(64)], editable=False, unique=True)
@@ -54,7 +50,7 @@ class ToucanInvitation(models.Model):
             return request.build_absolute_uri(location)
 
         # this is where it gets hard ...
-        site = self.site or Site.objects.get_current()
+        site = Site.objects.get_current(request)
         return 'https://{host}{location}'.format(host=site.domain, location=location)
 
     def accept(self, user):
@@ -116,14 +112,16 @@ class ToucanInvitation(models.Model):
             '-pk',
         ]
 
+    def __str__(self):
+        return 'Invitation to %s for organisation %s' % (self.email, self.organisation.name)
 
-def create_invitation(email, inviter, organisation, site,
+
+def create_invitation(email, inviter, organisation,
                       role=0, send_invite=False):
     invitation = ToucanInvitation(
         email=email,
         invited_by=inviter,
         organisation=organisation,
-        site=site,
         role=role
     )
     invitation.prepare_save()
@@ -143,7 +141,6 @@ def create_invitation_from_request(request, email, organisation=None):
         email,
         request.user,
         organisation or request.user.membership.org,
-        request.site,
         send_invite=False
     )
     invitation.send(context=RequestContext(request, {}), request=request)
