@@ -3,7 +3,6 @@ from datetime import timedelta
 from django.test import TestCase
 from django.contrib.auth.models import User
 from django.utils import timezone
-from django.contrib.sites.models import Site
 from organisations.factory import OrganisationFactory
 from .models import ToucanInvitation, INVITATION_VALID_DAYS
 
@@ -14,13 +13,11 @@ class ToucanInvitationTest(TestCase):
     def setUp(self):
         self.inviter = User.objects.create(username='test_inviter')
         self.org = OrganisationFactory(name='InvitersOrganisation')
-        self.site = Site.objects.create(name='example.com')
         self.org.add_owner(self.inviter)
         self.invitation = ToucanInvitation(
             invited_by=self.inviter,
             email='tester@example.com',
             organisation=self.org,
-            site=self.site
         )
         self.invitation.prepare_save()
         self.invitation.save()

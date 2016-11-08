@@ -1,8 +1,13 @@
 export const default_icon = 'circle-o'
 
 export const icon_mapping = {
-  medical: 'plus-square',
-  general: 'question'
+  general: 'question',
+  medical: 'medkit',
+  legaladvice: 'legal',
+  supplies: 'cubes',
+  fooditem: 'cutlery',
+  nonfooditem: 'support',
+  accommodation: 'building-o',
 }
 
 function getIconClassForIssueType(issueType, prefix='') {
