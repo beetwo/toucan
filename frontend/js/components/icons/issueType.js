@@ -13,7 +13,8 @@ export const icon_mapping = {
 function getIconClassForIssueType(issueType, prefix='') {
   let cls = default_icon;
   if (issueType && issueType.slug) {
-    cls = icon_mapping[issueType.slug] || default_icon;
+    let key = issueType.slug;
+    cls = icon_mapping[key] || icon_mapping[key.toLowerCase()] || default_icon;
   }
   return prefix + cls;
 }
