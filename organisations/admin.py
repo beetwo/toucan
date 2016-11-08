@@ -20,11 +20,11 @@ class OrganisationAdmin(admin.ModelAdmin):
     ]
 
     def save_formset(self, request, form, formset, change):
-
+        invites = formset.save(commit=False)
         if formset.deleted_objects or formset.changed_objects:
             raise NotImplementedError('Can not deal with inline deletion or changes.')
 
-        for inv in formset.new_objects:
+        for inv in invites:
             inv.invited_by = request.user
             inv.save()
             inv.send(request=request)
@@ -35,7 +35,7 @@ admin.site.register(Organisation, OrganisationAdmin)
 
 class MembershipAdmin(admin.ModelAdmin):
     list_display = ('user', 'org', 'role', 'created', 'modified')
-    list_filter = ('role',)
+    list_filter = ('role', 'org')
 
 
 admin.site.register(Membership, MembershipAdmin)

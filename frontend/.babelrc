@@ -1,17 +1,25 @@
 {
-  "presets": ["es2015-webpack", "stage-0", "react"],
+  "presets": ["es2015", "stage-0", "react"],
   "env": {
-    "local-hmr": {
-      "plugins": [["react-transform", {
-        "transforms": [{
-          "transform": "react-transform-hmr",
-          "imports": ["react"],
-          "locals": ["module"]
-        }]
-      }]]
-    },
-    "local": {},
-    "production": {},
-    "test": {}
+    "hmr": {
+      "plugins": [
+        [
+          "react-transform",
+          {
+            "transforms": [
+              {
+                "transform": "react-transform-hmr",
+                "imports": [
+                  "react"
+                ],
+                "locals": [
+                  "module"
+                ]
+              }
+            ]
+          }
+        ]
+      ]
+    }
   }
 }
