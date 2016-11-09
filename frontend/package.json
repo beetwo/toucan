@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "babel": "./node_modules/.bin/babel-node --presets node6",
     "webpack": "npm run babel -- ./node_modules/.bin/webpack --progress",
-    "build": "NODE_ENV=production npm run webpack -p",
+    "build": "NODE_ENV=production npm run webpack",
     "build-dev": "NODE_ENV=development npm run webpack",
     "dev": "NODE_ENV=development npm run babel -- ./node_modules/.bin/webpack --progress --watch",
     "hmr": "NODE_ENV=development BABEL_ENV=hmr npm run babel -- ./node_modules/.bin/webpack-dev-server --hot"
@@ -37,7 +37,6 @@
     "drmonty-leaflet-awesome-markers": "^2.0.2",
     "exports-loader": "^0.6.3",
     "expose-loader": "^0.7.1",
-    "extract-text-webpack-plugin": "^2.0.0-beta.4",
     "file-loader": "^0.8.5",
     "geojson-extent": "^0.3.2",
     "imports-loader": "^0.6.5",
