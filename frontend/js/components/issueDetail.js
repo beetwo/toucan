@@ -41,7 +41,6 @@ class IssueDetailsMain extends React.Component {
       default:
         body = <RawTextBody text={description} />;
     }
-
     return <div className='issueDetailMain' ref='scrollbar'>
       <div className='row'>
         <div className='col-md-8'>
@@ -53,7 +52,12 @@ class IssueDetailsMain extends React.Component {
           <ul className='list-inline'>
             { issue.issue_types.map((issue_type, index) => <li key={index}><Icon key={index} name={getIconClassForIssueType(issue_type)} /></li>) }
           </ul>
-          { issue.organisation ? <p>{issue.organisation.name}</p> : null}
+          { issue.organisation ? <p>
+              <a href={issue.organisation.profile_url} target="_blank">
+                {issue.organisation.name}
+                <sub><Icon name='external-link' /></sub>
+              </a>
+            </p> : null}
         </div>
         <div className='col-md-4 text-right'>
           <h3>
@@ -64,8 +68,7 @@ class IssueDetailsMain extends React.Component {
       <hr />
       <div className="panel panel-primary">
           <div className="panel-heading">
-            created by <UserLink username={ issue.creator.username } />
-            <Timeago date={issue.created} />
+            created by <UserLink username={ issue.creator.username } linkTo={issue.creator.html_url}/> <Timeago date={issue.created} />
           </div>
           <div className='panel-body'>
             {body}

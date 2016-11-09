@@ -56,10 +56,20 @@ class MembershipSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
 
     url = serializers.SerializerMethodField()
+    html_url = serializers.SerializerMethodField()
 
     def get_url(self, user):
         return reverse(
             'issue_tracker_api:user_detail',
+            kwargs={
+                'username': user.username
+            },
+            request=self.context['request']
+        )
+
+    def get_html_url(self, user):
+        return reverse(
+            'user_profile:public_profile',
             kwargs={
                 'username': user.username
             },
@@ -71,7 +81,8 @@ class UserSerializer(serializers.ModelSerializer):
         fields = [
             'username',
             'id',
-            'url'
+            'url',
+            'html_url'
         ]
 
 

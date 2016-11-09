@@ -153,7 +153,7 @@ export class Comment extends React.Component {
     let hasAttachments = (comment.attachments || []).length > 0;
     return (<div className='panel panel-default'>
       <div className='panel-heading'>
-        <UserLink username={comment.user.username} /> commented <Timeago date={comment.created} />
+        <UserLink username={comment.user.username} linkTo={comment.user.html_url}/> commented <Timeago date={comment.created} />
       </div>
       <div className="panel-body" style={{whiteSpace: 'pre-line'}}>
         {comment.comment === '' ?
