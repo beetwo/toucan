@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block organisation_main %}
-
+{% if user_organisation %}
 <h2>
     {% trans 'Your organisation'%}
 </h2>
@@ -25,6 +25,7 @@
 {% include 'organisations/list_item.html' with organisation=user_organisation %}
 
 <hr />
+{% endif %}
 
 <h2 style="margin-top: 3em;">{% trans 'All organisations' %}</h2>
 

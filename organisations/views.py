@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.shortcuts import get_object_or_404
-from django.db.models import Count
+from django.db.models import Count, ObjectDoesNotExist
 from django.db.models.functions import Lower
 from braces.views import FormValidMessageMixin
 
@@ -17,18 +17,36 @@ class OrganisationList(LoginRequiredMixin, ListView):
 
     template_name = 'organisations/list.html'
 
+    def get_user_org(self):
+
+        if self.request.user.is_authenticated:
+            try:
+                return self.request.user.membership.org
+            except ObjectDoesNotExist:
+                pass
+        return None
+
     def get_queryset(self):
+        user_org = self.get_user_org()
+
         # only select organisations with at least one member and order by
         # lowercased name
-        return Organisation.objects\
+        qs = Organisation.objects\
             .annotate(Count('membership')).filter(membership__count__gt=0)\
             .order_by(Lower('name'))
 
+        if user_org:
+            qs = qs.exclude(pk=user_org.pk)
+
+        return qs
+
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx.update({
-            'user_organisation': self.request.user.membership.org
-        })
+        user_org = self.get_user_org()
+        if user_org:
+            ctx.update({
+                'user_organisation': user_org
+            })
         return ctx
 
 
