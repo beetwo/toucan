@@ -4,6 +4,7 @@ import BundleTracker from 'webpack-bundle-tracker';
 import baseConfig from './webpack.base.config.js';
 
 import WebpackCleanupPlugin from 'webpack-cleanup-plugin';
+import ExtractTextPlugin from "extract-text-webpack-plugin";
 
 module.exports = (opts) => {
 

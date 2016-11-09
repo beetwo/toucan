@@ -4,7 +4,6 @@ var BundleTracker = require('webpack-bundle-tracker');
 var precss       = require('precss');
 var autoprefixer = require('autoprefixer');
 
-
 module.exports = (opts) => {
   const {PROJECT_ROOT, NODE_ENV} = opts;
 
@@ -37,7 +36,8 @@ module.exports = (opts) => {
             'react-leaflet',
             'react-markdown',
             'react-router',
-            'react-fa'
+            'react-fa',
+            'jquery'
         ],
         b2MapSelector: './js/location_selector',
         editor: './js/editor'

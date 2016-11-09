@@ -91,9 +91,6 @@ class IssueListUI extends React.Component {
             return (
               <tr key={issue.id} onClick={(e) => {e.preventDefault(); this.props.handleIssueChange(issue)}}>
                 <td>
-                    {issue.issue_types.map((it) => <Icon key={it.slug} name={getIconClassForIssueType(it)} title={it.name} /> )}
-                </td>
-                <td>
                     <a href='#'>
                       {issue.title}
                     </a>
@@ -101,10 +98,13 @@ class IssueListUI extends React.Component {
                     <small>{issue.organisation ? issue.organisation.name : null}</small>
                 </td>
                 <td>
-                    <CommentCount count={issue.comment_count} />
+                  <Status status={issue.status} />
                 </td>
                 <td>
-                  <Status status={issue.status} />
+                    {issue.issue_types.map((it) => <Icon key={it.slug} name={getIconClassForIssueType(it)} title={it.name} /> )}
+                </td>
+                <td>
+                    <CommentCount count={issue.comment_count} />
                 </td>
               </tr>);
         });
