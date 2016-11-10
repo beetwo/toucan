@@ -35,6 +35,10 @@ Toucan is currently in active development by <a href="http://www.beetwo.at">BeeT
 {% endif %}
 </p>
 
+
 {% endblock auth-content %}
+{% block before-body-close %}
+    {% include 'default/github_ribbon.html' %}
+{% endblock %}
 
 {% block public-links %}{% endblock %}
