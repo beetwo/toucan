@@ -53,7 +53,6 @@ class NotificationSettings(TimeStampedModel):
     point = gis_models.PointField(blank=True)
     point_radius = models.PositiveSmallIntegerField(
         default=2,
-        blank=True,
         verbose_name=_('radius in kilometers')
     )
 
