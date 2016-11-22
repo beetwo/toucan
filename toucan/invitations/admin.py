@@ -1,8 +1,35 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _
-from .models import ToucanInvitation
-from django.contrib.auth.models import User
+from django.template.context import RequestContext
+from django.contrib import messages
+
+from .models import ToucanInvitation, create_invitation
+
+
+def resend_invitations(modeladmin, request, queryset):
+    new_invitations = []
+    for invitation in queryset:
+        new_invitation = create_invitation(
+            invitation.email,
+            request.user,
+            invitation.organisation,
+            role=invitation.role,
+            send_invite=False
+        )
+        new_invitation.send(context=RequestContext(request, {}), request=request)
+        new_invitations.append(new_invitation)
+
+    messages.success(
+        request,
+        '%s Invitation(s) re-sent with new expiry dates. %s' % (
+            len(new_invitations),
+            ', '.join([i.email for i in new_invitations])
+        )
+    )
+
+resend_invitations.short_description = "Resend invitations."
+
 
 class ToucanInvitationAdmin(admin.ModelAdmin):
     exclude = [
@@ -18,6 +45,7 @@ class ToucanInvitationAdmin(admin.ModelAdmin):
         'valid_until',
         'validation_link'
     ]
+    actions = [resend_invitations]
 
     def valid_until(self, invitation):
         return invitation.invitation_valid_range.upper

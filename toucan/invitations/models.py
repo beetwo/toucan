@@ -116,6 +116,7 @@ class ToucanInvitation(models.Model):
         return 'Invitation to %s for organisation %s' % (self.email, self.organisation.name)
 
 
+
 def create_invitation(email, inviter, organisation,
                       role=0, send_invite=False):
     invitation = ToucanInvitation(
@@ -133,7 +134,7 @@ def create_invitation(email, inviter, organisation,
     return invitation
 
 
-def create_invitation_from_request(request, email, organisation=None):
+def create_invitation_from_request(request, email, organisation=None, role=0):
     if request.user.is_anonymous:
         raise ValueError('This method need an authenticated user for the request.')
 
