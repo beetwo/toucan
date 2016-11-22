@@ -170,7 +170,7 @@ CHANNEL_LAYERS = {
 
 # configure invitation system
 INVITATION_REQUIRED = True
-INVITATION_VALID_DAYS = 2
+INVITATION_VALID_DAYS = 30
 
 from .allauth import *
 
