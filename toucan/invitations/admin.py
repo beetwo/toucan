@@ -20,12 +20,13 @@ def resend_invitations(modeladmin, request, queryset):
         new_invitation.send(context=RequestContext(request, {}), request=request)
         new_invitations.append(new_invitation)
 
-    messages.success(
+    modeladmin.message_user(
         request,
         '%s Invitation(s) re-sent with new expiry dates. %s' % (
             len(new_invitations),
             ', '.join([i.email for i in new_invitations])
-        )
+        ),
+        messages.SUCCESS
     )
 
 resend_invitations.short_description = "Resend invitations."
@@ -41,7 +42,7 @@ class ToucanInvitationAdmin(admin.ModelAdmin):
     list_display = [
         'email',
         'user',
-        'secret_key',
+        'organisation',
         'valid_until',
         'validation_link'
     ]
