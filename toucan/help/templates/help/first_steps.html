@@ -1,0 +1,106 @@
+{% extends 'help/base.html' %}
+{% load i18n %}
+{% load static from staticfiles %}
+
+{% block content %}
+    <h2>First steps</h2>
+
+    <p>
+        Here are just a few small tips to make your first steps with Toucan a smoother experience.
+    </p>
+
+    <hr />
+
+    <div class="media">
+        <div class="media-body">
+            <h3>
+                Get notified of issues near you
+            </h3>
+            <blockquote>
+                <p>
+                    I want to be notified of medical issues within 20 km of my home.
+                </p>
+            </blockquote>
+
+            <p>
+                When people and organisations create issues on Toucan they are usually looking
+                for help.<br/>
+                With Toucan you can be notified when new a issue is created that matches your criteria.
+                Since all issues inside Toucan are location specific the most important way to
+                find issues that you might be able to resolve is through the use of this location information.<br/>
+                Currently Toucan supports notifications within a certain radius of a point.<br/>
+            </p>
+            <p>
+                <a href="{% url 'user_profile:notification_create' %}" class="btn btn-sm btn-primary">
+                    Add a notification rule
+                </a>
+            </p>
+        </div>
+
+        <div class="media-right">
+            <img src="{%  static 'help/location_radius.png' %}" alt="location radius">
+        </div>
+    </div>
+
+
+    <div class="media">
+        <div class="media-left" style="padding: 2em">
+            <i class="fa fa-comments-o fa-5x"></i>
+        </div>
+
+        <div class="media-body">
+
+            <h3 class="media-heading">Get notifications when you are mentioned</h3>
+
+            <blockquote>
+                <p>
+                    I want to be notified when I am mentioned in comments.
+                </p>
+            </blockquote>
+
+            <p>
+                A big part of the value proposition of Toucan is that you
+                can reach people and organisations that would otherwise not be able see your requests
+                for help.<br/>
+                Of course there are always cases where you might want to address people/organisations
+                directly and for this reason Toucan has a user notification system built-in.
+                You as a user can decide if and how you want to be notified of certain actions that
+                happen in Toucan.<br/>
+            </p>
+            <p class="text-right">
+                <a href="{% url 'user_profile:update_profile' %}" class="btn btn-sm btn-primary">
+                    Go to notification settings
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <div class="media">
+        <div class="media-body">
+            <h3>
+                Add an issue
+            </h3>
+            <p>
+                Issues in Toucan can be created by either right-clicking the map at the desired location
+                or following the 'Add issue' in the main menu.
+                Both ways will bring you to an issue creation form where you will need to fill out a few fields.
+                After saving the new issue will be visible to every user on Toucan.
+            </p>
+            <p>
+                <a href="{% url 'issue_app:issue_create' %}" class="btn btn-sm btn-primary">
+                    Add an issue
+                </a>
+            </p>
+        </div>
+        <div class="media-right" style="padding: 2em">
+            <i class="fa fa-file-text-o fa-5x"></i>
+        </div>
+    </div>
+
+
+
+
+
+
+
+{% endblock %}

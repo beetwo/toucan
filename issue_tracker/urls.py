@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^org/', include('organisations.urls', 'organisations')),
     url(r'^issues/', include('issues.urls', 'issue_app')),
     url(r'^profile/', include('user_profile.urls', 'user_profile')),
+    url(r'^help/', include('toucan.help.urls', 'help'))
 ]
 
 

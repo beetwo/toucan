@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'user_profile',
     'toucan.invitations',
     'toucan.media',
+    'toucan.help',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -156,7 +157,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '_media')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'assets')
+    os.path.join(BASE_DIR, 'assets'),
+    os.path.join(BASE_DIR, 'toucan/help/static/')
 ]
 
 LOGIN_REDIRECT_URL = 'user_profile:personal_profile'
