@@ -159,6 +159,11 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'assets')
 ]
 
+FIXTURE_DIRS = [
+    os.path.join(BASE_DIR, 'fixtures/')
+]
+
+
 LOGIN_REDIRECT_URL = 'user_profile:personal_profile'
 
 CHANNEL_LAYERS = {
