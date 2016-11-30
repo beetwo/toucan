@@ -4,7 +4,9 @@
 
 {% block main %}
 <div class="container">
-    <h1>Toucan online help
+    {% block help-header %}
+        <h1>Toucan online help</h1>
+    {% endblock %}
     <hr />
     {% block content %}
         <p>Some resources for working with Toucan.</p>
