@@ -9,7 +9,6 @@ __pycache__/
 # Distribution / packaging
 .Python
 env/
-build/
 develop-eggs/
 dist/
 downloads/
@@ -65,8 +64,5 @@ b2/
 activate
 .idea/
 issue_tracker/settings/secrets.py
-frontend/build/
-frontend/webpack-stats.json
-frontend/node_modules/
 _media/
 *.sqlite3
