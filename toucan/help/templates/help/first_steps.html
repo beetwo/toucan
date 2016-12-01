@@ -3,11 +3,11 @@
 {% load static from staticfiles %}
 
 {% block help-header %}
-<h1>First steps</h1>
+    <h1>Toucan Feature Guide</h1>
 
-<p>
-    Here are just a few small tips to make your first steps with Toucan a smoother experience.
-</p>
+    <p>
+        Here you will find some information on the features available on Toucan
+    </p>
 {% endblock %}
 
 
@@ -16,43 +16,60 @@
     <div class="media">
         <div class="media-body">
             <h3>
-                Get notified of issues near you
+                Get notified on what is relevant to you
             </h3>
             <blockquote>
                 <p>
-                    I want to be notified of medical issues within 20 km of my home.
+                    e.g. you are only interested in medical issues in your geographic radius
                 </p>
             </blockquote>
 
             <p>
-                When people and organisations create issues on Toucan they are usually looking
-                for help.<br/>
-                With Toucan you can be notified when new a issue is created that matches your criteria.
-                Since all issues inside Toucan are location specific the most important way to
-                find issues that you might be able to resolve is through the use of this location information.<br/>
-                Currently Toucan supports notifications within a certain radius of a point.<br/>
+                On Toucan you are notified when another organisation creates an issue. In order to avoid an overflow of
+                notifications, you can select for which organisation and what kind of issue you want to be notified on
+                in a geographic radius. If an issue matching your criteria is created you will be notified immediately
+                and can help resolve it.
             </p>
             <p>
                 <a href="{% url 'user_profile:notification_create' %}" class="btn btn-sm btn-primary">
-                    Add a notification rule
+                    Create New Notification Rule
                 </a>
             </p>
         </div>
 
         <div class="media-right">
-            <img src="{%  static 'help/location_radius.png' %}" alt="location radius">
+            <img src="{% static 'help/location_radius.png' %}" alt="location radius">
         </div>
     </div>
 
 
     <div class="media">
         <div class="media-left" style="padding: 2em">
-            <i class="fa fa-comments-o fa-5x"></i>
+            <i class="fa fa-file-text-o fa-5x"></i>
         </div>
+        <div class="media-body">
+            <h3>
+                Add an issue
+            </h3>
+            <p>
+                Issues can be added by clicking “Add issue” on the header menu. You will be directed to an issue
+                creation form to briefly describe your issue. After you click "create" your issue will be visible on the
+                map of all issues and organizations relevant to the issue will be notified.
+            </p>
+            <p>
+                <a href="{% url 'issue_app:issue_create' %}" class="btn btn-sm btn-primary">
+                    Add an issue
+                </a>
+            </p>
+        </div>
+
+    </div>
+
+    <div class="media">
 
         <div class="media-body">
 
-            <h3 class="media-heading">Get notifications when you are mentioned</h3>
+            <h3 class="media-heading">Commenting options</h3>
 
             <blockquote>
                 <p>
@@ -75,29 +92,12 @@
                 </a>
             </p>
         </div>
+        <div class="media-right" style="padding: 2em">
+            <i class="fa fa-comments-o fa-5x"></i>
+        </div>
     </div>
 
-    <div class="media">
-        <div class="media-body">
-            <h3>
-                Add an issue
-            </h3>
-            <p>
-                Issues in Toucan can be created by either right-clicking the map at the desired location
-                or following the 'Add issue' in the main menu.
-                Both ways will bring you to an issue creation form where you will need to fill out a few fields.
-                After saving the new issue will be visible to every user on Toucan.
-            </p>
-            <p>
-                <a href="{% url 'issue_app:issue_create' %}" class="btn btn-sm btn-primary">
-                    Add an issue
-                </a>
-            </p>
-        </div>
-        <div class="media-right" style="padding: 2em">
-            <i class="fa fa-file-text-o fa-5x"></i>
-        </div>
-    </div>
+
 
 
 
