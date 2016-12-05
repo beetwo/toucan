@@ -9,7 +9,7 @@
         <thead>
             <tr>
                 <th>{% trans 'Organisation' %}</th>
-                <th>{% trans 'Notifications via' %}</th>
+{#                <th>{% trans 'Notifications via' %}</th>#}
                 <th>{% trans 'Membership status' %}</th>
             </tr>
         </thead>
@@ -21,9 +21,9 @@
                         {{ membership.org.name }}
                     </a>
                 </td>
-                <td>
-                    {{ membership.get_mention_notification_display }}
-                </td>
+{#                <td>#}
+{#                    {{ membership.get_mention_notification_display }}#}
+{#                </td>#}
                 <td>
                     {% if membership.active %}
                         <span class="label label-success">
