@@ -40,18 +40,21 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'bootstrap3',
+    'widget_tweaks',
     'channels',
     'rest_framework',
     'rest_framework_gis',
     'drf_multiple_model',
     'imagekit',
     'django_filters',
+    'webpack_loader',
     # custom applications
     'organisations',
     'issues',
     'user_profile',
     'toucan.invitations',
     'toucan.media',
+    'toucan.help',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -153,10 +156,23 @@ REST_FRAMEWORK = {
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '_media')
 
+WEBPACK_BUILD_DIR = os.path.join(BASE_DIR, 'frontend/build/')
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'build/',
+        'STATS_FILE': os.path.join(WEBPACK_BUILD_DIR, 'webpack-stats-development.json'),
+        'POLL_INTERVAL': 0.1,
+        'IGNORE': ['.+\.hot-update.js', '.+\.map']
+    }
+}
+
+
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'assets')
+    os.path.join(BASE_DIR, 'toucan/branding/'),
+    ('wp', WEBPACK_BUILD_DIR)
 ]
 
 FIXTURE_DIRS = [

@@ -1,19 +1,14 @@
 from .. import *
+
 try:
     from ..secrets import ALLOWED_HOSTS
 except ImportError:
-    ALLOWED_HOSTS = [
-        '127.0.0.1'
-    ]
+    raise ImportError('Please set ALLOWED_HOSTS in the secrets file when using production config.')
+
 
 DEBUG = False
 
 DEFAULT_FROM_EMAIL = 'issuetracker@brickwall.at'
-
-INSTALLED_APPS += [
-    'webpack_loader',
-]
-
 
 WEBPACK_BUILD_DIR = os.path.join(BASE_DIR, 'frontend/production/')
 
