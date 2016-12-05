@@ -1,5 +1,5 @@
 {% extends 'issues/base.html' %}
-{% load i18n bootstrap3 %}
+{% load i18n bootstrap3 widget_tweaks %}
 
 {% block issue_heading_title %}
   {% trans 'Create new Issue' %}
@@ -13,9 +13,8 @@
 
             {% for f in form.hidden_fields %}{{ f }}{% endfor %}
 
-            {% bootstrap_field form.point %}
+            {{ form.point }}
             <div id="issueMap" style="height:300px; margin-bottom:2em;"></div>
-
 
             {% bootstrap_field form.title show_label=False %}
             {% bootstrap_field form.description show_label=False %}
@@ -61,6 +60,7 @@ var props = {
 }
 
 render_map(issueMap, props);
+
 })();
 </script>
 {% endblock %}

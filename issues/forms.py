@@ -34,8 +34,16 @@ class IssueForm(forms.ModelForm):
             'point': forms.TextInput,
             'issue_types': forms.CheckboxSelectMultiple
         }
+        labels = {
+            'title': 'Title',
+            'issue_types': 'Categories'
+        }
         help_texts = {
-            'title': _('A short and descriptive title for the issue'),
-            'description': _('Details of the issue'),
-            'issue_types': _('Please select one or more categories for your issue')
+            'title': _('Add a concise title for your issue, e.g. milk shortage.'),
+            'description': _('''Add a short paragraph about the issue
+                where you explain some details, e.g.
+                What do you need?
+                Is there a specific timeframe?
+            '''),
+            'issue_types': _('Select under what category your issue falls.')
         }
