@@ -29,7 +29,14 @@
                 </li>
                 <li {% if 'organisations' in namespaces %}class="active"{% endif %}>
                     <a href="{% url 'organisations:organisation_list' %}">
+                        <i class="fa fa-address-card-o"></i>
                         {% trans 'Organisations' %}
+                    </a>
+                </li>
+                <li {% if 'help' in namespaces %}class="active"{% endif %}>
+                    <a href="{% url 'help:start' %}">
+                        <i class="fa fa-question-circle"></i>
+                        {% trans 'Help' %}
                     </a>
                 </li>
             </ul>

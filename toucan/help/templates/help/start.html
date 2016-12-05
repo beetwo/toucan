@@ -1,0 +1,33 @@
+{% extends 'help/base.html' %}
+{% load i18n %}
+{% load static from staticfiles %}
+{% block content %}
+
+    <p class="alert alert-info">
+        Toucan is currently under heavy development and we are aware of the fact that documentation is sparse.<br />
+        Until we get these issues sorted out, here are some resources that you might be interested in.
+    </p>
+
+    <h2>Feature Guide</h2>
+
+    <p>
+        A feature guide that is intended for new users is available. It highlights some of the basic concepts when working with Toucan.
+    </p>
+    <p class="text-right">
+            <a class="btn btn-primary" href="{% url 'help:first_steps' %}">
+{#            <i class="fa fa-file-pdf-o"></i>&nbsp;#}
+            Go to Feature Guide
+        </a>
+    </p>
+
+    <h2>User Manual</h2>
+    <p>
+        A user manual was created that is intended to help early adopters through the basics of Toucan.
+    </p>
+    <p class="text-right">
+        <a class="btn btn-primary" href="{% static 'help/manual.pdf' %}">
+            <i class="fa fa-file-pdf-o"></i>&nbsp;
+            Download Manual
+        </a>
+    </p>
+{% endblock %}

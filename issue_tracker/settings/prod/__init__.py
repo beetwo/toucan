@@ -9,11 +9,6 @@ ALLOWED_HOSTS = [
     '.brickwall.at',
 ]
 
-INSTALLED_APPS += [
-    'webpack_loader',
-]
-
-
 WEBPACK_BUILD_DIR = os.path.join(BASE_DIR, 'frontend/production/')
 
 STATICFILES_DIRS += [

@@ -21,3 +21,4 @@ django-rest-multiple-models==1.8.0
 djangorestframework==3.5.1
 djangorestframework-gis==0.10.1
 django-model-utils==2.6
+django-widget-tweaks==1.4.1

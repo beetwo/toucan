@@ -1,0 +1,151 @@
+{% extends 'help/base.html' %}
+{% load i18n %}
+{% load static from staticfiles %}
+
+{% block extra-head %}
+    {{ block.super }}
+    <style type="text/css">
+        div.media {
+            margin-top: 2em;
+        }
+
+        .media-right > i, .media-left > i {
+            margin: 1em;
+        }
+
+        h3 ~ blockquote {
+            margin-top: 1em;
+        }
+    </style>
+{% endblock %}
+
+
+{% block help-header %}
+    <h1>Toucan Feature Guide</h1>
+
+    <p>
+        Here you will find some information on the features available on Toucan
+    </p>
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="media">
+        <div class="media-body">
+            <h3>
+                Get notified on what is relevant to you
+            </h3>
+            <blockquote>
+                <p>
+                    e.g. you are only interested in medical issues in your geographic radius
+                </p>
+            </blockquote>
+
+            <p>
+                On Toucan you are notified when another organisation creates an issue. In order to avoid an overflow of
+                notifications, you can select for which organisation and what kind of issue you want to be notified on
+                in a geographic radius. If an issue matching your criteria is created you will be notified immediately
+                and can help resolve it.
+            </p>
+            <p>
+                <a href="{% url 'user_profile:notification_create' %}" class="btn btn-sm btn-primary">
+                    Create New Notification Rule
+                </a>
+            </p>
+        </div>
+
+        <div class="media-right">
+            <img src="{% static 'help/location_radius.png' %}" alt="location radius">
+        </div>
+    </div>
+
+
+    <div class="media">
+        <div class="media-left">
+            <i class="fa fa-bell fa-5x"></i>
+        </div>
+        <div class="media-body">
+            <h3>
+                Choose how you want to be notified
+            </h3>
+            <blockquote>
+                <p>
+                    e.g. When another user directly mentions your name you want to receive a text. If a user mentions
+                    the organisation you work for you only want to receive an email.
+                </p>
+            </blockquote>
+            <p>
+                On Toucan you can reach individuals and organisations that would otherwise not be able see your requests
+                for help. Therefore a user can directly mention a person or an organization. In order to make sure you
+                only get notified on what you want to be notified on, choose what kind of notification you receive when
+                you or your organisation get mentioned.
+            </p>
+            <p class="text-right">
+                <a href="{% url 'user_profile:update_profile' %}" class="btn btn-sm btn-primary">
+                    Create Mentioning Rule
+                </a>
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="media">
+        <div class="media-body">
+            <h3>
+                Add an Issue
+            </h3>
+            <blockquote>
+                <p>
+                    You have a problem and need the support of other organisations.
+                </p>
+            </blockquote>
+            <p>
+                Issues can be added by clicking “Add issue” on the header menu. You will be directed to an issue
+                creation form to briefly describe your issue. After you click "create" your issue will be visible on the
+                map of all issues and organizations relevant to the issue will be notified.
+            </p>
+            <p>
+                <a href="{% url 'issues:issue_create' %}" class="btn btn-sm btn-primary">
+                    Add an issue
+                </a>
+            </p>
+        </div>
+
+        <div class="media-right">
+            <i class="fa fa-file-text-o fa-5x"></i>
+        </div>
+    </div>
+
+
+    <div class="media">
+        <div class="media-left">
+            <i class="fa fa-comments-o fa-5x"></i>
+        </div>
+        <div class="media-body">
+
+            <h3 class="media-heading">
+                Resolve an Issue
+            </h3>
+
+            <blockquote>
+                <p>
+                    Directly communicate with other users and resolve an issue on Toucan
+                </p>
+            </blockquote>
+
+            <p>
+                On Toucan you can directly comment on issues and get in touch with other users to solve problems as
+                efficiently as possible. You can upload pictures or files for greater detail and also directly mention
+                another organization or user by typing '@'and their name. Once the issue has been solved, you can click
+                on 'Resolve Issue' and it will disappear from the list of issues on Toucan.
+            </p>
+        </div>
+
+    </div>
+
+
+
+
+{% endblock %}
