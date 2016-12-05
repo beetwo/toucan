@@ -12,7 +12,7 @@ DEFAULT_FROM_EMAIL = 'issuetracker@brickwall.at'
 
 WEBPACK_BUILD_DIR = os.path.join(BASE_DIR, 'frontend/production/')
 
-STATICFILES_DIRS += [
+STATICFILES_DIRS = STATICFILES_DIRS[:-1] + [
     ('wp', WEBPACK_BUILD_DIR)
 ]
 
