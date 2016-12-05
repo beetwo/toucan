@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'bootstrap3',
+    'widget_tweaks',
     'channels',
     'rest_framework',
     'rest_framework_gis',
