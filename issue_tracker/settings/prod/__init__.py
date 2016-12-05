@@ -1,13 +1,14 @@
 from .. import *
+try:
+    from ..secrets import ALLOWED_HOSTS
+except ImportError:
+    ALLOWED_HOSTS = [
+        '127.0.0.1'
+    ]
 
 DEBUG = False
 
 DEFAULT_FROM_EMAIL = 'issuetracker@brickwall.at'
-
-ALLOWED_HOSTS = [
-    '127.0.0.1',
-    '.brickwall.at',
-]
 
 INSTALLED_APPS += [
     'webpack_loader',
@@ -31,26 +32,6 @@ WEBPACK_LOADER = {
         )
     }
 }
-
-# install opbeat if available
-try:
-    from ..secrets import OPBEAT
-except ImportError:
-    pass
-else:
-    INSTALLED_APPS += [
-        'opbeat.contrib.django',
-    ]
-
-    OPBEAT = {
-        'ORGANIZATION_ID': 'af2402d0c17c4c5487c73ddc26691ae1',
-        'APP_ID': '665f356411',
-        'SECRET_TOKEN': 'f5d22e2d879813223cfc88431e2e762fb32d45b9',
-    }
-
-    MIDDLEWARE_CLASSES = [
-        'opbeat.contrib.django.middleware.OpbeatAPMMiddleware',
-    ] + MIDDLEWARE_CLASSES
 
 
 # install raven handler if configured

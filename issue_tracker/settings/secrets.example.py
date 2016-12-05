@@ -11,6 +11,10 @@ EMAIL_HOST_PASSWORD = ''
 
 DEFAULT_FROM_EMAIL = 'do-not-reply@b2issuetracker.at'
 
+# a list of values that represent your FQDNs
+# ALLOWED_HOSTS = [
+#     'tracker.toucan.org'
+# ]
 
 # NEXMO = {
 #   'key': 'key',
@@ -19,8 +23,4 @@ DEFAULT_FROM_EMAIL = 'do-not-reply@b2issuetracker.at'
 #
 # RAVEN_DSN = 'sentry dsn url'
 #
-# OPBEAT = {
-#   'ORGANIZATION_ID': '',
-#   'APP_ID': '',
-#   'SECRET_TOKEN': '',
-# }
+

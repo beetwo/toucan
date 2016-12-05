@@ -1,4 +1,4 @@
-Django==1.10.3
+Django==1.10.4
 channels==0.17.3
 django-allauth==0.27.0
 django-location-field==1.6.1
@@ -15,9 +15,8 @@ nexmo==1.0.3
 twitter-text-python==1.1.0
 asgi_redis==0.14.1
 factory-boy==2.7.0
-opbeat==3.4.0
-raven==5.27.1
+raven==5.32.0
 django-rest-multiple-models==1.8.0
-djangorestframework==3.5.1
-djangorestframework-gis==0.10.1
+djangorestframework==3.5.3
+djangorestframework-gis==0.11
 django-model-utils==2.6
