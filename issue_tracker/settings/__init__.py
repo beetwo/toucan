@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'imagekit',
     'django_filters',
     'webpack_loader',
+    'raven.contrib.django.raven_compat',
     # custom applications
     'organisations',
     'issues',

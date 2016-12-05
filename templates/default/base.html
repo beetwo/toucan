@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 {% load i18n bootstrap3 %}
 {% load render_bundle from webpack_loader %}
+{#{% load raven %}#}
 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {% include 'default/favicons.html' %}
+    {% include './favicons.html' %}
     <title>{% block head_title %}{% trans 'Toucan' %}{% endblock %}</title>
+    {% include './raven.html' %}
     {% render_bundle 'vendor' %}
     {% block extra-head %}{% endblock %}
 </head>
@@ -15,7 +17,7 @@
 <body class="{% block body-classes %}{% endblock %}">
     {% block body %}
         {% block navbar %}
-            {% include 'default/navbar.html' %}
+            {% include './navbar.html' %}
         {% endblock navbar %}
         {% if messages %}
         <div class="container">

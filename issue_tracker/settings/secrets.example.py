@@ -9,7 +9,7 @@ EMAIL_HOST_PASSWORD = ''
 # EMAIL_USE_TLS = True
 
 
-DEFAULT_FROM_EMAIL = 'do-not-reply@b2issuetracker.at'
+DEFAULT_FROM_EMAIL = 'do-not-reply@example.com'
 
 # a list of values that represent your FQDNs
 ALLOWED_HOSTS = [
