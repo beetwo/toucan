@@ -36,7 +36,6 @@ try:
 except ImportError:
     pass
 else:
-    INSTALLED_APPS += ['raven.contrib.django.raven_compat']
     RAVEN_CONFIG = {
         'dsn': RAVEN_DSN,
         # If you are using git, you can also automatically configure the
