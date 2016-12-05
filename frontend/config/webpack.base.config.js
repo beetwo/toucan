@@ -14,7 +14,7 @@ module.exports = (opts) => {
       },
     }),
     new webpack.ProvidePlugin({
-        'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+        'fetch': 'imports-loader?this=>global!exports-loader?global.fetch!whatwg-fetch'
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
@@ -25,7 +25,7 @@ module.exports = (opts) => {
   return {
     context: PROJECT_ROOT,
     entry: {
-        main: './js/index',
+        main: ['babel-polyfill', './js/index'],
         vendor: [
             'bootstrap-loader',
             'font-awesome/css/font-awesome.css',
@@ -47,51 +47,44 @@ module.exports = (opts) => {
         filename: "[name]-[hash].js"
     },
     plugins,
-    resolve: {extensions: ['', '.js']},
+    resolve: {extensions: ['.js']},
     module: {
         loaders: [
-            {test: /\.css$/, loaders: ['style', 'css?-autoprefixer', 'postcss']},
-            {test: /\.scss$/, loaders: ['style', 'css?-autoprefixer', 'postcss', 'sass']},
+            {test: /\.css$/, loaders: ['style-loader', 'css-loader?-autoprefixer', 'postcss-loader']},
+            {test: /\.scss$/, loaders: ['style-loader', 'css-loader?-autoprefixer', 'postcss-loader', 'sass-loader']},
             {
                 test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "url?limit=10000"
+                loader: "url-loader?limit=10000"
             },
             {
                 test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
-                loader: 'file'
+                loader: 'file-loader'
             },
             {
                 test: /\.(png|jpg|jpeg)?$/,
-                loader: "url?limit=10000"
+                loader: "url-loader?limit=10000"
             },
             {
                 test: /\.json$/,
-                loader: 'json'
+                loader: 'json-loader'
             },
             // jquery + Bootstrap 3
             // if jquery is required, expose globally
-            { test: require.resolve("jquery"), loader: "expose?$!expose?jQuery" },
+            { test: require.resolve("jquery"), loader: "expose-loader?$!expose-loader?jQuery" },
             {
-                test: /bootstrap-sass\/assets\/javascripts\//, loader: 'imports?jQuery=jquery'
+                test: /bootstrap-sass\/assets\/javascripts\//, loader: 'imports-loader?jQuery=jquery'
             },
             // everything else
             {
                 test: /\.jsx?$/,
                 exclude: /(node_modules|bower_components)/,
-                loader: 'babel', // 'babel-loader' is also a legal name to reference
+                loader: 'babel-loader',
                 query: {
                     presets: ['react', 'es2015', 'stage-2'],
                     cacheDirectory: true
                 }
             }
         ],
-    },
-    postcss: function () {
-      return [
-        precss,
-        autoprefixer
-      ];
     }
-
   };
 };

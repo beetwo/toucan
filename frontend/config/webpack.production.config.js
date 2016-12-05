@@ -22,6 +22,7 @@ module.exports = (opts) => {
       // set CDN_PATH to your cdn static file directory
       publicPath: CDN_PATH || '/static/wp/',
     },
+    devtool: 'source-map',
     plugins: [
       ...config.plugins,
       // production bundle stats file
@@ -31,21 +32,21 @@ module.exports = (opts) => {
       }),
       // pass options to uglify
       new webpack.LoaderOptionsPlugin({
-        minimize: true,
-        debug: false,
+       minimize: true,
+       debug: false,
       }),
       // minifies your code
       new webpack.optimize.UglifyJsPlugin({
-        compress: {
-          warnings: false,
-        },
-        output: {
-          comments: false,
-        },
-        sourceMap: false,
+       compress: {
+         warnings: false,
+       },
+       output: {
+         comments: false,
+       },
+       sourceMap: false,
       }),
       // removes duplicate modules
-      new webpack.optimize.DedupePlugin(),
+      // new webpack.optimize.DedupePlugin(),
       // this cleans up the build directory
       new WebpackCleanupPlugin({
         exclude: ["webpack-stats-production.json"]

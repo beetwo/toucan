@@ -80,16 +80,19 @@
     "babel-cli": "^6.10.1",
     "babel-core": "^6.7.6",
     "babel-plugin-react-transform": "^2.0.2",
+    "babel-polyfill": "^6.16.0",
     "babel-preset-stage-0": "^6.5.0",
+    "bootstrap-loader": "^2.0.0-beta.16",
+    "extract-text-webpack-plugin": "^2.0.0-beta.4",
     "immutable": "^3.8.1",
     "jquery": "^2.2.3",
     "react-custom-scrollbars": "^4.0.0-beta.1",
     "react-dropzone": "^3.7.0",
+    "react-leaflet": "^0.12.1",
     "react-redux": "^4.4.2",
     "react-router-redux": "^4.0.2",
     "react-xhr-uploader": "^0.3.1",
     "redux": "^3.4.0",
-    "remarkable": "^1.6.2",
-    "webpack": "^2.1.0-beta.13"
+    "remarkable": "^1.6.2"
   }
 }
