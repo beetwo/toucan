@@ -12,9 +12,9 @@ EMAIL_HOST_PASSWORD = ''
 DEFAULT_FROM_EMAIL = 'do-not-reply@b2issuetracker.at'
 
 # a list of values that represent your FQDNs
-# ALLOWED_HOSTS = [
-#     'tracker.toucan.org'
-# ]
+ALLOWED_HOSTS = [
+    '127.0.0.1',  # replace this with your real domain name
+]
 
 # NEXMO = {
 #   'key': 'key',
