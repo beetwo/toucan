@@ -175,6 +175,11 @@ STATICFILES_DIRS = [
     ('wp', WEBPACK_BUILD_DIR)
 ]
 
+FIXTURE_DIRS = [
+    os.path.join(BASE_DIR, 'fixtures/')
+]
+
+
 LOGIN_REDIRECT_URL = 'user_profile:personal_profile'
 
 CHANNEL_LAYERS = {
