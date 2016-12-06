@@ -67,44 +67,27 @@ export class SingleFileUpload extends React.Component {
     }
 }
 
+
 export class ToucanUploader extends React.Component {
-
-    constructor(props) {
-      super(props);
-      this.state = {
-        files: []
-      }
-      this.onDrop = this.onDrop.bind(this);
-    }
-
-    reset() {
-      this.setState({
-        files: []
-      });
-    }
-
-    onDrop(acceptedFiles, rejectedFiles) {
-        let allFiles = this.state.files.concat(acceptedFiles);
-        this.setState({
-          files: allFiles
-        });
-    }
 
     render() {
         return <div>
             <ul className='list-inline'>
-              {this.state.files.map((f, index) => {
+              {this.props.files.map((f, index) => {
                 return (<li key={index}>
                   <SingleFileUpload file={f} onAdded={this.props.onAdded} />
                 </li>); })}
             </ul>
-
-            <Dropzone
-              className='form-control'
-              onDrop={this.onDrop}>
-              <Icon name="paperclip"/>&nbsp;
-              Drop files here to add as attachments
-            </Dropzone>
         </div>;
     }
 }
+
+export class UploadField extends React.Component {
+    render() {
+        return <Dropzone className="dropzoneWrapper" onDrop={this.props.onDrop}>{this.props.children}</Dropzone>;
+    }
+}
+
+UploadField.propTypes = {
+    onDrop: React.PropTypes.func.isRequired
+};

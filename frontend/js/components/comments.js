@@ -9,7 +9,7 @@ import without from 'lodash/without'
 import { fromJS } from 'immutable'
 import CommentView from './commentView'
 import UserLink from './userLink'
-import {ToucanUploader} from '../containers/fileUploader';
+import {ToucanUploader, UploadField} from '../containers/fileUploader';
 import Gallery from './gallery'
 
 export class CommentForm extends React.Component {
@@ -20,14 +20,16 @@ export class CommentForm extends React.Component {
     this.handleEditorStateChange = this.handleEditorStateChange.bind(this)
     this.handleStatusChangeAndSubmit = this.handleStatusChangeAndSubmit.bind(this)
     this.handleAttachmentAdded = this.handleAttachmentAdded.bind(this);
-    this.handleAttachmentRemoved = this.handleAttachmentRemoved.bind(this)
+    this.handleAttachmentRemoved = this.handleAttachmentRemoved.bind(this);
+    this.handleAttachmentDropped = this.handleAttachmentDropped.bind(this);
   }
 
   _getInitialState() {
     return {
       editorState: CommentEditor.getEmptyEditorState(),
       toggleState: false,
-      attachments: []
+      attachments: [],
+      files: []
     }
   }
 
@@ -38,7 +40,8 @@ export class CommentForm extends React.Component {
     );
     this.setState({
       editorState,
-      attachments: []
+      attachments: [],
+      files: []
     })
   }
 
@@ -59,7 +62,6 @@ export class CommentForm extends React.Component {
     }
     this.props.onComment(comment);
     this.resetEditorState();
-    this.uploader.reset();
   }
 
   handleEditorStateChange(state) {
@@ -94,7 +96,18 @@ export class CommentForm extends React.Component {
     });
   }
 
+  handleAttachmentDropped(acceptedFiles, rejectedFiles) {
+    this.setState({
+      files: [...this.state.files, ...acceptedFiles]
+    })
+  }
+
   render() {
+    let uploadControl = <ToucanUploader onAdded={this.handleAttachmentAdded}
+                                        onRemove={this.handleAttachmentRemoved}
+                                        files={this.state.files}
+    />;
+
     return (<form onSubmit={this.handleSubmit} ref={(e) => this._form =e }>
         <div className='panel panel-default'>
           <div className='panel-heading text-muted'>
@@ -106,15 +119,21 @@ export class CommentForm extends React.Component {
                          editorState={this.state.editorState} />
           </div>
           <div className='panel-footer clearfix'>
-            <ToucanUploader ref={(uploader) => this.uploader = uploader} onAdded={this.handleAttachmentAdded} onRemove={this.handleAttachmentRemoved} />
+            {uploadControl}
+            <div className='btn-toolbar' style={{marginTop: '0.3em'}}>
 
-            <div className='btn-toolbar pull-right' style={{marginTop: '0.3em'}}>
-             <button className='btn btn-sm btn-default' type='button' onClick={this.handleStatusChangeAndSubmit}>
-               { this.props.status == 'open' ? 'Resolve issue' : 'Reopen issue' }
-             </button>
-             <button className='btn btn-sm btn-success' type='submit'>
-               Comment
-             </button>
+              <UploadField onDrop={this.handleAttachmentDropped}>
+                  <span className="btn btn-default btn-sm">
+                    <Icon name="paperclip"/>&nbsp;Add Attachments
+                  </span>
+              </UploadField>
+
+              <button className='btn btn-sm btn-default pull-right' type='button' onClick={this.handleStatusChangeAndSubmit}>
+                  { this.props.status == 'open' ? 'Resolve issue' : 'Reopen issue' }
+              </button>
+              <button className='btn btn-sm btn-success pull-right' type='submit'>
+                Comment
+              </button>
            </div>
         </div>
     </div>
