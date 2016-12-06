@@ -114,7 +114,15 @@ class IssueListUI extends React.Component {
                 <IssueFilter {...this.props} filterOptions={this.props.filterOptions}/>
             </div>
             <hr />
-            <table className="issues table table-hover">
+            <table className="issues table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Issue</th>
+                    <th>Status</th>
+                    <th>Type(s)</th>
+                    <th>Discussion</th>
+                </tr>
+            </thead>
             <tbody>
                 {rows}
             </tbody>

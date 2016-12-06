@@ -84,7 +84,11 @@ export class ToucanUploader extends React.Component {
 
 export class UploadField extends React.Component {
     render() {
-        return <Dropzone className="dropzoneWrapper" onDrop={this.props.onDrop}>{this.props.children}</Dropzone>;
+        return <Dropzone className="dropzoneWrapper"
+                         onDrop={this.props.onDrop}
+                         accept='image/*'>
+            {this.props.children}
+        </Dropzone>;
     }
 }
 

@@ -2,17 +2,18 @@
 {% load i18n bootstrap3 %}
 
 {% block content %}
-   <h2>{% trans 'Memberships' %}</h2>
+   <h2>{% trans 'Membership' %}</h2>
     <hr />
     {% if memberships|length %}
     <table class="table table-striped">
+        {% if memberships|length > 1 %}
         <thead>
             <tr>
                 <th>{% trans 'Organisation' %}</th>
-{#                <th>{% trans 'Notifications via' %}</th>#}
                 <th>{% trans 'Membership status' %}</th>
             </tr>
         </thead>
+        {% endif %}
         <tbody>
         {% for membership in memberships %}
             <tr>
@@ -21,9 +22,6 @@
                         {{ membership.org.name }}
                     </a>
                 </td>
-{#                <td>#}
-{#                    {{ membership.get_mention_notification_display }}#}
-{#                </td>#}
                 <td>
                     {% if membership.active %}
                         <span class="label label-success">

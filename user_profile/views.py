@@ -53,15 +53,14 @@ class PersonalProfile(LoginRequiredMixin, PublicProfile):
         return ctx
 
 
-class UpdateProfile(LoginRequiredMixin, FormValidMessageMixin, UpdateView):
+class UpdateMentionNotificationSettingsView(LoginRequiredMixin, FormValidMessageMixin, UpdateView):
     fields = [
-        'phone_number',
         'user_mention_notification',
         'org_mention_notification'
     ]
 
-    template_name = 'user_profile/edit_profile.html'
-    form_valid_message = _('Profile updated')
+    template_name = 'user_profile/edit_mention_settings.html'
+    form_valid_message = _('Mention settings updated.')
 
     def get_success_url(self):
         return reverse(
@@ -71,6 +70,22 @@ class UpdateProfile(LoginRequiredMixin, FormValidMessageMixin, UpdateView):
     def get_object(self, queryset=None):
         return Profile.objects.get_or_create(user=self.request.user)[0]
 
+
+class UpdatePhoneNumber(LoginRequiredMixin, FormValidMessageMixin, UpdateView):
+    fields = [
+        'phone_number'
+    ]
+
+    template_name = 'user_profile/edit_phone.html'
+    form_valid_message = _('Phone number updated.')
+
+    def get_success_url(self):
+        return reverse(
+            'user_profile:personal_profile',
+        )
+
+    def get_object(self, queryset=None):
+        return Profile.objects.get_or_create(user=self.request.user)[0]
 
 class NotificationCreate(LoginRequiredMixin, FormValidMessageMixin, CreateView):
 
@@ -88,14 +103,9 @@ class NotificationCreate(LoginRequiredMixin, FormValidMessageMixin, CreateView):
             'user_profile:personal_profile',
         )
 
-
-class NotificationEdit(PermissionRequiredMixin, UpdateView):
-    form_class = NotificationSettingsForm
-    template_name = 'user_profile/notification/edit.html'
+class BaseNotificationView(PermissionRequiredMixin):
     model = NotificationSettings
-    form_valid_message = _('Notification created.')
     pk_url_kwarg = 'notification_id'
-
 
     def has_permission(self):
         return self.request.user == self.get_object().user
@@ -104,4 +114,15 @@ class NotificationEdit(PermissionRequiredMixin, UpdateView):
         return reverse(
             'user_profile:personal_profile',
         )
+
+
+class NotificationEditView(BaseNotificationView, FormValidMessageMixin, UpdateView):
+    form_class = NotificationSettingsForm
+    template_name = 'user_profile/notification/edit.html'
+    form_valid_message = _('Notification rule updated.')
+
+
+class NotificationDeleteView(BaseNotificationView, FormValidMessageMixin, DeleteView):
+    template_name = 'user_profile/notification/delete.html'
+    form_valid_message = _('Notification rule deleted.')
 

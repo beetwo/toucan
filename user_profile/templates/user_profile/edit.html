@@ -2,12 +2,12 @@
 {% load i18n bootstrap3 %}
 
 {% block profile-title %}
-{% trans 'Edit your profile' %}
+    {{ block.super }}
 {% endblock %}
 
 {% block content %}
 
-<form method="post" action="{% url 'user_profile:update_profile' %}">
+<form method="post" action=".">
     {% csrf_token %}
     {% bootstrap_form form %}
     {% buttons %}
