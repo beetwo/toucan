@@ -91,19 +91,18 @@ class IssueDetailUI extends React.Component {
 
     let gjs = issue_loader.issue_data;
     let issue = gjs.properties;
+    console.log(issue, gjs);
 
     return (<div className='issueDetail'>
-
-            <ol className='breadcrumb' style={{backgroundColor: 'transparent'}}>
-              <li>
-                <Link to='/'>
-                  Issue List
-                </Link>
-              </li>
-              <li className='active'>
-                Issue Detail
-              </li>
-            </ol>
+            <div className="btn-toolbar">
+              <Link to='/' className="btn btn-default btn-sm">
+                <Icon name="arrow-left"/>&nbsp;Issue List
+              </Link>
+              <Link to={`${gjs.id}/map`} className="btn btn-default btn-sm pull-right">
+                Map&nbsp;
+                <Icon name="map-o"/>
+              </Link>
+            </div>
 
             <IssueDetailsMain {...this.props} gjs={gjs} issue={issue} />
 
