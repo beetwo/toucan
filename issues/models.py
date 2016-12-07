@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
+from django.contrib.sites.models import Site
 
 from model_utils import Choices
 from model_utils.models import TimeStampedModel
@@ -111,7 +112,8 @@ class Issue(TimeStampedModel):
 
     def get_absolute_url(self):
         url = reverse('home_issue', kwargs={'issue_id': self.pk})
-        return 'https://%s%s' % (self.site.domain, url)
+        site = Site.objects.get_current()
+        return 'https://%s%s' % (site.domain, url)
 
     @property
     def gis_location(self):
