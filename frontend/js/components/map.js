@@ -162,11 +162,11 @@ export class LeafletMap extends React.Component {
               issue: l,
               isActive: l.id === this.props.selectedIssue
             };
-            if (l.id === this.props.selectedIssue) {
+            if (props.isActive) {
               // optionally center the map if there is an active marker
               center = props.position
             }
-            return <IssueMarker {...props} />
+            return <IssueMarker {...props} zIndexOffset={props.isActive ? 1000 :0}/>
         })
 
         if (this._panToUserLocation) {
