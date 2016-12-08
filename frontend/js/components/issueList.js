@@ -84,11 +84,11 @@ IssueFilter.propTypes = {
 
 class IssueListFooter extends React.Component {
     render() {
-        return <div className="issue-list-footer">
-            <div className="btn btn-primary">
-                Show Map
+        return <footer className="issue-list-footer">
+            <div className="btn btn-primary btn-block" onClick={this.props.openMap}>
+                <Icon name="map"/>&nbsp;Show Map
             </div>
-        </div>
+        </footer>
     }
 }
 
@@ -119,9 +119,12 @@ class IssueListUI extends React.Component {
         });
         return (
           <div className="issue-list">
+            {/*the filtering interface*/}
             <div className="issue-list-form">
                 <IssueFilter {...this.props} filterOptions={this.props.filterOptions}/>
             </div>
+
+            {/* the actual table of issues */}
             <div className="issue-list-body">
                 <table className="issues table table-hover table-striped">
                 <thead>
@@ -137,7 +140,13 @@ class IssueListUI extends React.Component {
                 </tbody>
                 </table>
             </div>
-            <IssueListFooter />
+
+            {/*issue list control*/}
+            {
+                this.props.mapOpenable ?
+                <IssueListFooter openMap={this.props.openMap}/>
+                : null
+            }
       </div>);
     }
 }

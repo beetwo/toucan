@@ -43,29 +43,30 @@ class IssueDetailMain extends React.Component {
         body = <RawTextBody text={description} />;
     }
     return <div className='issue-detail-main' ref='scrollbar'>
-      <div className='row'>
-        <div className='col-md-8'>
-          <h3>
-            <span className='text-muted'>#{gjs.id}</span>&nbsp;
-            {issue.title}
-          </h3>
 
-          <ul className='list-inline'>
-            { issue.issue_types.map((issue_type, index) => <li key={index}><Icon key={index} name={getIconClassForIssueType(issue_type)} /></li>) }
-          </ul>
-          { issue.organisation ? <p>
-              <a href={issue.organisation.profile_url} target="_blank">
-                {issue.organisation.name}
-                <sub><Icon name='external-link' /></sub>
-              </a>
-            </p> : null}
-        </div>
-        <div className='col-md-4 text-right'>
-          <h3>
-            <Status status={issue.status} />
-          </h3>
-        </div>
-      </div>
+      <h3>
+        <span className='text-muted'>#{gjs.id}</span>&nbsp;
+        {issue.title}
+      </h3>
+
+      <h3 className="pull-right">
+        <Status status={issue.status} />
+      </h3>
+
+      <ul className='list-inline'>
+        { issue.issue_types.map((issue_type, index) => <li key={index}><Icon key={index} name={getIconClassForIssueType(issue_type)} /></li>) }
+      </ul>
+
+      {
+        issue.organisation ?
+          <p>
+            <a href={issue.organisation.profile_url} target="_blank">
+              {issue.organisation.name}
+              <sub><Icon name='external-link' /></sub>
+            </a>
+          </p> :
+          null
+      }
       <hr />
       <div className="panel panel-primary">
           <div className="panel-heading">
@@ -77,6 +78,21 @@ class IssueDetailMain extends React.Component {
       </div>
       {children}
     </div>
+  }
+}
+
+class IssueDetailFooter extends React.Component {
+  render() {
+    let {openMap} = this.props;
+    return <footer className="bg-primary">
+            <Link to='/' className="btn btn-primary">
+              <Icon name="list"/>&nbsp;Issue List
+            </Link>
+          <button onClick={openMap} className="btn btn-primary pull-right">
+                Location&nbsp;
+                <Icon name="map-o"/>
+          </button>
+    </footer>;
   }
 }
 
@@ -92,21 +108,9 @@ class IssueDetailUI extends React.Component {
 
     let gjs = issue_loader.issue_data;
     let issue = gjs.properties;
-    console.log(issue, gjs);
 
     return (<div className='issue-detail'>
-            <div className="btn-toolbar">
-              <Link to='/' className="btn btn-default btn-sm">
-                <Icon name="arrow-left"/>&nbsp;Issue List
-              </Link>
-              <HiddenMedium>
-                <button onClick={this.props.openMap} className="btn btn-default btn-sm pull-right">
-                  Map&nbsp;
-                  <Icon name="map-o"/>
-                </button>
-              </HiddenMedium>
-            </div>
-
+      <div className="issue-detail-body">
             <IssueDetailMain {...this.props} gjs={gjs} issue={issue} />
 
             {
@@ -122,8 +126,9 @@ class IssueDetailUI extends React.Component {
 
 
              }
-
-          </div>);
+        </div>
+        <IssueDetailFooter openMap={this.props.openMap} />
+    </div>);
   }
 }
 

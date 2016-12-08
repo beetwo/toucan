@@ -2,24 +2,29 @@ import React from 'react'
 import Map , {CloseMapButton} from './map'
 import NewIssue from './newIssue'
 import MediaQuery from 'react-responsive'
+import Icon from 'react-fa'
 import {mediumSize} from './responsive'
 
 require('../../css/app.css');
 
-function WrapMap(props, closeFunc) {
-    console.log(closeFunc, CloseMapButton);
+function WrapMap(props) {
+    let { closable, onClose } = props;
+    // construct the map
+    let map = <Map geojson={props.geojson}
+                   bounds={props.bounds}
+                   visibleIssueIDs={props.issues.map(i => i.id)}
+                   setCoordinates={props.setCoordinates}
+                   coordinates={props.coordinates}
+                   selectIssue={props.selectIssue}
+                   selectedIssue={props.selectedIssue} />;
     return  <div className="map-container">
-                  <Map geojson={props.geojson}
-                       bounds={props.bounds}
-                       visibleIssueIDs={props.issues.map(i => i.id)}
-                       setCoordinates={props.setCoordinates}
-                       coordinates={props.coordinates}
-                       selectIssue={props.selectIssue}
-                       selectedIssue={props.selectedIssue}
-                       closeMap={props.closeFunc}
-                  >
-                  { closeFunc ? <CloseMapButton onClick={closeFunc} /> : null }
-              </Map>
+        {map}
+        {closable ? <footer className="bg-primary">
+            <div className="btn btn-primary btn-block text-center" onClick={onClose}>
+                <Icon name="times" />&nbsp;
+                Close Map
+            </div>
+        </footer> : null}
     </div>;
 }
 
@@ -44,7 +49,7 @@ class UI extends React.Component {
                     let displayMap = true,
                         displayIssues = true;
 
-                    // on mobile display one or the other
+                    // on mobile display one or the other,
                     // depending on state
                     if (isMobile) {
                         if (this.state.displayMap) {
@@ -55,7 +60,11 @@ class UI extends React.Component {
                     }
 
                     return (<div className="app-container">
-                        { displayMap ? WrapMap(this.props, this.toggleMapDisplay) : null }
+                        {
+                            displayMap ?
+                                <WrapMap {...this.props } closable={!displayIssues} onClose={this.toggleMapDisplay}/>
+                                : null
+                        }
                         {
                             displayIssues ?
                                 <div className="issues-container">
@@ -68,7 +77,10 @@ class UI extends React.Component {
                                     {
                                         React.cloneElement(
                                             this.props.children,
-                                            {openMap: this.toggleMapDisplay}
+                                            {
+                                                mapOpenable: !displayMap,
+                                                openMap: this.toggleMapDisplay
+                                            }
                                         )
                                     }
                                 </div> :

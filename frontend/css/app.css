@@ -42,20 +42,28 @@ main {
 }
 
 .map-container {
-  /*padding:1em;*/
   display: flex;
+  flex-direction: column;
 }
 
-.map-container > div {
+.map-container .leaflet-container {
   width: 100%;
-  flex: 1;
+  flex: 1 1 auto;
 }
 
+.map-container footer {
+  flex: 0 0 auto;
+}
+
+/*this container wraps the right hand side of desktop layout*/
 .issues-container {
   display: flex;
   flex-direction: column;
   /*padding: 1em;*/
 }
+
+
+/*issue list page */
 
 .issue-list {
   display: flex;
@@ -70,23 +78,28 @@ main {
 .issue-list-body {
   flex: 1 1 auto;
   overflow-y: auto;
-  padding: 0.5em;
+  padding: 1em;
 }
 
 .issue-list-footer {
     flex: 0 0 auto;
 }
 
+/*Issue detail page*/
 .issue-detail {
-  flex: 1;
-  /*display: flex;
-  flex-direction: column;*/
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-.issue-detail-main {
-  /*flex:1;*/
+.issue-detail-body {
+  flex:1 1 auto;
   overflow-y: auto;
-  padding-right: 1em;
+  padding: 1em;
+}
+
+.issue-detail footer {
+  flex: 0 0 auto;
 }
 
 .commentForm {

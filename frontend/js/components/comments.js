@@ -11,6 +11,7 @@ import CommentView from './commentView'
 import UserLink from './userLink'
 import {ToucanUploader, UploadField} from '../containers/fileUploader';
 import Gallery from './gallery'
+import Dropzone from 'react-dropzone';
 
 export class CommentForm extends React.Component {
   constructor(props) {
@@ -29,7 +30,8 @@ export class CommentForm extends React.Component {
       editorState: CommentEditor.getEmptyEditorState(),
       toggleState: false,
       attachments: [],
-      files: []
+      files: [],
+      isEmpty: true
     }
   }
 
@@ -102,11 +104,22 @@ export class CommentForm extends React.Component {
     })
   }
 
+  handleFileSelectorClick = () => {
+    console.log(this, this.dropzone);
+    this.dropzone.open();
+  }
+
   render() {
+
+    let noText = !this.state.editorState.getCurrentContent().hasText(),
+        noAttachments = this.state.attachments.length === 0,
+        isEmpty = noText && noAttachments;
+
     let uploadControl = <ToucanUploader onAdded={this.handleAttachmentAdded}
                                         onRemove={this.handleAttachmentRemoved}
                                         files={this.state.files}
     />;
+    let closeIssueButtonText = isEmpty ? 'Resolve issue' : 'Comment and resolve issue'
 
     return (<form onSubmit={this.handleSubmit} ref={(e) => this._form =e }>
         <div className='panel panel-default'>
@@ -114,26 +127,43 @@ export class CommentForm extends React.Component {
             <Icon name='comment-o' />  Add comment
           </div>
           <div className='panel-body'>
-            <CommentEditor onStateChange={this.handleEditorStateChange}
-                         mention_suggestions={this.props.users}
-                         editorState={this.state.editorState} />
-          </div>
-          <div className='panel-footer clearfix'>
+            <Dropzone onDrop={this.handleAttachmentDropped}
+                      ref={(node) => this.dropzone = node}
+                      disableClick={true}
+                      accept='image/*'
+                      className='dropZoneWrapper0815'
+                      >
+              <CommentEditor onStateChange={this.handleEditorStateChange}
+                           mention_suggestions={this.props.users}
+                           editorState={this.state.editorState}
+              />
+
+              <p className="text-muted">
+                Add image files by dropping them on this field or
+                by <a href="#" onClick={this.handleFileSelectorClick}>selecting them</a>.
+              </p>
+
+            </Dropzone>
             {uploadControl}
+          </div>
+          <div className='panel-footer'>
             <div className='btn-toolbar' style={{marginTop: '0.3em'}}>
 
-              <UploadField onDrop={this.handleAttachmentDropped}>
-                  <span className="btn btn-default btn-sm">
-                    <Icon name="paperclip"/>&nbsp;Add Attachments
-                  </span>
-              </UploadField>
-
-              <button className='btn btn-sm btn-default pull-right' type='button' onClick={this.handleStatusChangeAndSubmit}>
-                  { this.props.status == 'open' ? 'Resolve issue' : 'Reopen issue' }
-              </button>
-              <button className='btn btn-sm btn-success pull-right' type='submit'>
+              <button className='btn btn-sm btn-success pull-right'
+                      type='submit'
+                      disabled={isEmpty}>
                 Comment
               </button>
+              <button className='btn btn-sm btn-default'
+                      type='button'
+                      onClick={this.handleStatusChangeAndSubmit}>
+                  {
+                    this.props.status == 'open' ?
+                      closeIssueButtonText :
+                      'Reopen issue'
+                  }
+              </button>
+
            </div>
         </div>
     </div>
@@ -170,12 +200,15 @@ export class Comment extends React.Component {
   render() {
     let comment = this.props.comment;
     let hasAttachments = (comment.attachments || []).length > 0;
+    console.log(comment, hasAttachments, comment.comment === '');
+    let isEmptyComment = comment.comment === '';
+    if ( isEmptyComment && !hasAttachments ) { return null; };
     return (<div className='panel panel-default'>
       <div className='panel-heading'>
         <UserLink username={comment.user.username} linkTo={comment.user.html_url}/> commented <Timeago date={comment.created} />
       </div>
       <div className="panel-body" style={{whiteSpace: 'pre-line'}}>
-        {comment.comment === '' ?
+        {isEmptyComment ?
           <em>No comment was added.</em> :
            <CommentView comment={comment.comment} /> }
       </div>
@@ -200,7 +233,7 @@ export class StatusChange extends React.Component {
     if (sc.status === 'open') {
       txt = <span>
         <span className='label label-danger'>re-opened</span>
-        <span>this issue.</span>
+        <span> this issue.</span>
       </span>;
 
     } else if (sc.status === 'closed') {

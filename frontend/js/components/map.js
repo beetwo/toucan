@@ -2,7 +2,6 @@ import React, { PropTypes} from 'react';
 import ReactDOM from 'react-dom'
 import isEmpty from 'lodash/isEmpty'
 import {dispatch} from 'redux'
-import Icon from 'react-fa'
 import  Leaflet  from 'leaflet';
 import { Map, MapControl, TileLayer, LayerGroup, GeoJson, Marker, Popup } from 'react-leaflet';
 import geojsonExtent from 'geojson-extent';
@@ -75,27 +74,6 @@ class AddNewMarker extends React.Component {
                    clickable={true}
                    title="Left-click to create issue"
                    onDragend={this.handleMarkerPosition} />;
-  }
-}
-
-export class CloseMapButton extends MapControl {
-  componentWillMount() {
-    const centerControl = L.control({position: 'topright'});  // see http://leafletjs.com/reference.html#control-positions for other positions
-    const jsx = (
-      <button className="btn btn-primary"
-              onClick={this.props.onClick}>
-          <Icon name="times-circle-o" />&nbsp;
-          Close Map
-      </button>
-    );
-
-    centerControl.onAdd = function (map) {
-      let div = L.DomUtil.create('div', '');
-      ReactDOM.render(jsx, div);
-      return div;
-    };
-
-    this.leafletElement = centerControl;
   }
 }
 
