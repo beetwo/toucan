@@ -181,7 +181,7 @@ FIXTURE_DIRS = [
 ]
 
 
-LOGIN_REDIRECT_URL = 'user_profile:personal_profile'
+LOGIN_REDIRECT_URL = 'home'
 
 CHANNEL_LAYERS = {
     "default": {
