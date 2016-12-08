@@ -10,6 +10,7 @@ import Status from './status'
 import Icon from 'react-fa'
 import getIconClassForIssueType from './icons/issueType'
 import Remarkable from 'remarkable'
+import {HiddenMedium} from './responsive'
 
 function MarkdownBody (props) {
   let md = new Remarkable();
@@ -98,10 +99,12 @@ class IssueDetailUI extends React.Component {
               <Link to='/' className="btn btn-default btn-sm">
                 <Icon name="arrow-left"/>&nbsp;Issue List
               </Link>
-              <Link to={`${gjs.id}/map`} className="btn btn-default btn-sm pull-right">
-                Map&nbsp;
-                <Icon name="map-o"/>
-              </Link>
+              <HiddenMedium>
+                <button onClick={this.props.openMap} className="btn btn-default btn-sm pull-right">
+                  Map&nbsp;
+                  <Icon name="map-o"/>
+                </button>
+              </HiddenMedium>
             </div>
 
             <IssueDetailsMain {...this.props} gjs={gjs} issue={issue} />

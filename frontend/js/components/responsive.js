@@ -4,16 +4,16 @@
 import React from 'react'
 import MediaQuery from 'react-responsive'
 
-const mediumDevice = 992;
+export const mediumDevice = 992;
 
 export function VisibleMedium(props) {
-    return <MediaQuery maxWidth={mediumDevice}>
+    return <MediaQuery minWidth={mediumDevice}>
         {props.children}
     </MediaQuery>;
 }
 
 export function HiddenMedium(props) {
-    return <MediaQuery minWidth={mediumDevice}>
+    return <MediaQuery maxWidth={mediumDevice}>
         {props.children}
     </MediaQuery>;
 }

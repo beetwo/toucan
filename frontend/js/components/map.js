@@ -1,15 +1,19 @@
 import React, { PropTypes} from 'react';
+import ReactDOM from 'react-dom'
 import isEmpty from 'lodash/isEmpty'
 import {dispatch} from 'redux'
+import Icon from 'react-fa'
 import  Leaflet  from 'leaflet';
-import { Map, TileLayer, LayerGroup, GeoJson, Marker, Popup } from 'react-leaflet';
+import { Map, MapControl, TileLayer, LayerGroup, GeoJson, Marker, Popup } from 'react-leaflet';
 import geojsonExtent from 'geojson-extent';
 import { setCoordinates } from '../actions'
 import getMarkerForIssue from './markers/markers';
 import LocationControl from './locationControl';
 import { defaultMapBounds } from '../globals';
 import urls from '../urls';
+
 import {history} from '../index'
+
 require('leaflet/dist/leaflet.css');
 
 class IssueMarker extends React.Component {
@@ -74,6 +78,27 @@ class AddNewMarker extends React.Component {
   }
 }
 
+export class CloseMapButton extends MapControl {
+  componentWillMount() {
+    const centerControl = L.control({position: 'topright'});  // see http://leafletjs.com/reference.html#control-positions for other positions
+    const jsx = (
+      <button className="btn btn-primary"
+              onClick={this.props.onClick}>
+          <Icon name="times-circle-o" />&nbsp;
+          Close Map
+      </button>
+    );
+
+    centerControl.onAdd = function (map) {
+      let div = L.DomUtil.create('div', '');
+      ReactDOM.render(jsx, div);
+      return div;
+    };
+
+    this.leafletElement = centerControl;
+  }
+}
+
 
 export class LeafletMap extends React.Component {
 
@@ -109,7 +134,7 @@ export class LeafletMap extends React.Component {
     }
 
     getMap() {
-        return this._map.getLeafletElement();
+        return this._map.leafletElement;
     }
 
     handlePopupClose(e) {}
@@ -197,6 +222,7 @@ export class LeafletMap extends React.Component {
                                                    position={coordinates}
                                                    handleLatLng={this.handleAddMarkerPositionChange} /> : null }
                 <LocationControl locate={this.handleLocate}/>
+                {this.props.children}
             </Map>
         );
     }
