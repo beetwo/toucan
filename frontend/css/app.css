@@ -54,17 +54,36 @@ main {
 .issues-container {
   display: flex;
   flex-direction: column;
-  padding: 1em;
+  /*padding: 1em;*/
 }
 
+.issue-list {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 
-.issueDetail {
+.issue-list-form {
+  flex: 0 0 auto;
+}
+
+.issue-list-body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 0.5em;
+}
+
+.issue-list-footer {
+    flex: 0 0 auto;
+}
+
+.issue-detail {
   flex: 1;
   /*display: flex;
   flex-direction: column;*/
 }
 
-.issueDetailMain {
+.issue-detail-main {
   /*flex:1;*/
   overflow-y: auto;
   padding-right: 1em;

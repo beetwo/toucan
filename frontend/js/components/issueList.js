@@ -82,6 +82,15 @@ IssueFilter.propTypes = {
   loading: PropTypes.bool.isRequired
 }
 
+class IssueListFooter extends React.Component {
+    render() {
+        return <div className="issue-list-footer">
+            <div className="btn btn-primary">
+                Show Map
+            </div>
+        </div>
+    }
+}
 
 class IssueListUI extends React.Component {
 
@@ -109,24 +118,26 @@ class IssueListUI extends React.Component {
               </tr>);
         });
         return (
-          <div>
+          <div className="issue-list">
             <div className="issue-list-form">
                 <IssueFilter {...this.props} filterOptions={this.props.filterOptions}/>
             </div>
-            <hr />
-            <table className="issues table table-hover table-striped">
-            <thead>
-                <tr>
-                    <th>Issue</th>
-                    <th>Status</th>
-                    <th>Type(s)</th>
-                    <th>Discussion</th>
-                </tr>
-            </thead>
-            <tbody>
-                {rows}
-            </tbody>
-        </table>
+            <div className="issue-list-body">
+                <table className="issues table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Issue</th>
+                        <th>Status</th>
+                        <th>Type(s)</th>
+                        <th>Discussion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {rows}
+                </tbody>
+                </table>
+            </div>
+            <IssueListFooter />
       </div>);
     }
 }

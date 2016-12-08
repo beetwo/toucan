@@ -25,7 +25,7 @@ function RawTextBody (props) {
   return <div style={{whiteSpace: 'pre-line'}}>{props.text}</div>;
 }
 
-class IssueDetailsMain extends React.Component {
+class IssueDetailMain extends React.Component {
 
   render() {
     let {gjs, issue, children} = this.props;
@@ -42,7 +42,7 @@ class IssueDetailsMain extends React.Component {
       default:
         body = <RawTextBody text={description} />;
     }
-    return <div className='issueDetailMain' ref='scrollbar'>
+    return <div className='issue-detail-main' ref='scrollbar'>
       <div className='row'>
         <div className='col-md-8'>
           <h3>
@@ -94,7 +94,7 @@ class IssueDetailUI extends React.Component {
     let issue = gjs.properties;
     console.log(issue, gjs);
 
-    return (<div className='issueDetail'>
+    return (<div className='issue-detail'>
             <div className="btn-toolbar">
               <Link to='/' className="btn btn-default btn-sm">
                 <Icon name="arrow-left"/>&nbsp;Issue List
@@ -107,7 +107,7 @@ class IssueDetailUI extends React.Component {
               </HiddenMedium>
             </div>
 
-            <IssueDetailsMain {...this.props} gjs={gjs} issue={issue} />
+            <IssueDetailMain {...this.props} gjs={gjs} issue={issue} />
 
             {
               this.props.canComment ?
