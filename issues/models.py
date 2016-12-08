@@ -24,6 +24,9 @@ ISSUE_STATUS_CHOICES = Choices(
 class IssueType(TimeStampedModel):
     name = models.CharField(max_length=50)
     slug = models.SlugField()
+    description = models.TextField(
+        blank=True,
+        verbose_name='a short description of the issue type')
     svg_icon = models.FileField(blank=True, upload_to='markers')
 
     def __str__(self):
