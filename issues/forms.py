@@ -32,7 +32,7 @@ class IssueForm(forms.ModelForm):
         ]
         widgets = {
             'point': forms.TextInput,
-            'issue_types': forms.CheckboxSelectMultiple
+            # 'issue_types': forms.CheckboxSelectMultiple
         }
         labels = {
             'title': 'Title',
