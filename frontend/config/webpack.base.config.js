@@ -37,7 +37,9 @@ module.exports = (opts) => {
             'react-markdown',
             'react-router',
             'react-fa',
-            'jquery'
+            'jquery',
+            'selectize',
+            'selectize/dist/css/selectize.bootstrap3.css'
         ],
         b2MapSelector: './js/location_selector',
         editor: './js/editor'

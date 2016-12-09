@@ -55,12 +55,10 @@ class NotificationSettingsForm(forms.ModelForm):
             'issue_types',
         ]
         widgets = {
-            'point': forms.HiddenInput,
-            'notification_type': forms.RadioSelect,
-            'organisations': forms.CheckboxSelectMultiple,
-            'issue_types': forms.CheckboxSelectMultiple
+            'point': forms.HiddenInput
         }
         help_texts = {
-            'organisations': _('Notifications can be filtered by Organisation (default: all)'),
-            'issue_types': _('Filter by issue type (default: all)')
+            'organisations': _('Notifications can be filtered by Organisation (default: all).'),
+            'issue_types': _('Filter by issue type (default: all).'),
+            'notification_type': _('Choose how you want to be notified.')
         }
