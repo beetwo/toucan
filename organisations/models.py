@@ -19,6 +19,14 @@ def validate_organisation_slug(name):
         )
 
 
+class ActiveOrganisationManager(models.Manager):
+
+    def get_queryset(self):
+        return super().get_queryset()\
+            .annotate(active_membership_count=models.Count('membership'))\
+            .filter(active_membership_count__gte=1)
+
+
 class Organisation(TimeStampedModel):
 
     name = models.CharField(max_length=200, verbose_name=_('name'))
@@ -34,6 +42,9 @@ class Organisation(TimeStampedModel):
     logo = models.ImageField(blank=True)
     description = models.TextField(blank=True)
     homepage = models.URLField(blank=True)
+
+    objects = models.Manager()
+    active = ActiveOrganisationManager()
 
     @property
     def active_memberships(self):
