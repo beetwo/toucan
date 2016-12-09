@@ -135,6 +135,9 @@ export class LeafletMap extends React.Component {
       this.setState({
         zoom: this.getMap().getZoom()
       })
+        if (this.props.beforeMarkerNavigation) {
+          this.props.beforeMarkerNavigation(issue);
+        }
       history.push(`/issue/${issue.id}`);
     }
 
@@ -222,15 +225,16 @@ export class LeafletMap extends React.Component {
 }
 
 LeafletMap.propTypes = {
-  geojson: PropTypes.object.isRequired,
-  visibleIssueIDs: PropTypes.array.isRequired,
-  coordinates: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.bool
-  ]),
-  setCoordinates: PropTypes.func,
-  selectIssue: PropTypes.func.isRequired,
-  selectedIssue: PropTypes.number
+    geojson: PropTypes.object.isRequired,
+    visibleIssueIDs: PropTypes.array.isRequired,
+    beforeMarkerNavigation: PropTypes.func,
+    coordinates: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.bool
+    ]),
+    setCoordinates: PropTypes.func,
+    selectIssue: PropTypes.func.isRequired,
+    selectedIssue: PropTypes.number
 }
 
 export default LeafletMap

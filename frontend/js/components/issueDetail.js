@@ -10,7 +10,7 @@ import Status from './status'
 import Icon from 'react-fa'
 import getIconClassForIssueType from './icons/issueType'
 import Remarkable from 'remarkable'
-import {HiddenMedium} from './responsive'
+import {HiddenMedium, VisibleMedium} from './responsive'
 
 function MarkdownBody (props) {
   let md = new Remarkable();
@@ -110,7 +110,22 @@ class IssueDetailUI extends React.Component {
     let issue = gjs.properties;
 
     return (<div className='issue-detail'>
+
       <div className="issue-detail-body">
+
+            <VisibleMedium>
+            <ol className="breadcrumb" style={{'background-color': 'transparent'}}>
+              <li>
+                <Link to='/'>
+                <Icon name="list"/>&nbsp;Issue List
+                </Link>
+              </li>
+              <li className="active">
+                  #{gjs.id} {issue.title}
+              </li>
+            </ol>
+            </VisibleMedium>
+
             <IssueDetailMain {...this.props} gjs={gjs} issue={issue} />
 
             {
@@ -127,7 +142,9 @@ class IssueDetailUI extends React.Component {
 
              }
         </div>
-        <IssueDetailFooter openMap={this.props.openMap} />
+        <HiddenMedium>
+          <IssueDetailFooter openMap={this.props.openMap} />
+        </HiddenMedium>
     </div>);
   }
 }

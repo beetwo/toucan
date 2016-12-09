@@ -1,5 +1,5 @@
 import React from 'react'
-import Map , {CloseMapButton} from './map'
+import Map from './map'
 import NewIssue from './newIssue'
 import MediaQuery from 'react-responsive'
 import Icon from 'react-fa'
@@ -16,7 +16,9 @@ function WrapMap(props) {
                    setCoordinates={props.setCoordinates}
                    coordinates={props.coordinates}
                    selectIssue={props.selectIssue}
-                   selectedIssue={props.selectedIssue} />;
+                   selectedIssue={props.selectedIssue}
+                   beforeMarkerNavigation={props.onMapNavigate}
+                />;
     return  <div className="map-container">
         {map}
         {closable ? <footer className="bg-primary">
@@ -41,6 +43,14 @@ class UI extends React.Component {
         })
     }
 
+    onMapNavigate = (issue) => {
+        console.log('Map navigation called...', issue);
+        // this is called before the user clicks a marker on the map
+        this.setState({
+            displayMap: false
+        })
+    }
+
     render() {
 
         return (<MediaQuery maxWidth={992}>
@@ -62,7 +72,11 @@ class UI extends React.Component {
                     return (<div className="app-container">
                         {
                             displayMap ?
-                                <WrapMap {...this.props } closable={!displayIssues} onClose={this.toggleMapDisplay}/>
+                                <WrapMap {...this.props }
+                                         closable={!displayIssues}
+                                         onClose={this.toggleMapDisplay}
+                                         onMapNavigate={this.onMapNavigate}
+                                />
                                 : null
                         }
                         {
