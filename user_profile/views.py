@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from django.contrib.auth import get_user_model
 from braces.views import FormValidMessageMixin
-from organisations.models import Membership
+from organisations.models import Membership, Organisation
 
 from .models import Profile, NotificationSettings
 from .forms import NotificationSettingsForm
@@ -94,6 +94,11 @@ class NotificationCreate(LoginRequiredMixin, FormValidMessageMixin, CreateView):
     model = NotificationSettings
     form_valid_message = _('Notification settings updated.')
 
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class=form_class)
+        form.fields['organisations'].queryset = Organisation.active.all()
+        return form
+
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
@@ -120,6 +125,11 @@ class NotificationEditView(BaseNotificationView, FormValidMessageMixin, UpdateVi
     form_class = NotificationSettingsForm
     template_name = 'user_profile/notification/edit.html'
     form_valid_message = _('Notification rule updated.')
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class=form_class)
+        form.fields['organisations'].queryset = Organisation.active.all()
+        return form
 
 
 class NotificationDeleteView(BaseNotificationView, FormValidMessageMixin, DeleteView):

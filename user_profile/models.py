@@ -48,7 +48,10 @@ class NotificationSettings(TimeStampedModel):
 
     issue_types = models.ManyToManyField(IssueType, blank=True, verbose_name=_('issue types'))
 
-    organisations = models.ManyToManyField(Organisation, blank=True)
+    organisations = models.ManyToManyField(
+        Organisation,
+        blank=True
+    )
 
     point = gis_models.PointField(blank=True)
     point_radius = models.PositiveSmallIntegerField(
