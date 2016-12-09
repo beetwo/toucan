@@ -16,7 +16,7 @@ except AttributeError:
 class SMSNotification(BaseNotification):
 
     def get_message(self):
-        txt = '%s issue #%d was created:' % (self.issue.issue_type.name if self.issue.issue_type else '', self.issue.pk)
+        txt = 'An issue was created on Toucan: '
         subject = self.issue.title
         link = self.issue.get_absolute_url()
 
