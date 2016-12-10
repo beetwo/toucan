@@ -119,7 +119,9 @@ export class CommentForm extends React.Component {
                                         onRemove={this.handleAttachmentRemoved}
                                         files={this.state.files}
     />;
+
     let closeIssueButtonText = isEmpty ? 'Resolve issue' : 'Comment and resolve issue'
+    let reopenIssueButtonText = isEmpty ? 'Reopen issue' : 'Comment and reopen issue'
 
     return (<form onSubmit={this.handleSubmit} ref={(e) => this._form =e }>
         <div className='panel panel-default'>
@@ -159,8 +161,7 @@ export class CommentForm extends React.Component {
                       onClick={this.handleStatusChangeAndSubmit}>
                   {
                     this.props.status == 'open' ?
-                      closeIssueButtonText :
-                      'Reopen issue'
+                      closeIssueButtonText : reopenIssueButtonText
                   }
               </button>
 
