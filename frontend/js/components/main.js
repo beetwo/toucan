@@ -4,6 +4,7 @@ import NewIssue from './newIssue'
 import MediaQuery from 'react-responsive'
 import Icon from 'react-fa'
 import {mediumSize} from './responsive'
+import urls from '../urls'
 
 require('../../css/app.css');
 
@@ -19,13 +20,34 @@ function WrapMap(props) {
                    selectedIssue={props.selectedIssue}
                    beforeMarkerNavigation={props.onMapNavigate}
                 />;
+
     return  <div className="map-container">
         {map}
-        {closable ? <footer className="bg-primary">
-            <div className="btn btn-primary btn-block text-center" onClick={onClose}>
-                <Icon name="times" />&nbsp;
-                Close Map
-            </div>
+        {closable ?
+            <footer className="toucan-controls bg-primary">
+                {
+                    !props.coordinates ?
+                        <div className="btn btn-primary text-center" onClick={onClose}>
+                            <Icon name="times" />&nbsp;
+                            Close Map
+                        </div> :
+                        <div className="btn btn-primary text-center" onClick={props.clearCoordinates}>
+                            <Icon name="times" />&nbsp;
+                            Clear Selection
+                        </div>
+
+                }
+
+
+                {
+                    props.coordinates ?
+                        <a href={urls.createIssue(props.coordinates.lat, props.coordinates.lng)}
+                           className="btn btn-primary text-center">
+                            <Icon name="plus"/>&nbsp;
+                            Add Issue
+                        </a>
+                    : null
+                }
         </footer> : null}
     </div>;
 }

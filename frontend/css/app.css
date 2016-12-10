@@ -53,6 +53,11 @@ main {
 
 .map-container footer {
   flex: 0 0 auto;
+  display: flex;
+}
+
+.map-container footer > * {
+  flex: 1;
 }
 
 /*this container wraps the right hand side of desktop layout*/
