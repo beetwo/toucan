@@ -27,7 +27,7 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "babel-preset-stage-2": "^6.5.0",
-    "bootstrap-loader": "^2.0.0-beta.17",
+    "bootstrap-loader": "2.0.0-beta.17",
     "bootstrap-sass": "^3.3.6",
     "classnames": "^2.2.4",
     "commonmark": "^0.24.0",
@@ -84,7 +84,6 @@
     "webpack": "^2.1.0-beta.28",
     "webpack-bundle-tracker": "0.0.93",
     "webpack-cleanup-plugin": "^0.2.0",
-    "webpack-dev-server": "^2.0.0-beta",
     "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
