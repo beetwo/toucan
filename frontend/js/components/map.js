@@ -89,8 +89,9 @@ export class LeafletMap extends React.Component {
         this._panToUserLocation = false;
 
         this.state = {
-          context: false,
-          center: null,
+            context: false,
+            center: null,
+            zoom: 10
         }
 
         // bind event handlers
@@ -100,6 +101,14 @@ export class LeafletMap extends React.Component {
         this.handleAddMarkerPositionChange = this.handleAddMarkerPositionChange.bind(this);
         this.handleLocate = this.handleLocate.bind(this);
         this.handleLocationFound = this.handleLocationFound.bind(this);
+    }
+
+    componentDidMount() {
+        if (this.props.selectedIssue) {
+            this.setState({
+                zoom: 10
+            })
+        }
     }
 
     // these functions deal with setting Coordinates
@@ -182,9 +191,24 @@ export class LeafletMap extends React.Component {
 
         let bounds = this.props.bounds || this._computeBounds(geojson);
 
+        // figure out what to display
+        // all values relevant to the map
+        // are in this object
+        let mapSettings = {};
+        if (center) {
+            mapSettings['center'] = center;
+            mapSettings['zoom'] = this.state.zoom
+
+        } else {
+            mapSettings['bounds'] = bounds;
+        }
+        console.log(
+            'Rendering map',
+            mapSettings,
+            this.props.selectedIssue
+        )
         return (
-            <Map center={center}
-                 bounds={bounds}
+            <Map {...mapSettings}
                  onClick={this.handleClick}
                  onContextmenu={this.handleRightClick}
                  onPopupclose={this.handlePopupClose}
@@ -192,7 +216,6 @@ export class LeafletMap extends React.Component {
                  onLocationfound={this.handleLocationFound}
                  animate={true}
                  ref={(m) => this._map = m}
-                 zoom={this.state.zoom}
                  >
                 <TileLayer
                     url='//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'

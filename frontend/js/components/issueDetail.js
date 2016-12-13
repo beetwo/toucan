@@ -114,7 +114,7 @@ class IssueDetailUI extends React.Component {
       <div className="issue-detail-body">
 
             <VisibleMedium>
-            <ol className="breadcrumb" style={{'background-color': 'transparent'}}>
+            <ol className="breadcrumb" style={{'backgroundColor': 'transparent'}}>
               <li>
                 <Link to='/'>
                 <Icon name="list"/>&nbsp;Issue List

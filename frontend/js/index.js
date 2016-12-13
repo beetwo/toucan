@@ -9,8 +9,7 @@ import App from './containers/app'
 import IssueDetail from './containers/issueDetail'
 import IssueList from './containers/issueList'
 import UserDetail from './containers/userDetail'
-import {requestIssues, fetchIssues} from './actions'
-
+import {requestIssues, fetchIssues, resetSelectedIssue} from './actions'
 
 import { Router, Route, IndexRoute, useRouterHistory } from 'react-router'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
@@ -45,6 +44,7 @@ let bHistory = useRouterHistory(createHistory)({
 })
 export const history = syncHistoryWithStore(bHistory, store);
 
+
 render(
   <Provider store={store}>
     <Router history={history}>
@@ -57,3 +57,12 @@ render(
   </Provider>,
   document.getElementsByTagName('main')[0]
 );
+
+
+// remove any alerts that were set by the backend after a timeout
+if (window && document) {
+  window.setTimeout(() => {
+      let alerts = document.querySelectorAll('.alert.alert-dismissable')
+      alerts.forEach((node) => {console.log(node); node.remove()})
+  }, 7000)
+}
