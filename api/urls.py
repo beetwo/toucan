@@ -18,7 +18,7 @@ urlpatterns = [
     url(r'^user/',
         include([
             url(r'^$', UserSearch.as_view(), name='user_search'),
-            url(r'^(?P<username>[\w@.]+)/$', UserDetailView.as_view(), name='user_detail'),
+            url(r'^(?P<username>[\w@.\-]+)/$', UserDetailView.as_view(), name='user_detail'),
         ])
     ),
     url(r'^mentions/$', MentionView.as_view(), name='mention_search'),
