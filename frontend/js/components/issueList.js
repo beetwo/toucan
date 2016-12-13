@@ -86,7 +86,7 @@ class IssueListFooter extends React.Component {
     render() {
         return <footer className="issue-list-footer">
             <div className="btn btn-primary btn-block" onClick={this.props.openMap}>
-                <Icon name="map"/>&nbsp;Show Map
+                <Icon name="map-o"/>&nbsp;Show Map
             </div>
         </footer>
     }

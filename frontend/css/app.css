@@ -147,10 +147,19 @@ main {
   flex: 1;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 922px) {
   .app-container {
     flex-direction: column;
   }
+
+  h3:first-child {
+    margin-top: 0px;
+  }
+
+  div.page-header {
+    margin-top: 0px;
+  }
+
 }
 
 @media (min-width: 922px) {
