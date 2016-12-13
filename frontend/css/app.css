@@ -31,6 +31,7 @@ main {
 /* this is the react root */
 .app-container {
   overflow:hidden;
+  display: -webkit-flex;
   display: flex;
   flex-direction: row;
   flex: 1;

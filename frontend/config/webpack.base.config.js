@@ -22,6 +22,18 @@ module.exports = (opts) => {
     })
   ];
 
+  let cssLoaders = [
+      'style-loader',
+      {
+        loader: 'css-loader',
+        options: {
+            autoprefixer: false,
+            importLoaders: 1
+        },
+      },
+      'postcss-loader'
+  ];
+
   return {
     context: PROJECT_ROOT,
     entry: {
@@ -52,8 +64,17 @@ module.exports = (opts) => {
     resolve: {extensions: ['.js']},
     module: {
         loaders: [
-            {test: /\.css$/, loaders: ['style-loader', 'css-loader?-autoprefixer', 'postcss-loader']},
-            {test: /\.scss$/, loaders: ['style-loader', 'css-loader?-autoprefixer', 'postcss-loader', 'sass-loader']},
+            {
+                test: /\.css$/,
+                use: cssLoaders
+            },
+            {
+                test: /\.scss$/,
+                use: [
+                    ...cssLoaders,
+                    'sass-loader'
+                ]
+            },
             {
                 test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                 loader: "url-loader?limit=10000"

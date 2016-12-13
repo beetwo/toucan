@@ -86,10 +86,10 @@ class IssueDetailFooter extends React.Component {
     let {openMap} = this.props;
     return <footer className="bg-primary">
             <Link to='/' className="btn btn-primary">
-              <Icon name="list"/>&nbsp;Issue List
+              <Icon name="chevron-left"/>&nbsp;Issue List
             </Link>
           <button onClick={openMap} className="btn btn-primary pull-right">
-                Location&nbsp;
+                Show on Map&nbsp;
                 <Icon name="map-o"/>
           </button>
     </footer>;
