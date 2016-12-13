@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 {% load i18n bootstrap3 %}
 {% load render_bundle from webpack_loader %}
+{% load static from staticfiles %}
 {#{% load raven %}#}
 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="{% static 'manifest.json' %}">
     {% include './favicons.html' %}
     <title>{% block head_title %}{% trans 'Toucan' %}{% endblock %}</title>
     {% include './raven.html' %}
