@@ -1,6 +1,6 @@
 {% extends 'default/auth.html' %}
 {% load i18n %}
-
+{% load static from staticfiles %}
 {% block auth-header %}{% endblock %}
 
 {% block auth-content %}
@@ -35,6 +35,9 @@ Toucan is currently in active development by <a href="http://www.beetwo.at">BeeT
 {% endif %}
 </p>
 
+<p class="text-center" style="padding-top: 2em; text-decoration: underline">
+    <a href="{% static 'factsheet.pdf' %}">Download Toucan Factsheet</a>
+</p>
 
 {% endblock auth-content %}
 {% block before-body-close %}
