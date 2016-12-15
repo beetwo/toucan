@@ -59,10 +59,15 @@ render(
 );
 
 
+// safari does not implement forEach on Nodelists
+// as returned by querySelectorAll
+import forEach from 'lodash/forEach'
+
 // remove any alerts that were set by the backend after a timeout
 if (window && document) {
   window.setTimeout(() => {
-      let alerts = document.querySelectorAll('.alert.alert-dismissable')
-      alerts.forEach((node) => {console.log(node); node.remove()})
+      let alerts = document.querySelectorAll('.alert.alert-dismissable');
+      console.log(alerts);
+      forEach(alerts, (node) => {console.log(node); node.remove()})
   }, 7000)
 }

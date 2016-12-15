@@ -84,7 +84,7 @@ IssueFilter.propTypes = {
 
 class IssueListFooter extends React.Component {
     render() {
-        return <footer className="issue-list-footer">
+        return <footer className="issue-list-footer bg-primary">
             <div className="btn btn-primary btn-block" onClick={this.props.openMap}>
                 <Icon name="map-o"/>&nbsp;Show Map
             </div>
