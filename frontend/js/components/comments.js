@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react'
-import Timeago from 'react-timeago'
 import Icon from 'react-fa'
 import CommentEditor from '../containers/commentEditor'
 import DraftEditor, { convertToRaw, convertFromRaw, EditorState, ContentState } from 'draft-js'
@@ -11,6 +10,7 @@ import CommentView from './commentView'
 import UserLink from './userLink'
 import {ToucanUploader, UploadField} from '../containers/fileUploader';
 import Gallery from './gallery'
+import DateDisplay from './date'
 
 export class CommentForm extends React.Component {
   constructor(props) {
@@ -155,13 +155,6 @@ export class Attachments extends React.Component {
       paddingBottom: '0.5em'
     }
     return <Gallery images={attachments} />;
-    // <ul className="list-inline">
-    //   {attachments.map((attachment, index) => {
-    //     return <li key={index}>
-    //       <img style={imgStyles} src={attachment.thumbnail_url} alt='thumbnail'/>
-    //     </li>
-    //   })}
-    // </ul>
   }
 }
 
@@ -172,7 +165,10 @@ export class Comment extends React.Component {
     let hasAttachments = (comment.attachments || []).length > 0;
     return (<div className='panel panel-default'>
       <div className='panel-heading'>
-        <UserLink username={comment.user.username} linkTo={comment.user.html_url}/> commented <Timeago date={comment.created} />
+        <UserLink username={comment.user.username} linkTo={comment.user.html_url}/>
+        <span className="pull-right">
+            <DateDisplay date={comment.created} />
+          </span>
       </div>
       <div className="panel-body" style={{whiteSpace: 'pre-line'}}>
         {comment.comment === '' ?
