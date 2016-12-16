@@ -4,7 +4,7 @@ import Loading from './loading'
 import isEmpty from 'lodash/isEmpty'
 import {CommentList, CommentForm} from './comments'
 import { Link } from 'react-router'
-import Timeago from 'react-timeago'
+import DateDisplay from './date'
 import UserLink from './userLink'
 import Status from './status'
 import Icon from 'react-fa'
@@ -70,7 +70,10 @@ class IssueDetailMain extends React.Component {
       <hr />
       <div className="panel panel-primary">
           <div className="panel-heading">
-            created by <UserLink username={ issue.creator.username } linkTo={issue.creator.html_url}/> <Timeago date={issue.created} />
+            created by <UserLink username={ issue.creator.username } linkTo={issue.creator.html_url}/>
+            <span className="pull-right">
+              <DateDisplay date={issue.created} />
+            </span>
           </div>
           <div className='panel-body'>
             {body}
