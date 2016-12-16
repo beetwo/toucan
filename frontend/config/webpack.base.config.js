@@ -72,9 +72,13 @@ module.exports = (opts) => {
             },
             // jquery + Bootstrap 3
             // if jquery is required, expose globally
-            { test: require.resolve("jquery"), loader: "expose-loader?$!expose-loader?jQuery" },
             {
-                test: /bootstrap-sass\/assets\/javascripts\//, loader: 'imports-loader?jQuery=jquery'
+                test: require.resolve("jquery"),
+                loader: "expose-loader?$!expose-loader?jQuery"
+            },
+            {
+                test: /bootstrap-sass\/assets\/javascripts\//,
+                loader: 'imports-loader?jQuery=jquery'
             },
             // everything else
             {
