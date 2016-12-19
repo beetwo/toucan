@@ -235,7 +235,6 @@ class IssueSerializer(GeoFeatureModelSerializer):
     issue_types = IssueTypeSerializer(many=True, read_only=True)
 
     comment_count = serializers.IntegerField(read_only=True)
-    attachment_count = serializers.IntegerField(read_only=True)
 
     organisation = OrganisationSerializer()
 
@@ -254,7 +253,6 @@ class IssueSerializer(GeoFeatureModelSerializer):
             'url',
             'issue_types',
             'comment_count',
-            'attachment_count',
             'organisation',
         ]
 
