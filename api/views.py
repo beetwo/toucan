@@ -49,11 +49,13 @@ class UserInformationApi(APIView):
 class BaseIssueMixin(object):
 
     def get_queryset(self):
-        return Issue.objects\
+        print('getting queryset ...')
+
+        qs = Issue.objects\
             .annotate(
-                comment_count=Count('comments'),
-                attachment_count=Count('comments__mediafile')
+                comment_count=Count('comments')
             )
+        return qs
 
 
 class LocationApi(BaseIssueMixin, ListAPIView):
