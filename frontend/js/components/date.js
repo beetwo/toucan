@@ -10,12 +10,12 @@ export default function DateDisplay({date}) {
         date = new Date(Date.parse(date));
     }
     if (typeof date !== 'object') {
-        return <span>{'invalid date'}</span>;
+        return <span></span>;
     }
 
     return <span>
         <span>{date.toLocaleDateString(locale)}</span>
         &nbsp;
-        <span>{date.toLocaleTimeString(locale)}</span>
+        <span>{date.toLocaleTimeString(locale, {hour:'2-digit', minute:'2-digit'})}</span>
     </span>;
 }
