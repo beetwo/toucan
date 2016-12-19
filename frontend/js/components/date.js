@@ -14,8 +14,8 @@ export default function DateDisplay({date}) {
     }
 
     return <span>
-        <span>{date.toLocaleDateString(locale)}</span>
+        <span>{date.toLocaleDateString([])}</span>
         &nbsp;
-        <span>{date.toLocaleTimeString(locale, {hour:'2-digit', minute:'2-digit'})}</span>
+        <span>{date.toLocaleTimeString([], {hour12: false, hour:'2-digit', minute:'2-digit'})}</span>
     </span>;
 }
