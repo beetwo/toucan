@@ -17,8 +17,7 @@ module.exports = (opts) => {
         'fetch': 'imports-loader?this=>global!exports-loader?global.fetch!whatwg-fetch'
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      filename: 'vendor.bundle.js'
+      name: 'vendor'
     })
   ];
 
