@@ -4,7 +4,7 @@ from .views import OrganisationList, OrganisationDetail, OrganisationEdit, Organ
 
 app_name = 'organisations'
 
-urlpatterns =[
+urlpatterns = [
     url(r'^$', OrganisationList.as_view(), name='organisation_list'),
     # url(r'^create/$', OrganisationCreate.as_view(), name='organisation_create'),
     url(r'^(?P<org_id>\d+)/', include([

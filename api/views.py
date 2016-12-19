@@ -49,8 +49,6 @@ class UserInformationApi(APIView):
 class BaseIssueMixin(object):
 
     def get_queryset(self):
-        print('getting queryset ...')
-
         qs = Issue.objects\
             .annotate(
                 comment_count=Count('comments')
