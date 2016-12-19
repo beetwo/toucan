@@ -145,6 +145,34 @@
 
     </div>
 
+    {% url 'organisations:organisation_edit' org_id=user.membership.org_id as org_edit_url %}
+    <div class="media">
+        <div class="media-body">
+            <h3>
+                Create an Organisation Profile
+            </h3>
+            <blockquote>
+                <p>
+                    e.g. Upload your logo and link to your homepage, provide information on what work you do and where.
+                </p>
+            </blockquote>
+            <p>
+                On Toucan you can create a short profile with basic information on your organisation so other users
+                can be informed. Equally, you can see what other organisations work on.
+            </p>
+            {% if org_edit_url %}
+            <p>
+                <a href="{{ org_edit_url }}" class="btn btn-sm btn-primary">
+                    Create Organisation Profile
+                </a>
+            </p>
+            {% endif %}
+        </div>
+
+        <div class="media-right">
+            <i class="fa fa-users fa-5x"></i>
+        </div>
+    </div>
 
 
 
