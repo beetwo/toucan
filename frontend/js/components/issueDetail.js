@@ -70,10 +70,10 @@ class IssueDetailMain extends React.Component {
       <hr />
       <div className="panel panel-primary">
           <div className="panel-heading">
-            created by <UserLink username={ issue.creator.username } linkTo={issue.creator.html_url}/>
             <span className="pull-right">
               <DateDisplay date={issue.created} />
             </span>
+            <UserLink username={ issue.creator.username } linkTo={issue.creator.html_url}/>
           </div>
           <div className='panel-body'>
             {body}

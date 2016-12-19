@@ -199,10 +199,10 @@ export class Comment extends React.Component {
     if ( isEmptyComment && !hasAttachments ) { return null; };
     return (<div className='panel panel-default'>
       <div className='panel-heading'>
-        <UserLink username={comment.user.username} linkTo={comment.user.html_url}/>
         <span className="pull-right">
             <DateDisplay date={comment.created} />
-          </span>
+        </span>
+        <UserLink username={comment.user.username} linkTo={comment.user.html_url}/>
       </div>
       <div className="panel-body" style={{whiteSpace: 'pre-line'}}>
         {isEmptyComment ?
