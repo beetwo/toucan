@@ -67,7 +67,7 @@ class Organisation(TimeStampedModel):
             membership.role = role
             membership.active = active
             membership.save()
-            
+
         return membership
 
     def add_owner(self, user, **kwargs):
@@ -84,7 +84,7 @@ class Organisation(TimeStampedModel):
         return can_invite_to_org(user, self)
 
     def can_edit_details(self, user):
-        return self.membership_set.filter(user=user, role__in=[10]).exists()
+        return self.membership_set.filter(user=user, role__gte=5).exists()
 
     class Meta:
         verbose_name = _('Organisation')
@@ -102,7 +102,7 @@ class Membership(TimeStampedModel):
     ROLES_CHOICES = [
         (0, _('member')),
         (5, _('admin')),
-        (10, _('owner'))
+        # (10, _('owner'))
     ]
 
     org = models.ForeignKey(Organisation)
