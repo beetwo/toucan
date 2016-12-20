@@ -124,6 +124,7 @@ class IssueListUI extends React.Component {
                 <IssueFilter {...this.props} filterOptions={this.props.filterOptions}/>
             </div>
 
+
             {/* the actual table of issues */}
             <div className="issue-list-body">
                 <table className="issues table table-hover table-striped">
@@ -131,7 +132,7 @@ class IssueListUI extends React.Component {
                     <tr>
                         <th>Issue</th>
                         <th>Status</th>
-                        <th>Type(s)</th>
+                        <th>Category</th>
                         <th>Discussion</th>
                     </tr>
                 </thead>
@@ -144,8 +145,8 @@ class IssueListUI extends React.Component {
             {/*issue list control*/}
             {
                 this.props.mapOpenable ?
-                <IssueListFooter openMap={this.props.openMap}/>
-                : null
+                    <IssueListFooter openMap={this.props.openMap}/>
+                    : null
             }
       </div>);
     }
