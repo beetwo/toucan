@@ -56,8 +56,7 @@ module.exports = (opts) => {
         editor: './js/editor'
     },
     output: {
-        path: path.resolve(PROJECT_ROOT, './build/'),
-        filename: "[name]-[hash].js"
+        path: path.resolve(PROJECT_ROOT, './build/')
     },
     plugins,
     resolve: {extensions: ['.js']},
