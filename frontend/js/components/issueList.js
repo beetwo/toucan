@@ -119,7 +119,7 @@ class IssueListUI extends React.Component {
                 <tr>
                     <th>Issue</th>
                     <th>Status</th>
-                    <th>Type(s)</th>
+                    <th>Category</th>
                     <th>Discussion</th>
                 </tr>
             </thead>
