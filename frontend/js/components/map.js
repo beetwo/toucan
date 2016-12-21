@@ -93,7 +93,7 @@ export class LeafletMap extends React.Component {
         if (props.selectedIssue && props.geojson) {
             let issue = this._getIssueById(props.selectedIssue, props.geojson)
             this.state = {
-                zoom: 10,
+                zoom: 13,
                 center: this._getIssueLatLng(issue)
             }
         } else if (props.bounds) {
