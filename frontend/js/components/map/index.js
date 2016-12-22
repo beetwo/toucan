@@ -5,13 +5,13 @@ import {dispatch} from 'redux'
 import  Leaflet  from 'leaflet';
 import { Map, MapControl, TileLayer, LayerGroup, GeoJson, Marker, Popup } from 'react-leaflet';
 import geojsonExtent from 'geojson-extent';
-import { setCoordinates } from '../actions'
-import getMarkerForIssue from './markers/markers';
+import getMarkerForIssue from './markers';
 import LocationControl from './locationControl';
-import { defaultMapBounds } from '../globals';
-import urls from '../urls';
 
-import {history} from '../index'
+import { defaultMapBounds } from '../../globals';
+import urls from '../../urls';
+import {history} from '../../index'
+import { setCoordinates } from '../../actions'
 
 require('leaflet/dist/leaflet.css');
 
@@ -253,11 +253,11 @@ export class LeafletMap extends React.Component {
             center: center || this.state.center,
             zoom: this.state.zoom
         };
-        console.log(
-            'Rendering map',
-            mapSettings,
-            this.props.selectedIssue
-        )
+        // console.log(
+        //     'Rendering map',
+        //     mapSettings,
+        //     this.props.selectedIssue
+        // )
         return (
             <Map {...mapSettings}
                  onClick={this.handleClick}

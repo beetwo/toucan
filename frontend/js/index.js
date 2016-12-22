@@ -67,7 +67,6 @@ import forEach from 'lodash/forEach'
 if (window && document) {
   window.setTimeout(() => {
       let alerts = document.querySelectorAll('.alert.alert-dismissable');
-      console.log(alerts);
       forEach(alerts, (node) => {console.log(node); node.remove()})
   }, 7000)
 }

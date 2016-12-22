@@ -1,12 +1,15 @@
 import React from 'react'
-import Map from './map'
+import Map from './map/index'
 import NewIssue from './newIssue'
 import MediaQuery from 'react-responsive'
 import Icon from 'react-fa'
+
 import {mediumSize} from './responsive'
 import urls from '../urls'
+import {DetailFooter, CustomLocationSelectedFooter} from './map/footers'
 
 require('../../css/app.css');
+
 
 function WrapMap(props) {
     let { closable, onClose } = props;
@@ -20,35 +23,22 @@ function WrapMap(props) {
                    selectedIssue={props.selectedIssue}
                    beforeMarkerNavigation={props.onMapNavigate}
                 />;
+    let selectedIssue = null;
+    if (props.selectedIssue) {
+        selectedIssue = props.geojson.features.filter((i) => i.id === props.selectedIssue)[0];
+    }
+    let footer =  closable ? (
+        props.coordinates ?
+            <CustomLocationSelectedFooter coordinates={props.coordinates}
+                                                   clear={props.clearCoordinates}/>
+            :
+            <DetailFooter close={onClose} linkTo={selectedIssue ? selectedIssue.geometry.coordinates : false}/>
+
+    ) : null;
 
     return  <div className="map-container">
         {map}
-        {closable ?
-            <footer className="toucan-controls bg-primary">
-                {
-                    !props.coordinates ?
-                        <div className="btn btn-primary text-center" onClick={onClose}>
-                            <Icon name="times" />&nbsp;
-                            Close Map
-                        </div> :
-                        <div className="btn btn-primary text-center" onClick={props.clearCoordinates}>
-                            <Icon name="times" />&nbsp;
-                            Clear Selection
-                        </div>
-
-                }
-
-
-                {
-                    props.coordinates ?
-                        <a href={urls.createIssue(props.coordinates.lat, props.coordinates.lng)}
-                           className="btn btn-primary text-center">
-                            <Icon name="plus"/>&nbsp;
-                            Add Issue
-                        </a>
-                    : null
-                }
-        </footer> : null}
+        {footer}
     </div>;
 }
 
