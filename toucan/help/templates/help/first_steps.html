@@ -16,6 +16,11 @@
         h3 ~ blockquote {
             margin-top: 1em;
         }
+        @media (max-width:992px){
+            .media-left, .media-right {
+                display: none;
+            }
+        }
     </style>
 {% endblock %}
 
@@ -115,7 +120,7 @@
             {% endif %}
         </div>
 
-        <div class="media-right">
+        <div class="media-right hidden-sm hidden-xs">
             <i class="fa fa-users fa-5x"></i>
         </div>
     </div>
