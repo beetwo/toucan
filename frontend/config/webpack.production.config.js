@@ -19,8 +19,9 @@ module.exports = (opts) => {
     output: {
       ...config.output,
       path: output_path,
+      filename: "[name]-[chunkhash].js",
       // set CDN_PATH to your cdn static file directory
-      publicPath: CDN_PATH || '/static/wp/',
+      publicPath: CDN_PATH || '/static/wp/'
     },
     devtool: 'source-map',
     plugins: [

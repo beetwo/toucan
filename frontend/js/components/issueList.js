@@ -82,6 +82,15 @@ IssueFilter.propTypes = {
   loading: PropTypes.bool.isRequired
 }
 
+class IssueListFooter extends React.Component {
+    render() {
+        return <footer className="issue-list-footer bg-primary">
+            <div className="btn btn-primary btn-block" onClick={this.props.openMap}>
+                <Icon name="map-o"/>&nbsp;Show Map
+            </div>
+        </footer>
+    }
+}
 
 class IssueListUI extends React.Component {
 
@@ -109,24 +118,36 @@ class IssueListUI extends React.Component {
               </tr>);
         });
         return (
-          <div>
+          <div className="issue-list">
+            {/*the filtering interface*/}
             <div className="issue-list-form">
                 <IssueFilter {...this.props} filterOptions={this.props.filterOptions}/>
             </div>
-            <hr />
-            <table className="issues table table-hover table-striped">
-            <thead>
-                <tr>
-                    <th>Issue</th>
-                    <th>Status</th>
-                    <th>Category</th>
-                    <th>Discussion</th>
-                </tr>
-            </thead>
-            <tbody>
-                {rows}
-            </tbody>
-        </table>
+
+
+            {/* the actual table of issues */}
+            <div className="issue-list-body">
+                <table className="issues table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Issue</th>
+                        <th>Status</th>
+                        <th>Category</th>
+                        <th>Discussion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {rows}
+                </tbody>
+                </table>
+            </div>
+
+            {/*issue list control*/}
+            {
+                this.props.mapOpenable ?
+                    <IssueListFooter openMap={this.props.openMap}/>
+                    : null
+            }
       </div>);
     }
 }

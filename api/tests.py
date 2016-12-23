@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.core.urlresolvers import reverse
 
 from issues.models import Issue, IssueType
 from django.contrib.auth.models import User
@@ -32,3 +33,13 @@ class ReadApiTestCase(TestCase):
 
     def testIssueList(self):
         self.assertTrue(True)
+
+class UserNameReverseUrlTest(TestCase):
+
+    def resolve(self, username):
+        return reverse('issue_tracker_api:user_detail', kwargs={'username': username})
+
+    def testUsernames(self):
+        self.resolve('tester')
+        self.resolve('tester@example.com')
+        self.resolve('tester-mc-test')

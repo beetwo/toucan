@@ -10,6 +10,7 @@ import Status from './status'
 import Icon from 'react-fa'
 import getIconClassForIssueType from './icons/issueType'
 import Remarkable from 'remarkable'
+import {HiddenMedium, VisibleMedium} from './responsive'
 
 function MarkdownBody (props) {
   let md = new Remarkable();
@@ -24,7 +25,7 @@ function RawTextBody (props) {
   return <div style={{whiteSpace: 'pre-line'}}>{props.text}</div>;
 }
 
-class IssueDetailsMain extends React.Component {
+class IssueDetailMain extends React.Component {
 
   render() {
     let {gjs, issue, children} = this.props;
@@ -41,37 +42,38 @@ class IssueDetailsMain extends React.Component {
       default:
         body = <RawTextBody text={description} />;
     }
-    return <div className='issueDetailMain' ref='scrollbar'>
-      <div className='row'>
-        <div className='col-md-8'>
-          <h3>
-            <span className='text-muted'>#{gjs.id}</span>&nbsp;
-            {issue.title}
-          </h3>
+    return <div className='issue-detail-main' ref='scrollbar'>
 
-          <ul className='list-inline'>
-            { issue.issue_types.map((issue_type, index) => <li key={index}><Icon key={index} name={getIconClassForIssueType(issue_type)} /></li>) }
-          </ul>
-          { issue.organisation ? <p>
-              <a href={issue.organisation.profile_url} target="_blank">
-                {issue.organisation.name}
-                <sub><Icon name='external-link' /></sub>
-              </a>
-            </p> : null}
-        </div>
-        <div className='col-md-4 text-right'>
-          <h3>
-            <Status status={issue.status} />
-          </h3>
-        </div>
-      </div>
+      <h3>
+        <span className='text-muted'>#{gjs.id}</span>&nbsp;
+        {issue.title}
+      </h3>
+
+      <h3 className="pull-right">
+        <Status status={issue.status} />
+      </h3>
+
+      <ul className='list-inline'>
+        { issue.issue_types.map((issue_type, index) => <li key={index}><Icon key={index} name={getIconClassForIssueType(issue_type)} /></li>) }
+      </ul>
+
+      {
+        issue.organisation ?
+          <p>
+            <a href={issue.organisation.profile_url} target="_blank">
+              {issue.organisation.name}
+              <sub><Icon name='external-link' /></sub>
+            </a>
+          </p> :
+          null
+      }
       <hr />
       <div className="panel panel-primary">
           <div className="panel-heading">
-            created by <UserLink username={ issue.creator.username } linkTo={issue.creator.html_url}/>
             <span className="pull-right">
               <DateDisplay date={issue.created} />
             </span>
+            <UserLink username={ issue.creator.username } linkTo={issue.creator.html_url}/>
           </div>
           <div className='panel-body'>
             {body}
@@ -79,6 +81,21 @@ class IssueDetailsMain extends React.Component {
       </div>
       {children}
     </div>
+  }
+}
+
+class IssueDetailFooter extends React.Component {
+  render() {
+    let {openMap} = this.props;
+    return <footer className="bg-primary">
+            <Link to='/' className="btn btn-primary">
+              <Icon name="chevron-left"/>&nbsp;Issue List
+            </Link>
+          <button onClick={openMap} className="btn btn-primary pull-right">
+                Show on Map&nbsp;
+                <Icon name="map-o"/>
+          </button>
+    </footer>;
   }
 }
 
@@ -95,20 +112,24 @@ class IssueDetailUI extends React.Component {
     let gjs = issue_loader.issue_data;
     let issue = gjs.properties;
 
-    return (<div className='issueDetail'>
+    return (<div className='issue-detail'>
 
-            <ol className='breadcrumb' style={{backgroundColor: 'transparent'}}>
+      <div className="issue-detail-body">
+
+            <VisibleMedium>
+            <ol className="breadcrumb" style={{'backgroundColor': 'transparent'}}>
               <li>
                 <Link to='/'>
-                  Issue List
+                <Icon name="list"/>&nbsp;Issue List
                 </Link>
               </li>
-              <li className='active'>
-                Issue Detail
+              <li className="active">
+                  #{gjs.id} {issue.title}
               </li>
             </ol>
+            </VisibleMedium>
 
-            <IssueDetailsMain {...this.props} gjs={gjs} issue={issue} />
+            <IssueDetailMain {...this.props} gjs={gjs} issue={issue} />
 
             {
               this.props.canComment ?
@@ -123,8 +144,11 @@ class IssueDetailUI extends React.Component {
 
 
              }
-
-          </div>);
+        </div>
+        <HiddenMedium>
+          <IssueDetailFooter openMap={this.props.openMap} />
+        </HiddenMedium>
+    </div>);
   }
 }
 

@@ -34,6 +34,12 @@ if settings.DEBUG:
         url(r'^__debug__/', include(debug_toolbar.urls)),
     ]
 
+    from notifications.debug import generate_notifications
+    urlpatterns += [
+        url(r'^__generate_notifications__/$', generate_notifications, name='generate_notifications')
+    ]
+
+
 urlpatterns += [
     url(r'^map/', include([
         # this is needed for reversing the issue url in the notifications

@@ -3,9 +3,12 @@ import { connect } from 'react-redux'
 import IssueListUI from '../components/issueList'
 import { history } from '../index'
 import getFilteredIssues from '../issueSelector'
-import { addIssueFilter, removeIssueFilter, fetchIssues} from '../actions'
+import { addIssueFilter, removeIssueFilter, fetchIssues, resetSelectedIssue} from '../actions'
 
 class IssueListContainer extends React.Component {
+  componentDidMount(){
+    this.props.resetSelectedIssue();
+  }
   render() {
     return <IssueListUI { ...this.props } />
   }
@@ -28,7 +31,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(fetchIssues());
     },
     addIssueFilter: (prop, value) => dispatch(addIssueFilter(prop, value)),
-    removeIssueFilter: (prop, value) => dispatch(removeIssueFilter(prop, value))
+    removeIssueFilter: (prop, value) => dispatch(removeIssueFilter(prop, value)),
+    resetSelectedIssue: () => dispatch(resetSelectedIssue())
   };
 }
 

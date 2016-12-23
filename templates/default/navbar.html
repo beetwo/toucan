@@ -79,6 +79,14 @@
                                         {% trans 'About Toucan' %}
                                     </a>
                                 </li>
+                                {% if debug %}
+                                <li class="divider"></li>
+                                    <li>
+                                        <a href="{% url 'generate_notifications' %}">
+                                            Generate Notifications
+                                        </a>
+                                    </li>
+                                {% endif %}
                             </ul>
                     </li>
                 {% else %}
