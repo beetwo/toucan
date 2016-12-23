@@ -86,6 +86,7 @@ export class UploadField extends React.Component {
     render() {
         return <Dropzone className="dropzoneWrapper"
                          onDrop={this.props.onDrop}
+                         disableClick={true}
                          accept='image/*'>
             {this.props.children}
         </Dropzone>;

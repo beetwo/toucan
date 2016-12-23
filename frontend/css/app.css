@@ -1,23 +1,26 @@
 html, body {
-  height: 100%;
-  width: 100%;
-  margin: 0;
+    height: 100%;
+    width: 100%;
+    margin: 0;
 }
 
 body {
-  height: 100vh;
-  display:flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 nav {
-  flex-shrink: 0;
+    flex-shrink: 0;
+}
+
+nav.navbar {
+    margin-bottom: 0;
 }
 
 main {
-  flex-grow: 1;
-  display: flex;
-  overflow: hidden;
+    flex-grow: 1;
+    display: flex;
+    overflow: hidden;
 }
 
 .hide-overflow {
@@ -26,94 +29,172 @@ main {
 
 /* this is the react root */
 .app-container {
-  flex: 1;
-  overflow:hidden;
-  display: flex;
+    overflow: hidden;
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: row;
+    flex: 1;
 }
 
 .app-container > * {
-  flex: 1;
-  overflow: auto;
+    flex: 1;
+    overflow: auto;
 }
 
 .map-container {
-  padding:1em;
-  display: flex;
+    display: flex;
+    flex-direction: column;
 }
 
-.map-container > div {
-  width: 100%;
-  flex: 1;
+.map-container .leaflet-container {
+    width: 100%;
+    flex: 1 1 auto;
 }
 
+.map-container footer {
+    flex: 0 0 auto;
+    display: flex;
+}
+
+.map-container footer > * {
+    flex: 1;
+}
+
+/*this container wraps the right hand side of desktop layout*/
 .issues-container {
-  display: flex;
-  flex-direction: column;
-  padding: 1em;
+    display: flex;
+    flex-direction: column;
+    /*padding: 1em;*/
+}
+
+/*issue list page */
+
+.issue-list {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex: 1;
+}
+
+.issue-list-form, .issue-list-footer {
+    flex: none;
+}
+
+.issue-list-body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 1em;
 }
 
 
-.issueDetail {
-  flex: 1;
-  /*display: flex;
-  flex-direction: column;*/
+/*Issue detail page*/
+.issue-detail {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex:1;
 }
 
-.issueDetailMain {
-  /*flex:1;*/
-  overflow-y: auto;
-  padding-right: 1em;
+.issue-detail-body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 1em;
+}
+
+.issue-detail footer {
+    flex: none;
 }
 
 .commentForm {
-  padding-right: 1em;
+    padding-right: 1em;
 }
 
 .issueDetailBottom {
-  padding-top: 1em;
+    padding-top: 1em;
 }
 
 /* currently not used*/
 .marker-cluster {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #3498db;
-  color: #fff;
-  text-align: center;
-  font-size: 24px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #3498db;
+    color: #fff;
+    text-align: center;
+    font-size: 24px;
 }
 
-.leaflet-cluster-anim .leaflet-marker-icon, .leaflet-cluster-anim .leaflet-marker-shadow {
-    -webkit-transition: -webkit-transform 0.3s ease-out, opacity 0.3s ease-in;
-    -moz-transition: -moz-transform 0.3s ease-out, opacity 0.3s ease-in;
-    -o-transition: -o-transform 0.3s ease-out, opacity 0.3s ease-in;
+.leaflet-cluster-anim .leaflet-marker-icon,
+.leaflet-cluster-anim .leaflet-marker-shadow {
     transition: transform 0.3s ease-out, opacity 0.3s ease-in;
 }
 
 .issues tr:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .issue-list-form {
-  display: flex;
-  flex-direction: row;
+    display: flex;
+    flex-direction: row;
 }
 
 .issue-filter {
-  flex: 1;
+    flex: 1;
 }
 
-@media (max-width: 768px) {
-  .app-container {
-    flex-direction: column;
-  }
+@media (max-width: 922px) {
+    .app-container {
+        flex-direction: column;
+    }
+
+    h3:first-child {
+        margin-top: 0px;
+    }
+
+    div.page-header {
+        margin-top: 0px;
+    }
+
+}
+
+@media (min-width: 922px) {
+    .issue-list-form {
+        padding: 1em;
+    }
+
 }
 
 table.issues .fa {
-  padding-right: 0.5em;
+    padding-right: 0.5em;
 }
 
 /*a[target=_blank] {
   text-decoration: underline;
 }*/
+
+.toucanLoadingSpinner {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.alert.alert-dismissable {
+    opacity: 0.8;
+
+}
+
+#message-container {
+    position: absolute;
+    bottom: 5vh;
+    right: 5vw;
+    width: 90vw;
+}
+
+
+@media (min-width: 922px) {
+    #message-container {
+        width: 40vw;
+    }
+}

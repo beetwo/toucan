@@ -6,10 +6,11 @@ import thunkMiddleware from 'redux-thunk'
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import reducers from './reducers'
 import App from './containers/app'
+
 import IssueDetail from './containers/issueDetail'
 import IssueList from './containers/issueList'
-import UserDetail, {Single} from './containers/userDetail'
 import {requestIssues, fetchIssues} from './actions'
+import UserDetail from './containers/userDetail'
 
 
 import { Router, Route, IndexRoute, useRouterHistory } from 'react-router'
@@ -45,6 +46,7 @@ let bHistory = useRouterHistory(createHistory)({
 })
 export const history = syncHistoryWithStore(bHistory, store);
 
+
 render(
   <Provider store={store}>
     <Router history={history}>
@@ -59,3 +61,16 @@ render(
   </Provider>,
   document.getElementsByTagName('main')[0]
 );
+
+
+// safari does not implement forEach on Nodelists
+// as returned by querySelectorAll
+import forEach from 'lodash/forEach'
+
+// remove any alerts that were set by the backend after a timeout
+if (window && document) {
+  window.setTimeout(() => {
+      let alerts = document.querySelectorAll('.alert.alert-dismissable');
+      forEach(alerts, (node) => {console.log(node); node.remove()})
+  }, 7000)
+}

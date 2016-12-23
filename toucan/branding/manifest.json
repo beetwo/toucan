@@ -1,0 +1,13 @@
+{
+  "short_name": "Toucan",
+  "name": "Toucan Issue Tracker",
+  "icons": [
+    {
+      "src": "logo.jpg",
+      "sizes": "68x70",
+      "type": "image/jpeg"
+    }
+  ],
+  "start_url": "/map/",
+  "display": "standalone"
+}

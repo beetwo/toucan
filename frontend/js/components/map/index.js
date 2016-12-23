@@ -1,15 +1,18 @@
 import React, { PropTypes} from 'react';
+import ReactDOM from 'react-dom'
 import isEmpty from 'lodash/isEmpty'
 import {dispatch} from 'redux'
 import  Leaflet  from 'leaflet';
-import { Map, TileLayer, LayerGroup, GeoJson, Marker, Popup } from 'react-leaflet';
+import { Map, MapControl, TileLayer, LayerGroup, GeoJson, Marker, Popup } from 'react-leaflet';
 import geojsonExtent from 'geojson-extent';
-import { setCoordinates } from '../actions'
-import getMarkerForIssue from './markers/markers';
+import getMarkerForIssue from './markers';
 import LocationControl from './locationControl';
-import { defaultMapBounds } from '../globals';
-import urls from '../urls';
-import {history} from '../index'
+
+import { defaultMapBounds } from '../../globals';
+import urls from '../../urls';
+import {history} from '../../index'
+import { setCoordinates } from '../../actions'
+
 require('leaflet/dist/leaflet.css');
 
 class IssueMarker extends React.Component {
@@ -85,10 +88,20 @@ export class LeafletMap extends React.Component {
         // and reset during the render method
         this._panToUserLocation = false;
 
-        this.state = {
-          context: false,
-          center: null,
+        console.log('Map constructor', props);
+
+        if (props.selectedIssue && props.geojson) {
+            let issue = this._getIssueById(props.selectedIssue, props.geojson)
+            this.state = {
+                zoom: 13,
+                center: this._getIssueLatLng(issue)
+            }
+        } else if (props.bounds) {
+            this.state = {
+                bounds: props.bounds
+            }
         }
+        console.log('Map constructor state set', this.state);
 
         // bind event handlers
         this.handleClick = this.handleClick.bind(this);
@@ -98,6 +111,67 @@ export class LeafletMap extends React.Component {
         this.handleLocate = this.handleLocate.bind(this);
         this.handleLocationFound = this.handleLocationFound.bind(this);
     }
+
+    _getIssueById(issueId, geojson) {
+        if (geojson && geojson.features){
+            return geojson.features.filter((p)=> p.id === issueId)[0]
+        }
+    }
+
+    _getIssueLatLng(issue) {
+        // maps from geojson to leaflet compatible coordinates
+        return issue.geometry.coordinates.slice(0,2).reverse()
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.debug('New props for map', nextProps, this.props);
+        let currentIssue = this.props.selectedIssue,
+            nextIssue = nextProps.selectedIssue;
+
+        // return if no changes
+        if (currentIssue === nextIssue) {
+            console.debug(
+                'Same issue as before, no map state change.',
+                currentIssue,
+                nextIssue,
+                this.props,
+                nextProps
+            )
+            return;
+        }
+
+        if (
+            (
+                // we are moving from one issue to the next
+                currentIssue &&
+                nextIssue &&
+                currentIssue !== nextIssue
+            ) || (
+                // or from all issues to selected Issues
+                !currentIssue && nextIssue
+            )
+        ) {
+            // => recenter map without zooming
+            console.debug('Re-centering map without zoom', issue, nextIssue);
+            let issue = this._getIssueById(nextIssue, nextProps.geojson)
+            if (!issue) {return;}
+            this.setState({
+                zoom: this.getMap().getZoom(),
+                center: this._getIssueLatLng(issue),
+                bounds: null
+            })
+        }
+        if (currentIssue && !nextIssue) {
+            console.debug('Moving from detail to overview map.')
+            // moving from issueDetail to overview
+            this.setState({
+                zoom: null,
+                center: null,
+                bounds: this._computeBounds(nextProps.geojson)
+            })
+        }
+    }
+
 
     // these functions deal with setting Coordinates
     handleAddMarkerPositionChange (latLng) {
@@ -109,7 +183,7 @@ export class LeafletMap extends React.Component {
     }
 
     getMap() {
-        return this._map.getLeafletElement();
+        return this._map.leafletElement;
     }
 
     handlePopupClose(e) {}
@@ -124,20 +198,22 @@ export class LeafletMap extends React.Component {
       this._panToUserLocation = true;
       this.setState({
         center: e.latlng,
-        zoom: this.getMap().getZoom()
+        zoom: this.getMap().getZoom(),
+        bounds: null
       });
     }
 
     handleMarkerClick (issue) {
-      this.setState({
-        zoom: this.getMap().getZoom()
-      })
-      history.push(`/issue/${issue.id}`);
+        if (this.props.beforeMarkerNavigation) {
+            this.props.beforeMarkerNavigation(issue);
+        }
+        history.push(`/issue/${issue.id}`);
     }
 
     render() {
         const {geojson, coordinates, visibleIssueIDs} = this.props;
         const has_coordinates = !isEmpty(coordinates);
+        let center = false;
 
         if (isEmpty(geojson)) {
           return null;
@@ -152,7 +228,6 @@ export class LeafletMap extends React.Component {
         });
         locations = locations.filter((l) => visibleIssueIDs.indexOf(l.id) != -1);
 
-        let center = this.state.center;
         let markers = locations.map(
           (l) => {
             let props = {
@@ -162,11 +237,8 @@ export class LeafletMap extends React.Component {
               issue: l,
               isActive: l.id === this.props.selectedIssue
             };
-            if (l.id === this.props.selectedIssue) {
-              // optionally center the map if there is an active marker
-              center = props.position
-            }
-            return <IssueMarker {...props} />
+
+            return <IssueMarker {...props} zIndexOffset={props.isActive ? 1000 :0}/>
         })
 
         if (this._panToUserLocation) {
@@ -176,9 +248,18 @@ export class LeafletMap extends React.Component {
 
         let bounds = this.props.bounds || this._computeBounds(geojson);
 
+        let mapSettings = {
+            bounds: this.state.bounds,
+            center: center || this.state.center,
+            zoom: this.state.zoom
+        };
+        // console.log(
+        //     'Rendering map',
+        //     mapSettings,
+        //     this.props.selectedIssue
+        // )
         return (
-            <Map center={center}
-                 bounds={bounds}
+            <Map {...mapSettings}
                  onClick={this.handleClick}
                  onContextmenu={this.handleRightClick}
                  onPopupclose={this.handlePopupClose}
@@ -186,7 +267,6 @@ export class LeafletMap extends React.Component {
                  onLocationfound={this.handleLocationFound}
                  animate={true}
                  ref={(m) => this._map = m}
-                 zoom={this.state.zoom}
                  >
                 <TileLayer
                     url='//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
@@ -197,6 +277,7 @@ export class LeafletMap extends React.Component {
                                                    position={coordinates}
                                                    handleLatLng={this.handleAddMarkerPositionChange} /> : null }
                 <LocationControl locate={this.handleLocate}/>
+                {this.props.children}
             </Map>
         );
     }
@@ -218,15 +299,16 @@ export class LeafletMap extends React.Component {
 }
 
 LeafletMap.propTypes = {
-  geojson: PropTypes.object.isRequired,
-  visibleIssueIDs: PropTypes.array.isRequired,
-  coordinates: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.bool
-  ]),
-  setCoordinates: PropTypes.func,
-  selectIssue: PropTypes.func.isRequired,
-  selectedIssue: PropTypes.number
+    geojson: PropTypes.object.isRequired,
+    visibleIssueIDs: PropTypes.array.isRequired,
+    beforeMarkerNavigation: PropTypes.func,
+    coordinates: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.bool
+    ]),
+    setCoordinates: PropTypes.func,
+    selectIssue: PropTypes.func.isRequired,
+    selectedIssue: PropTypes.number
 }
 
 export default LeafletMap

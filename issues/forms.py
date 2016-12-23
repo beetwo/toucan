@@ -32,7 +32,7 @@ class IssueForm(forms.ModelForm):
         ]
         widgets = {
             'point': forms.TextInput,
-            'issue_types': forms.CheckboxSelectMultiple
+            # 'issue_types': forms.CheckboxSelectMultiple
         }
         labels = {
             'title': 'Title',
@@ -45,5 +45,6 @@ class IssueForm(forms.ModelForm):
                 What do you need?
                 Is there a specific timeframe?
             '''),
-            'issue_types': _('Select under what category your issue falls.')
+            'issue_types': _('Select under what category your issue falls.'),
+            'point': _('Specify a location for your issue by clicking the map and/or dragging the marker.')
         }

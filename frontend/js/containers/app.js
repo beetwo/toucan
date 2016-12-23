@@ -31,6 +31,7 @@ IssueTrackerApp.propType = {
 }
 
 const mapStateToProps = (state) => {
+
   return {
     allIssues: state.redux_issues,
     issues: getFilteredIssues(state.redux_issues, state.issueFilters.selections),

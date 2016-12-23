@@ -74,6 +74,13 @@ export function selectIssue(issue_id) {
     }
 }
 
+export function resetSelectedIssue() {
+    return {
+        type: SELECT_ISSUE,
+        issue_id: null
+    }
+}
+
 export function requestIssue(issue_id) {
     return {
         type: REQUEST_ISSUE,
