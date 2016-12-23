@@ -106,7 +106,7 @@ function issueDetails(state={}, action) {
   }
 }
 
-function geojson(state={}, action) {
+function geojson(state={features: []}, action) {
   switch(action.type){
     case RECEIVE_ISSUES:
       return action.issues
