@@ -21,10 +21,8 @@ export const CHANGE_ISSUE_STATUS = 'CHANGE_ISSUE_STATUS'
 export const ADD_ISSUES_FILTER = 'ADD_ISSUES_FILTER'
 export const REMOVE_ISSUES_FILTER = 'REMOVE_ISSUES_FILTER'
 
-
 export const FETCH_CURRENT_USER_DATA = 'FETCH_CURRENT_USER_DATA'
-
-
+export const RECEIVE_USER_INFORMATION = 'RECEIVE_USER_INFORMATION'
 
 export function requestIssues() {
   return {
@@ -176,6 +174,28 @@ export function loadCurrentUserInformation() {
   }
 }
 
+export function receiveUserInformation(username, json) {
+    return {
+        type: RECEIVE_USER_INFORMATION,
+        payload: json,
+        username: username
+    }
+}
+
+export function loadUserInformation(username) {
+    return (dispatch, getState) => {
+        // dispatch with empty information
+        dispatch(receiveUserInformation(username, {}))
+        // get the real information and get going
+        return jsonGet(`/api/about/${encodeURI(username)}/`)
+            .then(response => response.json())
+            .then(json => dispatch(
+                receiveUserInformation(username, json)
+                )
+            )
+    }
+}
+
 
 // these are currently not used
 export function changeIssueStatus(issue_id, status) {
@@ -195,3 +215,5 @@ export function closeIssue(issue_id) {
 export function openIssue(issue_id) {
   return changeIssueStatus(issue_id, 'open');
 }
+
+

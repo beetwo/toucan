@@ -1,6 +1,6 @@
 from django.conf.urls import url, include
 from .views import LocationApi, IssueView, IssueCommentView, UserSearch, IssueStatusView, CommentDetailView, \
-    MentionView, UserInformationApi, UserDetailView, ImageCreateView
+    MentionView, UserInformationApi, UserDetailView, ImageCreateView, UserOrOrgDetailView
 
 app_name = 'issue_tracker_api'
 
@@ -15,6 +15,8 @@ urlpatterns = [
         ])
     ),
     url(r'^aboutme/$', UserInformationApi.as_view(), name='aboutme'),
+    url(r'^about/(?P<name>[\w@.\-]+)/$', UserOrOrgDetailView.as_view(), name='user_or_org_detail'),
+
     url(r'^user/',
         include([
             url(r'^$', UserSearch.as_view(), name='user_search'),

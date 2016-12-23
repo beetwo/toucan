@@ -4,11 +4,15 @@ import { Link } from 'react-router'
 class UserLink extends React.Component {
   render() {
     let { username, linkTo } = this.props;
+    let linkText = this.props.children ? this.props.children : username
+
     let link = linkTo ?
       <a href={linkTo} target='_blank'>
-        {username}
+          {linkText}
       </a> :
-      <Link to={`/users/${username}`}>{username}</Link>;
+      <Link to={`/detail/${username}`}>
+          {linkText}
+      </Link>;
     return link;
   }
 }

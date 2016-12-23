@@ -12,7 +12,8 @@ import {
   RECEIVE_COMMENTS,
   ADD_ISSUES_FILTER,
   REMOVE_ISSUES_FILTER,
-  FETCH_CURRENT_USER_DATA
+  FETCH_CURRENT_USER_DATA,
+  RECEIVE_USER_INFORMATION
  } from './actions';
 
 import {defaultMapBounds} from './globals'
@@ -310,6 +311,22 @@ function currentUser(
   }
 }
 
+function userInformationByUsername(
+    state={},
+    action
+) {
+  switch (action.type) {
+      case RECEIVE_USER_INFORMATION:
+        let key = action.username
+        return {
+            ...state,
+            [key]: action.payload
+        }
+      default:
+        return state
+  }
+}
+
 function loadingStatus(
   state={
     issues: false
@@ -320,7 +337,7 @@ function loadingStatus(
       return {
         ...state,
         issues: true
-      };
+      }
     case RECEIVE_ISSUES:
       return {
         ...state,
@@ -345,6 +362,7 @@ const reducers = {
   allUsers,
   allOrganisations,
   currentUser,
+  userInformationByUsername,
   loadingStatus
 }
 

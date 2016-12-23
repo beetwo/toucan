@@ -44,6 +44,8 @@ class OrganisationSerializer(serializers.ModelSerializer):
         ]
 
 
+
+
 class MembershipSerializer(serializers.ModelSerializer):
 
     org = OrganisationSerializer(many=False, read_only=True)
@@ -96,8 +98,32 @@ class FullUserSerializer(serializers.ModelSerializer):
             'username',
             'first_name',
             'last_name',
-            'email',
             'membership'
+        ]
+
+class FullOrganisationSerializer(OrganisationSerializer):
+
+    members = UserSerializer(many=True, read_only=True)
+
+    class Meta(OrganisationSerializer.Meta):
+        fields = OrganisationSerializer.Meta.fields + [
+            "members",
+            "description",
+            "homepage"
+        ]
+
+
+
+class PublicUserSerializer(UserSerializer):
+
+    membership = MembershipSerializer(many=False, read_only=True)
+
+    class Meta:
+        model = UserSerializer.Meta.model
+        fields = UserSerializer.Meta.fields + [
+            'membership',
+            'first_name',
+            'last_name',
         ]
 
 

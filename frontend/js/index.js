@@ -8,7 +8,7 @@ import reducers from './reducers'
 import App from './containers/app'
 import IssueDetail from './containers/issueDetail'
 import IssueList from './containers/issueList'
-import UserDetail from './containers/userDetail'
+import UserDetail, {Single} from './containers/userDetail'
 import {requestIssues, fetchIssues} from './actions'
 
 
@@ -48,10 +48,12 @@ export const history = syncHistoryWithStore(bHistory, store);
 render(
   <Provider store={store}>
     <Router history={history}>
+      <Route path="/detail/">
+        <Route path=":username" component={UserDetail} name='userDetail' />
+      </Route>
       <Route path="/" component={App} name='issueList' >
         <IndexRoute component={IssueList} name='issueListIndex'/>
         <Route path="issue/:IssueID" component={IssueDetail} name='issueDetail'/>
-        <Route path="users/:username" component={UserDetail} name='userDetail' />
       </Route>
     </Router>
   </Provider>,

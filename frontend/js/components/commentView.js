@@ -7,7 +7,6 @@ class Comment extends React.Component {
     let {comment} = this.props;
     let mentions = twitterText.extractMentionsWithIndices(comment);
     let parts = [];
-
     if (mentions.length > 0) {
       mentions.sort(function(a,b){ return a.indices[0] - b.indices[0]; });
       let begin_index = 0;
@@ -18,8 +17,14 @@ class Comment extends React.Component {
           {comment.substring(begin_index, value.indices[0])}
           </span>
         )
-        let username = comment.substring(value.indices[0], value.indices[1]);
-        parts.push(<UserLink key={counter++} username={username} />)
+        let username = value.screenName,
+            linkText = comment.substring(value.indices[0], value.indices[1]);
+          parts.push(
+              <UserLink key={counter++}
+                        username={username}>
+                  {linkText}
+              </UserLink>
+          )
         begin_index = value.indices[1]
       })
       parts.push(<span key={counter++}>{comment.substring(begin_index, comment.length)}</span>);

@@ -53,10 +53,7 @@ class IssueDetailsMain extends React.Component {
             { issue.issue_types.map((issue_type, index) => <li key={index}><Icon key={index} name={getIconClassForIssueType(issue_type)} /></li>) }
           </ul>
           { issue.organisation ? <p>
-              <a href={issue.organisation.profile_url} target="_blank">
-                {issue.organisation.name}
-                <sub><Icon name='external-link' /></sub>
-              </a>
+            <UserLink username={issue.organisation.short_name}>{issue.organisation.name}</UserLink>
             </p> : null}
         </div>
         <div className='col-md-4 text-right'>
@@ -68,7 +65,7 @@ class IssueDetailsMain extends React.Component {
       <hr />
       <div className="panel panel-primary">
           <div className="panel-heading">
-            created by <UserLink username={ issue.creator.username } linkTo={issue.creator.html_url}/>
+            created by <UserLink username={ issue.creator.username } />
             <span className="pull-right">
               <DateDisplay date={issue.created} />
             </span>

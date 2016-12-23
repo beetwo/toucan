@@ -165,7 +165,7 @@ export class Comment extends React.Component {
     let hasAttachments = (comment.attachments || []).length > 0;
     return (<div className='panel panel-default'>
       <div className='panel-heading'>
-        <UserLink username={comment.user.username} linkTo={comment.user.html_url}/>
+        <UserLink username={comment.user.username} />
         <span className="pull-right">
             <DateDisplay date={comment.created} />
           </span>
@@ -207,7 +207,7 @@ export class StatusChange extends React.Component {
     };
 
     return <p className='text-right text-muted'>
-      <a>{sc.user.username}</a>&nbsp;
+      <UserLink username={sc.user.username} />&nbsp;
       {txt}
     </p>;
   }
@@ -231,6 +231,7 @@ export class CommentList extends React.Component {
   flattenUsers(users=[]) {
     return fromJS(
       users.map((u) => {
+        console.log(u);
         return {
           name: u.username
         }
@@ -239,7 +240,6 @@ export class CommentList extends React.Component {
   }
 
   render() {
-
     let all = this.flattenCommentsAndStatusChanges(
       this.props.comments,
       this.props.statusChanges

@@ -26,7 +26,10 @@ class IssueDetailContainer extends React.Component {
 
   render() {
     return <IssueDetailUI { ...this.props } >
-      <Comments issue_id={this.props.issueID} users={this.props.usernames}/>
+      <Comments issue_id={this.props.issueID}
+                users={this.props.usernames}
+                mentions={this.props.mentions}
+      />
     </IssueDetailUI>
   }
 }

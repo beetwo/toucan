@@ -50,6 +50,11 @@ class Organisation(TimeStampedModel):
     def active_memberships(self):
         return self.membership_set.filter(active=True)
 
+    @property
+    def members(self):
+        return [m.user for m in self.active_memberships.select_related('user')]
+
+
     def add_user_to_org(self, user, role=0, active=True):
         try:
             membership = Membership.objects.get(
