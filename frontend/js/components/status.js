@@ -3,7 +3,7 @@ import classNames from 'classnames'
 
 export default function({status}) {
     let cls = classNames('label', {
-      'label-danger': status === 'closed',
+      'label-danger': status === 'resolved',
       'label-success': status === 'open'
     })
     return <span className={cls}>

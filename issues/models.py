@@ -18,7 +18,7 @@ TwitterParser = ttp.Parser()
 
 ISSUE_STATUS_CHOICES = Choices(
     ('open', _('open')),
-    ('closed', _('closed'))
+    ('closed', _('resolved'))
 )
 
 class IssueType(TimeStampedModel):

@@ -264,6 +264,12 @@ class IssueSerializer(GeoFeatureModelSerializer):
 
     organisation = OrganisationSerializer()
 
+    status = serializers.SerializerMethodField()
+
+    def get_status(self, obj):
+        print(obj, dir(obj))
+        return obj.get_current_status_display()
+
     class Meta:
         model = Issue
         geo_field = 'point'
@@ -274,6 +280,7 @@ class IssueSerializer(GeoFeatureModelSerializer):
             'priority',
             'visibility',
             'status',
+            # 'get_status_display',
             'created',
             # defined fields
             'url',
