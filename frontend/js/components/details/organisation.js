@@ -13,7 +13,8 @@ class OrganisationDetails extends React.Component {
             logo,
             members,
             description,
-            homepage
+            homepage,
+            profile_url
         } = this.props;
 
         let items = [
@@ -41,6 +42,9 @@ class OrganisationDetails extends React.Component {
             }
             </ul>
             {/*<pre>{JSON.stringify(this.props, null, 2)}</pre>*/}
+            <UserLink linkTo={profile_url} className="btn btn-default pull-right">
+                More
+            </UserLink>
         </div>
     }
 }

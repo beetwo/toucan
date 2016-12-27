@@ -267,7 +267,6 @@ class IssueSerializer(GeoFeatureModelSerializer):
     status = serializers.SerializerMethodField()
 
     def get_status(self, obj):
-        print(obj, dir(obj))
         return obj.get_current_status_display()
 
     class Meta:

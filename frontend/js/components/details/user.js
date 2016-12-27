@@ -7,11 +7,13 @@ import DetailTable from './table'
 
 class UserDetails extends React.Component {
     render() {
+        console.log(this.props);
         let {
             username,
             first_name,
             last_name,
-            membership
+            membership,
+            html_url
         } = this.props;
         let org = membership.org;
 
@@ -23,6 +25,9 @@ class UserDetails extends React.Component {
         return <div>
             <h1>Profile for user {username}</h1>
             <DetailTable items={items}/>
+            <UserLink linkTo={html_url} className="btn btn-default pull-right">
+                More
+            </UserLink>
         </div>;
     }
 }

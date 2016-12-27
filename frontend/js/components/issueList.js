@@ -3,6 +3,8 @@ import Icon from 'react-fa'
 import classNames from 'classnames'
 import Status from './status'
 import getIconClassForIssueType from './icons/issueType'
+import {DateOnlyDisplay, DateOrTimeDisplay} from './date'
+
 
 function CommentCount({count}) {
     return (<span className={classNames({'text-muted': count === 0})}>
@@ -104,13 +106,18 @@ class IssueListUI extends React.Component {
                       {issue.title}
                     </a>
                     <br />
-                    <small>{issue.organisation ? issue.organisation.name : null}</small>
+                    <small>
+                        {issue.organisation ? issue.organisation.name : null}
+                    </small>
                 </td>
                 <td>
                   <Status status={issue.status} />
                 </td>
                 <td>
                     {issue.issue_types.map((it) => <Icon key={it.slug} name={getIconClassForIssueType(it)} title={it.name} /> )}
+                </td>
+                <td>
+                    <DateOrTimeDisplay date={issue.created} />
                 </td>
                 <td>
                     <CommentCount count={issue.comment_count} />
@@ -133,6 +140,7 @@ class IssueListUI extends React.Component {
                         <th>Issue</th>
                         <th>Status</th>
                         <th>Category</th>
+                        <th>Created</th>
                         <th>Discussion</th>
                     </tr>
                 </thead>
