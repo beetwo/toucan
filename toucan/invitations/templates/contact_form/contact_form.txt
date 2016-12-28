@@ -1,0 +1,14 @@
+A new message has been received through the contact form on {{ site.domain|default:'Toucan' }}
+
+==================
+From: {{ name }}
+      {{ email }}
+
+Message:
+----------------------
+{{ body }}
+----------------------
+
+
+
+
