@@ -1,6 +1,8 @@
 from django.conf.urls import url, include
+from django.views.generic import TemplateView
 
-from .views import InvitationAcceptedView, InviteToOrgView
+from .views import InvitationAcceptedView, InviteToOrgView, RequestInvitationFormView
+
 
 urlpatterns = [
     url(
@@ -15,6 +17,17 @@ urlpatterns = [
     ),
     url(
         r'^request/',
-        include('contact_form.urls')
+        include([
+            url(r'^$',
+                RequestInvitationFormView.as_view(
+                ),
+                name='request_invitation_form'
+            ),
+            url(
+                r'^sent/$',
+                TemplateView.as_view(template_name='contact_form/contact_form_sent.html'),
+                name='request_invitation_form_sent'
+            )
+        ])
     )
 ]

@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404
 
 from allauth.account.adapter import get_adapter
 from allauth.account.views import SignupView
+from contact_form.views import ContactFormView
 from braces.views import UserPassesTestMixin, AnonymousRequiredMixin
 
 from organisations.models import Organisation
@@ -100,3 +101,10 @@ class InviteToOrgView(UserPassesTestMixin, FormView):
         )
         invitation = create_invitation_from_request(self.request, email)
         return super().form_valid(form)
+
+
+
+class RequestInvitationFormView(ContactFormView):
+
+    def get_success_url(self):
+        return reverse('request_invitation_form_sent')
