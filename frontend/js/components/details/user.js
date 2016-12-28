@@ -7,7 +7,6 @@ import DetailTable from './table'
 
 class UserDetails extends React.Component {
     render() {
-        console.log(this.props);
         let {
             username,
             first_name,

@@ -59,7 +59,6 @@ export function DateOrTimeDisplay({date}) {
     let cd = new Date(),
         [cday, cmonth, cyear] = getDateTuple(cd),
         [rday, rmonth, ryear] = getDateTuple(date);
-    console.log(cday, cmonth, cyear)
     let isToday = (cday === rday) && (cmonth === rmonth) && (cyear === ryear);
 
     if (isToday) {

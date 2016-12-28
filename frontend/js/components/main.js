@@ -8,6 +8,8 @@ import {mediumSize} from './responsive'
 import urls from '../urls'
 import {DetailFooter, CustomLocationSelectedFooter} from './map/footers'
 
+import { ScrollContainer } from 'react-router-scroll';
+
 require('../../css/app.css');
 
 
@@ -42,6 +44,10 @@ function WrapMap(props) {
     </div>;
 }
 
+const shouldUpdateScroll = function(prevProps, props) {
+    console.log('ShouldScroll?', prevProps, props);
+    return true
+}
 
 class UI extends React.Component {
 
@@ -56,7 +62,7 @@ class UI extends React.Component {
     }
 
     onMapNavigate = (issue) => {
-        console.log('Map navigation called...', issue);
+        // console.log('Map navigation called...', issue);
         // this is called before the user clicks a marker on the map
         this.setState({
             displayMap: false
@@ -93,23 +99,26 @@ class UI extends React.Component {
                         }
                         {
                             displayIssues ?
-                                <div className="issues-container">
-                                    {
-                                        this.props.coordinates === null ?
-                                            null:
-                                            <NewIssue coordinates={this.props.coordinates} removeAction={this.props.clearCoordinates} />
-                                    }
+                                <ScrollContainer scrollKey='issues-container' shouldUpdateScroll={shouldUpdateScroll}>
+                                    <div className="issues-container">
+                                        {
+                                            this.props.coordinates === null ?
+                                                null:
+                                                <NewIssue coordinates={this.props.coordinates} removeAction={this.props.clearCoordinates} />
+                                        }
 
-                                    {
-                                        React.cloneElement(
-                                            this.props.children,
-                                            {
-                                                mapOpenable: !displayMap,
-                                                openMap: this.toggleMapDisplay
-                                            }
-                                        )
-                                    }
-                                </div> :
+                                        {
+                                            React.cloneElement(
+                                                this.props.children,
+                                                {
+                                                    mapOpenable: !displayMap,
+                                                    openMap: this.toggleMapDisplay
+                                                }
+                                            )
+                                        }
+                                    </div>
+                                </ScrollContainer>
+                                :
                                 null
                         }
                     </div>)
