@@ -19,13 +19,12 @@ urlpatterns = [
         r'^request/',
         include([
             url(r'^$',
-                RequestInvitationFormView.as_view(
-                ),
+                RequestInvitationFormView.as_view(),
                 name='request_invitation_form'
             ),
             url(
                 r'^sent/$',
-                TemplateView.as_view(template_name='contact_form/contact_form_sent.html'),
+                TemplateView.as_view(template_name='invitations/request_access/contact_form_sent.html'),
                 name='request_invitation_form_sent'
             )
         ])

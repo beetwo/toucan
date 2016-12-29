@@ -15,7 +15,7 @@ from braces.views import UserPassesTestMixin, AnonymousRequiredMixin
 from organisations.models import Organisation
 from .models import ToucanInvitation, create_invitation_from_request
 from .settings import INVITATION_SESSION_KEY
-from .forms import InviteUserForm
+from .forms import InviteUserForm, RequestAccessContactForm
 from .permissions import can_invite_to_org
 
 
@@ -105,6 +105,9 @@ class InviteToOrgView(UserPassesTestMixin, FormView):
 
 
 class RequestInvitationFormView(ContactFormView):
+
+    template_name = 'invitations/request_access/contact_form.html'
+    form_class = RequestAccessContactForm
 
     def get_success_url(self):
         return reverse('request_invitation_form_sent')
