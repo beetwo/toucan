@@ -3,8 +3,11 @@
 
 {% block content %}
     <h1>Request access to Toucan</h1>
+    <hr />
+    <p class="text-center">
+        Toucan is currently invitation only.
+    </p>
     <p>
-        Toucan is currently invitation only.<br/>
         Since the information shared on Toucan is potentially sensitive in nature
         we require some checks before you will be able to access the application.
     </p>
@@ -24,7 +27,7 @@
     </ol>
 
     <hr />
-    <form method="post">
+    <form method="post" novalidate>
         {% csrf_token %}
         {% bootstrap_form form %}
         <p class="text-center">

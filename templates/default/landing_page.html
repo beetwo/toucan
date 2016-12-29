@@ -30,20 +30,24 @@ Toucan is currently in active development by <a href="http://www.beetwo.at">BeeT
     </a>
 </p>
 {% else %}
-<div class="well">
-    <p>
-    This deployment of Toucan is currently invitation only.
-    If you want to be a part of it, please fill out a short form and
-    we will get in touch with you as soon as possible.
+    <p class="text-center">
+        <a class='btn btn-primary' href="{% url 'account_login' %}">Go to Login</a>
     </p>
+
     <hr />
-    <p>
-        <a href="{% url 'request_invitation_form' %}" class="btn btn-primary" >Request Access</a>
-        <a class='btn btn-primary pull-right' href="{% url 'account_login' %}">
-            Go to Login
-        </a>
-    </p>
-</div>
+
+    <div class="well">
+        <p>
+            This deployment of Toucan is currently invitation only.
+            If you want to be a part of it, please fill out a short form and
+            we will get in touch with you as soon as possible.
+        </p>
+
+
+        <p class="text-center">
+            <a href="{% url 'request_invitation_form' %}" class="btn btn-primary" >Request Access</a>
+        </p>
+    </div>
 {% endif %}
 
 <p class="text-center" style="padding-top: 2em; text-decoration: underline">
