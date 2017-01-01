@@ -194,7 +194,6 @@ export class Comment extends React.Component {
   render() {
     let comment = this.props.comment;
     let hasAttachments = (comment.attachments || []).length > 0;
-    console.log(comment, hasAttachments, comment.comment === '');
     let isEmptyComment = comment.comment === '';
     if ( isEmptyComment && !hasAttachments ) { return null; };
     return (<div className='panel panel-default'>

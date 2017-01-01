@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react'
 import Icon from 'react-fa'
 import classNames from 'classnames'
+import { ScrollContainer } from 'react-router-scroll';
+
 import Status from './status'
 import getIconClassForIssueType from './icons/issueType'
 import {DateOnlyDisplay, DateOrTimeDisplay} from './date'
@@ -131,7 +133,7 @@ class IssueListUI extends React.Component {
                 <IssueFilter {...this.props} filterOptions={this.props.filterOptions}/>
             </div>
 
-
+            <ScrollContainer scrollKey='toucan-issue-list'>
             {/* the actual table of issues */}
             <div className="issue-list-body">
                 <table className="issues table table-hover table-striped">
@@ -149,6 +151,7 @@ class IssueListUI extends React.Component {
                 </tbody>
                 </table>
             </div>
+            </ScrollContainer>
 
             {/*issue list control*/}
             {

@@ -1,16 +1,19 @@
 import React, {PropTypes} from 'react'
 import ReactDOM  from 'react-dom'
-import Loading from './loading'
+import { ScrollContainer } from 'react-router-scroll';
 import isEmpty from 'lodash/isEmpty'
-import {CommentList, CommentForm} from './comments'
 import { Link } from 'react-router'
+import Icon from 'react-fa'
+import Remarkable from 'remarkable'
+
+import {CommentList, CommentForm} from './comments'
 import DateDisplay from './date'
 import UserLink from './userLink'
 import Status from './status'
-import Icon from 'react-fa'
 import getIconClassForIssueType from './icons/issueType'
-import Remarkable from 'remarkable'
 import {HiddenMedium, VisibleMedium} from './responsive'
+import Loading from './loading'
+
 
 function MarkdownBody (props) {
   let md = new Remarkable();
@@ -112,7 +115,7 @@ class IssueDetailUI extends React.Component {
     let issue = gjs.properties;
 
     return (<div className='issue-detail'>
-
+      <ScrollContainer scrollKey='toucan-issue-detail'>
       <div className="issue-detail-body">
 
             <VisibleMedium>
@@ -144,6 +147,7 @@ class IssueDetailUI extends React.Component {
 
              }
         </div>
+        </ScrollContainer>
         <HiddenMedium>
           <IssueDetailFooter openMap={this.props.openMap} />
         </HiddenMedium>
