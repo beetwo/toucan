@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
 import { connect } from 'react-redux'
 import IssueListUI from '../components/issueList'
-import { history } from '../index'
+import { browserHistory } from 'react-router'
 import getFilteredIssues from '../issueSelector'
 import { addIssueFilter, removeIssueFilter, fetchIssues, resetSelectedIssue} from '../actions'
 
@@ -25,7 +25,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     handleIssueChange: (issue) => {
-      history.push(`issue/${issue.id}`)
+      browserHistory.push(`issue/${issue.id}`)
     },
     refreshIssueList: () => {
       dispatch(fetchIssues());

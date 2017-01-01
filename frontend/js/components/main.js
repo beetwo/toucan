@@ -12,7 +12,6 @@ import { ScrollContainer } from 'react-router-scroll';
 
 require('../../css/app.css');
 
-
 function WrapMap(props) {
     let { closable, onClose } = props;
     // construct the map
@@ -45,8 +44,12 @@ function WrapMap(props) {
 }
 
 const shouldUpdateScroll = function(prevProps, props) {
-    console.log('ShouldScroll?', prevProps, props);
-    return true
+    console.log(
+        'ShouldScroll?',
+        prevProps,
+        props
+    );
+    return [0,100]
 }
 
 class UI extends React.Component {
@@ -99,26 +102,23 @@ class UI extends React.Component {
                         }
                         {
                             displayIssues ?
-                                <ScrollContainer scrollKey='issues-container' shouldUpdateScroll={shouldUpdateScroll}>
-                                    <div className="issues-container">
-                                        {
-                                            this.props.coordinates === null ?
-                                                null:
-                                                <NewIssue coordinates={this.props.coordinates} removeAction={this.props.clearCoordinates} />
-                                        }
+                                <div className="issues-container">
+                                {
+                                    this.props.coordinates === null ?
+                                        null:
+                                        <NewIssue coordinates={this.props.coordinates} removeAction={this.props.clearCoordinates} />
+                                }
 
+                                {
+                                    React.cloneElement(
+                                        this.props.children,
                                         {
-                                            React.cloneElement(
-                                                this.props.children,
-                                                {
-                                                    mapOpenable: !displayMap,
-                                                    openMap: this.toggleMapDisplay
-                                                }
-                                            )
+                                            mapOpenable: !displayMap,
+                                            openMap: this.toggleMapDisplay
                                         }
-                                    </div>
-                                </ScrollContainer>
-                                :
+                                    )
+                                }
+                                </div> :
                                 null
                         }
                     </div>)
