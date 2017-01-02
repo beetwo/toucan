@@ -124,19 +124,19 @@ export class LeafletMap extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.debug('New props for map', nextProps, this.props);
+        // console.debug('New props for map', nextProps, this.props);
         let currentIssue = this.props.selectedIssue,
             nextIssue = nextProps.selectedIssue;
 
         // return if no changes
         if (currentIssue === nextIssue) {
-            console.debug(
-                'Same issue as before, no map state change.',
-                currentIssue,
-                nextIssue,
-                this.props,
-                nextProps
-            )
+            // console.debug(
+            //     'Same issue as before, no map state change.',
+            //     currentIssue,
+            //     nextIssue,
+            //     this.props,
+            //     nextProps
+            // )
             return;
         }
 
@@ -152,7 +152,7 @@ export class LeafletMap extends React.Component {
             )
         ) {
             // => recenter map without zooming
-            console.debug('Re-centering map without zoom', issue, nextIssue);
+            // console.debug('Re-centering map without zoom', issue, nextIssue);
             let issue = this._getIssueById(nextIssue, nextProps.geojson)
             if (!issue) {return;}
             this.setState({
@@ -162,7 +162,7 @@ export class LeafletMap extends React.Component {
             })
         }
         if (currentIssue && !nextIssue) {
-            console.debug('Moving from detail to overview map.')
+            // console.debug('Moving from detail to overview map.')
             // moving from issueDetail to overview
             this.setState({
                 zoom: null,

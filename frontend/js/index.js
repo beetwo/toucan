@@ -9,13 +9,11 @@ import App from './containers/app'
 
 import IssueDetail from './containers/issueDetail'
 import IssueList from './containers/issueList'
-import {requestIssues, fetchIssues} from './actions'
 import UserDetail from './containers/userDetail'
 
-
-import { Router, Route, IndexRoute, useRouterHistory } from 'react-router'
+import { Router, Route, IndexRoute, useRouterHistory, applyRouterMiddleware, browserHistory } from 'react-router'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
-import { createHistory } from 'history'
+import { useScroll } from 'react-router-scroll'
 
 // create the root reducer
 let issueTrackerApp = combineReducers({
@@ -33,7 +31,6 @@ if (process.env.NODE_ENV !== 'production') {
   middleware = [...middleware, loggerMiddleware];
 }
 
-
 // and create the store
 let store = createStore(
   issueTrackerApp,
@@ -41,15 +38,18 @@ let store = createStore(
 )
 
 // Create an enhanced history that syncs navigation events with the store
-let bHistory = useRouterHistory(createHistory)({
+let bHistory = useRouterHistory(() => browserHistory)({
   basename: '/map'
 })
-export const history = syncHistoryWithStore(bHistory, store);
 
+export const history = syncHistoryWithStore(
+    bHistory,
+    store
+);
 
 render(
   <Provider store={store}>
-    <Router history={history}>
+    <Router history={history} render={applyRouterMiddleware(useScroll())}>
       <Route path="/detail/">
         <Route path=":username" component={UserDetail} name='userDetail' />
       </Route>
