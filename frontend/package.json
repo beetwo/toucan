@@ -81,12 +81,12 @@
     "style-loader": "^0.13.1",
     "twitter-text": "^1.13.4",
     "url-loader": "^0.5.7",
-    "webpack": "^2.1.0-beta.28",
+    "webpack": "beta",
     "webpack-bundle-tracker": "0.0.93",
     "webpack-cleanup-plugin": "^0.2.0",
     "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
-    "webpack-dev-server": "^2.1.0-beta.12"
+    "webpack-dev-server": "2.2.0"
   }
 }
