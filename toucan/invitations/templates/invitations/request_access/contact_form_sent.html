@@ -1,0 +1,19 @@
+{% extends './base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+<div class="alert alert-success">
+    <p class="text-center">
+        Your message has been sent.<br />
+        We will get in touch with you as soon as possible.
+    </p>
+    <p class="text-center title">
+        <b>Thank you for your interest in Toucan!</b>
+    </p>
+</div>
+<p class="text-center">
+    <a href="{% url 'landing_page' %}">
+        Return to Homepage
+    </a>
+</p>
+{% endblock content %}

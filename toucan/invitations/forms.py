@@ -1,6 +1,6 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-
+from contact_form.forms import ContactForm
 from user_profile.forms import BaseUserProfileSignupForm
 from .models import ToucanInvitation
 
@@ -53,3 +53,20 @@ class InvitedUserSignupForm(BaseUserProfileSignupForm):
 
 class InviteUserForm(forms.Form):
     email = forms.EmailField()
+
+
+class RequestAccessContactForm(ContactForm):
+
+    help_texts = {
+        'body': _('''
+            Please give some details on why you want to participate on Toucan.
+            e.g. the name of the organisation you are part of and which organisations
+            you work with ...
+        ''')
+    }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        print(self.fields)
+        for field_name, msg in self.help_texts.items():
+            self.fields[field_name].help_text = msg

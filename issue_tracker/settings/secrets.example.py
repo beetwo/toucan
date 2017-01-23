@@ -1,6 +1,12 @@
 # Change this to a nice long string
 SECRET_KEY = 'verySecretKey'
 
+ADMINS = [
+    ('<name>', '<admin email address>'),
+]
+
+MANAGERS = ADMINS
+
 # Emails are at least used for user auth flow
 EMAIL_HOST = ''
 EMAIL_HOST_USER = ''

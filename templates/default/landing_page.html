@@ -23,17 +23,32 @@ Toucan is currently in active development by <a href="http://www.beetwo.at">BeeT
 
 <hr />
 
-<p class="text-center">
 {% if request.user.is_authenticated %}
+<p class="text-center">
     <a class="btn btn-primary" href="{% url 'home' %}">
         {% trans 'Go to issue tracker' %}
     </a>
-{% else %}
-    <a class='btn btn-primary' href="{% url 'account_login' %}">
-        Login
-    </a>
-{% endif %}
 </p>
+{% else %}
+    <p class="text-center">
+        <a class='btn btn-primary' href="{% url 'account_login' %}">Go to Login</a>
+    </p>
+
+    <hr />
+
+    <div class="well">
+        <p>
+            This deployment of Toucan is currently invitation only.
+            If you want to be a part of it, please fill out a short form and
+            we will get in touch with you as soon as possible.
+        </p>
+
+
+        <p class="text-center">
+            <a href="{% url 'request_invitation_form' %}" class="btn btn-primary" >Request Access</a>
+        </p>
+    </div>
+{% endif %}
 
 <p class="text-center" style="padding-top: 2em; text-decoration: underline">
     <a href="{% static 'factsheet.pdf' %}">Download Toucan Factsheet</a>
