@@ -13,7 +13,6 @@ module.exports = (opts) => {
     config = baseConfig(opts),
     output_path = path.resolve(PROJECT_ROOT, 'production/');
 
-
   return {
     ...config,
     output: {

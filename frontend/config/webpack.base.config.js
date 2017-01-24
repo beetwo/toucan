@@ -1,7 +1,8 @@
 var path = require("path");
 var webpack = require('webpack');
 var BundleTracker = require('webpack-bundle-tracker');
-var precss       = require('precss');
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+var precss = require('precss');
 var autoprefixer = require('autoprefixer');
 
 module.exports = (opts) => {
@@ -18,6 +19,10 @@ module.exports = (opts) => {
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor'
+    }),
+    new BundleAnalyzerPlugin({
+        analyzerMode: 'disabled',
+        generateStatsFile: true
     })
   ];
 
