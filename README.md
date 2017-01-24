@@ -1,4 +1,6 @@
-# B2 Issue Tracker
+![toucan logo](https://github.com/beetwo/toucan/blob/master/toucan/branding/toucan_logo.png)
+
+# Toucan
 
 [ ![Codeship Status for mcallistersean/b2-issue-tracker](https://codeship.com/projects/b7b1fb70-8d18-0132-df0d-2286ccb6e81a/status?branch=master)](https://codeship.com/projects/60574)
 
