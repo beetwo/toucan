@@ -24,7 +24,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-DEFAULT_FROM_EMAIL = 'mailer@issuetracker.xyz'
+DEFAULT_FROM_EMAIL = 'toucan@brickwall.at'
 
 # Application definition
 INSTALLED_APPS = [

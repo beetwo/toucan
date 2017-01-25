@@ -1,3 +1,4 @@
+import os
 from .. import *
 
 try:
@@ -6,9 +7,18 @@ except ImportError:
     raise ImportError('Please set ALLOWED_HOSTS in the secrets file when using production config.')
 
 
+try:
+    from ..secrets import ANYMAIL
+except ImportError:
+    raise ImportError('Please set ANYMAIL settings in the secrets file when using production config.')
+
+INSTALLED_APPS += [
+    'anymail'
+]
+
 DEBUG = False
 
-DEFAULT_FROM_EMAIL = 'issuetracker@brickwall.at'
+DEFAULT_FROM_EMAIL = 'toucan@brickwall.at'
 
 WEBPACK_BUILD_DIR = os.path.join(BASE_DIR, 'frontend/production/')
 
@@ -28,6 +38,8 @@ WEBPACK_LOADER = {
     }
 }
 
+
+EMAIL_BACKEND = "anymail.backends.mailgun.MailgunBackend"
 
 # install raven handler if configured
 try:
