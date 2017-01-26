@@ -63,7 +63,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def get_url(self, user):
         return reverse(
-            'issue_tracker_api:user_detail',
+            'toucan_api:user_detail',
             kwargs={
                 'username': user.username
             },
@@ -254,7 +254,7 @@ class StatusSerializer(serializers.ModelSerializer):
 class IssueSerializer(GeoFeatureModelSerializer):
 
     url = serializers.HyperlinkedIdentityField(
-        view_name='issue_tracker_api:issue_detail',
+        view_name='toucan_api:issue_detail',
         lookup_url_kwarg='issue_id',
         lookup_field='pk'
     )
@@ -305,14 +305,14 @@ class FullIssueSerializer(IssueSerializer):
 
     def get_comment_url(self, issue):
         return reverse(
-            'issue_tracker_api:issue_comments',
+            'toucan_api:issue_comments',
             kwargs={'issue_id': issue.pk},
             request=self.context['request']
         )
 
     def get_status_url(self, issue):
         return reverse(
-            'issue_tracker_api:issue_status',
+            'toucan_api:issue_status',
             kwargs={'issue_id': issue.pk},
             request=self.context['request']
         )

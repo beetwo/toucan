@@ -2,7 +2,7 @@ from django.conf.urls import url, include
 from .views import LocationApi, IssueView, IssueCommentView, UserSearch, IssueStatusView, CommentDetailView, \
     MentionView, UserInformationApi, UserDetailView, ImageCreateView, UserOrOrgDetailView
 
-app_name = 'issue_tracker_api'
+app_name = 'toucan_api'
 
 urlpatterns = [
     url(r'^$', LocationApi.as_view()),

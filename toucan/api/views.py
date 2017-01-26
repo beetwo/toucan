@@ -8,7 +8,6 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from issue_tracker.defaults import B2_ISSUE_TRACKER
 
 from ..issues.models import Issue, IssueComment, IssueStatus
 from ..organisations.models import Organisation
@@ -28,8 +27,7 @@ class UserInformationApi(APIView):
         response = {
             'user': None,
             'notificationAreas': [],
-            'canComment': False,
-            'bbox': B2_ISSUE_TRACKER['MAP_BOUNDS']
+            'canComment': False
         }
 
         if request.user.is_authenticated():
