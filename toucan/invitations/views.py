@@ -1,22 +1,21 @@
-from django.views.generic.detail import DetailView, SingleObjectMixin
-from django.views.generic.edit import FormView
-from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
-from django.contrib import messages
-from django.utils.translation import ugettext_lazy as _
-from django.utils.functional import cached_property
-from django.shortcuts import get_object_or_404
-
 from allauth.account.adapter import get_adapter
 from allauth.account.views import SignupView
-from contact_form.views import ContactFormView
 from braces.views import UserPassesTestMixin, AnonymousRequiredMixin
+from contact_form.views import ContactFormView
+from django.contrib import messages
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+from django.utils.functional import cached_property
+from django.utils.translation import ugettext_lazy as _
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import FormView
 
-from organisations.models import Organisation
-from .models import ToucanInvitation, create_invitation_from_request
-from .settings import INVITATION_SESSION_KEY
+from ..organisations.models import Organisation
 from .forms import InviteUserForm, RequestAccessContactForm
+from .models import ToucanInvitation, create_invitation_from_request
 from .permissions import can_invite_to_org
+from .settings import INVITATION_SESSION_KEY
 
 
 class InvitationAcceptedView(AnonymousRequiredMixin, DetailView):
