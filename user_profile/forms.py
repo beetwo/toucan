@@ -11,6 +11,7 @@ class BaseUserProfileSignupForm(forms.Form):
 
     phone = PhoneNumberField(
         label=_('Your mobile phone number'),
+        help_text=_('Please enter your mobile phone number starting with the country code. E.g. "+431234526"'),
         required=False
     )
 
