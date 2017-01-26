@@ -1,7 +1,8 @@
+from contact_form.forms import ContactForm
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from contact_form.forms import ContactForm
-from user_profile.forms import BaseUserProfileSignupForm
+
+from ..user_profile.forms import BaseUserProfileSignupForm
 from .models import ToucanInvitation
 
 invitation_error = forms.ValidationError(

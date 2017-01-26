@@ -8,7 +8,8 @@ from django.contrib.postgres.fields import DateTimeRangeField
 from django.template.context import RequestContext
 from datetime import timedelta
 from django.contrib.sites.models import Site
-from organisations.models import Organisation, Membership
+
+from ..organisations.models import Organisation, Membership
 from .settings import INVITATION_VALID_DAYS
 
 
