@@ -22,6 +22,12 @@ ALLOWED_HOSTS = [
     '127.0.0.1',  # replace this with your real domain name
 ]
 
+ANYMAIL = {
+    # (exact settings here depend on your ESP...)
+    "MAILGUN_API_KEY": "<your Mailgun key>",
+    "MAILGUN_SENDER_DOMAIN": 'mg.example.com',  # your Mailgun domain, if needed
+}
+
 # NEXMO = {
 #   'key': 'key',
 #   'secret': 'secret'
