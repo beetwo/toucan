@@ -16,11 +16,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='issue',
             name='issue_types',
-            field=models.ManyToManyField(to='toucan.issues.IssueType', verbose_name='issue type'),
+            field=models.ManyToManyField(to='issues.IssueType', verbose_name='issue type'),
         ),
         migrations.AlterField(
             model_name='issue',
             name='issue_type',
-            field=models.ForeignKey(default=1, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='deprecated_issue_type', to='toucan.issues.IssueType', verbose_name='issue types'),
+            field=models.ForeignKey(default=1, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='deprecated_issue_type', to='issues.IssueType', verbose_name='issue types'),
         ),
     ]

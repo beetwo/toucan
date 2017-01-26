@@ -63,7 +63,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='membership',
             name='org',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='toucan.organisations.Organisation'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organisations.Organisation'),
         ),
         migrations.AddField(
             model_name='membership',
@@ -73,7 +73,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='location',
             name='org',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='toucan.organisations.Organisation'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='organisations.Organisation'),
         ),
         migrations.AlterUniqueTogether(
             name='membership',

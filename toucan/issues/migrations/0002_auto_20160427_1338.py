@@ -16,11 +16,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='issuecomment',
             name='issue',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments', to='toucan.issues.Issue'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments', to='issues.Issue'),
         ),
         migrations.AlterField(
             model_name='issuestatus',
             name='issue',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='status_changes', to='toucan.issues.Issue'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='status_changes', to='issues.Issue'),
         ),
     ]

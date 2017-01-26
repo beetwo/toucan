@@ -3,7 +3,7 @@ from django.contrib.gis.geos import Point
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-from toucan.organisations import Organisation
+from toucan.organisations.models import Organisation
 from toucan.issues.models import Issue, IssueType
 
 

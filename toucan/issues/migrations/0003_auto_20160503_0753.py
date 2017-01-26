@@ -26,6 +26,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='issue',
             name='organisation',
-            field=models.ForeignKey(default='', null=True, on_delete=django.db.models.deletion.CASCADE, to='toucan.organisations.Organisation', verbose_name='organisation'),
+            field=models.ForeignKey(default='', null=True, on_delete=django.db.models.deletion.CASCADE, to='organisations.Organisation', verbose_name='organisation'),
         ),
     ]

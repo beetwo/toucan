@@ -46,7 +46,7 @@ class Migration(migrations.Migration):
                 ('created', model_utils.fields.AutoCreatedField(default=django.utils.timezone.now, editable=False, verbose_name='created')),
                 ('modified', model_utils.fields.AutoLastModifiedField(default=django.utils.timezone.now, editable=False, verbose_name='modified')),
                 ('comment', models.TextField(blank=True, verbose_name='comment')),
-                ('issue', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='toucan.issues.Issue')),
+                ('issue', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='issues.Issue')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
             options={
@@ -61,7 +61,7 @@ class Migration(migrations.Migration):
                 ('created', model_utils.fields.AutoCreatedField(default=django.utils.timezone.now, editable=False, verbose_name='created')),
                 ('modified', model_utils.fields.AutoLastModifiedField(default=django.utils.timezone.now, editable=False, verbose_name='modified')),
                 ('status', models.CharField(choices=[('open', 'open'), ('closed', 'closed')], db_index=True, max_length=10)),
-                ('issue', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='toucan.issues.Issue')),
+                ('issue', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='issues.Issue')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
             options={
@@ -86,11 +86,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='issue',
             name='issue_type',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='toucan.issues.IssueType'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='issues.IssueType'),
         ),
         migrations.AddField(
             model_name='issue',
             name='organisation',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='toucan.organisations.Organisation', verbose_name='organisation'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='organisations.Organisation', verbose_name='organisation'),
         ),
     ]
