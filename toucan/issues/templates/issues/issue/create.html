@@ -1,0 +1,81 @@
+{% extends 'issues/base.html' %}
+{% load i18n bootstrap3 widget_tweaks %}
+
+{% block issue_heading_title %}
+  {% trans 'Create new Issue' %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-12">
+        <form method="post" action="" novalidate>
+            {% csrf_token %}
+
+            {% for f in form.hidden_fields %}{{ f }}{% endfor %}
+
+            {# the point field needs some special rendering #}
+            {% if form.errors.point %}
+            <div class="form-group has-error">
+                {%  for error in form.errors.point %}
+                <div class="help-block">
+                        {{ error }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <div id="issueMap" style="height:300px;"></div>
+            {{ form.point }}
+            <div class="help-block" style="margin-bottom: 1em">{{ form.point.help_text }}</div>
+            {# end point field #}
+
+            {% bootstrap_field form.title show_label=False %}
+            {% bootstrap_field form.description show_label=False %}
+            {% bootstrap_field form.issue_types %}
+
+            {% buttons %}
+            <button type="submit" class="btn btn-primary">
+                {% trans 'Create' %}
+            </button>
+            {% endbuttons %}
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block before-body-close %}
+{{ block.super }}
+<script type="application/javascript">
+(function(){
+var position = false;
+{% if initial_point %}
+  {% with p=initial_point.get_coords %}
+  position = {
+      lng: {{ p.0 }},
+      lat: {{ p.1 }}
+  };
+  {% endwith %}
+{% endif %}
+
+var issueMap = document.getElementById('issueMap'),
+    location_field = document.getElementById('id_point');
+
+$(location_field).hide();
+
+function cb(e) {
+    location_field.value = 'POINT(' + e.lng + ' ' + e.lat + ')'
+};
+
+var props = {
+    editable: true,
+    position: position,
+    onPositionChange: cb
+}
+
+render_map(issueMap, props);
+
+// selectize the issue type selector
+$('select[multiple]').selectize();
+
+})();
+</script>
+{% endblock %}

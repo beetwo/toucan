@@ -1,13 +1,11 @@
-from django.db import models
 from django.conf import settings
-
-from model_utils.models import TimeStampedModel
-from model_utils.managers import InheritanceManager
-
+from django.db import models
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
+from model_utils.managers import InheritanceManager
+from model_utils.models import TimeStampedModel
 
-from issues.models import IssueComment
+from toucan.issues.models import IssueComment
 
 
 class MediaFile(TimeStampedModel):

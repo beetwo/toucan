@@ -50,9 +50,9 @@ INSTALLED_APPS = [
     'webpack_loader',
     'raven.contrib.django.raven_compat',
     # custom applications
-    'organisations',
-    'issues',
-    'user_profile',
+    'toucan.organisations',
+    'toucan.issues',
+    'toucan.user_profile',
     'toucan.invitations',
     'toucan.media',
     'toucan.help',

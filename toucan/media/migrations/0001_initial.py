@@ -47,7 +47,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='mediafile',
             name='comment',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='issues.IssueComment'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='toucan.issues.IssueComment'),
         ),
         migrations.AddField(
             model_name='mediafile',

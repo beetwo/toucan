@@ -1,9 +1,10 @@
 from datetime import timedelta
 
-from django.test import TestCase
 from django.contrib.auth.models import User
+from django.test import TestCase
 from django.utils import timezone
-from organisations.factory import OrganisationFactory
+
+from toucan.organisations.factory import OrganisationFactory
 from .models import ToucanInvitation, INVITATION_VALID_DAYS
 
 validity = timedelta(days=INVITATION_VALID_DAYS)

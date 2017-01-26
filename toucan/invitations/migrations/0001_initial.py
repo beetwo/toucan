@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
                 ('secret_key', models.CharField(editable=False, max_length=64, unique=True, validators=[django.core.validators.MinLengthValidator(64)])),
                 ('role', models.IntegerField(choices=[(0, 'member'), (5, 'admin'), (10, 'owner')], default=0)),
                 ('invited_by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='invited', to=settings.AUTH_USER_MODEL)),
-                ('organisation', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='organisations.Organisation')),
+                ('organisation', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='toucan.organisations.Organisation')),
                 ('site', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sites.Site')),
                 ('user', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='invited_through', to=settings.AUTH_USER_MODEL)),
             ],

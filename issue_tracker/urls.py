@@ -1,10 +1,10 @@
-from django.conf.urls import url, include
 from django.conf import settings
+from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.generic import TemplateView
 
-from issues.views import HomeView
 from toucan.invitations.views import InvitedSignupView
+from toucan.issues.views import HomeView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -12,10 +12,10 @@ urlpatterns = [
     url(r'^accounts/signup/', InvitedSignupView.as_view(), name='account_signup'),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^invitations/', include('toucan.invitations.urls')),
-    url(r'^api/', include('api.urls')),
-    url(r'^org/', include('organisations.urls', 'organisations')),
-    url(r'^issues/', include('issues.urls', 'issue_app')),
-    url(r'^profile/', include('user_profile.urls', 'user_profile')),
+    url(r'^api/', include('toucan.api.urls')),
+    url(r'^org/', include('toucan.organisations.urls', 'organisations')),
+    url(r'^issues/', include('toucan.issues.urls', 'issue_app')),
+    url(r'^profile/', include('toucan.user_profile.urls', 'user_profile')),
     url(r'^help/', include('toucan.help.urls', 'help'))
 ]
 
@@ -34,7 +34,7 @@ if settings.DEBUG:
         url(r'^__debug__/', include(debug_toolbar.urls)),
     ]
 
-    from notifications.debug import generate_notifications
+    from toucan.notifications.debug import generate_notifications
     urlpatterns += [
         url(r'^__generate_notifications__/$', generate_notifications, name='generate_notifications')
     ]
