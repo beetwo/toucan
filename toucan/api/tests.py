@@ -37,7 +37,7 @@ class ReadApiTestCase(TestCase):
 class UserNameReverseUrlTest(TestCase):
 
     def resolve(self, username):
-        return reverse('issue_tracker_api:user_detail', kwargs={'username': username})
+        return reverse('toucan_api:user_detail', kwargs={'username': username})
 
     def testUsernames(self):
         self.resolve('tester')

@@ -70,7 +70,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.sites.middleware.CurrentSiteMiddleware',
 ]
 
-ROOT_URLCONF = 'issue_tracker.urls'
+ROOT_URLCONF = 'toucan_conf.urls'
 
 TEMPLATES = [
     {
@@ -91,7 +91,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'issue_tracker.wsgi.application'
+WSGI_APPLICATION = 'toucan_conf.wsgi.application'
 
 
 # Database
@@ -186,7 +186,7 @@ LOGIN_REDIRECT_URL = 'home'
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "asgi_redis.RedisChannelLayer",
-        "ROUTING": "issue_tracker.routing.channel_routing"
+        "ROUTING": "toucan_conf.routing.channel_routing"
     },
 }
 
