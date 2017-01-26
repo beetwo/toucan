@@ -76,8 +76,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'templates'),
-            os.path.join(BASE_DIR, 'templates', 'allauth'),
+            os.path.join(BASE_DIR, 'toucan/templates'),
+            os.path.join(BASE_DIR, 'toucan/templates', 'allauth'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -100,7 +100,7 @@ WSGI_APPLICATION = 'issue_tracker.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'issues-tracker',
+        'NAME': 'toucan',
     }
 }
 
@@ -177,7 +177,7 @@ STATICFILES_DIRS = [
 ]
 
 FIXTURE_DIRS = [
-    os.path.join(BASE_DIR, 'fixtures/')
+    os.path.join(BASE_DIR, 'toucan/fixtures/')
 ]
 
 
