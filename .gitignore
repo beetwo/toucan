@@ -63,6 +63,5 @@ target/
 b2/
 activate
 .idea/
-issue_tracker/settings/secrets.py
-_media/
+data/media/
 *.sqlite3
