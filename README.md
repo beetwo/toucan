@@ -2,7 +2,7 @@
 
 # Toucan
 
-[ ![Codeship Status for mcallistersean/b2-issue-tracker](https://codeship.com/projects/b7b1fb70-8d18-0132-df0d-2286ccb6e81a/status?branch=master)](https://codeship.com/projects/60574)
+[ ![Codeship Status for beetwo/toucan](https://codeship.com/projects/b7b1fb70-8d18-0132-df0d-2286ccb6e81a/status?branch=master)](https://codeship.com/projects/60574)
 
 A geographic issue tracker with some real time functionality.
 
@@ -60,7 +60,7 @@ DATABASES = {
 }
 ```
 
-To create the database scheme run the migrations (requires PostgreSQL superuser rights to install the postgis extension):
+To create the database scheme run the migrations (might require PostgreSQL superuser rights to install the postgis extension):
 
 ```
 ./manage.py migrate
@@ -72,12 +72,22 @@ The frontend part of the code is to be found in the 'frontend' folder. To instal
 
 ```
 npm install
+
+#or
+
+yarn install
+
 ```
 
 Finally build the frontend assets
 
 ```
 npm run build-dev
+
+#or
+
+yarn build-dev
+
 ```
 
 
@@ -92,11 +102,24 @@ In the ./frontend folder run the following command
 npm run dev
 ```
 
+or
+
+```
+yarn dev
+```
+
 
 For fearless frontend developers there is also the option to enable hot module replacement.
 ```
 npm run hmr
 ```
+
+or
+
+```
+yarn hmr
+```
+
 
 This will start a server to do the static file hosting on 127.0.0.1:8080 and skip the django dev server for the built frontend files.
 
@@ -106,15 +129,15 @@ This will start a server to do the static file hosting on 127.0.0.1:8080 and ski
 Make sure you have activated the virtual environment:
 
 ```
-source b2it/bin/activate
+source env/bin/activate
 ```
 
 Make sure a Redis server is running and listening on port 6379.
 
-Start the application server:
+Start the application server with development settings:
 
 ```
-./manage.py runserver --settings=issue_tracker.settings.dev
+./manage.py runserver --settings=toucan_conf.settings.dev
 ```
 
-You should be able to access the application now at http://localhost:8000.
+You should be able to access the application now at http://127.0.0.1:8000.
