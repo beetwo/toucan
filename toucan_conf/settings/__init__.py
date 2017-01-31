@@ -180,7 +180,6 @@ FIXTURE_DIRS = [
     os.path.join(BASE_DIR, 'toucan/fixtures/')
 ]
 
-
 LOGIN_REDIRECT_URL = 'home'
 
 CHANNEL_LAYERS = {
