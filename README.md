@@ -23,8 +23,8 @@ The backend assumes a working python environment with the packages listed in req
 First create and activate a virtual environment by issuing the following commands in the project directory:
 
 ```
-virtualenv b2it
-source b2it/bin/activate
+virtualenv env
+source env/bin/activate
 ```
 
 Then install the requirements into the virtual environment:
@@ -38,20 +38,20 @@ Under Linux it might be necessary to install additional dev-packages such as `li
 ### Set a secret key
 
 ```
-cp issue_tracker/settings/secrets.example.py issue_tracker/settings/secrets.py
+cp toucan_conf/settings/secrets.example.py toucan_conf/settings/secrets.py
 ```
 
-Open `issue_tracker/settings/secrets.py` and set `SECRET_KEY` to some string.
+Open `toucan_conf/settings/secrets.py` and set `SECRET_KEY` to some string.
 
 ### Database
 
-The application requires a PostgreSQL installation (>=9.4) with a database named `issues-tracker`. Configure the database connection by extending the `DATABASES` object in `issues_tracker/settings/__init__.py`:
+The application requires a PostgreSQL installation (>=9.4) with a database named `toucan`. Configure the database connection by extending the `DATABASES` object in `issues_tracker/settings/__init__.py`:
 
 ```
 DATABASES = {
   'default': {
     'ENGINE': 'django.contrib.gis.db.backends.postgis',
-    'NAME': 'issues-tracker',
+    'NAME': 'toucan',
     'USER': 'postgres',
     'PASSWORD': 'postgres',
     'HOST': 'localhost',
