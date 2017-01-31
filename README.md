@@ -68,26 +68,26 @@ To create the database scheme run the migrations (might require PostgreSQL super
 
 ### Build Frontend
 
-The frontend part of the code is to be found in the 'frontend' folder. To install the build tools and dependencies of the frontend issue the following command from within that folder:
+The frontend part of the code is to be found in the 'frontend' folder. To install the build tools and dependencies of the frontend issue the following commands from within that folder.
+
+Note: use either the yarn or the npm commands, both should result in the same packages being installed.
 
 ```
 npm install
-
-#or
-
+```
+or
+```
 yarn install
-
 ```
 
 Finally build the frontend assets
 
 ```
 npm run build-dev
-
-#or
-
+```
+or
+```
 yarn build-dev
-
 ```
 
 
@@ -119,7 +119,6 @@ or
 ```
 yarn hmr
 ```
-
 
 This will start a server to do the static file hosting on 127.0.0.1:8080 and skip the django dev server for the built frontend files.
 
