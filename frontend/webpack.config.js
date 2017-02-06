@@ -11,35 +11,38 @@
  * @returns {object} - returns a webpack config object
  */
 
-const OPTIONS = {
+const path = require('path')
+
+let OPTIONS = {
   PROJECT_ROOT: __dirname,
+  BUILD_ROOT: path.resolve(__dirname, 'production/'),
   NODE_ENV: process.env.NODE_ENV,
   CDN_PATH: process.env.CDN_PATH,
-  HMR: process.env.HMR
+  HMR: process.env.HMR,
+  STATS_FILE: 'webpack-stats.json'
 };
 
 let main_config = (() => {
   let hmr = process.env.BABEL_ENV || false;
   switch (process.env.NODE_ENV) {
-    case 'production':
-      return require('./config/webpack.production.config.js');
     case 'development':
+      OPTIONS = {
+          ...OPTIONS,
+          BUILD_ROOT: path.resolve(__dirname, 'build/')
+      }
       if (hmr) {
         return require('./config/webpack.development.hmr.config.js');
       }
       return require('./config/webpack.development.config.js');
     default:
-      return require('./config/webpack.development.config.js');
+      // default is production config
+      return require('./config/webpack.production.config.js');
   }
 })()(OPTIONS);
 
 let bootstrap_config = require('./config/webpack.bootstrap.config.js')(OPTIONS);
 
-// console.log(bootstrap_config, main_config);
-
 module.exports = [
     main_config,
     bootstrap_config
 ]
-
-// module.exports = main_config

@@ -6,16 +6,18 @@ let path = require('path');
 let base_config_loader = require('./webpack.base.config.js');
 
 module.exports = (opts) => {
-    const {PROJECT_ROOT, NODE_ENV} = opts;
-    let base_config = base_config_loader(opts);
-    let output_path = path.resolve(PROJECT_ROOT, 'build/');
+    const {PROJECT_ROOT, NODE_ENV, BUILD_ROOT} = opts,
+        base_config = base_config_loader(opts),
+        // bootstrap builds into subdirectory of build root
+        output_path = path.resolve(BUILD_ROOT, 'bootstrap/'),
+        stats_file='webpack-stats-bootstrap.json';
 
     return {
         output: [],
         context: PROJECT_ROOT,
         output: {
             path: output_path,
-            publicPath: '/static/wp/',
+            publicPath: base_config.output.publicPath + 'bootstrap/',
             filename: '[name].js'
         },
         entry: {
@@ -30,7 +32,7 @@ module.exports = (opts) => {
         plugins: [
             new BundleTracker({
                 path: output_path,
-                filename: 'webpack-stats-bootstrap.json'
+                filename: stats_file
             })
         ]
     }

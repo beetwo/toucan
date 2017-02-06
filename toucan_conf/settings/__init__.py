@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+from .webpack import configureWebpackLoader
 
 # BASE_DIR is where manage.py resides
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -158,30 +159,14 @@ REST_FRAMEWORK = {
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '_media')
 
-WEBPACK_BUILD_DIR = os.path.join(BASE_DIR, 'frontend/build/')
+WEBPACK_BUILD_DIR = os.path.join(BASE_DIR, 'frontend/production/')
 
-WEBPACK_LOADER = {
-    'DEFAULT': {
-        'CACHE': not DEBUG,
-        'BUNDLE_DIR_NAME': 'build/',
-        'STATS_FILE': os.path.join(WEBPACK_BUILD_DIR, 'webpack-stats-development.json'),
-        'POLL_INTERVAL': 0.1,
-        'IGNORE': ['.+\.hot-update.js', '.+\.map']
-    },
-    'BOOTSTRAP': {
-        'CACHE': not DEBUG,
-        'BUNDLE_DIR_NAME': 'build/',
-        'STATS_FILE': os.path.join(WEBPACK_BUILD_DIR, 'webpack-stats-bootstrap.json'),
-        'POLL_INTERVAL': 0.1,
-        'IGNORE': ['.+\.hot-update.js', '.+\.map']
-    }
-}
-
+WEBPACK_LOADER = configureWebpackLoader(WEBPACK_BUILD_DIR)
 
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    ('wp', WEBPACK_BUILD_DIR),  # this needs to be last, see production config
+    ('wp', WEBPACK_BUILD_DIR),  # this needs to be last, see dev config
 ]
 
 FIXTURE_DIRS = [
