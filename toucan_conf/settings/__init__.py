@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'toucan.invitations',
     'toucan.media',
     'toucan.help',
+    'toucan.branding',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -158,11 +159,19 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '_media')
 
 WEBPACK_BUILD_DIR = os.path.join(BASE_DIR, 'frontend/build/')
+
 WEBPACK_LOADER = {
     'DEFAULT': {
         'CACHE': not DEBUG,
         'BUNDLE_DIR_NAME': 'build/',
         'STATS_FILE': os.path.join(WEBPACK_BUILD_DIR, 'webpack-stats-development.json'),
+        'POLL_INTERVAL': 0.1,
+        'IGNORE': ['.+\.hot-update.js', '.+\.map']
+    },
+    'BOOTSTRAP': {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'build/',
+        'STATS_FILE': os.path.join(WEBPACK_BUILD_DIR, 'webpack-stats-bootstrap.json'),
         'POLL_INTERVAL': 0.1,
         'IGNORE': ['.+\.hot-update.js', '.+\.map']
     }
@@ -172,8 +181,7 @@ WEBPACK_LOADER = {
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'toucan/branding/'),
-    ('wp', WEBPACK_BUILD_DIR)
+    ('wp', WEBPACK_BUILD_DIR),  # this needs to be last, see production config
 ]
 
 FIXTURE_DIRS = [

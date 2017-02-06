@@ -1,0 +1,226 @@
+/*
+ * Start Bootstrap - Landing Page (http://startbootstrap.com/)
+ * Copyright 2013-2016 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
+ */
+
+body,
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+}
+
+.topnav {
+    font-size: 14px;
+}
+
+
+.navbar-brand {
+    padding: 10px 10px;
+}
+
+.navbar-brand > img {
+    max-height: 100%;
+}
+
+@media (min-width: 768px) {
+    /*Fix up the nav links */
+    .navbar-default .navbar-nav > li > a {
+        color: #2C3E50;
+    }
+    .navbar-default .navbar-nav > li:last-child > a {
+        color: #32A9DD;
+    }
+
+    .navbar-default {
+        background-color: transparent;
+        border-color: #2C3E50;
+    }
+    .toucan-nav-link-bordered {
+        border: 1px solid;
+        border-radius: 4px;
+        display: block;
+        position: relative;
+        padding: 0.6em 0.6em;
+        bottom: 0.6em;
+    }
+
+    .nav > li > a:hover, .nav > li > a:focus {
+        background-color: transparent;
+        font-weight: bolder;
+    }
+    .intro-header {
+        background-image: linear-gradient(
+            rgba(255, 255, 255, 0.3),
+            rgba(255, 255, 255, 0.3)
+        ),
+        url(../img/background.jpg);
+    }
+}
+
+@media (max-width: 767px) {
+    .intro-header {
+        background-image: none, none;
+    }
+}
+
+.lead {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.intro-header {
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size:cover;
+
+    width: 100%;
+    height: 0;
+    text-align: center;
+    /*text-shadow: 0 1px 0 black;*/
+
+    padding-top: 75%;
+}
+
+
+.intro-message {
+    position: absolute;
+    font-weight: bold;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    /*background-color: rgba(255,255,255,0.6);*/
+}
+
+
+/*// unused....*/
+
+.intro-divider {
+    width: 400px;
+    border-top: 1px solid #f8f8f8;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+.intro-message > h3 {
+    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+}
+
+@media(max-width:767px) {
+    .intro-message {
+        padding-bottom: 15%;
+    }
+
+    .intro-message > h1 {
+        font-size: 3em;
+    }
+
+    ul.intro-social-buttons > li {
+        display: block;
+        margin-bottom: 20px;
+        padding: 0;
+    }
+
+    ul.intro-social-buttons > li:last-child {
+        margin-bottom: 0;
+    }
+
+    .intro-divider {
+        width: 100%;
+    }
+}
+
+.network-name {
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 2px;
+}
+
+.content-section-a {
+    padding: 50px 0;
+    background-color: #f8f8f8;
+}
+
+.content-section-b {
+    padding: 50px 0;
+    border-top: 1px solid #e7e7e7;
+    border-bottom: 1px solid #e7e7e7;
+}
+
+.section-heading {
+    margin-bottom: 30px;
+}
+
+.section-heading-spacer {
+    float: left;
+    width: 200px;
+    border-top: 3px solid #e7e7e7;
+}
+
+.banner {
+    padding: 100px 0;
+    color: #f8f8f8;
+    /*background: url(../img/banner-bg.jpg) no-repeat center center;*/
+    background-size: cover;
+}
+
+.banner h2 {
+    margin: 0;
+    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    font-size: 3em;
+}
+
+.banner ul {
+    margin-bottom: 0;
+}
+
+.banner-social-buttons {
+    float: right;
+    margin-top: 0;
+}
+
+@media(max-width:1199px) {
+    ul.banner-social-buttons {
+        float: left;
+        margin-top: 15px;
+    }
+}
+
+@media(max-width:767px) {
+    .banner h2 {
+        margin: 0;
+        text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+        font-size: 3em;
+    }
+
+    ul.banner-social-buttons > li {
+        display: block;
+        margin-bottom: 20px;
+        padding: 0;
+    }
+
+    ul.banner-social-buttons > li:last-child {
+        margin-bottom: 0;
+    }
+}
+
+footer {
+    padding: 50px 0;
+    background-color: #f8f8f8;
+}
+
+p.copyright {
+    margin: 15px 0 0;
+}

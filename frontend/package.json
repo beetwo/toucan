@@ -10,7 +10,7 @@
     "build": "NODE_ENV=production npm run webpack",
     "build-dev": "NODE_ENV=development npm run webpack",
     "dev": "NODE_ENV=development npm run babel -- ./node_modules/.bin/webpack --progress --watch",
-    "hmr": "NODE_ENV=development BABEL_ENV=hmr npm run babel -- ./node_modules/.bin/webpack-dev-server --hot"
+    "hmr": "NODE_ENV=development BABEL_ENV=hmr npm run babel -- ./node_modules/.bin/webpack-dev-server --hot --cache false"
   },
   "author": "Sean Mc Allister",
   "license": "ISC",

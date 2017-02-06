@@ -41,10 +41,11 @@ module.exports = (opts) => {
   return {
     context: PROJECT_ROOT,
     entry: {
-        main: ['babel-polyfill', './js/index'],
+        main: [
+            'babel-polyfill',
+            './js/index'
+        ],
         vendor: [
-            'bootstrap-loader',
-            'font-awesome/css/font-awesome.css',
             './css/misc.css',
             'react',
             'react-dom',
@@ -53,7 +54,6 @@ module.exports = (opts) => {
             'react-markdown',
             'react-router',
             'react-fa',
-            'jquery',
             'selectize',
             'selectize/dist/css/selectize.bootstrap3.css'
         ],

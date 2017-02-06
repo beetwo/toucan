@@ -18,7 +18,7 @@ const OPTIONS = {
   HMR: process.env.HMR
 };
 
-module.exports = (() => {
+let main_config = (() => {
   let hmr = process.env.BABEL_ENV || false;
   switch (process.env.NODE_ENV) {
     case 'production':
@@ -32,3 +32,14 @@ module.exports = (() => {
       return require('./config/webpack.development.config.js');
   }
 })()(OPTIONS);
+
+let bootstrap_config = require('./config/webpack.bootstrap.config.js')(OPTIONS);
+
+// console.log(bootstrap_config, main_config);
+
+module.exports = [
+    main_config,
+    bootstrap_config
+]
+
+// module.exports = main_config
