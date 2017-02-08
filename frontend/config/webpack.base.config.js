@@ -6,7 +6,9 @@ var precss = require('precss');
 var autoprefixer = require('autoprefixer');
 
 module.exports = (opts) => {
-  const {PROJECT_ROOT, NODE_ENV} = opts;
+  const {PROJECT_ROOT, NODE_ENV, STATS_FILE, BUILD_ROOT} = opts;
+
+  console.log(BUILD_ROOT);
 
   let plugins = [
     new webpack.DefinePlugin({
@@ -23,6 +25,11 @@ module.exports = (opts) => {
     new BundleAnalyzerPlugin({
         analyzerMode: 'disabled',
         generateStatsFile: true
+    }),
+    // local bundle stats file
+    new BundleTracker({
+        path: BUILD_ROOT,
+        filename: STATS_FILE
     })
   ];
 
@@ -41,10 +48,11 @@ module.exports = (opts) => {
   return {
     context: PROJECT_ROOT,
     entry: {
-        main: ['babel-polyfill', './js/index'],
+        main: [
+            'babel-polyfill',
+            './js/index'
+        ],
         vendor: [
-            'bootstrap-loader',
-            'font-awesome/css/font-awesome.css',
             './css/misc.css',
             'react',
             'react-dom',
@@ -53,7 +61,6 @@ module.exports = (opts) => {
             'react-markdown',
             'react-router',
             'react-fa',
-            'jquery',
             'selectize',
             'selectize/dist/css/selectize.bootstrap3.css'
         ],
@@ -61,7 +68,8 @@ module.exports = (opts) => {
         editor: './js/editor'
     },
     output: {
-        path: path.resolve(PROJECT_ROOT, './build/')
+        path: BUILD_ROOT,
+        publicPath: '/static/wp/'
     },
     plugins,
     resolve: {extensions: ['.js']},

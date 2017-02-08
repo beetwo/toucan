@@ -5,6 +5,7 @@ from django.views.generic import TemplateView
 
 from toucan.invitations.views import InvitedSignupView
 from toucan.issues.views import HomeView
+from toucan.utils.views import MultiTemplateView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -46,7 +47,12 @@ urlpatterns += [
         url(r'^issue/(?P<issue_id>\d+)', HomeView.as_view(), name='home_issue'),
         url(r'', HomeView.as_view(), name='home'),  # => Single Page App
     ])),
-    url(r'^$', TemplateView.as_view(template_name='default/landing_page.html'), name='landing_page'),
+    url(r'^$', MultiTemplateView.as_view(
+        template_names=[
+            'toucan/index.html',
+            'default/landing_page.html'
+        ]),
+        name='landing_page'),
 ]
 
 

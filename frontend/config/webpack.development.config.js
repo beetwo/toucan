@@ -6,9 +6,7 @@ import baseConfig from './webpack.base.config.js';
 
 module.exports = (opts) => {
 
-  const {CDN_PATH, PROJECT_ROOT} = opts,
-      config = baseConfig(opts),
-      output_path = path.resolve(PROJECT_ROOT, 'build/');
+  const config = baseConfig(opts);
 
   return {
     ...config,
@@ -20,11 +18,6 @@ module.exports = (opts) => {
     },
     plugins: [
       ...config.plugins,
-      // local bundle stats file
-      new BundleTracker({
-        path: output_path,
-        filename: 'webpack-stats-development.json'
-      }),
       new webpack.NoEmitOnErrorsPlugin()
     ]
   };

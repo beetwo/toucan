@@ -1,4 +1,5 @@
 from . import *
+from .webpack import configureWebpackLoader
 
 DEBUG = True
 
@@ -17,6 +18,14 @@ MIDDLEWARE_CLASSES = [
 
 INTERNAL_IPS = [
     '127.0.0.1',
+]
+
+WEBPACK_BUILD_DIR = os.path.join(BASE_DIR, 'frontend/build/')
+
+WEBPACK_LOADER = configureWebpackLoader(WEBPACK_BUILD_DIR, debug=DEBUG, bundleDir='build/')
+
+STATICFILES_DIRS = STATICFILES_DIRS[:-1] + [
+    ('wp', WEBPACK_BUILD_DIR)
 ]
 
 LOGGING = {

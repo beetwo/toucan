@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+{% load static from staticfiles %}
+{% load render_bundle from webpack_loader %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Toucan</title>
+    {% render_bundle 'bootstrap' config='BOOTSTRAP' %}
+    <link href="{% static 'toucan/css/landing_page.css' %}" type="text/css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    {% include './nav.html' %}
+
+
+    <!-- Header -->
+    <div class="intro-header">
+        <div class="container-fluid intro-message">
+            <div class="row">
+                <div class="col-lg-6 col-lg-offset-3">
+                        <h3>Toucan</h3>
+                        <p>Humanitarian organisations often struggle to access real-time information about the urgent
+                            needs in an emergency situation, especially at times of rapid change. Sometimes, several
+                            organisations duplicate their efforts to reach solve the same issues, while others aren’t
+                            reached at all.</p>
+
+                        <p>Toucan is an online emergency relief platform. It enables communication among humanitarian
+                            actors and facilitates sharing information and coordinating resources, whether supplying
+                            food or urgent medical assistance. Organisations become more aware of who provides what
+                            services
+                            where.</p>
+                      <p>
+                          <a class="btn btn-primary">Learn more</a>
+                      </p>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /.intro-header -->
+{#    <div class="container-fluid" style="display: none">#}
+{#        <section id="supporters-and-partners">#}
+{#            <div id="supporters">#}
+{#                <h3>Our Supporters</h3>#}
+{#                <div class="logos">#}
+{#                    <img src="{% static 'toucan/img/erste_stiftung.png' %}" alt="3rd party logo">#}
+{#                    <img src="{% static 'toucan/img/bka.png' %}" alt="3rd party logo">#}
+{#                </div>#}
+{#            </div>#}
+{#            <div id="partners">#}
+{#                <h3>Our Partners</h3>#}
+{#                <div class="logos">#}
+{#                    <img src="{% static 'toucan/img/sos.png' %}" alt="3rd party logo">#}
+{#                </div>#}
+{##}
+{#            </div>#}
+{#        </section>#}
+{#    </div>#}
+
+
+    <div class="container-fluid">
+        <div class="row supporters">
+            <div class="col-md-7">
+                <h4 class="text-muted">Our Supporters</h4>
+                <div class="row">
+                    <div class="col-md-6 vc-image text-center">
+                        <img src="{% static 'toucan/img/erste_stiftung.png' %}" alt="3rd party logo">
+                    </div>
+                    <div class="col-md-6 vc-image text-center">
+                        <img src="{% static 'toucan/img/bka.png' %}" alt="3rd party logo">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <h4 class="text-muted">Our Partners</h4>
+                <div class="row">
+                    <div class="col-md-12 vc-image text-center">
+                        <img src="{% static 'toucan/img/sos.png' %}" alt="3rd party logo">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <img src="{% static 'toucan/logos/BeeTwo_Logo_white_transparent.svg' %}" alt="BeeTwo Logo" />
+                    <br />
+                    <span>Toucan is a product by BeeTwo and currently in development.</span>
+                    <br/>
+                    <span>&copy; 2017, BeeTwo</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

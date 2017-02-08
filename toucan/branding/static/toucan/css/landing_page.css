@@ -1,0 +1,166 @@
+/*
+ * Start Bootstrap - Landing Page (http://startbootstrap.com/)
+ * Copyright 2013-2016 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
+ */
+
+body,
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+}
+
+.navbar-brand {
+    padding: 10px 10px;
+}
+
+.navbar-brand > img {
+    max-height: 100%;
+}
+
+.intro-header {
+    margin-top: 90px;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    /*Fix up the nav links */
+    .navbar-default .navbar-nav > li > a {
+        color: #2C3E50;
+    }
+    .navbar-default .navbar-nav > li:last-child > a {
+        color: #32A9DD;
+    }
+
+    .navbar-default {
+        background-color: transparent;
+        border-color: #2C3E50;
+    }
+
+    /* some links want to have a border */
+    .toucan-nav-link-bordered {
+        border: 1px solid;
+        border-radius: 4px;
+        display: block;
+        position: relative;
+        padding: 0.6em 0.6em;
+        bottom: 0.6em;
+    }
+
+    .nav > li > a:hover, .nav > li > a:focus {
+        background-color: transparent;
+        font-weight: bolder;
+    }
+
+    /* header text above the background image */
+    .intro-header {
+        background-image: linear-gradient(
+            rgba(255, 255, 255, 0.3),
+            rgba(255, 255, 255, 0.3)
+        ),
+        url(../img/background.jpg);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+        background-size:cover;
+
+        width: 100%;
+        margin-top: 0;
+        height: 0;
+        text-align: center;
+        padding-top: 75%;
+    }
+
+    .intro-message {
+        position: absolute;
+        font-weight: bold;
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        /*background-color: rgba(255,255,255,0.6);*/
+    }
+
+}
+
+.supporters {
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+.supporters > div:not(:first-child) {
+    border-left: 3px solid #e7e7e7;
+}
+
+.vc-image {
+    padding-top: 2em;
+    padding-bottom: 2em;
+}
+
+.vc-image > img {
+    max-width: 300px;
+}
+
+/* flexbox experiments -- not used */
+section#supporters-and-partners {
+    display: flex;
+}
+
+section#supporters-and-partners > div {
+    border-left: 1px solid gainsboro;
+}
+
+section#supporters-and-partners > #supporters {
+    flex: 1.61803398875;
+}
+
+section#supporters-and-partners > #supporters {
+    flex: 1;
+}
+
+.logos {
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+}
+
+.logos > img {
+    display: block;
+    flex: 1;
+    width:auto;
+    height:auto;
+    max-width: 400px;
+    max-height: 200px;
+}
+
+/*@media (max-width: 767px) {*/
+    /*.intro-header {*/
+        /*background-image: none, none;*/
+    /*}*/
+/*}*/
+
+/*.logos {*/
+    /*display: flex;*/
+    /*flex-direction: row;*/
+/*}*/
+
+/*.logos > img {*/
+    /*flex: 0 1;*/
+    /*max-width: 400px;*/
+/*}*/
+
+footer {
+    padding: 1em;
+    color: white;
+    background-color: #2C3E50;
+    text-align: center;
+}
