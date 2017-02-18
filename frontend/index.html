@@ -2,11 +2,87 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>TestPage</title>
+    <title>Toucan TestPage</title>
 </head>
 <body>
-<main id='main' style="padding: 1em; height: 100vh; display:flex;"></main>
-<script src="./build/vendor.bundle.js"></script>
-<script src="./build/editor.js"></script>
+<nav class="navbar navbar-default navbar-static-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/map/">
+                <img alt="Toucan Logo" class="img-responsive" src="/assets/toucan_logo.png">
+            </a>
+        </div>
+
+        <div id="navbar" class="collapse navbar-collapse">
+
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a href="/map/">
+                        <i class="fa fa-globe"></i>
+                        All Issues
+                    </a>
+                </li>
+                <li>
+                    <a href="/org/">
+                        <i class="fa fa-address-card-o"></i>
+                        Organisations
+                    </a>
+                </li>
+                <li>
+                    <a href="/help/">
+                        <i class="fa fa-question-circle"></i>
+                        Help
+                    </a>
+                </li>
+            </ul>
+
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/issues/create/">
+                        <i class="fa fa-plus"></i>
+                        Add Issue
+                    </a>
+                </li>
+
+                    <li class="dropdown ">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-user"></i>&nbsp;
+                                mcallister
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="/profile/">
+                                        Settings and Profile
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/accounts/logout/">
+                                        Logout
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="/">
+                                        About Toucan
+                                    </a>
+                                </li>
+
+                            </ul>
+                    </li>
+
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+<h1>Toucan Kitchensink</h1>
+<script src="bootstrap.js"></script>
 </body>
 </html>

@@ -18,12 +18,15 @@ let OPTIONS = {
   BUILD_ROOT: path.resolve(__dirname, 'production/'),
   NODE_ENV: process.env.NODE_ENV,
   CDN_PATH: process.env.CDN_PATH,
-  HMR: process.env.HMR,
   STATS_FILE: 'webpack-stats.json'
 };
 
+let hmr = process.env.BABEL_ENV === 'hmr';
+let bsOnly = process.env.BABEL_ENV === 'bootstrap:dev';
+
+
 let main_config = (() => {
-  let hmr = process.env.BABEL_ENV || false;
+
   switch (process.env.NODE_ENV) {
     case 'development':
       OPTIONS = {
@@ -33,6 +36,11 @@ let main_config = (() => {
       if (hmr) {
         return require('./config/webpack.development.hmr.config.js');
       }
+
+      if(bsOnly) {
+          return require('./config/webpack.bootstrap.dev.config')
+      }
+
       return require('./config/webpack.development.config.js');
     default:
       // default is production config
@@ -42,7 +50,12 @@ let main_config = (() => {
 
 let bootstrap_config = require('./config/webpack.bootstrap.config.js')(OPTIONS);
 
-module.exports = [
+if (bsOnly) {
+  module.exports = main_config
+} else {
+  module.exports = [
     main_config,
     bootstrap_config
-]
+  ]
+}
+
