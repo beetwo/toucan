@@ -7,3 +7,13 @@
     padding: 15px;
     width: auto;
 }
+
+.navbar {
+    font-weight: bold;
+}
+
+.nav .add-issue-link {
+    background-color: $brand-info;
+    padding: 0.3rem 1.2rem;
+    border-radius: 0.4rem;
+}
