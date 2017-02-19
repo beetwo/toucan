@@ -160,12 +160,14 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '_media')
 
 WEBPACK_BUILD_DIR = os.path.join(BASE_DIR, 'frontend/production/')
-
 WEBPACK_LOADER = configureWebpackLoader(WEBPACK_BUILD_DIR)
+
+WEBPACK_ASSETS_DIR = os.path.join(BASE_DIR, 'frontend/assets/')
 
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
+    ('frontend', WEBPACK_ASSETS_DIR),
     ('wp', WEBPACK_BUILD_DIR),  # this needs to be last, see dev config
 ]
 

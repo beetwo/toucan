@@ -24,7 +24,6 @@ let OPTIONS = {
 let hmr = process.env.BABEL_ENV === 'hmr';
 let bsOnly = process.env.BABEL_ENV === 'bootstrap:dev';
 
-
 let main_config = (() => {
 
   switch (process.env.NODE_ENV) {
@@ -37,25 +36,19 @@ let main_config = (() => {
         return require('./config/webpack.development.hmr.config.js');
       }
 
-      if(bsOnly) {
-          return require('./config/webpack.bootstrap.dev.config')
-      }
-
       return require('./config/webpack.development.config.js');
     default:
       // default is production config
       return require('./config/webpack.production.config.js');
   }
-})()(OPTIONS);
-
-let bootstrap_config = require('./config/webpack.bootstrap.config.js')(OPTIONS);
+})();
 
 if (bsOnly) {
-  module.exports = main_config
+  module.exports = require('./config/webpack.bootstrap.dev.config')(OPTIONS);
 } else {
   module.exports = [
-    main_config,
-    bootstrap_config
+    main_config(OPTIONS),
+    require('./config/webpack.bootstrap.config.js')(OPTIONS)
   ]
 }
 

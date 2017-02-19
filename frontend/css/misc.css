@@ -2,15 +2,6 @@ div.toolbar {
     padding: 0.5em;
 }
 
-.navbar-brand {
-    padding: 0px;
-}
-.navbar-brand>img {
-    height: 100%;
-    padding: 15px;
-    width: auto;
-}
-
 @media (max-width: 922px) {
     /*save some space on mobile devices*/
     .page-header,
@@ -22,5 +13,4 @@ div.toolbar {
     .page-header {
         margin-bottom: 7px;
     }
-
 }

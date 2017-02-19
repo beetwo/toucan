@@ -21,14 +21,6 @@ h6 {
     font-weight: 700;
 }
 
-.navbar-brand {
-    padding: 10px 10px;
-}
-
-.navbar-brand > img {
-    max-height: 100%;
-}
-
 .intro-header {
     margin-top: 90px;
     text-align: center;
