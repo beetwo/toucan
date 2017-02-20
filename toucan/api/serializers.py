@@ -143,7 +143,10 @@ class SimpleImageSerializer(serializers.ModelSerializer):
     thumbnail_url = serializers.SerializerMethodField()
 
     def get_thumbnail_url(self, image):
-        return image.thumbnail.url
+        try:
+            return image.thumbnail.url
+        except FileNotFoundError:
+            return None
 
     class Meta:
         model = ImageFile
