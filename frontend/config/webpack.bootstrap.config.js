@@ -25,6 +25,7 @@ module.exports = (opts) => {
                 'jquery',
                 'bootstrap-loader',
                 'font-awesome/css/font-awesome.css',
+                'selectize/dist/css/selectize.bootstrap3.css',
             ]
         },
         // include the loaders from the main file

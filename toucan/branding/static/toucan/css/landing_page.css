@@ -21,14 +21,6 @@ h6 {
     font-weight: 700;
 }
 
-.navbar-brand {
-    padding: 10px 10px;
-}
-
-.navbar-brand > img {
-    max-height: 100%;
-}
-
 .intro-header {
     margin-top: 90px;
     text-align: center;
@@ -141,22 +133,6 @@ section#supporters-and-partners > #supporters {
     max-width: 400px;
     max-height: 200px;
 }
-
-/*@media (max-width: 767px) {*/
-    /*.intro-header {*/
-        /*background-image: none, none;*/
-    /*}*/
-/*}*/
-
-/*.logos {*/
-    /*display: flex;*/
-    /*flex-direction: row;*/
-/*}*/
-
-/*.logos > img {*/
-    /*flex: 0 1;*/
-    /*max-width: 400px;*/
-/*}*/
 
 footer {
     padding: 1em;

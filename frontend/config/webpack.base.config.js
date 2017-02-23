@@ -8,8 +8,6 @@ var autoprefixer = require('autoprefixer');
 module.exports = (opts) => {
   const {PROJECT_ROOT, NODE_ENV, STATS_FILE, BUILD_ROOT} = opts;
 
-  console.log(BUILD_ROOT);
-
   let plugins = [
     new webpack.DefinePlugin({
       'process.env': {
@@ -53,7 +51,6 @@ module.exports = (opts) => {
             './js/index'
         ],
         vendor: [
-            './css/misc.css',
             'react',
             'react-dom',
             'leaflet',
@@ -62,7 +59,6 @@ module.exports = (opts) => {
             'react-router',
             'react-fa',
             'selectize',
-            'selectize/dist/css/selectize.bootstrap3.css'
         ],
         b2MapSelector: './js/location_selector',
         editor: './js/editor'
