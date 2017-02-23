@@ -25,7 +25,7 @@ DEFAULT_FROM_EMAIL = 'toucan@brickwall.at'
 STATIC_ROOT = os.path.join(BASE_DIR, '_static')
 
 
-EMAIL_BACKEND = "anymail.backends.mailgun.MailgunBackend"
+EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 
 # install raven handler if configured
 try:
