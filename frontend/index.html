@@ -3,8 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Toucan TestPage</title>
+    <style>
+        body > hr {
+            margin-top: 3em;
+            margin-bottom: 3em;
+            box-shadow: 0 0 10px 1px black;
+        }
+        body > h1, body > h2 {
+            margin-bottom: 2em;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
+
+<h1>Toucan Kitchensink</h1>
+
+<hr />
+
+<h2>Navbar</h2>
+
 <nav class="navbar navbar-default navbar-static-top">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -82,6 +100,76 @@
         </div><!--/.nav-collapse -->
     </div>
 </nav>
+
+<hr />
+
+<h2>Issue List</h2>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            Here be stuff
+        </div>
+    </div>
+</div>
+
+<hr />
+
+<h2>Forms</h2>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <form>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputFile">File input</label>
+                    <input type="file" id="exampleInputFile">
+                    <p class="help-block">Example block-level help text here.</p>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> Check me out
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <form>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputFile">File input</label>
+                    <input type="file" >
+                    <p class="help-block">Example block-level help text here.</p>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> Check me out
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<hr />
+
 
 
 
