@@ -418,6 +418,7 @@ module.exports = g;
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
+// eslint-disable-next-line import/no-webpack-loader-syntax
 module.exports = __webpack_require__(7);
 
 

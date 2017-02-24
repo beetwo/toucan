@@ -14,7 +14,7 @@ class B2SelectorMap extends React.Component {
     super(props)
     this._map = null
     this.state = {
-      position: this.props.position || defaultIssueLocation,
+      position: this.props.position,
       zoom: 12
     }
 
@@ -24,9 +24,7 @@ class B2SelectorMap extends React.Component {
   }
 
   componentDidMount() {
-    if (this.state.position === defaultIssueLocation) {
-      this._map.getLeafletElement().locate();
-    }
+    this._map.leafletElement.locate();
   }
 
   handleLocationFound(e) {
@@ -34,13 +32,13 @@ class B2SelectorMap extends React.Component {
   }
 
   handleLocationError() {
-    this.setPosition(defaultIssueLocation);
+    // this is called if the user blocks the geo location call
   }
 
   setPosition(position) {
     this.setState({
       position: position,
-      zoom: this._map.getLeafletElement().getZoom()
+      zoom: this._map.leafletElement.getZoom()
     });
   }
 
@@ -51,10 +49,10 @@ class B2SelectorMap extends React.Component {
   }
 
   render () {
-    const position = this.state.position;
+    const position = this.state.position || defaultIssueLocation;
     let marker = null;
 
-    if (this.state.position) {
+    if (position && position !== defaultIssueLocation) {
       let marker_props = {
         ref: 'marker',
         draggable: this.props.editable,
@@ -73,7 +71,7 @@ class B2SelectorMap extends React.Component {
         <TileLayer url='//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' />
                  {marker}
-         <LocationControl locate={()=> this._map.getLeafletElement().locate()} />
+         <LocationControl locate={()=> this._map.leafletElement.locate()} />
       </Map>);
   }
   componentDidUpdate() {

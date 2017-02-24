@@ -63,3 +63,8 @@ class NotificationSettingsForm(forms.ModelForm):
             'issue_types': _('Filter by issue type (default: all).'),
             'notification_type': _('Choose how you want to be notified.')
         }
+        error_messages = {
+            'point': {
+                'required': _('Please select a point from the map.')
+            }
+        }

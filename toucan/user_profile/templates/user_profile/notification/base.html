@@ -41,10 +41,13 @@ var props = {
 var update_cb = render_map(map, props);
 
 // subscribe to changes in the radius field
-radius_field.addEventListener('change', function(e) {
-  props.radius = parseInt(this.value, 10) * 1000;
-  update_cb(props);
-})
+var handleRadiusChange = function(e) {
+    props.radius = parseInt(e.target.value, 10) * 1000;
+    update_cb(props);
+}
+
+radius_field.addEventListener('change', handleRadiusChange)
+radius_field.addEventListener('keyup', handleRadiusChange)
 
 $('select[multiple]').selectize({
     placeholder: 'any'
