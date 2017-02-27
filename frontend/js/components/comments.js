@@ -36,15 +36,17 @@ export class CommentForm extends React.Component {
   }
 
   resetEditorState() {
-    let editorState = EditorState.push(
-      this.state.editorState,
-      ContentState.createFromText('')
-    );
-    this.setState({
-      editorState,
-      attachments: [],
-      files: []
-    })
+    // let editorState = EditorState.push(
+    //   this.state.editorState,
+    //   ContentState.createFromText('')
+    // );
+    // this.setState({
+    //   editorState,
+    //   attachments: [],
+    //   files: []
+    // })
+    //   console.log(this._getInitialState());
+    this.setState(this._getInitialState());
   }
 
   handleSubmit(e) {
