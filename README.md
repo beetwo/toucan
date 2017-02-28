@@ -1,4 +1,4 @@
-![toucan logo](https://github.com/beetwo/toucan/blob/master/toucan/branding/toucan_logo.png)
+![toucan logo](https://github.com/beetwo/toucan/blob/master/toucan/branding/static/toucan/logos/Toucan_Logo_Main.png)
 
 # Toucan
 
