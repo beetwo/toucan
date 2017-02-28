@@ -1,79 +1,122 @@
 [
-  {
+{
     "model": "issues.issuetype",
     "pk": 1,
     "fields": {
-      "created": "2016-05-06T13:46:41.895Z",
-      "modified": "2016-10-05T15:53:21.273Z",
-      "name": "Medical",
-      "slug": "Medical",
-      "svg_icon": ""
+        "created": "2017-02-28T15:08:52.550Z",
+        "modified": "2017-02-28T15:08:52.551Z",
+        "name": "Core Relief Items (Non-Food Items)",
+        "slug": "core-relief-items-non-food-items",
+        "description": "",
+        "svg_icon": ""
     }
-  },
-  {
+},
+{
     "model": "issues.issuetype",
     "pk": 2,
     "fields": {
-      "created": "2016-05-06T13:46:48.339Z",
-      "modified": "2016-10-05T15:53:11.743Z",
-      "name": "General",
-      "slug": "general",
-      "svg_icon": ""
+        "created": "2017-02-28T15:08:52.585Z",
+        "modified": "2017-02-28T15:08:52.586Z",
+        "name": "Shelter",
+        "slug": "shelter",
+        "description": "",
+        "svg_icon": ""
     }
-  },
-  {
+},
+{
     "model": "issues.issuetype",
     "pk": 3,
     "fields": {
-      "created": "2016-09-19T10:36:57.293Z",
-      "modified": "2016-10-05T15:52:56.275Z",
-      "name": "Supplies",
-      "slug": "Supplies",
-      "svg_icon": ""
+        "created": "2017-02-28T15:08:52.610Z",
+        "modified": "2017-02-28T15:08:52.610Z",
+        "name": "Health",
+        "slug": "health",
+        "description": "",
+        "svg_icon": ""
     }
-  },
-  {
+},
+{
     "model": "issues.issuetype",
     "pk": 4,
     "fields": {
-      "created": "2016-10-05T15:50:20.549Z",
-      "modified": "2016-10-05T15:50:20.553Z",
-      "name": "Accommodation",
-      "slug": "Accommodation",
-      "svg_icon": ""
+        "created": "2017-02-28T15:08:52.627Z",
+        "modified": "2017-02-28T15:08:52.627Z",
+        "name": "Nutrition (Food Items)",
+        "slug": "nutrition-food-items",
+        "description": "",
+        "svg_icon": ""
     }
-  },
-  {
+},
+{
     "model": "issues.issuetype",
     "pk": 5,
     "fields": {
-      "created": "2016-10-05T15:51:02.037Z",
-      "modified": "2016-10-05T15:51:02.037Z",
-      "name": "Non Food Item",
-      "slug": "NonFoodItem",
-      "svg_icon": ""
+        "created": "2017-02-28T15:08:52.638Z",
+        "modified": "2017-02-28T15:08:52.638Z",
+        "name": "Sanitation, Water & Hygiene",
+        "slug": "sanitation-water-hygiene",
+        "description": "",
+        "svg_icon": ""
     }
-  },
-  {
+},
+{
     "model": "issues.issuetype",
     "pk": 6,
     "fields": {
-      "created": "2016-10-05T15:51:23.394Z",
-      "modified": "2016-10-05T15:51:23.395Z",
-      "name": "Food Item",
-      "slug": "FoodItem",
-      "svg_icon": ""
+        "created": "2017-02-28T15:08:52.650Z",
+        "modified": "2017-02-28T15:08:52.650Z",
+        "name": "Logistics",
+        "slug": "logistics",
+        "description": "",
+        "svg_icon": ""
     }
-  },
-  {
+},
+{
     "model": "issues.issuetype",
     "pk": 7,
     "fields": {
-      "created": "2016-10-05T15:51:35.023Z",
-      "modified": "2016-10-05T15:51:35.023Z",
-      "name": "Legal Advice",
-      "slug": "LegalAdvice",
-      "svg_icon": ""
+        "created": "2017-02-28T15:08:52.673Z",
+        "modified": "2017-02-28T15:08:52.673Z",
+        "name": "Protection",
+        "slug": "protection",
+        "description": "",
+        "svg_icon": ""
     }
-  }
+},
+{
+    "model": "issues.issuetype",
+    "pk": 8,
+    "fields": {
+        "created": "2017-02-28T15:08:52.684Z",
+        "modified": "2017-02-28T15:08:52.684Z",
+        "name": "Legal Advice",
+        "slug": "legal-advice",
+        "description": "",
+        "svg_icon": ""
+    }
+},
+{
+    "model": "issues.issuetype",
+    "pk": 9,
+    "fields": {
+        "created": "2017-02-28T15:08:52.696Z",
+        "modified": "2017-02-28T15:08:52.697Z",
+        "name": "Education",
+        "slug": "education",
+        "description": "",
+        "svg_icon": ""
+    }
+},
+{
+    "model": "issues.issuetype",
+    "pk": 10,
+    "fields": {
+        "created": "2017-02-28T15:08:52.709Z",
+        "modified": "2017-02-28T15:08:52.709Z",
+        "name": "Camp Management (Staff Supplies)",
+        "slug": "camp-management-staff-supplies",
+        "description": "",
+        "svg_icon": ""
+    }
+}
 ]
