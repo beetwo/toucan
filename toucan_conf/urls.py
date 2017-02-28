@@ -1,11 +1,13 @@
 from django.conf import settings
 from django.conf.urls import url, include
 from django.contrib import admin
-from django.views.generic import TemplateView
-
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 from toucan.invitations.views import InvitedSignupView
 from toucan.issues.views import HomeView
 from toucan.utils.views import MultiTemplateView
+
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -41,13 +43,21 @@ if settings.DEBUG:
     ]
 
 
+
+class RedirectAuthenticatedUsers(MultiTemplateView):
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated():
+            return HttpResponseRedirect(reverse('home'))
+        return super().get(request, *args, **kwargs)
+
+
 urlpatterns += [
     url(r'^map/', include([
         # this is needed for reversing the issue url in the notifications
         url(r'^issue/(?P<issue_id>\d+)', HomeView.as_view(), name='home_issue'),
         url(r'', HomeView.as_view(), name='home'),  # => Single Page App
     ])),
-    url(r'^$', MultiTemplateView.as_view(
+    url(r'^$', RedirectAuthenticatedUsers.as_view(
         template_names=[
             'toucan/index.html',
             'default/landing_page.html'
