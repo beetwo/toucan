@@ -135,7 +135,7 @@ class IssueListUI extends React.Component {
 
             <ScrollContainer scrollKey='toucan-issue-list'>
             {/* the actual table of issues */}
-            <div className="issue-list-body">
+            <div className="issue-list-body table-responsive">
                 <table className="issues table table-hover table-striped">
                 {/*<thead>*/}
                     {/*<tr>*/}
