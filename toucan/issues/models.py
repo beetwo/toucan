@@ -53,10 +53,12 @@ class Issue(TimeStampedModel):
 
     title = models.CharField(
         max_length=300,
-        verbose_name=_('issue title')
+        verbose_name=_('issue title'),
+        blank=True,
+        default=''
     )
 
-    description = models.TextField(blank=False)
+    description = models.TextField(blank=True, default='')
 
     FORMAT_CHOICES = Choices(
         ('', _('Just text')),
@@ -79,8 +81,17 @@ class Issue(TimeStampedModel):
 
     issue_types = models.ManyToManyField(
         IssueType,
+        blank=True,
+        verbose_name=_('issue type'),
+        related_name='all_issues'
+    )
+
+    main_issue_type = models.ForeignKey(
+        IssueType,
+        null=True,
         blank=False,
-        verbose_name=_('issue type')
+        verbose_name=_('issue type'),
+        related_name='issues'
     )
 
     priority = models.SmallIntegerField(choices=PRIORITY_CHOICES, default=1)
@@ -93,6 +104,17 @@ class Issue(TimeStampedModel):
         default='open',
         verbose_name=_('issue status')
     )
+
+    amount = models.SmallIntegerField(default=1)
+    resource = models.CharField(
+        max_length=100,
+        default='',
+        blank=False
+    )
+
+    @property
+    def issue_title(self):
+        return '%d x %s' % (self.amount, self.resource)
 
     def update_status(self):
         status = self.status
@@ -112,6 +134,10 @@ class Issue(TimeStampedModel):
             return self.status_changes.latest().status
         except IssueStatus.DoesNotExist:
             return 'open'
+
+    def get_issue_types(self):
+        '''This method is being used to hide the multiple issue types from the api'''
+        return [self.main_issue_type] if self.main_issue_type else []
 
     def get_absolute_url(self):
         url = reverse('home_issue', kwargs={'issue_id': self.pk})

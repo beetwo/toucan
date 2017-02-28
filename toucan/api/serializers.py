@@ -262,13 +262,19 @@ class IssueSerializer(GeoFeatureModelSerializer):
         lookup_field='pk'
     )
 
-    issue_types = IssueTypeSerializer(many=True, read_only=True)
+    issue_types = IssueTypeSerializer(
+        many=True,
+        read_only=True,
+        source='get_issue_types'
+    )
 
     comment_count = serializers.IntegerField(read_only=True)
 
     organisation = OrganisationSerializer()
 
     status = serializers.SerializerMethodField()
+
+    title = serializers.ReadOnlyField(source='issue_title')
 
     def get_status(self, obj):
         return obj.get_current_status_display()
@@ -283,6 +289,8 @@ class IssueSerializer(GeoFeatureModelSerializer):
             'priority',
             'visibility',
             'status',
+            'amount',
+            'resource',
             # 'get_status_display',
             'created',
             # defined fields

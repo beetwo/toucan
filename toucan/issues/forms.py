@@ -27,8 +27,10 @@ class IssueForm(forms.ModelForm):
         fields = [
             'point',
             'title',
-            'issue_types',
-            'description',
+            'main_issue_type',
+            'amount',
+            'resource'
+            # 'description',
         ]
         widgets = {
             'point': forms.TextInput,
@@ -36,15 +38,12 @@ class IssueForm(forms.ModelForm):
         }
         labels = {
             'title': 'Title',
-            'issue_types': 'Categories'
+            'main_issue_type': 'Category',
+            'amount': 'Amount',
+            'resource': ''
         }
         help_texts = {
             'title': _('Add a concise title for your issue, e.g. milk shortage.'),
-            'description': _('''Add a short paragraph about the issue
-                where you explain some details, e.g.
-                What do you need?
-                Is there a specific timeframe?
-            '''),
-            'issue_types': _('Select under what category your issue falls.'),
+            'main_issue_type': _('Select under what category your issue falls.'),
             'point': _('Specify a location for your issue by clicking the map and/or dragging the marker.')
         }

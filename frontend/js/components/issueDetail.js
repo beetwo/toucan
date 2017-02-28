@@ -42,9 +42,17 @@ class IssueDetailMain extends React.Component {
       case 'markdown':
         body = <MarkdownBody text={description} />;
         break;
+      case undefined:
+        body = null
+        break
       default:
         body = <RawTextBody text={description} />;
     }
+
+    let resourceListing = <ul>
+      <li><span>{issue.amount}</span> <span>{issue.resource}</span></li>
+    </ul>
+
     return <div className='issue-detail-main' ref='scrollbar'>
 
       <h3>
@@ -78,7 +86,9 @@ class IssueDetailMain extends React.Component {
             <UserLink username={ issue.creator.username } />
           </div>
           <div className='panel-body'>
-            {body}
+              {resourceListing}
+              {/*{ body ? <hr /> : null}*/}
+              {/*{ body}*/}
           </div>
       </div>
       {children}

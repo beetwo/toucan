@@ -13,6 +13,7 @@
 
             {% for f in form.hidden_fields %}{{ f }}{% endfor %}
 
+            <h2>Where?</h2>
             {# the point field needs some special rendering #}
             {% if form.errors.point %}
             <div class="form-group has-error">
@@ -28,9 +29,16 @@
             <div class="help-block" style="margin-bottom: 1em">{{ form.point.help_text }}</div>
             {# end point field #}
 
-            {% bootstrap_field form.title show_label=False %}
-            {% bootstrap_field form.description show_label=False %}
-            {% bootstrap_field form.issue_types %}
+            <h2>What?</h2>
+            {% bootstrap_field form.main_issue_type %}
+
+            <h2>For whom?</h2>
+            <div class="form-inline">
+                {% bootstrap_field form.amount label_class='sr-only' %}
+                {% bootstrap_field form.resource label_class='sr-only' %}
+            </div>
+
+            <hr />
 
             {% buttons %}
             <button type="submit" class="btn btn-primary">
@@ -74,7 +82,7 @@ var props = {
 render_map(issueMap, props);
 
 // selectize the issue type selector
-$('select[multiple]').selectize();
+$('select[name=main_issue_type]').selectize();
 
 })();
 </script>
