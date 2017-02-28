@@ -10,6 +10,7 @@ import App from './containers/app'
 import IssueDetail from './containers/issueDetail'
 import IssueList from './containers/issueList'
 import UserDetail from './containers/userDetail'
+import CreateIssue from './components/createIssue'
 
 import { Router, Route, IndexRoute, useRouterHistory, applyRouterMiddleware, browserHistory } from 'react-router'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
@@ -56,6 +57,7 @@ render(
       <Route path="/" component={App} name='issueList' >
         <IndexRoute component={IssueList} name='issueListIndex'/>
         <Route path="issue/:IssueID" component={IssueDetail} name='issueDetail'/>
+        <Route path="add/" component={CreateIssue} name="addIssue" />
       </Route>
     </Router>
   </Provider>,
