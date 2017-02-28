@@ -43,6 +43,12 @@ cp toucan_conf/settings/secrets.example.py toucan_conf/settings/secrets.py
 
 Open `toucan_conf/settings/secrets.py` and set `SECRET_KEY` to some string.
 
+### Load the default categories
+
+While not required it is strongly suggested to add some default categories for your installation. These can be added to/changed/deleted from the administrative interface. 
+```
+./manage.py loaddata toucan/fixtures/issueTypes.json
+```
 ### Database
 
 The application requires a PostgreSQL installation (>=9.4) with a database named `toucan`. Configure the database connection by extending the `DATABASES` object in `issues_tracker/settings/__init__.py`:
