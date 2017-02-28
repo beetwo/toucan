@@ -32,7 +32,9 @@
                             services
                             where.</p>
                       <p>
-                          <a class="btn btn-primary">Learn more</a>
+                          <a class="btn btn-primary" href="{% static 'toucan/factsheet.pdf' %}">
+                              Download Factsheet <i class="fa fa-file-pdf-o"></i>
+                          </a>
                       </p>
                 </div>
             </div>
@@ -41,25 +43,6 @@
         <!-- /.container -->
     </div>
     <!-- /.intro-header -->
-{#    <div class="container-fluid" style="display: none">#}
-{#        <section id="supporters-and-partners">#}
-{#            <div id="supporters">#}
-{#                <h3>Our Supporters</h3>#}
-{#                <div class="logos">#}
-{#                    <img src="{% static 'toucan/img/erste_stiftung.png' %}" alt="3rd party logo">#}
-{#                    <img src="{% static 'toucan/img/bka.png' %}" alt="3rd party logo">#}
-{#                </div>#}
-{#            </div>#}
-{#            <div id="partners">#}
-{#                <h3>Our Partners</h3>#}
-{#                <div class="logos">#}
-{#                    <img src="{% static 'toucan/img/sos.png' %}" alt="3rd party logo">#}
-{#                </div>#}
-{##}
-{#            </div>#}
-{#        </section>#}
-{#    </div>#}
-
 
     <div class="container-fluid">
         <div class="row supporters">
@@ -94,9 +77,9 @@
                 <div class="col-lg-12">
                     <img src="{% static 'toucan/logos/BeeTwo_Logo_white_transparent.svg' %}" alt="BeeTwo Logo" />
                     <br />
-                    <span>Toucan is a product by BeeTwo and currently in development.</span>
+                    <span>Toucan is a product by <a href="http://beetwo.at/">BeeTwo</a> and currently in development.</span>
                     <br/>
-                    <span>&copy; 2017, BeeTwo</span>
+                    <span>&copy; 2017, <a href="http://beetwo.at/">BeeTwo</a></span>
                 </div>
             </div>
         </div>

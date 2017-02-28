@@ -137,15 +137,6 @@ class IssueListUI extends React.Component {
             {/* the actual table of issues */}
             <div className="issue-list-body table-responsive">
                 <table className="issues table table-hover table-striped">
-                {/*<thead>*/}
-                    {/*<tr>*/}
-                        {/*<th>Issue</th>*/}
-                        {/*<th>Status</th>*/}
-                        {/*<th>Category</th>*/}
-                        {/*<th>Created</th>*/}
-                        {/*<th>Discussion</th>*/}
-                    {/*</tr>*/}
-                {/*</thead>*/}
                 <tbody>
                     {rows}
                 </tbody>
