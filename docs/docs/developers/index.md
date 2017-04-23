@@ -1,4 +1,10 @@
-# Toucan
+# Developing Toucan
+
+```
+This is currently just the old README.md file from the repository.
+If you follow through this and hit any walls please file an issue or 
+(even better) issue a pull request. Thanks.
+```
 
 ## Installation
 
@@ -12,9 +18,11 @@
 
 ### Dependencies
 
-The backend assumes a working python environment with the packages listed in requirements.txt installed.
+The backend assumes a working python environment with the packages
+listed in requirements.txt installed.
 
-First create and activate a virtual environment by issuing the following commands in the project directory:
+First create and activate a virtual environment by issuing the following
+commands in the project directory:
 
 ```
 virtualenv env
@@ -27,7 +35,10 @@ Then install the requirements into the virtual environment:
 pip install -r requirements.txt
 ```
 
-Under Linux it might be necessary to install additional dev-packages such as `libjpeg-dev`, `zlibc`, `python3.4-dev` and `libpg-dev` because the installation of some python dependencies involve the compilation of C-code.
+Under Linux it might be necessary to install additional dev-packages
+such as `libjpeg-dev`, `zlibc`, `python-dev` and `libpg-dev` because 
+the installation of some python dependencies involve the compilation of 
+C extensions.
 
 ### Set a secret key
 
@@ -39,13 +50,18 @@ Open `toucan_conf/settings/secrets.py` and set `SECRET_KEY` to some string.
 
 ### Load the default categories
 
-While not required it is strongly suggested to add some default categories for your installation. These can be added to/changed/deleted from the administrative interface. 
+While not required it is strongly suggested to add some default 
+categories for your installation. These can be added to/changed/deleted 
+from the administrative interface. 
+
 ```
 ./manage.py loaddata toucan/fixtures/issueTypes.json
 ```
 ### Database
 
-The application requires a PostgreSQL installation (>=9.4) with a database named `toucan`. Configure the database connection by extending the `DATABASES` object in `issues_tracker/settings/__init__.py`:
+The application requires a PostgreSQL installation (>=9.4) with a 
+database named `toucan`. Configure the database connection by extending 
+the `DATABASES` object in `issues_tracker/settings/__init__.py`:
 
 ```
 DATABASES = {
@@ -60,7 +76,8 @@ DATABASES = {
 }
 ```
 
-To create the database scheme run the migrations (might require PostgreSQL superuser rights to install the postgis extension):
+To create the database scheme run the migrations (this might require 
+PostgreSQL superuser rights to install the postgis extension):
 
 ```
 ./manage.py migrate
@@ -68,9 +85,12 @@ To create the database scheme run the migrations (might require PostgreSQL super
 
 ### Build Frontend
 
-The frontend part of the code is to be found in the 'frontend' folder. To install the build tools and dependencies of the frontend issue the following commands from within that folder.
+The frontend part of the code is to be found in the 'frontend' folder. 
+To install the build tools and dependencies of the frontend issue the 
+following commands from within that folder.
 
-Note: use either the yarn or the npm commands, both should result in the same packages being installed.
+Note: use either the yarn or the npm commands, both should result in 
+the same packages being installed.
 
 ```
 npm install
@@ -95,7 +115,8 @@ yarn build-dev
 
 ### Frontend
 
-Start the development server so that the frontend is automatically rebuilt when a file is modified.
+Start the development server so that the frontend is automatically 
+rebuilt when a file is modified.
 In the ./frontend folder run the following command
 
 ```
@@ -109,7 +130,8 @@ yarn dev
 ```
 
 
-For fearless frontend developers there is also the option to enable hot module replacement.
+For fearless frontend developers there is also the option to enable hot 
+module replacement.
 ```
 npm run hmr
 ```
@@ -120,7 +142,9 @@ or
 yarn hmr
 ```
 
-This will start a server to do the static file hosting on 127.0.0.1:8080 and skip the django dev server for the built frontend files.
+This will start a server to do the static file hosting on 
+127.0.0.1:8080 and skip the django dev server for the built frontend 
+files.
 
 
 ### Backend
@@ -139,4 +163,5 @@ Start the application server with development settings:
 ./manage.py runserver --settings=toucan_conf.settings.dev
 ```
 
-You should be able to access the application now at http://127.0.0.1:8000.
+You should be able to access the application now at 
+http://127.0.0.1:8000.

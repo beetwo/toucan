@@ -1,2 +1,12 @@
 site_name: Toucan Documentation
+
+pages:
+- Home: 'index.md'
+- End User Guide:
+    - 'Features': 'user-guide/features.md'
+- Developers:
+    - 'Getting started': 'developers/index.md'
+    - 'Using Docker': 'developers/using-docker.md'
+- About: 'about.md'
+
 theme: readthedocs
