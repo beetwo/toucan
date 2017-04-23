@@ -11,6 +11,14 @@
 
     
     <url>
+     <loc>/about/</loc>
+     <lastmod>2017-04-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
      <loc>/users/</loc>
      <lastmod>2017-04-23</lastmod>
      <changefreq>daily</changefreq>
@@ -18,19 +26,19 @@
     
 
     
+        
     <url>
-     <loc>/devs/</loc>
+     <loc>/developers/</loc>
      <lastmod>2017-04-23</lastmod>
      <changefreq>daily</changefreq>
     </url>
-    
-
-    
+        
     <url>
-     <loc>/about/</loc>
+     <loc>/developers/using-docker/</loc>
      <lastmod>2017-04-23</lastmod>
      <changefreq>daily</changefreq>
     </url>
+        
     
 
 </urlset>

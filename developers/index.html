@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Home - Toucan Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Home";
+    var mkdocs_page_input_path = "developers/index.md";
+    var mkdocs_page_url = "/developers/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Toucan Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../about/">About</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../users/">Users</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Developers</span>
+    <ul class="subnav">
+                <li class=" current">
+                    
+    <a class="current" href="./">Home</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#toucan">Toucan</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#installation">Installation</a></li>
+        
+            <li><a class="toctree-l4" href="#development">Development</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="using-docker/">Using docker</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Toucan Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Developers &raquo;</li>
+        
+      
+    
+    <li>Home</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="toucan">Toucan</h1>
+<h2 id="installation">Installation</h2>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li><a href="https://www.python.org/">Python 3</a></li>
+<li><a href="https://www.postgresql.org/">PostgreSQL</a> (&gt;=9.4)</li>
+<li><a href="http://postgis.net/">PostGIS</a></li>
+<li><a href="http://www.redis.io">Redis</a></li>
+<li><a href="https://nodejs.org">Node.js</a></li>
+</ul>
+<h3 id="dependencies">Dependencies</h3>
+<p>The backend assumes a working python environment with the packages listed in requirements.txt installed.</p>
+<p>First create and activate a virtual environment by issuing the following commands in the project directory:</p>
+<pre><code>virtualenv env
+source env/bin/activate
+</code></pre>
+
+<p>Then install the requirements into the virtual environment:</p>
+<pre><code>pip install -r requirements.txt
+</code></pre>
+
+<p>Under Linux it might be necessary to install additional dev-packages such as <code>libjpeg-dev</code>, <code>zlibc</code>, <code>python3.4-dev</code> and <code>libpg-dev</code> because the installation of some python dependencies involve the compilation of C-code.</p>
+<h3 id="set-a-secret-key">Set a secret key</h3>
+<pre><code>cp toucan_conf/settings/secrets.example.py toucan_conf/settings/secrets.py
+</code></pre>
+
+<p>Open <code>toucan_conf/settings/secrets.py</code> and set <code>SECRET_KEY</code> to some string.</p>
+<h3 id="load-the-default-categories">Load the default categories</h3>
+<p>While not required it is strongly suggested to add some default categories for your installation. These can be added to/changed/deleted from the administrative interface. </p>
+<pre><code>./manage.py loaddata toucan/fixtures/issueTypes.json
+</code></pre>
+
+<h3 id="database">Database</h3>
+<p>The application requires a PostgreSQL installation (&gt;=9.4) with a database named <code>toucan</code>. Configure the database connection by extending the <code>DATABASES</code> object in <code>issues_tracker/settings/__init__.py</code>:</p>
+<pre><code>DATABASES = {
+  'default': {
+    'ENGINE': 'django.contrib.gis.db.backends.postgis',
+    'NAME': 'toucan',
+    'USER': 'postgres',
+    'PASSWORD': 'postgres',
+    'HOST': 'localhost',
+    'PORT': 5434
+  }
+}
+</code></pre>
+
+<p>To create the database scheme run the migrations (might require PostgreSQL superuser rights to install the postgis extension):</p>
+<pre><code>./manage.py migrate
+</code></pre>
+
+<h3 id="build-frontend">Build Frontend</h3>
+<p>The frontend part of the code is to be found in the 'frontend' folder. To install the build tools and dependencies of the frontend issue the following commands from within that folder.</p>
+<p>Note: use either the yarn or the npm commands, both should result in the same packages being installed.</p>
+<pre><code>npm install
+</code></pre>
+
+<p>or</p>
+<pre><code>yarn install
+</code></pre>
+
+<p>Finally build the frontend assets</p>
+<pre><code>npm run build-dev
+</code></pre>
+
+<p>or</p>
+<pre><code>yarn build-dev
+</code></pre>
+
+<h2 id="development">Development</h2>
+<h3 id="frontend">Frontend</h3>
+<p>Start the development server so that the frontend is automatically rebuilt when a file is modified.
+In the ./frontend folder run the following command</p>
+<pre><code>npm run dev
+</code></pre>
+
+<p>or</p>
+<pre><code>yarn dev
+</code></pre>
+
+<p>For fearless frontend developers there is also the option to enable hot module replacement.</p>
+<pre><code>npm run hmr
+</code></pre>
+
+<p>or</p>
+<pre><code>yarn hmr
+</code></pre>
+
+<p>This will start a server to do the static file hosting on 127.0.0.1:8080 and skip the django dev server for the built frontend files.</p>
+<h3 id="backend">Backend</h3>
+<p>Make sure you have activated the virtual environment:</p>
+<pre><code>source env/bin/activate
+</code></pre>
+
+<p>Make sure a Redis server is running and listening on port 6379.</p>
+<p>Start the application server with development settings:</p>
+<pre><code>./manage.py runserver --settings=toucan_conf.settings.dev
+</code></pre>
+
+<p>You should be able to access the application now at http://127.0.0.1:8000.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="using-docker/" class="btn btn-neutral float-right" title="Using docker">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../users/" class="btn btn-neutral" title="Users"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../users/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="using-docker/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+
+</body>
+</html>

@@ -16,16 +16,6 @@
             "title": "Introduction"
         },
         {
-            "location": "/users/",
-            "text": "",
-            "title": "For end users"
-        },
-        {
-            "location": "/devs/",
-            "text": "",
-            "title": "For developers"
-        },
-        {
             "location": "/about/",
             "text": "About\n\n\nSomebody please fill me up with some text",
             "title": "About"
@@ -34,6 +24,86 @@
             "location": "/about/#about",
             "text": "Somebody please fill me up with some text",
             "title": "About"
+        },
+        {
+            "location": "/users/",
+            "text": "Features\n\n\nCurrently a fully configured Toucan deployment offers the following features:\n\n\n\n\nuser/organisation logic with access control\n\n\nper user configurable notification system based on email and text messages (\nSMS\n)\n\n\ntwitter like mentions of usernames  and organisation names\n\n\ngeographic subscriptions let users be notified of new issues in a geographic range (point + radius)\n\n\n\n\nThe Overview Page\n\n\nThe main view is split between a map and a issue list view. \nThe map on the left hand side visualizes the locations of issues. \nThe right hand side of the",
+            "title": "Users"
+        },
+        {
+            "location": "/users/#features",
+            "text": "Currently a fully configured Toucan deployment offers the following features:   user/organisation logic with access control  per user configurable notification system based on email and text messages ( SMS )  twitter like mentions of usernames  and organisation names  geographic subscriptions let users be notified of new issues in a geographic range (point + radius)",
+            "title": "Features"
+        },
+        {
+            "location": "/users/#the-overview-page",
+            "text": "The main view is split between a map and a issue list view. \nThe map on the left hand side visualizes the locations of issues. \nThe right hand side of the",
+            "title": "The Overview Page"
+        },
+        {
+            "location": "/developers/",
+            "text": "Toucan\n\n\nInstallation\n\n\nPrerequisites\n\n\n\n\nPython 3\n\n\nPostgreSQL\n (>=9.4)\n\n\nPostGIS\n\n\nRedis\n\n\nNode.js\n\n\n\n\nDependencies\n\n\nThe backend assumes a working python environment with the packages listed in requirements.txt installed.\n\n\nFirst create and activate a virtual environment by issuing the following commands in the project directory:\n\n\nvirtualenv env\nsource env/bin/activate\n\n\n\n\nThen install the requirements into the virtual environment:\n\n\npip install -r requirements.txt\n\n\n\n\nUnder Linux it might be necessary to install additional dev-packages such as \nlibjpeg-dev\n, \nzlibc\n, \npython3.4-dev\n and \nlibpg-dev\n because the installation of some python dependencies involve the compilation of C-code.\n\n\nSet a secret key\n\n\ncp toucan_conf/settings/secrets.example.py toucan_conf/settings/secrets.py\n\n\n\n\nOpen \ntoucan_conf/settings/secrets.py\n and set \nSECRET_KEY\n to some string.\n\n\nLoad the default categories\n\n\nWhile not required it is strongly suggested to add some default categories for your installation. These can be added to/changed/deleted from the administrative interface. \n\n\n./manage.py loaddata toucan/fixtures/issueTypes.json\n\n\n\n\nDatabase\n\n\nThe application requires a PostgreSQL installation (>=9.4) with a database named \ntoucan\n. Configure the database connection by extending the \nDATABASES\n object in \nissues_tracker/settings/__init__.py\n:\n\n\nDATABASES = {\n  'default': {\n    'ENGINE': 'django.contrib.gis.db.backends.postgis',\n    'NAME': 'toucan',\n    'USER': 'postgres',\n    'PASSWORD': 'postgres',\n    'HOST': 'localhost',\n    'PORT': 5434\n  }\n}\n\n\n\n\nTo create the database scheme run the migrations (might require PostgreSQL superuser rights to install the postgis extension):\n\n\n./manage.py migrate\n\n\n\n\nBuild Frontend\n\n\nThe frontend part of the code is to be found in the 'frontend' folder. To install the build tools and dependencies of the frontend issue the following commands from within that folder.\n\n\nNote: use either the yarn or the npm commands, both should result in the same packages being installed.\n\n\nnpm install\n\n\n\n\nor\n\n\nyarn install\n\n\n\n\nFinally build the frontend assets\n\n\nnpm run build-dev\n\n\n\n\nor\n\n\nyarn build-dev\n\n\n\n\nDevelopment\n\n\nFrontend\n\n\nStart the development server so that the frontend is automatically rebuilt when a file is modified.\nIn the ./frontend folder run the following command\n\n\nnpm run dev\n\n\n\n\nor\n\n\nyarn dev\n\n\n\n\nFor fearless frontend developers there is also the option to enable hot module replacement.\n\n\nnpm run hmr\n\n\n\n\nor\n\n\nyarn hmr\n\n\n\n\nThis will start a server to do the static file hosting on 127.0.0.1:8080 and skip the django dev server for the built frontend files.\n\n\nBackend\n\n\nMake sure you have activated the virtual environment:\n\n\nsource env/bin/activate\n\n\n\n\nMake sure a Redis server is running and listening on port 6379.\n\n\nStart the application server with development settings:\n\n\n./manage.py runserver --settings=toucan_conf.settings.dev\n\n\n\n\nYou should be able to access the application now at http://127.0.0.1:8000.",
+            "title": "Home"
+        },
+        {
+            "location": "/developers/#toucan",
+            "text": "",
+            "title": "Toucan"
+        },
+        {
+            "location": "/developers/#installation",
+            "text": "",
+            "title": "Installation"
+        },
+        {
+            "location": "/developers/#prerequisites",
+            "text": "Python 3  PostgreSQL  (>=9.4)  PostGIS  Redis  Node.js",
+            "title": "Prerequisites"
+        },
+        {
+            "location": "/developers/#dependencies",
+            "text": "The backend assumes a working python environment with the packages listed in requirements.txt installed.  First create and activate a virtual environment by issuing the following commands in the project directory:  virtualenv env\nsource env/bin/activate  Then install the requirements into the virtual environment:  pip install -r requirements.txt  Under Linux it might be necessary to install additional dev-packages such as  libjpeg-dev ,  zlibc ,  python3.4-dev  and  libpg-dev  because the installation of some python dependencies involve the compilation of C-code.",
+            "title": "Dependencies"
+        },
+        {
+            "location": "/developers/#set-a-secret-key",
+            "text": "cp toucan_conf/settings/secrets.example.py toucan_conf/settings/secrets.py  Open  toucan_conf/settings/secrets.py  and set  SECRET_KEY  to some string.",
+            "title": "Set a secret key"
+        },
+        {
+            "location": "/developers/#load-the-default-categories",
+            "text": "While not required it is strongly suggested to add some default categories for your installation. These can be added to/changed/deleted from the administrative interface.   ./manage.py loaddata toucan/fixtures/issueTypes.json",
+            "title": "Load the default categories"
+        },
+        {
+            "location": "/developers/#database",
+            "text": "The application requires a PostgreSQL installation (>=9.4) with a database named  toucan . Configure the database connection by extending the  DATABASES  object in  issues_tracker/settings/__init__.py :  DATABASES = {\n  'default': {\n    'ENGINE': 'django.contrib.gis.db.backends.postgis',\n    'NAME': 'toucan',\n    'USER': 'postgres',\n    'PASSWORD': 'postgres',\n    'HOST': 'localhost',\n    'PORT': 5434\n  }\n}  To create the database scheme run the migrations (might require PostgreSQL superuser rights to install the postgis extension):  ./manage.py migrate",
+            "title": "Database"
+        },
+        {
+            "location": "/developers/#build-frontend",
+            "text": "The frontend part of the code is to be found in the 'frontend' folder. To install the build tools and dependencies of the frontend issue the following commands from within that folder.  Note: use either the yarn or the npm commands, both should result in the same packages being installed.  npm install  or  yarn install  Finally build the frontend assets  npm run build-dev  or  yarn build-dev",
+            "title": "Build Frontend"
+        },
+        {
+            "location": "/developers/#development",
+            "text": "",
+            "title": "Development"
+        },
+        {
+            "location": "/developers/#frontend",
+            "text": "Start the development server so that the frontend is automatically rebuilt when a file is modified.\nIn the ./frontend folder run the following command  npm run dev  or  yarn dev  For fearless frontend developers there is also the option to enable hot module replacement.  npm run hmr  or  yarn hmr  This will start a server to do the static file hosting on 127.0.0.1:8080 and skip the django dev server for the built frontend files.",
+            "title": "Frontend"
+        },
+        {
+            "location": "/developers/#backend",
+            "text": "Make sure you have activated the virtual environment:  source env/bin/activate  Make sure a Redis server is running and listening on port 6379.  Start the application server with development settings:  ./manage.py runserver --settings=toucan_conf.settings.dev  You should be able to access the application now at http://127.0.0.1:8000.",
+            "title": "Backend"
+        },
+        {
+            "location": "/developers/using-docker/",
+            "text": "",
+            "title": "Using docker"
         }
     ]
 }
