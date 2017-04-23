@@ -1,3 +1,5 @@
+![toucan logo](./img/toucan_logo.png)
+
 # Toucan Issue Tracker
 
 ## Introduction
