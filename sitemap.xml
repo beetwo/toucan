@@ -10,19 +10,13 @@
     
 
     
+        
     <url>
-     <loc>/about/</loc>
+     <loc>/user-guide/features/</loc>
      <lastmod>2017-04-23</lastmod>
      <changefreq>daily</changefreq>
     </url>
-    
-
-    
-    <url>
-     <loc>/users/</loc>
-     <lastmod>2017-04-23</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
+        
     
 
     
@@ -39,6 +33,14 @@
      <changefreq>daily</changefreq>
     </url>
         
+    
+
+    
+    <url>
+     <loc>/about/</loc>
+     <lastmod>2017-04-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
     
 
 </urlset>

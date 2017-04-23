@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Home - Toucan Documentation</title>
+  <title>Getting started - Toucan Documentation</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,7 +17,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Home";
+    var mkdocs_page_name = "Getting started";
     var mkdocs_page_input_path = "developers/index.md";
     var mkdocs_page_url = "/developers/";
   </script>
@@ -54,12 +54,13 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../about/">About</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../users/">Users</a>
+    <span class="caption-text">End User Guide</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../user-guide/features/">Features</a>
+                </li>
+    </ul>
 	    </li>
           
             <li class="toctree-l1">
@@ -68,10 +69,10 @@
     <ul class="subnav">
                 <li class=" current">
                     
-    <a class="current" href="./">Home</a>
+    <a class="current" href="./">Getting started</a>
     <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#toucan">Toucan</a></li>
+    <li class="toctree-l3"><a href="#developing-toucan">Developing Toucan</a></li>
     
         <ul>
         
@@ -86,9 +87,14 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="using-docker/">Using docker</a>
+    <a class="" href="using-docker/">Using Docker</a>
                 </li>
     </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../about/">About</a>
 	    </li>
           
         </ul>
@@ -117,7 +123,7 @@
         
       
     
-    <li>Home</li>
+    <li>Getting started</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -127,7 +133,12 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="toucan">Toucan</h1>
+                <h1 id="developing-toucan">Developing Toucan</h1>
+<pre><code>This is currently just the old README.md file from the repository.
+If you follow through this and hit any walls please file an issue or 
+(even better) issue a pull request. Thanks.
+</code></pre>
+
 <h2 id="installation">Installation</h2>
 <h3 id="prerequisites">Prerequisites</h3>
 <ul>
@@ -138,8 +149,10 @@
 <li><a href="https://nodejs.org">Node.js</a></li>
 </ul>
 <h3 id="dependencies">Dependencies</h3>
-<p>The backend assumes a working python environment with the packages listed in requirements.txt installed.</p>
-<p>First create and activate a virtual environment by issuing the following commands in the project directory:</p>
+<p>The backend assumes a working python environment with the packages
+listed in requirements.txt installed.</p>
+<p>First create and activate a virtual environment by issuing the following
+commands in the project directory:</p>
 <pre><code>virtualenv env
 source env/bin/activate
 </code></pre>
@@ -148,19 +161,26 @@ source env/bin/activate
 <pre><code>pip install -r requirements.txt
 </code></pre>
 
-<p>Under Linux it might be necessary to install additional dev-packages such as <code>libjpeg-dev</code>, <code>zlibc</code>, <code>python3.4-dev</code> and <code>libpg-dev</code> because the installation of some python dependencies involve the compilation of C-code.</p>
+<p>Under Linux it might be necessary to install additional dev-packages
+such as <code>libjpeg-dev</code>, <code>zlibc</code>, <code>python-dev</code> and <code>libpg-dev</code> because 
+the installation of some python dependencies involve the compilation of 
+C extensions.</p>
 <h3 id="set-a-secret-key">Set a secret key</h3>
 <pre><code>cp toucan_conf/settings/secrets.example.py toucan_conf/settings/secrets.py
 </code></pre>
 
 <p>Open <code>toucan_conf/settings/secrets.py</code> and set <code>SECRET_KEY</code> to some string.</p>
 <h3 id="load-the-default-categories">Load the default categories</h3>
-<p>While not required it is strongly suggested to add some default categories for your installation. These can be added to/changed/deleted from the administrative interface. </p>
+<p>While not required it is strongly suggested to add some default 
+categories for your installation. These can be added to/changed/deleted 
+from the administrative interface. </p>
 <pre><code>./manage.py loaddata toucan/fixtures/issueTypes.json
 </code></pre>
 
 <h3 id="database">Database</h3>
-<p>The application requires a PostgreSQL installation (&gt;=9.4) with a database named <code>toucan</code>. Configure the database connection by extending the <code>DATABASES</code> object in <code>issues_tracker/settings/__init__.py</code>:</p>
+<p>The application requires a PostgreSQL installation (&gt;=9.4) with a 
+database named <code>toucan</code>. Configure the database connection by extending 
+the <code>DATABASES</code> object in <code>issues_tracker/settings/__init__.py</code>:</p>
 <pre><code>DATABASES = {
   'default': {
     'ENGINE': 'django.contrib.gis.db.backends.postgis',
@@ -173,13 +193,17 @@ source env/bin/activate
 }
 </code></pre>
 
-<p>To create the database scheme run the migrations (might require PostgreSQL superuser rights to install the postgis extension):</p>
+<p>To create the database scheme run the migrations (this might require 
+PostgreSQL superuser rights to install the postgis extension):</p>
 <pre><code>./manage.py migrate
 </code></pre>
 
 <h3 id="build-frontend">Build Frontend</h3>
-<p>The frontend part of the code is to be found in the 'frontend' folder. To install the build tools and dependencies of the frontend issue the following commands from within that folder.</p>
-<p>Note: use either the yarn or the npm commands, both should result in the same packages being installed.</p>
+<p>The frontend part of the code is to be found in the 'frontend' folder. 
+To install the build tools and dependencies of the frontend issue the 
+following commands from within that folder.</p>
+<p>Note: use either the yarn or the npm commands, both should result in 
+the same packages being installed.</p>
 <pre><code>npm install
 </code></pre>
 
@@ -197,7 +221,8 @@ source env/bin/activate
 
 <h2 id="development">Development</h2>
 <h3 id="frontend">Frontend</h3>
-<p>Start the development server so that the frontend is automatically rebuilt when a file is modified.
+<p>Start the development server so that the frontend is automatically 
+rebuilt when a file is modified.
 In the ./frontend folder run the following command</p>
 <pre><code>npm run dev
 </code></pre>
@@ -206,7 +231,8 @@ In the ./frontend folder run the following command</p>
 <pre><code>yarn dev
 </code></pre>
 
-<p>For fearless frontend developers there is also the option to enable hot module replacement.</p>
+<p>For fearless frontend developers there is also the option to enable hot 
+module replacement.</p>
 <pre><code>npm run hmr
 </code></pre>
 
@@ -214,7 +240,9 @@ In the ./frontend folder run the following command</p>
 <pre><code>yarn hmr
 </code></pre>
 
-<p>This will start a server to do the static file hosting on 127.0.0.1:8080 and skip the django dev server for the built frontend files.</p>
+<p>This will start a server to do the static file hosting on 
+127.0.0.1:8080 and skip the django dev server for the built frontend 
+files.</p>
 <h3 id="backend">Backend</h3>
 <p>Make sure you have activated the virtual environment:</p>
 <pre><code>source env/bin/activate
@@ -225,7 +253,8 @@ In the ./frontend folder run the following command</p>
 <pre><code>./manage.py runserver --settings=toucan_conf.settings.dev
 </code></pre>
 
-<p>You should be able to access the application now at http://127.0.0.1:8000.</p>
+<p>You should be able to access the application now at 
+http://127.0.0.1:8000.</p>
               
             </div>
           </div>
@@ -233,10 +262,10 @@ In the ./frontend folder run the following command</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="using-docker/" class="btn btn-neutral float-right" title="Using docker">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="using-docker/" class="btn btn-neutral float-right" title="Using Docker">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../users/" class="btn btn-neutral" title="Users"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../user-guide/features/" class="btn btn-neutral" title="Features"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -262,7 +291,7 @@ In the ./frontend folder run the following command</p>
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../users/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../user-guide/features/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="using-docker/" style="color: #fcfcfc">Next &raquo;</a></span>
