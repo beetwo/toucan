@@ -1,0 +1,9 @@
+site_name: Toucan Docs
+
+pages:
+    - Home: index.md
+    - For end users: users.md
+    - For developers: devs.md
+    - About: about.md
+
+theme: readthedocs
