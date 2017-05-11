@@ -1,0 +1,11 @@
+FROM python:3.6
+ENV PYTHONUNBUFFERED 1
+VOLUME /backend
+VOLUME /build
+VOLUME /code
+RUN ls -lah /backend/ && cp /backend/requirements* /code
+WORKDIR /backend
+RUN pwd && ls
+RUN pip install -U pip
+RUN pip install -r /code/requirements.txt
+RUN pip install -r /code/requirements-dev.txt

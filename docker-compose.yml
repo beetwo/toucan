@@ -1,0 +1,32 @@
+
+version: '2'
+
+services:
+
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=$DB_PW
+      - POSTGRES_USER=$DB_USER
+      - POSTGRES_DB=$DB_NAME
+    expose:
+      - 5432
+
+  toucan:
+    depends_on:
+      - "db"
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.backend
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend:/backend
+      - ./frontend/build:/build
+    expose:
+      - 8000
+    environment:
+      - DEBUG=true
+      - DB_USER
+      - DB_PW
+      - DB_NAME
+      - DJANGO_SETTINGS_MODULE
