@@ -18,6 +18,7 @@ TwitterParser = ttp.Parser()
 
 ISSUE_STATUS_CHOICES = Choices(
     ('open', _('open')),
+    ('in_progress', _('in progress')),
     ('closed', _('resolved'))
 )
 
