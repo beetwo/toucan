@@ -5,7 +5,7 @@ from phonenumber_field.formfields import PhoneNumberField
 
 from ..organisations.models import Organisation
 from .models import Profile, NotificationSettings
-
+from allauth.account.forms import LoginForm
 
 class BaseUserProfileSignupForm(forms.Form):
 
@@ -68,3 +68,11 @@ class NotificationSettingsForm(forms.ModelForm):
                 'required': _('Please select a point from the map.')
             }
         }
+
+
+class ToucanLoginForm(LoginForm):
+
+    def get_initial_for_field(self, field, field_name):
+        if field_name == 'remember':
+            return True
+        return super().get_initial_for_field(field, field_name)
