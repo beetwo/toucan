@@ -17,6 +17,5 @@ class LocationFieldSpatialTest(TestCase):
         }
 
         obj = Location.objects.create(org=self.org, **vals)
-
         self.assertEqual(obj.city, vals['city'])
-        self.assertEqual(obj.location, Point(48.59727118, 16.58460436))
+        self.assertEqual(obj.location, Point(48.59727118, 16.58460436, srid=4326))
