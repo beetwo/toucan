@@ -6,12 +6,13 @@ var precss = require('precss');
 var autoprefixer = require('autoprefixer');
 
 module.exports = (opts) => {
-  const {PROJECT_ROOT, NODE_ENV, STATS_FILE, BUILD_ROOT} = opts;
+  const {PROJECT_ROOT, NODE_ENV, STATS_FILE, BUILD_ROOT, TILE_SRC} = opts;
 
-  console.log(BUILD_ROOT);
+  // console.log(BUILD_ROOT);
 
   let plugins = [
     new webpack.DefinePlugin({
+      TILE_SRC: `"${TILE_SRC}"`,
       'process.env': {
         NODE_ENV: JSON.stringify(NODE_ENV),
       },

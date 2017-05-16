@@ -33,6 +33,7 @@
     "commonmark": "^0.24.0",
     "commonmark-react-renderer": "^4.1.2",
     "css-loader": "^0.26.1",
+    "dotenv": "^4.0.0",
     "draft-js": "^0.7.0",
     "draft-js-linkify-plugin": "^1.0.1",
     "draft-js-mention-plugin": "^1.1.2",

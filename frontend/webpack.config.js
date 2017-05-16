@@ -11,7 +11,15 @@
  * @returns {object} - returns a webpack config object
  */
 
+require('dotenv').config()
+
 const path = require('path')
+
+const TILE_SRC = process.env.MAPBOX_API_KEY ?
+   `https://api.tiles.mapbox.com/v4/mapbox.light/{z}/{x}/{y}.png?access_token=${process.env.MAPBOX_API_KEY}`:
+   '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+
+
 
 let OPTIONS = {
   PROJECT_ROOT: __dirname,
@@ -19,7 +27,8 @@ let OPTIONS = {
   NODE_ENV: process.env.NODE_ENV,
   CDN_PATH: process.env.CDN_PATH,
   HMR: process.env.HMR,
-  STATS_FILE: 'webpack-stats.json'
+  STATS_FILE: 'webpack-stats.json',
+  TILE_SRC
 };
 
 let main_config = (() => {

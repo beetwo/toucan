@@ -88,7 +88,6 @@ export class LeafletMap extends React.Component {
         // and reset during the render method
         this._panToUserLocation = false;
 
-        console.log('Map constructor', props);
 
         if (props.selectedIssue && props.geojson) {
             let issue = this._getIssueById(props.selectedIssue, props.geojson)
@@ -101,7 +100,6 @@ export class LeafletMap extends React.Component {
                 bounds: props.bounds
             }
         }
-        console.log('Map constructor state set', this.state);
 
         // bind event handlers
         this.handleClick = this.handleClick.bind(this);
@@ -253,11 +251,7 @@ export class LeafletMap extends React.Component {
             center: center || this.state.center,
             zoom: this.state.zoom
         };
-        // console.log(
-        //     'Rendering map',
-        //     mapSettings,
-        //     this.props.selectedIssue
-        // )
+        
         return (
             <Map {...mapSettings}
                  onClick={this.handleClick}
@@ -269,7 +263,7 @@ export class LeafletMap extends React.Component {
                  ref={(m) => this._map = m}
                  >
                 <TileLayer
-                    url='//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                    url={TILE_SRC}
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 />
                 {markers}
