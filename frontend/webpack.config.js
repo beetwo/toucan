@@ -20,7 +20,6 @@ const TILE_SRC = process.env.MAPBOX_API_KEY ?
    '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 
 
-
 let OPTIONS = {
   PROJECT_ROOT: __dirname,
   BUILD_ROOT: path.resolve(__dirname, 'production/'),

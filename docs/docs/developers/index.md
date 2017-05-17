@@ -147,6 +147,21 @@ This will start a server to do the static file hosting on
 files.
 
 
+### Frontend Maps
+
+By default the [openstreetmaps service](https://www.openstreetmap.org) 
+is used as the tile source for the mapping components.
+
+If you intend to use mapbox tiles during development create a 
+```.env``` file inside the frontend folder and add a line similar to 
+this one to it:
+
+```
+MAPBOX_API_KEY=<mapbox-api-key>
+```
+
+The API key can be found inside your mapbox account's settings.
+
 ### Backend
 
 Make sure you have activated the virtual environment:
