@@ -78,6 +78,37 @@ class AddNewMarker extends React.Component {
 }
 
 
+const OSMTileLayer = () => {
+    return <TileLayer
+        url='//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+        attribution='© <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    />
+}
+
+const MapBoxTileLayer = ({apiKey}) => {
+    return <TileLayer
+         attribution={[
+             '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a>',
+             '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+             '<strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>'
+        ].join(' ')}
+        url={`https://api.tiles.mapbox.com/v4/mapbox.light/{z}/{x}/{y}.png?access_token=${apiKey}`}
+    />
+}
+
+const ToucanTileLayer = () => {
+    return process.env.MAPBOX_API_KEY ?
+        <MapBoxTileLayer apiKey={process.env.MAPBOX_API_KEY} /> :
+        <OSMTileLayer />
+}
+
+const AttributionImage = () => {
+    return process.env.MAPBOX_API_KEY ?
+        <span className="mapbox-wordmark"></span> :
+        null;
+}
+
+
 export class LeafletMap extends React.Component {
 
     constructor (props) {
@@ -128,13 +159,6 @@ export class LeafletMap extends React.Component {
 
         // return if no changes
         if (currentIssue === nextIssue) {
-            // console.debug(
-            //     'Same issue as before, no map state change.',
-            //     currentIssue,
-            //     nextIssue,
-            //     this.props,
-            //     nextProps
-            // )
             return;
         }
 
@@ -169,7 +193,6 @@ export class LeafletMap extends React.Component {
             })
         }
     }
-
 
     // these functions deal with setting Coordinates
     handleAddMarkerPositionChange (latLng) {
@@ -251,7 +274,7 @@ export class LeafletMap extends React.Component {
             center: center || this.state.center,
             zoom: this.state.zoom
         };
-        
+
         return (
             <Map {...mapSettings}
                  onClick={this.handleClick}
@@ -262,16 +285,14 @@ export class LeafletMap extends React.Component {
                  animate={true}
                  ref={(m) => this._map = m}
                  >
-                <TileLayer
-                    url={TILE_SRC}
-                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                />
+                <ToucanTileLayer />
                 {markers}
                 {has_coordinates ? <AddNewMarker ref={(e) => this._add_new_marker = e }
                                                    position={coordinates}
                                                    handleLatLng={this.handleAddMarkerPositionChange} /> : null }
                 <LocationControl locate={this.handleLocate}/>
                 {this.props.children}
+                <AttributionImage />
             </Map>
         );
     }

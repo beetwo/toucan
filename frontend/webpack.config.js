@@ -15,19 +15,16 @@ require('dotenv').config()
 
 const path = require('path')
 
-const TILE_SRC = process.env.MAPBOX_API_KEY ?
-   `https://api.tiles.mapbox.com/v4/mapbox.light/{z}/{x}/{y}.png?access_token=${process.env.MAPBOX_API_KEY}`:
-   '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 
 
 let OPTIONS = {
-  PROJECT_ROOT: __dirname,
-  BUILD_ROOT: path.resolve(__dirname, 'production/'),
-  NODE_ENV: process.env.NODE_ENV,
-  CDN_PATH: process.env.CDN_PATH,
-  HMR: process.env.HMR,
-  STATS_FILE: 'webpack-stats.json',
-  TILE_SRC
+    PROJECT_ROOT: __dirname,
+    BUILD_ROOT: path.resolve(__dirname, 'production/'),
+    NODE_ENV: process.env.NODE_ENV,
+    CDN_PATH: process.env.CDN_PATH,
+    HMR: process.env.HMR,
+    STATS_FILE: 'webpack-stats.json',
+    MAPBOX_API_KEY: process.env.MAPBOX_API_KEY
 };
 
 let main_config = (() => {
