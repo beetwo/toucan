@@ -243,6 +243,16 @@ module replacement.</p>
 <p>This will start a server to do the static file hosting on 
 127.0.0.1:8080 and skip the django dev server for the built frontend 
 files.</p>
+<h3 id="frontend-maps">Frontend Maps</h3>
+<p>By default the <a href="https://www.openstreetmap.org">openstreetmaps service</a> 
+is used as the tile source for the mapping components.</p>
+<p>If you intend to use mapbox tiles during development create a 
+<code>.env</code> file inside the frontend folder and add a line similar to 
+this one to it:</p>
+<pre><code>MAPBOX_API_KEY=&lt;mapbox-api-key&gt;
+</code></pre>
+
+<p>The API key can be found inside your mapbox account's settings.</p>
 <h3 id="backend">Backend</h3>
 <p>Make sure you have activated the virtual environment:</p>
 <pre><code>source env/bin/activate
