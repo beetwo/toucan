@@ -10,7 +10,7 @@ import {DetailFooter, CustomLocationSelectedFooter} from './map/footers'
 
 import { ScrollContainer } from 'react-router-scroll';
 
-require('../../css/app.css');
+require('../../css/app.scss');
 
 function WrapMap(props) {
     let { closable, onClose } = props;
