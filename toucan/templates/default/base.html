@@ -13,8 +13,9 @@
     {% include './favicons.html' %}
     <title>{% block head_title %}{% trans 'Toucan' %}{% endblock %}</title>
     {% include './raven.html' %}
-    {% render_bundle 'bootstrap' config='BOOTSTRAP' %}
+    {% render_bundle 'manifest' %}
     {% render_bundle 'vendor' %}
+    {% render_bundle 'bootstrap' %}
     {% block extra-head %}{% endblock %}
 </head>
 

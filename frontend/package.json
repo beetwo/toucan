@@ -85,6 +85,7 @@
     "webpack": "beta",
     "webpack-bundle-tracker": "0.0.93",
     "webpack-cleanup-plugin": "^0.2.0",
+    "webpack-dev-middleware": "^1.10.2",
     "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
