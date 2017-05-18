@@ -15,8 +15,6 @@ require('dotenv').config()
 
 const path = require('path')
 
-
-
 let OPTIONS = {
     PROJECT_ROOT: __dirname,
     BUILD_ROOT: path.resolve(__dirname, 'production/'),
