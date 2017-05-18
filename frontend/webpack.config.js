@@ -25,7 +25,7 @@ let OPTIONS = {
     MAPBOX_API_KEY: process.env.MAPBOX_API_KEY
 };
 
-let main_config = (() => {
+module.exports = (() => {
   let hmr = process.env.BABEL_ENV || false;
   switch (process.env.NODE_ENV) {
     case 'development':
@@ -42,10 +42,3 @@ let main_config = (() => {
       return require('./config/webpack.production.config.js');
   }
 })()(OPTIONS);
-
-let bootstrap_config = require('./config/webpack.bootstrap.config.js')(OPTIONS);
-
-module.exports = [
-    main_config,
-    bootstrap_config
-]

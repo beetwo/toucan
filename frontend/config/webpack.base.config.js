@@ -25,7 +25,15 @@ module.exports = (opts) => {
         'fetch': 'imports-loader?this=>global!exports-loader?global.fetch!whatwg-fetch'
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor'
+        name: "vendor",
+        minChunks: function(module){
+            return module.context && module.context.indexOf("node_modules") !== -1;
+        }
+    }),
+    // this should just include the wp boilerplate stuff (approx 30kb)
+    new webpack.optimize.CommonsChunkPlugin({
+        name: "manifest",
+        minChunks: Infinity
     }),
     new BundleAnalyzerPlugin({
         analyzerMode: 'disabled',
@@ -70,7 +78,12 @@ module.exports = (opts) => {
             'selectize/dist/css/selectize.bootstrap3.css'
         ],
         b2MapSelector: './js/location_selector',
-        editor: './js/editor'
+        editor: './js/editor',
+        bootstrap : [
+            'jquery',
+            'bootstrap-loader',
+            'font-awesome/css/font-awesome.css',
+        ]
     },
     output: {
         path: BUILD_ROOT,
