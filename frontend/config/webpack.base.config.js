@@ -26,15 +26,13 @@ module.exports = (opts) => {
     }),
     new webpack.optimize.CommonsChunkPlugin({
         name: "vendor",
-        minChunks: function(module){
-            return module.context && module.context.indexOf("node_modules") !== -1;
-        }
+        minChunks: 2
     }),
     // this should just include the wp boilerplate stuff (approx 30kb)
-    new webpack.optimize.CommonsChunkPlugin({
-        name: "manifest",
-        minChunks: Infinity
-    }),
+    // new webpack.optimize.CommonsChunkPlugin({
+    //     name: "manifest",
+    //     minChunks: Infinity
+    // }),
     new BundleAnalyzerPlugin({
         analyzerMode: 'disabled',
         generateStatsFile: true
