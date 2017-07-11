@@ -52,7 +52,7 @@
     "json-loader": "^0.5.4",
     "leaflet": "^0.7.7",
     "lodash": "^4.10.0",
-    "node-sass": "^3.4.2",
+    "node-sass": "^4.5.3",
     "postcss-loader": "^1.2.1",
     "precss": "^1.4.0",
     "react": "^15.0.1",
@@ -91,8 +91,8 @@
     "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
+    "@kadira/storybook": "^2.21.0",
     "webpack-bundle-analyzer": "^2.2.1",
-    "webpack-dev-server": "2.2.0",
-    "@kadira/storybook": "^2.21.0"
+    "webpack-dev-server": "2.2.0"
   }
 }
