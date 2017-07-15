@@ -55,12 +55,17 @@ export const history = syncHistoryWithStore(bHistory, store);
 // this is currently a hack, but will be cleaned up once we upgrade
 // react router
 const unlisten = history.listen((location, action) => {
+  console.log("History:", location, action);
   let parts = location.pathname.split("/");
+
   let active = "needs";
   if (parts[1] === "orgs") {
     active = "orgs";
   }
-  render(<Nav active={active} />, document.getElementById("react-navbar"));
+  render(
+    <Nav active={active} push={history.push} />,
+    document.getElementById("react-navbar")
+  );
 });
 
 render(

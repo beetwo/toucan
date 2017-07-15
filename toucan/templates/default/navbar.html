@@ -19,22 +19,29 @@
         </div>
 
         <div id="navbar" class="collapse navbar-collapse">
+
             {#  this navbar can be controlled by react #}
-            <div id="react-navbar"></div>
-            {# navbar left #}
+            {# rect will just replace the content of this dom node #}
+            <div id="react-navbar">
+                <ul class="nav navbar-nav">
+                    {% url 'home' as home %}
+                    <li>
+                        <a href="{{ home }}">
+                            <i class="fa fa-globe"></i>
+                            {% trans 'Needs' %}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ home }}orgs/">
+                            <i class="fa fa-address-card-o"></i>
+                            {% trans 'Organisations' %}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            {# purely django controlled nav #}
             <ul class="nav navbar-nav">
-{#                <li {% if request.resolver_match.url_name == 'home' %}class="active"{% endif %}>#}
-{#                    <a href="{% url 'home' %}">#}
-{#                        <i class="fa fa-globe"></i>#}
-{#                        {% trans 'All Needs' %}#}
-{#                    </a>#}
-{#                </li>#}
-{#                <li {% if 'organisations' in namespaces %}class="active"{% endif %}>#}
-{#                    <a href="{% url 'organisations:organisation_list' %}">#}
-{#                        <i class="fa fa-address-card-o"></i>#}
-{#                        {% trans 'Organisations' %}#}
-{#                    </a>#}
-{#                </li>#}
+
                 <li {% if 'help' in namespaces %}class="active"{% endif %}>
                     <a href="{% url 'help:start' %}">
                         <i class="fa fa-question-circle"></i>
