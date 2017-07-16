@@ -6,7 +6,7 @@ from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
 from ..issues.models import Issue, IssueComment, IssueType, IssueStatus
 from ..media.models import ImageFile, MediaFile
-from ..organisations.models import Organisation, Membership
+from ..organisations.models import Organisation, Membership, Location
 from ..user_profile.models import NotificationSettings
 
 
@@ -21,14 +21,22 @@ class NotificationAreaSerializer(GeoFeatureModelSerializer):
             'point_radius',
         ]
 
+class OrganisationLocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Location
+        fields = [
+            'pk',
+            'city',
+            'location'
+        ]
 
 class OrganisationSerializer(serializers.ModelSerializer):
 
     logo = serializers.ImageField()
     profile_url = serializers.SerializerMethodField()
+    location_set = OrganisationLocationSerializer(many=True, read_only=True)
 
     def get_profile_url(self, org):
-
         return reverse(
             'organisations:organisation_detail',
             kwargs={'org_id': org.pk},
@@ -38,10 +46,12 @@ class OrganisationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Organisation
         fields = [
+            'pk',
             'name',
             'short_name',
             'logo',
-            'profile_url'
+            'profile_url',
+            'location_set'
         ]
 
 

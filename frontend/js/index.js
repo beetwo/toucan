@@ -5,13 +5,13 @@ import { Provider } from "react-redux";
 import thunkMiddleware from "redux-thunk";
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import reducers from "./reducers";
-import App from "./containers/app";
+import App from "./containers/issuesIndex";
 import Nav from "./nav";
 
 import IssueDetail from "./containers/issueDetail";
 import IssueList from "./containers/issueList";
 import UserDetail from "./containers/userDetail";
-import OrganisationsList from "./containers/orgList";
+import OrganisationsList from "./containers/organisationsIndex";
 
 import {
   Router,
@@ -53,11 +53,9 @@ export const history = syncHistoryWithStore(bHistory, store);
 
 // Listen for changes to the current location and update the nav part
 // this is currently a hack, but will be cleaned up once we upgrade
-// react router
+// react router or move to a completely client side rendered menu
 const unlisten = history.listen((location, action) => {
-  console.log("History:", location, action);
   let parts = location.pathname.split("/");
-
   let active = "needs";
   if (parts[1] === "orgs") {
     active = "orgs";

@@ -1,6 +1,6 @@
 from django.conf.urls import url, include
 from .views import LocationApi, IssueView, IssueCommentView, UserSearch, IssueStatusView, CommentDetailView, \
-    MentionView, UserInformationApi, UserDetailView, ImageCreateView, UserOrOrgDetailView
+    MentionView, UserInformationApi, UserDetailView, ImageCreateView, UserOrOrgDetailView, OrganisationListView
 
 app_name = 'toucan_api'
 
@@ -29,6 +29,11 @@ urlpatterns = [
         r'^media/',
         include([
             url(r'^image/$', ImageCreateView.as_view(), name='image_upload'),
+        ])
+    ),
+    url(r'^organisations/',
+        include([
+            url(r'^$', OrganisationListView.as_view(), name='organisation_list')
         ])
     )
 ]

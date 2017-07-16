@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 import {
   REQUEST_ISSUES,
   RECEIVE_ISSUES,
@@ -13,86 +13,95 @@ import {
   ADD_ISSUES_FILTER,
   REMOVE_ISSUES_FILTER,
   FETCH_CURRENT_USER_DATA,
-  RECEIVE_USER_INFORMATION
- } from './actions';
+  RECEIVE_USER_INFORMATION,
+  RECEIVE_ORGANISATIONS
+} from "./actions";
 
-import {defaultMapBounds} from './globals'
-import uniq from 'lodash/uniq'
-import flattenDeep from 'lodash/flattenDeep'
+import { defaultMapBounds } from "./globals";
+import uniq from "lodash/uniq";
+import flattenDeep from "lodash/flattenDeep";
 
-function issues(state=[], action) {
+function issues(state = [], action) {
   switch (action.type) {
     case RECEIVE_ISSUES:
-      return action.issues.features.map((issue) => {
+      return action.issues.features.map(issue => {
         return {
           id: issue.id,
           ...issue.properties
-        }
-      })
+        };
+      });
     case RECEIVE_ISSUE:
       // update the issues array with the properties from the issue details
-      let index = state.findIndex((i)=> { return i.id === action.issue_id; })
+      let index = state.findIndex(i => {
+        return i.id === action.issue_id;
+      });
       if (index != -1) {
-        let issue =  {
+        let issue = {
           ...state[index],
           ...action.payload.properties
-        }
-        return [].concat(...state.slice(0, index), issue, ...state.slice(index+1));
-      }
-      else {
+        };
+        return [].concat(
+          ...state.slice(0, index),
+          issue,
+          ...state.slice(index + 1)
+        );
+      } else {
         return state;
       }
     default:
-      return state
+      return state;
   }
 }
 
-function selectedIssue(state=null, action) {
-  switch(action.type) {
+function selectedIssue(state = null, action) {
+  switch (action.type) {
     case SELECT_ISSUE:
-      return action.issue_id
+      return action.issue_id;
     default:
-      return state
+      return state;
   }
 }
 
-function issueDetail(state = {
-  isLoading: true,
-  didInvalidate: false,
-  issue_data: {}
-}, action) {
-    switch(action.type) {
-      case SELECT_ISSUE:
-        return {
-          ...state,
-          isLoading: true,
-          didInvalidate: false
-        }
-      case REQUEST_ISSUE:
-        return {
-          ...state,
-          isLoading: true,
-          didInvalidate: false
-        }
-      case RECEIVE_ISSUE:
-        return {
-          ...state,
-          isLoading: false,
-          didInvalidate: false,
-          issue_data: action.payload
-        }
-      case INVALIDATE_ISSUE:
-        return {
-          ...state,
-          didInvalidate: true
-        }
-      default:
-        return state
-    }
+function issueDetail(
+  state = {
+    isLoading: true,
+    didInvalidate: false,
+    issue_data: {}
+  },
+  action
+) {
+  switch (action.type) {
+    case SELECT_ISSUE:
+      return {
+        ...state,
+        isLoading: true,
+        didInvalidate: false
+      };
+    case REQUEST_ISSUE:
+      return {
+        ...state,
+        isLoading: true,
+        didInvalidate: false
+      };
+    case RECEIVE_ISSUE:
+      return {
+        ...state,
+        isLoading: false,
+        didInvalidate: false,
+        issue_data: action.payload
+      };
+    case INVALIDATE_ISSUE:
+      return {
+        ...state,
+        didInvalidate: true
+      };
+    default:
+      return state;
   }
+}
 
-function issueDetails(state={}, action) {
-  switch(action.type) {
+function issueDetails(state = {}, action) {
+  switch (action.type) {
     case SELECT_ISSUE:
     case REQUEST_ISSUE:
     case RECEIVE_ISSUE:
@@ -100,202 +109,199 @@ function issueDetails(state={}, action) {
       return {
         ...state,
         [action.issue_id]: issueDetail(state[action.issue_id], action)
-      }
+      };
     default:
-      return state
+      return state;
   }
 }
 
-function geojson(state={features: []}, action) {
-  switch(action.type){
+function geojson(state = { features: [] }, action) {
+  switch (action.type) {
     case RECEIVE_ISSUES:
-      return action.issues
+      return action.issues;
     default:
-      return state
+      return state;
   }
 }
 
-function coordinates(state=null, action) {
+function coordinates(state = null, action) {
   switch (action.type) {
     case SET_COORDINATES:
-      return action.latLng
+      return action.latLng;
     default:
-      return state
+      return state;
   }
 }
 
-function issueComments(state={
-  isLoading: true,
-  comments: []
-}, action) {
+function issueComments(
+  state = {
+    isLoading: true,
+    comments: []
+  },
+  action
+) {
   switch (action.type) {
     case RECEIVE_ISSUE:
       return {
         isLoading: false,
         comments: action.payload.properties.comments || []
-      }
+      };
     default:
-      return state
-
+      return state;
   }
 }
 
-function commentsByIssueID(state={}, action) {
+function commentsByIssueID(state = {}, action) {
   switch (action.type) {
     case RECEIVE_ISSUE:
       return {
         ...state,
-        [action.issue_id]: issueComments(
-          state[action.issue_id],
-          action
-        )
-      }
+        [action.issue_id]: issueComments(state[action.issue_id], action)
+      };
     default:
-      return state
+      return state;
   }
 }
 
-function statusChangesByIssueID(state={}, action) {
+function statusChangesByIssueID(state = {}, action) {
   switch (action.type) {
     case RECEIVE_ISSUE:
       return {
         ...state,
         [action.issue_id]: action.payload.properties.status_changes
-      }
+      };
     default:
-      return state
-
+      return state;
   }
 }
 
-
-function usersByIssueID(state={}, action) {
+function usersByIssueID(state = {}, action) {
   switch (action.type) {
     case RECEIVE_ISSUE:
-        return {
-          ...state,
-          [action.issue_id]: action.payload.properties.users
-        }
+      return {
+        ...state,
+        [action.issue_id]: action.payload.properties.users
+      };
     default:
-      return state
-
+      return state;
   }
 }
 
-
-function issueFiltersOptions(state={}, action) {
+function issueFiltersOptions(state = {}, action) {
   switch (action.type) {
     case RECEIVE_ISSUES:
-      let issues_with_orgs = action.issues.features.filter((i) => { return i.properties.organisation !== null;})
-      let org_names =  uniq(issues_with_orgs.map((i) => i.properties.organisation.name))
+      let issues_with_orgs = action.issues.features.filter(i => {
+        return i.properties.organisation !== null;
+      });
+      let org_names = uniq(
+        issues_with_orgs.map(i => i.properties.organisation.name)
+      );
       return {
-          ...state,
-          status: uniq(action.issues.features.map((i) => i.properties.status)),
-          type: uniq(
-            flattenDeep(
-              action.issues.features.map(
-                (i) =>  i.properties.issue_types.map(
-                    (issue_type) => issue_type.slug
-                )
-              )
+        ...state,
+        status: uniq(action.issues.features.map(i => i.properties.status)),
+        type: uniq(
+          flattenDeep(
+            action.issues.features.map(i =>
+              i.properties.issue_types.map(issue_type => issue_type.slug)
             )
-          ),
-          organisation: org_names
-      }
+          )
+        ),
+        organisation: org_names
+      };
     default:
-      return state
+      return state;
   }
 }
 
 function issueFiltersSelections(state, action) {
-  let {property, value} = action.filter;
+  let { property, value } = action.filter;
   let cs = [...state[property]];
   let s = {
     ...state
   };
   switch (action.type) {
     case ADD_ISSUES_FILTER:
-        if (cs.indexOf(value) === -1) {
-          cs.push(value)
-        }
-        s[property] = cs
-        return s
+      if (cs.indexOf(value) === -1) {
+        cs.push(value);
+      }
+      s[property] = cs;
+      return s;
     case REMOVE_ISSUES_FILTER:
-        s[property] = cs.filter((x) => x != value)
-        return s
+      s[property] = cs.filter(x => x != value);
+      return s;
     default:
-      return state
+      return state;
   }
 }
 
-function issueFilters(state={
+function issueFilters(
+  state = {
     options: {
       status: [],
       type: [],
       organisation: []
     },
     selections: {
-      status: ['open'],
+      status: ["open"],
       type: [],
       organisation: []
     }
-  }, action) {
+  },
+  action
+) {
   switch (action.type) {
     case RECEIVE_ISSUES:
       return {
         ...state,
         options: issueFiltersOptions(state.options, action)
-      }
+      };
     case ADD_ISSUES_FILTER:
     case REMOVE_ISSUES_FILTER:
       return {
         ...state,
         selections: issueFiltersSelections(state.selections, action)
-      }
+      };
     default:
-      return state
+      return state;
   }
 }
 
-function allUsers(
-  state = [],
-  action
-) {
+function allUsers(state = [], action) {
   switch (action.type) {
     case RECEIVE_ISSUE:
-      let users = new Set(action.payload.properties.users.map((u) => u.username) || []);
-      state.forEach((u) => users.add(u));
-      return Array.from(users.values())
+      let users = new Set(
+        action.payload.properties.users.map(u => u.username) || []
+      );
+      state.forEach(u => users.add(u));
+      return Array.from(users.values());
     default:
-      return state
+      return state;
   }
 }
 
-
-function allOrganisations(
-  state=[],
-  action
-) {
+function allOrganisations(state = [], action) {
   switch (action.type) {
     case RECEIVE_ISSUE:
       if (action.payload.properties.organisation !== null) {
         let org_slug = action.payload.properties.organisation.short_name;
-        return uniq([...state, org_slug])
+        return uniq([...state, org_slug]);
       }
-      return state
+      return state;
     case RECEIVE_ISSUES:
-      let issues_with_orgs = action.issues.features.filter((i) => i.properties.organisation !== null)
-      let org_slugs = issues_with_orgs.map((i) => i.properties.organisation.short_name)
-      return uniq([...state, ...org_slugs])
+      let issues_with_orgs = action.issues.features.filter(
+        i => i.properties.organisation !== null
+      );
+      let org_slugs = issues_with_orgs.map(
+        i => i.properties.organisation.short_name
+      );
+      return uniq([...state, ...org_slugs]);
     default:
-      return state
-
+      return state;
   }
 }
 
-
 function currentUser(
-  state={
+  state = {
     user: null,
     notificationAreas: [],
     canComment: false,
@@ -304,53 +310,64 @@ function currentUser(
   action
 ) {
   switch (action.type) {
-      case FETCH_CURRENT_USER_DATA:
+    case FETCH_CURRENT_USER_DATA:
       return {
-          ...state,
-          ...action.payload
+        ...state,
+        ...action.payload
       };
     default:
       return state;
   }
 }
 
-function userInformationByUsername(
-    state={},
-    action
-) {
+function userInformationByUsername(state = {}, action) {
   switch (action.type) {
-      case RECEIVE_USER_INFORMATION:
-        let key = action.username
-        return {
-            ...state,
-            [key]: action.payload
-        }
-      default:
-        return state
+    case RECEIVE_USER_INFORMATION:
+      let key = action.username;
+      return {
+        ...state,
+        [key]: action.payload
+      };
+    default:
+      return state;
   }
 }
 
 function loadingStatus(
-  state={
+  state = {
     issues: false
-  }, action
+  },
+  action
 ) {
   switch (action.type) {
     case REQUEST_ISSUES:
       return {
         ...state,
         issues: true
-      }
+      };
     case RECEIVE_ISSUES:
       return {
         ...state,
         issues: false
-      }
+      };
     default:
       return state;
   }
 }
 
+function organisationsByID(state = {}, action) {
+  console.log(action.type, action);
+  switch (action.type) {
+    case RECEIVE_ORGANISATIONS:
+      let new_state = {};
+      action.payload.forEach(org => {
+        new_state[parseInt(org.pk, 10)] = org;
+      });
+      return new_state;
+    default:
+      return state;
+  }
+}
 
 const reducers = {
   geojson,
@@ -366,7 +383,8 @@ const reducers = {
   allOrganisations,
   currentUser,
   userInformationByUsername,
-  loadingStatus
-}
+  loadingStatus,
+  organisationsByID
+};
 
 export default reducers;
