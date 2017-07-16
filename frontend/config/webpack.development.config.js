@@ -1,24 +1,25 @@
-import path from 'path';
-import webpack from 'webpack';
-import BundleTracker from 'webpack-bundle-tracker';
+import path from "path";
+import webpack from "webpack";
+import BundleTracker from "webpack-bundle-tracker";
 
-import baseConfig from './webpack.base.config.js';
+import baseConfig from "./webpack.base.config.js";
 
-module.exports = (opts) => {
-
+module.exports = opts => {
   const config = baseConfig(opts);
 
   return {
     ...config,
-    devtool: 'source-map',
+    devtool: "source-map",
     output: {
       ...config.output,
-      publicPath: '/static/wp/',
-      filename: '[name].js'
+      publicPath: "/static/wp/",
+      filename: "[name].js"
     },
-    plugins: [
-      ...config.plugins,
-      new webpack.NoEmitOnErrorsPlugin()
-    ]
+    plugins: [...config.plugins, new webpack.NoEmitOnErrorsPlugin()],
+    devServer: {
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      }
+    }
   };
 };

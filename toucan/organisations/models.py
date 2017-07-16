@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.contrib.gis.db import models as geo_models
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -150,7 +149,7 @@ class Membership(TimeStampedModel):
         return base
 
 
-class Location(geo_models.Model):
+class Location(models.Model):
     city = models.CharField(max_length=255)
     location = LocationField()
     org = models.ForeignKey(Organisation, null=True)
