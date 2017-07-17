@@ -1,0 +1,11 @@
+$padding: 10px;
+@mixin screen-sm-min {
+  @media (min-width: 768px) { @content; }
+}
+@mixin screen-md-min {
+  @media (min-width: 992px) { @content; }
+}
+@mixin screen-lg-min {
+  @media (min-width: 1200px) { @content; }
+}
+

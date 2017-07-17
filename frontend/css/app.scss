@@ -1,4 +1,14 @@
 @import 'colors';
+@import 'flexGrid';
+@import 'navbar';
+@import 'iconfont';
+@import 'icons';
+@import 'variables';
+@import 'lists';
+@import 'issueList';
+@import 'issueDetail';
+@import 'userLink';
+@import 'comments';
 html, body {
     height: 100%;
     width: 100%;
@@ -33,8 +43,11 @@ main {
     overflow: hidden;
     display: -webkit-flex;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex: 1;
+    @include screen-sm-min {
+      flex-direction: row-reverse;
+    }
 }
 
 .app-container > * {
@@ -45,6 +58,10 @@ main {
 .map-container {
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
+    @include screen-sm-min {
+      flex-grow: 6;
+    }
 }
 
 .map-container .leaflet-container {
@@ -59,59 +76,6 @@ main {
 
 .map-container footer > * {
     flex: 1;
-}
-
-/*this container wraps the right hand side of desktop layout*/
-.issues-container {
-    display: flex;
-    flex-direction: column;
-    /*padding: 1em;*/
-}
-
-/*issue list page */
-
-.issue-list {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    flex: 1;
-}
-
-.issue-list-form, .issue-list-footer {
-    flex: none;
-}
-
-.issue-list-body {
-    flex: 1 1 auto;
-    overflow-y: auto;
-    padding: 1em;
-}
-
-
-/*Issue detail page*/
-.issue-detail {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    flex:1;
-}
-
-.issue-detail-body {
-    flex: 1 1 auto;
-    overflow-y: auto;
-    padding: 1em;
-}
-
-.issue-detail footer {
-    flex: none;
-}
-
-.commentForm {
-    padding-right: 1em;
-}
-
-.issueDetailBottom {
-    padding-top: 1em;
 }
 
 /* currently not used*/
@@ -143,10 +107,7 @@ main {
     flex: 1;
 }
 
-@media (max-width: 922px) {
-    .app-container {
-        flex-direction: column;
-    }
+@media only screen and (max-width: 922px) {
 
     h3:first-child {
         margin-top: 0px;
@@ -160,13 +121,9 @@ main {
 
 @media (min-width: 922px) {
     .issue-list-form {
-        padding: 1em;
+        /*padding: 1em;*/
     }
 
-}
-
-table.issues .fa {
-    padding-right: 0.5em;
 }
 
 /*a[target=_blank] {

@@ -1,0 +1,14 @@
+.mapHandle {
+  width: 36px;
+  border-radius: 5px;
+  background-color: $c-lightgrey;
+  height: 5px;
+  display: inline-block;
+  &:hover {
+    text-decoration: none;
+    background-color: $c-lightgrey - 20;
+  }
+  @include screen-md-min {
+    display: none;
+  }
+}

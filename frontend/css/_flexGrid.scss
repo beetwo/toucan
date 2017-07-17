@@ -1,0 +1,20 @@
+.flex-container {
+  display: flex;
+  width: 100%;
+}
+.flex-col {
+  flex: 1;
+  // for bootstrap compatibility
+  position: relative;
+}
+.flex-container--bordered {
+  border: 1px solid $c-lightgrey;
+  border-left: none;
+  border-right: none;
+  .flex-col {
+    border-right: 1px solid $c-lightgrey;
+    &:last-child {
+      border: none;
+    }
+  }
+}
