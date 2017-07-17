@@ -16,7 +16,7 @@ from ..user_profile.models import NotificationSettings
 from .serializers import IssueSerializer, FullIssueSerializer, CommentSerializer, \
     UserSerializer, StatusSerializer, OrgMentionSerializer, UserMentionSerializer, \
     NotificationAreaSerializer, FullUserSerializer, ImageUploadSerializer, \
-    PublicUserSerializer, FullOrganisationSerializer
+    PublicUserSerializer, FullOrganisationSerializer, OrganisationSerializer
 
 User = get_user_model()
 
@@ -157,3 +157,7 @@ class ImageCreateView(CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(uploader=self.request.user)
+
+class OrganisationListView(ListAPIView):
+    serializer_class = OrganisationSerializer
+    queryset = Organisation.objects.all()

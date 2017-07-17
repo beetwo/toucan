@@ -1,6 +1,6 @@
-Django==1.11.1
+Django==1.11.3
 django-allauth==0.27.0
-django-location-field==1.6.1
+django-location-field==2.0.3
 django-braces==1.8.1
 django-extensions==1.7.4
 django-webpack-loader==0.3.0

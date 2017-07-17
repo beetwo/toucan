@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django_filters',
     'webpack_loader',
     'raven.contrib.django.raven_compat',
+    'location_field.apps.DefaultConfig',
     # custom applications
     'toucan.organisations',
     'toucan.issues',
