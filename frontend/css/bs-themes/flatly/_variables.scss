@@ -149,27 +149,27 @@ $btn-font-weight:                normal !default;
 
 $btn-default-color:              #fff !default;
 $btn-default-bg:                 $gray !default;
-$btn-default-border:             $btn-default-bg !default;
+$btn-default-border:             transparent !default;
 
 $btn-primary-color:              $btn-default-color !default;
 $btn-primary-bg:                 $brand-primary !default;
-$btn-primary-border:             $btn-primary-bg !default;
+$btn-primary-border:             transparent !default;
 
 $btn-success-color:              $btn-default-color !default;
-$btn-success-bg:                 $brand-success !default;
-$btn-success-border:             $btn-success-bg !default;
+$btn-success-bg:                 $c-darkblue !default;
+$btn-success-border:             transparent !default;
 
 $btn-info-color:                 $btn-default-color !default;
-$btn-info-bg:                    $brand-info !default;
-$btn-info-border:                $btn-info-bg !default;
+$btn-info-bg:                    $c-turquoise !default;
+$btn-info-border:                transparent !default;
 
 $btn-warning-color:              $btn-default-color !default;
 $btn-warning-bg:                 $brand-warning !default;
-$btn-warning-border:             $btn-warning-bg !default;
+$btn-warning-border:             transparent !default;
 
 $btn-danger-color:               $btn-default-color !default;
 $btn-danger-bg:                  $brand-danger !default;
-$btn-danger-border:              $btn-danger-bg !default;
+$btn-danger-border:              transparent !default;
 
 $btn-link-disabled-color:        $gray-light !default;
 
@@ -203,7 +203,7 @@ $input-border-radius-large:      $border-radius-large !default;
 $input-border-radius-small:      $border-radius-small !default;
 
 //** Border color for inputs on focus
-$input-border-focus:             $brand-primary !default;
+$input-border-focus:             #000 !default;
 
 //** Placeholder text color
 $input-color-placeholder:        #acb6c0 !default;

@@ -1,11 +1,5 @@
 .issue {
-  border-bottom: 1px solid $c-lightgrey;
-  margin: 0;
-  padding: $padding;
-  &:hover {
-    cursor: pointer;
-    background-color: $c-beige;
-  }
+  @include listItem;
 }
 .issue-icon {
   .icon {
@@ -71,8 +65,7 @@
 }
 
 .issue-list-body {
-    flex: 1 1 auto;
-    overflow-y: auto;
+  @extend .list-body;
 }
 .issue-addNew {
   display: block;

@@ -51,7 +51,7 @@ export class CustomLocationSelectedFooter extends React.Component {
             <a href={urls.createIssue(this.props.coordinates.lat, this.props.coordinates.lng)}
                className="btn btn-primary text-center">
                 <Icon name="plus"/>&nbsp;
-                Add Issue
+                Add Need
             </a>
             </MapFooter>
         )

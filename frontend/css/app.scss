@@ -1,12 +1,14 @@
 @import 'colors';
+@import 'variables';
+@import 'helpers';
 @import 'flexGrid';
 @import 'navbar';
 @import 'iconfont';
 @import 'icons';
-@import 'variables';
 @import 'lists';
 @import 'issueList';
 @import 'issueDetail';
+@import 'orgList';
 @import 'userLink';
 @import 'comments';
 html, body {
