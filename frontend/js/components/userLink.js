@@ -7,10 +7,10 @@ class UserLink extends React.Component {
     let linkText = this.props.children ? this.props.children : username
 
     let link = linkTo ?
-      <a href={linkTo} target='_blank' className={className}>
+      <a className="userLink" href={linkTo} target='_blank' className={className}>
           {linkText}
       </a> :
-      <Link to={`/detail/${username}`}>
+      <Link className="userLink" to={`/detail/${username}`}>
           {linkText}
       </Link>;
     return link;

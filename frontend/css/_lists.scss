@@ -1,0 +1,28 @@
+@mixin listItem {
+  display: block;
+  border-bottom: 1px solid $c-lightgrey;
+  margin: 0;
+  padding: $padding;
+  &:hover {
+    cursor: pointer;
+    background-color: $c-beige;
+  }
+}
+.list-body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+}
+.mapHandle {
+  width: 36px;
+  border-radius: 5px;
+  background-color: $c-lightgrey;
+  height: 5px;
+  display: inline-block;
+  &:hover {
+    text-decoration: none;
+    background-color: $c-lightgrey - 20;
+  }
+  @include screen-md-min {
+    display: none;
+  }
+}

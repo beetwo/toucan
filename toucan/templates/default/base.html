@@ -9,14 +9,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css">
     <link rel="manifest" href="{% static 'toucan/manifest.json' %}">
+    
     {% include './favicons.html' %}
     <title>{% block head_title %}{% trans 'Toucan' %}{% endblock %}</title>
     {% include './raven.html' %}
     {#{% render_bundle 'manifest' %}#}
     {% render_bundle 'vendor' %}
     {% render_bundle 'bootstrap' %}
-    {% block extra-head %}{% endblock %}
+    <style>
+      .body-beige {
+        /*c-beige*/
+        background-color: #FFF8EA;
+      }
+      .navbar-brand {
+        padding: 10px;
+      }
+      .navbar-brand>img {
+        /*width: auto;*/
+        /*height: 100%;*/
+      }
+      .navbar-logo {
+        width: 120px;
+        height: auto;
+      }
+    </style>{% block extra-head %}{% endblock %}
 </head>
 
 <body class="{% block body-classes %}{% endblock %}">

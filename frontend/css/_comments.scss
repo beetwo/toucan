@@ -1,0 +1,37 @@
+.comments {}
+.comment {
+  padding: $padding;
+  background-color: $c-lightgrey;
+  border-radius: 4px;
+  margin-bottom: $padding;
+  margin-left: $padding*2;
+}
+.comment-header {
+  font-size: 14px;
+}
+.comment-time {
+  color: $c-darkgrey;
+}
+.comment-primary {
+  background-color: $c-issues-muted;
+  margin-left: 0;
+  margin-right: $padding*2;
+}
+.comment-attachment {
+  color: $c-darkgrey;
+  font-size: 12px;
+  &:hover {
+    color: $c-yellow;
+    text-decoration: none;
+  }
+}
+.comment-button {
+  background-color: $c-turquoise;
+  border: none;
+  &:hover {
+    background-color: $c-turquoise - 20;
+  }
+}
+.comment-footer {
+  margin-top: $padding/2;
+}

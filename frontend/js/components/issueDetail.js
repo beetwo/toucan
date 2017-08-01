@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react'
 import ReactDOM  from 'react-dom'
+import TimeAgo from 'react-timeago'
 import { ScrollContainer } from 'react-router-scroll';
 import isEmpty from 'lodash/isEmpty'
 import { Link } from 'react-router'
@@ -47,41 +48,54 @@ class IssueDetailMain extends React.Component {
     }
     return <div className='issue-detail-main' ref='scrollbar'>
 
-      <h3>
-        <span className='text-muted'>#{gjs.id}</span>&nbsp;
-        {issue.title}
-      </h3>
-
-      <h3 className="pull-right">
-        <Status status={issue.status} />
-      </h3>
-
-      <ul className='list-inline'>
-        { issue.issue_types.map((issue_type, index) => <li key={index}><Icon key={index} name={getIconClassForIssueType(issue_type)} /></li>) }
-      </ul>
-
-      {
-        issue.organisation ?
-          <p>
-            <UserLink username={issue.organisation.short_name}>
-              {issue.organisation.name}
-            </UserLink>
-          </p> :
-          null
-      }
-      <hr />
-      <div className="panel panel-primary">
-          <div className="panel-heading">
-            <span className="pull-right">
-              <DateDisplay date={issue.created} />
-            </span>
-            <UserLink username={ issue.creator.username } />
+    <div className="issue-detail-header media media-middle">
+      <div className="media-left">
+      <span className="icon icon-nutrition icon-xl"></span>
+      </div>
+      <div className="media-body">
+        <h1 className="issue-detail-title">
+          <div className="issue-detail-label">
+          Nutrition
           </div>
-          <div className='panel-body'>
+          {issue.title}
+        </h1>
+      </div>
+    </div>
+      { /*issue.issue_types.map((issue_type, index) => <li key={index}><Icon key={index} name={getIconClassForIssueType(issue_type)} /></li>) */}
+
+
+
+      <div className="flex-container flex-container--bordered">
+        <div className="flex-col">
+          {
+            issue.organisation ?
+              <div className="issue-detail-organisation">
+                <div className="issue-detail-label">Organisation</div>
+                <UserLink username={issue.organisation.short_name}>
+                  {issue.organisation.name}
+                </UserLink>
+              </div> :
+              null
+          }
+        </div>
+        <div className="flex-col">
+          <div className="issue-detail-status">
+            <div className="issue-detail-label">Status</div>
+            {issue.status} <a href="#" className="statusChange">change</a>
+          </div>
+        </div>
+      </div>
+      <div className="issue-detail-comments">
+        <div className="comment comment-primary">
+          <div className="comment-header">
+            <UserLink username={ issue.creator.username } />, <span className="comment-time"><TimeAgo date={issue.created} /></span>
+          </div>
+          <div className='comment-body'>
             {body}
           </div>
+        </div>
+        {children}
       </div>
-      {children}
     </div>
   }
 }
@@ -118,18 +132,14 @@ class IssueDetailUI extends React.Component {
       <ScrollContainer scrollKey='toucan-issue-detail'>
       <div className="issue-detail-body">
 
-            <VisibleMedium>
-            <ol className="breadcrumb" style={{'backgroundColor': 'transparent'}}>
-              <li>
-                <Link to='/'>
-                <Icon name="list"/>&nbsp;Issue List
-                </Link>
-              </li>
-              <li className="active">
-                  #{gjs.id} {issue.title}
-              </li>
-            </ol>
-            </VisibleMedium>
+            <div className="issue-list-mapHandle">
+              <a href="#" className="mapHandle">&nbsp;</a>
+            </div>
+            <div className="issue-detail-close pull-right">
+              <Link to='/'>
+                <span className="icon icon-close"></span>
+              </Link>
+            </div>
 
             <IssueDetailMain {...this.props} gjs={gjs} issue={issue} />
 

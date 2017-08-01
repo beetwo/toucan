@@ -1,0 +1,23 @@
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+}
+.icon-md {
+  font-size: 16px;
+}
+.icon-baseline {
+  vertical-align: baseline;
+}
+.icon-lg {
+  font-size: 20px;
+  position: relative;
+  top: -2px;
+}
+.icon-xl {
+  font-size: 33px;
+}
+.text-muted {
+  &.icon, .icon {
+    color: $c-lightgrey !important;
+  }
+}

@@ -1,0 +1,91 @@
+.issue {
+  @include listItem;
+}
+.issue-icon {
+  .icon {
+    font-size: 30px;
+  }
+}
+.issue-title {
+  font-size: 16px;
+  font-weight: bold;
+}
+.issue-comments {
+  float: right;
+}
+.issue-details {
+  color: $c-darkgrey;
+  font-size: 14px;
+}
+.issue-organisation {
+  color: $c-darkblue;
+}
+.issue-date {}
+
+.comments {
+  .icon {
+    color: $c-darkbeige;
+    padding-right: 3px;
+  }
+}
+/*this container wraps the right hand side of desktop layout*/
+.issues-container {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0 !important;
+    flex-grow: 2;
+    @include screen-sm-min {
+      flex-basis: 320px !important;
+      flex-grow: 1;
+    }
+}
+
+/*issue list page */
+
+.issue-list {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex: 1;
+}
+
+.issue-list-form, .issue-list-footer {
+  flex: none;
+}
+.issue-list-form {
+  padding: $padding;
+  font-size: 14px;
+  a {
+    color: $c-text;
+    &:hover {
+      text-decoration: none;
+      color: $c-yellow;
+    }
+  }
+}
+
+.issue-list-body {
+  @extend .list-body;
+}
+.issue-addNew {
+  display: block;
+  border: 1px solid $c-lightgrey;
+  border-left: none;
+  border-right: none;
+  background-color: $c-beige;
+  color: $c-yellow;
+  padding: $padding;
+  font-weight: bold;
+  &:hover {
+    text-decoration: none;
+    cursor: pointer;
+    background-color: $c-yellow;
+    color: $c-beige;
+  }
+}
+
+.issue-list-mapHandle {
+  text-align: center;
+  padding-top: $padding/2;
+  height: 10px;
+}

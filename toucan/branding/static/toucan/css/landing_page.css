@@ -17,10 +17,16 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-weight: 700;
+    font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: bold;
+}
 .navbar-brand {
     padding: 10px 10px;
 }
@@ -30,11 +36,9 @@ h6 {
 }
 
 .intro-header {
-    margin-top: 90px;
     text-align: center;
 }
 
-@media (min-width: 768px) {
     /*Fix up the nav links */
     .navbar-default .navbar-nav > li > a {
         color: #2C3E50;
@@ -67,38 +71,79 @@ h6 {
     .intro-header {
         background-image: linear-gradient(
             rgba(255, 255, 255, 0.3),
-            rgba(255, 255, 255, 0.3)
+            rgba(255, 255, 255, 0.1)
         ),
         url(../img/background.jpg);
         background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-position: center;
+        /*background-attachment: fixed;*/
         background-size:cover;
 
         width: 100%;
         margin-top: 0;
         height: 0;
         text-align: center;
-        padding-top: 75%;
+        /*padding-top: 75%;*/
+        height: 500px;
+        background-position: top;
     }
 
-    .intro-message {
-        position: absolute;
-        font-weight: bold;
-        top: 80px;
-        left: 50%;
-        transform: translateX(-50%);
-        /*background-color: rgba(255,255,255,0.6);*/
-    }
-
+.intro-message-heading {
+  font-weight: bold;
+  font-size: 33px;
+  margin-bottom: 30px;
 }
+
+.intro-text {
+  /*c-beige*/
+  background-color: #FFF8EA;
+  padding: 20px 0;
+}
+.intro-text-heading {
+  padding: 30px 0;
+}
+  .intro-message {
+    padding-top: 30px;
+  }
+@media only screen and (min-width: 768px) {
+  .intro-message-heading {
+    font-size: 39px;
+  }
+  .intro-header {
+    height: 700px;
+    background-position: center;
+  }
+  .intro-message {
+    padding-top: 70px;
+  }
+}
+.btn-signIn, .btn-access {
+  width: 200px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.heading-blue {
+  color: #3268A8;
+}
+.btn-factsheet {
+  margin-top: 20px;
+  max-width: 400px;
+}
+.btn-signIn {
+  /*c-darkblue*/
+  background-color: #3268A8;
+  border-color: #3268A8;
+}
+.btn-access {
+  /*c-tourquoise*/
+  background-color: #64AFCA;
+  border-color: #64AFCA;
+}
+
+
 
 .supporters {
     margin-top: 2em;
     margin-bottom: 2em;
-}
-.supporters > div:not(:first-child) {
-    border-left: 3px solid #e7e7e7;
 }
 
 .vc-image {
@@ -161,6 +206,22 @@ section#supporters-and-partners > #supporters {
 footer {
     padding: 1em;
     color: white;
-    background-color: #2C3E50;
+    background-color: #3268A8;
     text-align: center;
+}
+footer a {
+  color: #64AFCA;
+}
+footer a:hover {
+  color: inherit;
+}
+.beetwo-logo {
+  width: 100px;
+  margin: 10px 0;
+}
+.toucan-logo {
+  padding: 0 60px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 416px;
 }

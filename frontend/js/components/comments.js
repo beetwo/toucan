@@ -12,6 +12,7 @@ import {ToucanUploader, UploadField} from '../containers/fileUploader'
 import Gallery from './gallery'
 import Dropzone from 'react-dropzone'
 import DateDisplay from './date'
+import TimeAgo from 'react-timeago'
 
 export class CommentForm extends React.Component {
   constructor(props) {
@@ -125,12 +126,7 @@ export class CommentForm extends React.Component {
     let closeIssueButtonText = isEmpty ? 'Resolve issue' : 'Comment and resolve issue'
     let reopenIssueButtonText = isEmpty ? 'Reopen issue' : 'Comment and reopen issue'
 
-    return (<form onSubmit={this.handleSubmit} ref={(e) => this._form =e }>
-        <div className='panel panel-default'>
-          <div className='panel-heading text-muted'>
-            <Icon name='comment-o' />  Add comment
-          </div>
-          <div className='panel-body'>
+    return (<form className="issue-detail-form" onSubmit={this.handleSubmit} ref={(e) => this._form =e }>
             <Dropzone onDrop={this.handleAttachmentDropped}
                       ref={(node) => this.dropzone = node}
                       disableClick={true}
@@ -142,14 +138,18 @@ export class CommentForm extends React.Component {
                            editorState={this.state.editorState}
               />
 
-              <p className="text-muted">
-                Add image files by dropping them on this field or
-                by <a href="#" onClick={this.handleFileSelectorClick}>selecting them</a>.
+              <p className="comment-footer text-right">
+                <a href="#" className="comment-attachment" onClick={this.handleFileSelectorClick}>
+                <span className="icon icon-paperclip icon-md icon-baseline"></span> Add an attachment
+                </a>
+                &nbsp;
+                <a href="#" className="btn btn-primary comment-button btn-sm">
+                Send <span className="icon icon-send icon-lg"></span>
+                </a>
               </p>
 
             </Dropzone>
             {uploadControl}
-          </div>
           <div className='panel-footer'>
             <div className='btn-toolbar' style={{marginTop: '0.3em'}}>
 
@@ -169,7 +169,6 @@ export class CommentForm extends React.Component {
 
            </div>
         </div>
-    </div>
   </form>);
   }
 }
@@ -198,23 +197,21 @@ export class Comment extends React.Component {
     let hasAttachments = (comment.attachments || []).length > 0;
     let isEmptyComment = comment.comment === '';
     if ( isEmptyComment && !hasAttachments ) { return null; };
-    return (<div className='panel panel-default'>
-      <div className='panel-heading'>
-        <span className="pull-right">
-            <DateDisplay date={comment.created} />
-        </span>
-          <UserLink username={comment.user.username} />
-      </div>
-      <div className="panel-body" style={{whiteSpace: 'pre-line'}}>
-        {isEmptyComment ?
-          <em>No comment was added.</em> :
-           <CommentView comment={comment.comment} /> }
-      </div>
-      { hasAttachments ?
-        <div className='panel-footer'>
-          <Attachments attachments={comment.attachments} />
-        </div> : null }
-    </div>);
+    return (
+      <div className="comment">
+          <div className="comment-header">
+            <UserLink username={comment.user.username} />, <span className="comment-time"><TimeAgo minPeriod="60" date={comment.created} /></span>
+          </div>
+          <div className="comment-body" style={{whiteSpace: 'pre-line'}}>
+            {isEmptyComment ?
+              <em>No comment was added.</em> :
+               <CommentView comment={comment.comment} /> }
+          </div>
+          { hasAttachments ?
+            <div className='panel-footer'>
+              <Attachments attachments={comment.attachments} />
+            </div> : null }
+        </div>);
   }
 }
 

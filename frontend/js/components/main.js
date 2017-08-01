@@ -74,7 +74,7 @@ class UI extends React.Component {
 
     render() {
 
-        return (<MediaQuery maxWidth={992}>
+        return (<MediaQuery maxWidth={1}>
                 {(isMobile) => {
                     // default: display both
                     let displayMap = true,

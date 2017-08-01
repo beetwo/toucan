@@ -1,0 +1,68 @@
+.issue-detail {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex:1;
+}
+.issue-detail-header, .issue-detail-status, .issue-detail-organisation {
+  padding: $padding;
+}
+.issue-detail-body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+}
+.issue-detail-title {
+  font-size: 20px;
+  margin: 0;
+  font-weight: bold;
+  .issue-detail-label {
+    color: $c-yellow;
+  }
+}
+.issue-detail-label {
+  text-transform: uppercase;
+  font-size: 12px;
+  color: $c-darkgrey;
+}
+.issue-detail-organisation {
+  a {
+    color: $c-organisations;
+  }
+}
+
+.issueDetailBottom {
+    padding-top: 1em;
+}
+.issue-detail-close {
+  padding-right: $padding;
+  a {
+    color: $c-darkgrey;
+    &:hover {
+      color: $c-yellow;
+      text-decoration: none;
+    }
+  }
+}
+.issue-detail-status {
+  color: $c-turquoise;
+}
+.issue-detail-comments {
+  padding: 0 $padding;
+  margin: $padding 0;
+}
+.statusChange {
+  font-size: 12px;
+  color: $c-green;
+  &:hover {
+    color: $c-green;
+  }
+}
+.issue-detail footer {
+    flex: none;
+}
+
+.issue-detail-form {
+  padding: 0 $padding;
+  margin: $padding 0;
+  margin-left: 20px;
+}

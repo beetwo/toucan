@@ -1,4 +1,6 @@
+@import '../../colors.scss';
 $bootstrap-sass-asset-helper: false !default;
+
 // Flatly 3.3.6
 // Variables
 // --------------------------------------------------
@@ -8,15 +10,15 @@ $bootstrap-sass-asset-helper: false !default;
 //
 //## Gray and brand colors for use across Bootstrap.
 
-$gray-base:              #000 !default;
+$gray-base:              $c-text !default;
 $gray-darker:            lighten($gray-base, 13.5%) !default; // #222
-$gray-dark:              #7b8a8b !default;   // #333
-$gray:                   #95a5a6 !default; // #555
-$gray-light:             #b4bcc2 !default;   // #999
-$gray-lighter:           #ecf0f1 !default; // #eee
+$gray-dark:              $c-darkgrey !default;   // #333
+$gray:                   $c-text !default; // #555
+$gray-lighter:           $c-lightgrey !default; // #eee
+$gray-light:             darken($gray-lighter, 13.5%) !default;   // #999
 
-$brand-primary:         #2C3E50 !default;
-$brand-success:         #32A9DD !default;
+$brand-primary:         $c-yellow !default;
+$brand-success:         $c-green !default;
 $brand-info:            #3498DB !default;
 $brand-warning:         #F39C12 !default;
 $brand-danger:          #D32A19 !default;
@@ -29,12 +31,12 @@ $brand-danger:          #D32A19 !default;
 //** Background color for `<body>`.
 $body-bg:               #fff !default;
 //** Global text color on `<body>`.
-$text-color:            $brand-primary !default;
+$text-color:            $gray-base !default;
 
 //** Global textual link color.
-$link-color:            $brand-success !default;
+$link-color:            $brand-primary !default;
 //** Link hover color set via `darken()` function.
-$link-hover-color:      $link-color !default;
+$link-hover-color:      $brand-primary !default;
 //** Link hover decoration.
 $link-hover-decoration: underline !default;
 
@@ -43,7 +45,7 @@ $link-hover-decoration: underline !default;
 //
 //## Font, line-height, and color for body text, headings, and more.
 
-$font-family-sans-serif:  "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$font-family-sans-serif:  "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 $font-family-serif:       Georgia, "Times New Roman", Times, serif !default;
 //** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
 $font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !default;
@@ -89,7 +91,7 @@ $icon-font-svg-id:        "glyphicons_halflingsregular" !default;
 //## Define common padding and border radius sizes and more. Values based on 14px text and 1.428 line-height (~20px to start).
 
 $padding-base-vertical:     10px !default;
-$padding-base-horizontal:   15px !default;
+$padding-base-horizontal:   10px !default;
 
 $padding-large-vertical:    18px !default;
 $padding-large-horizontal:  27px !default;
@@ -147,34 +149,34 @@ $btn-font-weight:                normal !default;
 
 $btn-default-color:              #fff !default;
 $btn-default-bg:                 $gray !default;
-$btn-default-border:             $btn-default-bg !default;
+$btn-default-border:             transparent !default;
 
 $btn-primary-color:              $btn-default-color !default;
 $btn-primary-bg:                 $brand-primary !default;
-$btn-primary-border:             $btn-primary-bg !default;
+$btn-primary-border:             transparent !default;
 
 $btn-success-color:              $btn-default-color !default;
-$btn-success-bg:                 $brand-success !default;
-$btn-success-border:             $btn-success-bg !default;
+$btn-success-bg:                 $c-darkblue !default;
+$btn-success-border:             transparent !default;
 
 $btn-info-color:                 $btn-default-color !default;
-$btn-info-bg:                    $brand-info !default;
-$btn-info-border:                $btn-info-bg !default;
+$btn-info-bg:                    $c-turquoise !default;
+$btn-info-border:                transparent !default;
 
 $btn-warning-color:              $btn-default-color !default;
 $btn-warning-bg:                 $brand-warning !default;
-$btn-warning-border:             $btn-warning-bg !default;
+$btn-warning-border:             transparent !default;
 
 $btn-danger-color:               $btn-default-color !default;
 $btn-danger-bg:                  $brand-danger !default;
-$btn-danger-border:              $btn-danger-bg !default;
+$btn-danger-border:              transparent !default;
 
 $btn-link-disabled-color:        $gray-light !default;
 
 // Allows for customizing button radius independently from global border radius
-$btn-border-radius-base:         $border-radius-base !default;
-$btn-border-radius-large:        $border-radius-large !default;
-$btn-border-radius-small:        $border-radius-small !default;
+$btn-border-radius-base:         25px !default;
+$btn-border-radius-large:        50px !default;
+$btn-border-radius-small:        20px !default;
 
 
 //== Forms
@@ -201,7 +203,7 @@ $input-border-radius-large:      $border-radius-large !default;
 $input-border-radius-small:      $border-radius-small !default;
 
 //** Border color for inputs on focus
-$input-border-focus:             $brand-primary !default;
+$input-border-focus:             #000 !default;
 
 //** Placeholder text color
 $input-color-placeholder:        #acb6c0 !default;
@@ -358,23 +360,23 @@ $container-lg:                 $container-large-desktop !default;
 //##
 
 // Basics of a navbar
-$navbar-height:                    60px !default;
+$navbar-height:                    45px !default;
 $navbar-margin-bottom:             $line-height-computed !default;
 $navbar-border-radius:             $border-radius-base !default;
 $navbar-padding-horizontal:        floor(($grid-gutter-width / 2)) !default;
 $navbar-padding-vertical:          (($navbar-height - $line-height-computed) / 2) !default;
 $navbar-collapse-max-height:       340px !default;
 
-$navbar-default-color:             #fff !default;
-$navbar-default-bg:                $brand-primary !default;
+$navbar-default-color:             $c-text !default;
+$navbar-default-bg:                #fff !default;
 $navbar-default-border:            transparent !default;
 
 // Navbar links
-$navbar-default-link-color:                #fff !default;
-$navbar-default-link-hover-color:          $brand-success !default;
+$navbar-default-link-color:                $c-text !default;
+$navbar-default-link-hover-color:          $c-yellow !default;
 $navbar-default-link-hover-bg:             transparent !default;
-$navbar-default-link-active-color:         #fff !default;
-$navbar-default-link-active-bg:            darken($navbar-default-bg, 10%) !default;
+$navbar-default-link-active-color:         $c-yellow !default;
+$navbar-default-link-active-bg:            transparent !default;
 $navbar-default-link-disabled-color:       #ccc !default;
 $navbar-default-link-disabled-bg:          transparent !default;
 
@@ -385,8 +387,8 @@ $navbar-default-brand-hover-bg:            transparent !default;
 
 // Navbar toggle
 $navbar-default-toggle-hover-bg:           darken($navbar-default-bg, 10%) !default;
-$navbar-default-toggle-icon-bar-bg:        #fff !default;
-$navbar-default-toggle-border-color:       darken($navbar-default-bg, 10%) !default;
+$navbar-default-toggle-icon-bar-bg:        $c-text !default;
+$navbar-default-toggle-border-color:       none !default;
 
 
 //=== Inverted navbar
@@ -420,7 +422,7 @@ $navbar-inverse-toggle-border-color:        darken($navbar-inverse-bg, 10%) !def
 //##
 
 //=== Shared nav styles
-$nav-link-padding:                          10px 15px !default;
+$nav-link-padding:                          10px 10px !default;
 $nav-link-hover-bg:                         $gray-lighter !default;
 
 $nav-disabled-link-color:                   $gray-light !default;

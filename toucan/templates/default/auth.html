@@ -1,4 +1,5 @@
 {% extends 'default/base.html' %}
+{% block body-classes %}body-beige{% endblock %}
 {% load static from staticfiles %}
 {% load i18n %}
 {# hide navbar #}
@@ -6,17 +7,18 @@
 
 {% block main %}
     <div class="container">
-        <img alt="Toucan Logo"
-             class="center-block img-responsive"
-             src="{% static 'toucan/toucan_logo.png' %}"
-             style="margin-top:1em; margin-bottom: 1em;">
+      <img alt="Toucan Logo" width="296" style="margin-top: 40px;margin-bottom: 40px;" class="center-block toucan-logo img-responsive" src="{% static 'toucan/logos/Toucan_Logo_Main@2x.png' %}">
 
         <div class="col-md-6 col-md-offset-3">
 
-            <h1 class="text-center" style="margin-top: 1.5em;">
-                {% block auth-header %}{% endblock %}
-            </h1>
-            <hr />
+          <div class="text-center"  style="margin-top: 40px;margin-bottom: 40px;">
+            <h2>
+              Sign in to Toucan
+            </h2>
+            <h4>
+              Please enter your details
+            </h4>
+          </div>
 
             <div class="row">
                 {% block auth-content %}{% endblock auth-content %}

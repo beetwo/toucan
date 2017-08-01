@@ -10,20 +10,36 @@
     {% render_bundle 'vendor' %}
     {% render_bundle 'bootstrap' %}
     <link href="{% static 'toucan/css/landing_page.css' %}" type="text/css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css">
 </head>
 <body>
 
     <!-- Navigation -->
-    {% include './nav.html' %}
 
 
     <!-- Header -->
     <div class="intro-header">
         <div class="container-fluid intro-message">
             <div class="row">
-                <div class="col-lg-6 col-lg-offset-3">
-                        <h3>Toucan</h3>
+                <div class="col-lg-6 col-lg-offset-3 text-center">
+
+                  <img alt="Toucan Logo" class="toucan-logo img-responsive" src="{% static 'toucan/logos/Toucan_Logo_Main@2x.png' %}">
+                  <h1 class="intro-message-heading heading-blue">Resources where they’re needed.</h1>
+                  <a href="{% url 'account_login' %}" class="btn btn-success btn-signIn">Sign in</a>
+                  <a href="{% url 'request_invitation_form' %}" class="btn btn-info btn-access">Request access</a>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /.intro-header -->
+
+    <div class="container-beige">
+    <div class="container-fluid">
+      <div class="row intro-text">
+        <div class="col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
+                        <h3 class="intro-text-heading text-center heading-blue">A tool for better emergency relief coordination.</h3>
                         <p>Humanitarian organisations often struggle to access real-time information about the urgent
                             needs in an emergency situation, especially at times of rapid change. Sometimes, several
                             organisations duplicate their efforts to reach solve the same issues, while others aren’t
@@ -35,41 +51,39 @@
                             services
                             where.</p>
                       <p>
-                          <a class="btn btn-primary" href="{% static 'toucan/factsheet.pdf' %}">
-                              Download Factsheet <i class="fa fa-file-pdf-o"></i>
+                          <a class="center-block btn btn-info btn-factsheet" href="{% static 'toucan/factsheet.pdf' %}">
+                              Download Factsheet (PDF)
                           </a>
                       </p>
-                </div>
-            </div>
-
         </div>
-        <!-- /.container -->
+      </div>
     </div>
-    <!-- /.intro-header -->
-
+    </div>
     <div class="container-fluid">
-        <div class="row supporters">
-            <div class="col-md-7">
-                <h4 class="text-muted">Our Supporters</h4>
-                <div class="row">
-                    <div class="col-md-6 vc-image text-center">
-                        <img src="{% static 'toucan/img/erste_stiftung.png' %}" alt="3rd party logo">
-                    </div>
-                    <div class="col-md-6 vc-image text-center">
-                        <img src="{% static 'toucan/img/bka.png' %}" alt="3rd party logo">
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-5">
-                <h4 class="text-muted">Our Partners</h4>
+    <div class="supporters">
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <h3>Partners</h3>
                 <div class="row">
                     <div class="col-md-12 vc-image text-center">
                         <img src="{% static 'toucan/img/sos.png' %}" alt="3rd party logo">
                     </div>
                 </div>
-
+            </div>
+            <div class="col-md-6 text-center">
+                <h3>Funders</h3>
+                <div class="row">
+                    <div class="col-sm-12 vc-image text-center">
+                        <img src="{% static 'toucan/img/erste_stiftung.png' %}" alt="3rd party logo">
+                    </div>
+                    <div class="col-sm-12 vc-image text-center">
+                        <img src="{% static 'toucan/img/bka.png' %}" alt="3rd party logo">
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
+    </div>
     </div>
 
 
@@ -78,11 +92,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <img src="{% static 'toucan/logos/BeeTwo_Logo_white_transparent.svg' %}" alt="BeeTwo Logo" />
+                    <img src="{% static 'toucan/logos/BeeTwo_Logo_white_transparent.svg' %}" class="beetwo-logo" alt="BeeTwo Logo" />
                     <br />
                     <span>Toucan is a product by <a href="http://beetwo.at/">BeeTwo</a> and currently in development.</span>
                     <br/>
-                    <span>&copy; 2017, <a href="http://beetwo.at/">BeeTwo</a></span>
+                    <span>&copy; 2017, BeeTwo</span>
                 </div>
             </div>
         </div>

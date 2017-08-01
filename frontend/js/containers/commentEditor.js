@@ -82,6 +82,7 @@ class CommentEditor extends React.Component {
           onChange={this.props.onStateChange}
           plugins={plugins}
           ref={(e) => this.editor = e }
+          placeholder="Add comment"
         />
         <MentionSuggestions
           onSearchChange={ this.onSearchChange }

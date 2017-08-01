@@ -72,6 +72,7 @@ module.exports = (opts) => {
             'react-markdown',
             'react-router',
             'react-fa',
+            'react-timeago',
             'selectize',
             'selectize/dist/css/selectize.bootstrap3.css'
         ],
@@ -88,7 +89,7 @@ module.exports = (opts) => {
         publicPath: '/static/wp/'
     },
     plugins,
-    resolve: {extensions: ['.js']},
+    resolve: {extensions: ['.js', '.scss']},
     module: {
         loaders: [
             {

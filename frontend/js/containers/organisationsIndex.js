@@ -15,12 +15,50 @@ class OrganisationsApp extends React.Component {
   render() {
     return (
       <div>
-        <h1>Organisations</h1>
+      <div className="issue-list-mapHandle">
+        <a href="#" className="mapHandle">&nbsp;</a>
+      </div>
+      <div className="issue-list-form">
+        <div className="flex-container">
+          <div className="flex-col">
+            <a href="#" className="dropdown-toggle" data-toggle="dropdown">
+              <span className="icon icon-filter"></span>
+              Filter
+            </a>
+            <ul className="dropdown-menu">
+            </ul>
+          </div>
+          <div className="flex-col text-right">
+            <span className="text-muted">Sort by: </span><a href="#">Nearest <span className="icon icon-chevron"></span></a>
+          </div>
+        </div>
+      </div>
         {this.props.organisations.map(org => {
           return (
-            <pre key={org.pk}>
-              {JSON.stringify(org, null, 2)}
-            </pre>
+            <div className="org-list-body">
+              <div className="org" key={org.pk} onClick={(e) => {e.preventDefault(); window.location.href=org.profile_url}}>
+                <div className="flex-container flex-vCenter">
+                  <div className="flex-col">
+                    <div className="issue-basics">
+                      <span className="issue-title">
+                        {org.name}
+                      </span>
+                    </div>
+                    <div className="org-details">
+                      <span className="icon icon-pin org-pin"></span>
+                      <span className="org-location">
+                        Athens, Greece
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex-col">
+                    <div className="org-logo">
+                      <img src={org.logo} alt="" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           );
         })}
       </div>

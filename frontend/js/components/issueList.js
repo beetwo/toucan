@@ -1,17 +1,18 @@
 import React, { PropTypes } from 'react'
 import Icon from 'react-fa'
+import TimeAgo from 'react-timeago'
 import classNames from 'classnames'
+import urls from '../urls'
 import { ScrollContainer } from 'react-router-scroll';
-
 import Status from './status'
 import getIconClassForIssueType from './icons/issueType'
 import {DateOnlyDisplay, DateOrTimeDisplay} from './date'
 
 
 function CommentCount({count}) {
-    return (<span className={classNames({'text-muted': count === 0})}>
-        <Icon name='comment-o' size='lg'/>
-        { count === 0 ? count : <strong>{count}</strong>}
+    return (<span className={classNames('comments', {'text-muted': count === 0})}>
+        <span className='icon icon-comment icon-lg'/>
+        {count}
     </span>);
 }
 
@@ -61,21 +62,22 @@ class IssueFilter extends React.Component {
     }
     input_textual = input_textual.join(', ')
 
-    return (<div className="input-group">
-      <div className="input-group-btn">
-        <button className="btn btn-default dropdown-toggle" data-toggle="dropdown">
-          <Icon name='filter' />&nbsp;
-          Filter <span className="caret"></span>
-        </button>
-        <ul className="dropdown-menu">
-            {items}
-        </ul>
+    return (
+      <div className="flex-container">
+        <div className="flex-col">
+          <a href="#" className="dropdown-toggle" data-toggle="dropdown">
+            <span className="icon icon-filter"></span>
+            Filter
+          </a>
+          <ul className="dropdown-menu">
+              {items}
+          </ul>
+        </div>
+        <div className="flex-col text-right">
+          <span className="text-muted">Sort by: </span><a href="#">Newest <span className="icon icon-chevron"></span></a>
+        </div>
       </div>
-      <input type="text" disabled className="form-control" value={input_textual}/>
-      <span className="input-group-addon" onClick={this.props.refreshIssueList}>
-        <Icon spin={this.props.loading} name='refresh' />
-      </span>
-    </div>);
+    );
   }
 }
 
@@ -102,45 +104,55 @@ class IssueListUI extends React.Component {
         let issues = this.props.issues || [];
         let rows = issues.map((issue, index) => {
             return (
-              <tr key={issue.id} onClick={(e) => {e.preventDefault(); this.props.handleIssueChange(issue)}}>
-                <td>
-                    <a href='#'>
+              <div className="issue media" key={issue.id} onClick={(e) => {e.preventDefault(); this.props.handleIssueChange(issue)}}>
+                <div className="issue-icon media-left media-middle">
+                  <span className="icon icon-health"></span>
+                  {/*{issue.issue_types.map((it) => <Icon key={it.slug} name={getIconClassForIssueType(it)} title={it.name} /> )}*/}
+                </div>
+                <div className="media-body">
+                  <div className="issue-basics">
+                    <span className="issue-title">
                       {issue.title}
-                    </a>
-                    <br />
-                    <small>
-                        {issue.organisation ? issue.organisation.name : null}
-                    </small>
-                </td>
-                <td>
-                  <Status status={issue.status} />
-                </td>
-                <td>
-                    {issue.issue_types.map((it) => <Icon key={it.slug} name={getIconClassForIssueType(it)} title={it.name} /> )}
-                </td>
-                <td>
-                    <DateOrTimeDisplay date={issue.created} />
-                </td>
-                <td>
-                    <CommentCount count={issue.comment_count} />
-                </td>
-              </tr>);
+                    </span>
+                    <span className="issue-comments">
+                      <CommentCount count={issue.comment_count} />
+                    </span>
+                  </div>
+                  <div className="issue-details">
+                    <span className="issue-organisation">
+                      {issue.organisation ? issue.organisation.name : null}
+                    </span>
+                    <span className="issue-date">
+                      , <TimeAgo date={issue.created} />
+                    </span>
+                  </div>
+                </div>
+              </div>);
         });
         return (
           <div className="issue-list">
+            <div className="issue-list-mapHandle">
+              <a href="#" className="mapHandle">&nbsp;</a>
+            </div>
             {/*the filtering interface*/}
             <div className="issue-list-form">
                 <IssueFilter {...this.props} filterOptions={this.props.filterOptions}/>
             </div>
-
             <ScrollContainer scrollKey='toucan-issue-list'>
-            {/* the actual table of issues */}
-            <div className="issue-list-body table-responsive">
-                <table className="issues table table-hover table-striped">
-                <tbody>
-                    {rows}
-                </tbody>
-                </table>
+            {/* the actual list of issues */}
+            <div className="issue-list-body">
+                {/*adding new items*/}
+                <div className="issues">
+                  <a href={urls.createIssue()} className="issue issue-addNew media">
+                    <div className="issue-icon media-left media-middle">
+                      <span className="icon icon-plus"></span>
+                    </div>
+                    <div className="media-body media-middle">
+                      Add Need
+                    </div>
+                  </a>
+                  {rows}
+                </div>
             </div>
             </ScrollContainer>
 
