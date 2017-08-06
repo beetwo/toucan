@@ -1,4 +1,5 @@
-import React, { PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import ReactDOM from 'react-dom'
 import isEmpty from 'lodash/isEmpty'
 import {dispatch} from 'redux'

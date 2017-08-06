@@ -2,7 +2,9 @@ import Editor from 'draft-js-plugins-editor'
 import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin'
 import createLinkifyPlugin from 'draft-js-linkify-plugin'
 
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types';
+
+import React from 'react';
 import { EditorState, ContentState, convertToRaw, convertFromRaw  } from 'draft-js'
 import { fromJS } from 'immutable';
 

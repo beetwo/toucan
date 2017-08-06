@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react'
+import PropTypes from 'prop-types';
+import React from 'react';
 import Icon from 'react-fa'
 import CommentEditor from '../containers/commentEditor'
 import DraftEditor, { convertToRaw, convertFromRaw, EditorState, ContentState } from 'draft-js'

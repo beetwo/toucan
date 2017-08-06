@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react'
+import PropTypes from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux'
 import { CommentList } from '../components/comments'
 import {loadComments as loadCommentsAction} from '../actions'

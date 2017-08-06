@@ -1,6 +1,8 @@
 import 'babel-polyfill';
 
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+
+import React from 'react';
 import { render } from 'react-dom';
 import { Map, Marker, Popup, TileLayer, Circle } from 'react-leaflet';
 
