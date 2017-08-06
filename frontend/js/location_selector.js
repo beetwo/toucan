@@ -1,24 +1,32 @@
-import 'babel-polyfill';
+import "babel-polyfill";
 
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
+import React from "react";
+import { render } from "react-dom";
+import { Map, Marker, Popup, Circle } from "react-leaflet";
+import L from "leaflet";
+import TileLayer from "./components/map/tiles";
+import LocationControl from "./components/map/locationControl";
+import { defaultIssueLocation } from "./globals";
 
-import React from 'react';
-import { render } from 'react-dom';
-import { Map, Marker, Popup, TileLayer, Circle } from 'react-leaflet';
+require("leaflet/dist/leaflet.css");
 
-import LocationControl from './components/map/locationControl';
-import { defaultIssueLocation } from './globals';
-
-require('leaflet/dist/leaflet.css');
+// default markers seem to be broken
+// https://github.com/Leaflet/Leaflet/issues/4968
+const MarkerIcon = L.icon({
+  iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+  iconUrl: require("leaflet/dist/images/marker-icon.png"),
+  shadowUrl: require("leaflet/dist/images/marker-shadow.png")
+});
 
 class B2SelectorMap extends React.Component {
   constructor(props) {
-    super(props)
-    this._map = null
+    super(props);
+    this._map = null;
     this.state = {
       position: this.props.position,
       zoom: 12
-    }
+    };
 
     this.onPositionChange = this.onPositionChange.bind(this);
     this.handleLocationFound = this.handleLocationFound.bind(this);
@@ -46,35 +54,47 @@ class B2SelectorMap extends React.Component {
 
   onPositionChange(latLng) {
     if (this.props.editable) {
-      this.setPosition(latLng)
+      this.setPosition(latLng);
     }
   }
 
-  render () {
+  render() {
     const position = this.state.position || defaultIssueLocation;
     let marker = null;
 
     if (position && position !== defaultIssueLocation) {
       let marker_props = {
-        ref: 'marker',
+        ref: "marker",
         draggable: this.props.editable,
-        onDragEnd: (e) => this.onPositionChange(e.target.getLatLng())
+        onDragEnd: e => this.onPositionChange(e.target.getLatLng()),
+        icon: MarkerIcon
       };
       marker = <Marker {...marker_props} position={position} />;
 
       if (this.props.radius > 0) {
-        marker = (<Circle center={position} radius={this.props.radius}>{marker}</Circle>);
+        marker = (
+          <Circle center={position} radius={this.props.radius}>
+            {marker}
+          </Circle>
+        );
       }
     }
 
     return (
-      <Map center={position} onClick={(e) => this.onPositionChange(e.latlng)} zoom={this.state.zoom} ref={(m) => this._map = m}
-            onLocationfound={this.handleLocationFound} onLocationerror={this.handleLocationError} animate={true}>
-        <TileLayer url='//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-                   attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' />
-                 {marker}
-         <LocationControl locate={()=> this._map.leafletElement.locate()} />
-      </Map>);
+      <Map
+        center={position}
+        onClick={e => this.onPositionChange(e.latlng)}
+        zoom={this.state.zoom}
+        ref={m => (this._map = m)}
+        onLocationfound={this.handleLocationFound}
+        onLocationerror={this.handleLocationError}
+        animate={true}
+      >
+        <TileLayer />
+        {marker}
+        <LocationControl locate={() => this._map.leafletElement.locate()} />
+      </Map>
+    );
   }
   componentDidUpdate() {
     if (this.props.onPositionChange != undefined) {
@@ -85,24 +105,20 @@ class B2SelectorMap extends React.Component {
 
 B2SelectorMap.propTypes = {
   onPositionChange: PropTypes.func,
-  position: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.bool
-  ]).isRequired,
+  position: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]).isRequired,
   editable: PropTypes.bool,
   radius: PropTypes.number
-}
+};
 
 B2SelectorMap.defaultProps = {
   onPositionChange: () => {},
   editable: false,
   position: false,
   radius: 0
-}
+};
 
-
-function render_map(element, props={}) {
-  let cb = function (new_props) {
+function render_map(element, props = {}) {
+  let cb = function(new_props) {
     return render(<B2SelectorMap {...new_props} />, element);
   };
   // call it once
@@ -112,4 +128,4 @@ function render_map(element, props={}) {
 }
 window.render_map = render_map;
 
-export default render_map
+export default render_map;
