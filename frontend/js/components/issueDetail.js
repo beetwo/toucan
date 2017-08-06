@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react'
+import PropTypes from 'prop-types';
+import React from 'react';
 import ReactDOM  from 'react-dom'
 import TimeAgo from 'react-timeago'
 import { ScrollContainer } from 'react-router-scroll';

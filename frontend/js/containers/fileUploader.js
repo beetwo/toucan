@@ -1,6 +1,8 @@
 /**
  * Created by sean on 23/10/16.
  */
+import PropTypes from 'prop-types';
+
 import React from 'react';
 import Icon from 'react-fa'
 import Dropzone from 'react-dropzone';
@@ -94,5 +96,5 @@ export class UploadField extends React.Component {
 }
 
 UploadField.propTypes = {
-    onDrop: React.PropTypes.func.isRequired
+    onDrop: PropTypes.func.isRequired
 };

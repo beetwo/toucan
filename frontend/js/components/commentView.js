@@ -1,5 +1,6 @@
 import twitterText from 'twitter-text'
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types';
+import React from 'react';
 import UserLink from './userLink'
 
 class Comment extends React.Component {
