@@ -21,13 +21,25 @@ ISSUE_STATUS_CHOICES = Choices(
     ('closed', _('resolved'))
 )
 
+
+class IssueTypeManager(models.Manager):
+
+    def get_by_natural_key(self, slug):
+        return self.get(slug=slug)
+
+
 class IssueType(TimeStampedModel):
+
+    objects = IssueTypeManager()
+
     name = models.CharField(max_length=50)
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
     description = models.TextField(
         blank=True,
         verbose_name='a short description of the issue type')
-    svg_icon = models.FileField(blank=True, upload_to='markers')
+
+    def natural_key(self):
+        return (self.slug)
 
     def __str__(self):
         return self.name

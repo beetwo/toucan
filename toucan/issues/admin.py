@@ -10,6 +10,7 @@ class IssueAdmin(admin.ModelAdmin):
 class IssueTypeAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug', 'description_short')
     fields = ['name', 'slug', 'description']
+    prepopulated_fields = {'slug': ['name']}
 
     def description_short(self, issueType):
         desc = issueType.description
