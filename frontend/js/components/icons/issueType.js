@@ -24,7 +24,7 @@ function getIconClassForIssueType(issueType, prefix = "") {
         let key = issueType.slug;
         cls =
           un_ocha_icon_mapping[key] ||
-          icon_mapping[key.toLowerCase()] ||
+          un_ocha_icon_mapping[key.toLowerCase()] ||
           default_icon;
         break;
       }
