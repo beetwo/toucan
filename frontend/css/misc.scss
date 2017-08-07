@@ -1,0 +1,46 @@
+@import 'colors';
+@import 'bs-themes/flatly/_variables.scss';
+div.toolbar {
+  padding: 0.5em;
+}
+
+@media (max-width: 922px) {
+  /*save some space on mobile devices*/
+  .page-header,
+  .page-header h1:first-child,
+  div.toolbar,
+  h3:first-child {
+    margin-top: 0px;
+  }
+  .page-header {
+    margin-bottom: 7px;
+  }
+}
+
+// Extensions =================================================================
+
+.navbar-brand {
+  padding: 10px;
+}
+.navbar-logo {
+  width: 120px;
+  height: auto;
+}
+
+.body-beige {
+  background-color: $c-beige;
+  a, a:hover {
+    color: $c-darkblue;
+  }
+}
+
+.form-title {
+  font-size: 27px;
+}
+
+.form-heading {
+  font-weight: bold;
+  margin-top: $padding-base-vertical*3;
+  margin-bottom: $padding-base-vertical*2;
+}
+

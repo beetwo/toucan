@@ -64,7 +64,7 @@ module.exports = (opts) => {
             './js/index'
         ],
         vendor: [
-            './css/misc.css',
+            './css/misc.scss',
             'react',
             'react-dom',
             'leaflet',
