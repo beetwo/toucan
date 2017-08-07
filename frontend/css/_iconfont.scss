@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'toucan';
-  src:  url('fonts/toucan.eot?1orha2');
-  src:  url('fonts/toucan.eot?1orha2#iefix') format('embedded-opentype'),
+  src: url('fonts/toucan.eot?1orha2');
+  src: url('fonts/toucan.eot?1orha2#iefix') format('embedded-opentype'),
     url('fonts/toucan.ttf?1orha2') format('truetype'),
     url('fonts/toucan.woff?1orha2') format('woff'),
     url('fonts/toucan.svg?1orha2#toucan') format('svg');
@@ -9,7 +9,8 @@
   font-style: normal;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[class^="icon-"],
+[class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'toucan' !important;
   speak: none;
@@ -58,7 +59,7 @@
   content: "\e907";
   color: #fab400;
 }
-.icon-core-relief-items:before {
+.icon-core-relief-item:before {
   content: "\e908";
   color: #fab400;
 }
@@ -86,7 +87,7 @@
   content: "\e90e";
   color: #fab400;
 }
-.icon-water-hygiene:before {
+.icon-sanitation-water-hygiene:before {
   content: "\e90f";
   color: #fab400;
 }
