@@ -6,6 +6,7 @@
 @import 'iconfont';
 @import 'icons';
 @import 'lists';
+@import 'filter';
 @import 'issueList';
 @import 'issueDetail';
 @import 'orgList';
@@ -100,10 +101,6 @@ main {
     cursor: pointer;
 }
 
-.issue-list-form {
-    display: flex;
-    flex-direction: row;
-}
 
 .issue-filter {
     flex: 1;

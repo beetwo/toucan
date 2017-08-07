@@ -1,0 +1,40 @@
+.filter {
+}
+.filter-head, .filter-body, .filter-foot {
+  padding: 0 $padding;
+}
+.filter-heading {
+  font-size: 18px;
+}
+.filter-toggle {
+  color: $c-darkblue;
+  &:hover {
+    color: darken( $c-darkblue, 10 );
+  }
+}
+.filter-section {
+  border-top: 1px solid $c-lightgrey;
+}
+.filter-item {
+  display: flex;
+  /*justify-content: space-between;*/
+  font-size: 16px;
+  border: 1px solid $c-lightgrey;
+  border-radius: $radius;
+  padding: $padding/2 0;
+  margin-bottom: $padding/2;
+}
+.filter-icon {
+  margin-right: $padding;
+}
+.filter-check {
+  width: 8%;
+}
+.filter-title {
+  width: 85%;
+}
+.filter-foot {
+  border-top: 1px solid $c-lightgrey;
+  padding-top: $padding;
+  padding-bottom: $padding;
+}

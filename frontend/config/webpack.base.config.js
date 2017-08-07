@@ -82,6 +82,7 @@ module.exports = (opts) => {
             'jquery',
             'bootstrap-loader',
             'font-awesome/css/font-awesome.css',
+            './css/_bs-overrides.scss',
         ]
     },
     output: {

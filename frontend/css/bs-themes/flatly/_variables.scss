@@ -93,7 +93,7 @@ $icon-font-svg-id:        "glyphicons_halflingsregular" !default;
 $padding-base-vertical:     10px !default;
 $padding-base-horizontal:   10px !default;
 
-$padding-large-vertical:    18px !default;
+$padding-large-vertical:    $padding-base-vertical !default;
 $padding-large-horizontal:  27px !default;
 
 $padding-small-vertical:    6px !default;
@@ -145,7 +145,7 @@ $table-border-color:            $gray-lighter !default;
 //
 //## For each of Bootstrap's buttons, define text, background and border color.
 
-$btn-font-weight:                normal !default;
+$btn-font-weight:                bold !default;
 
 $btn-default-color:              #fff !default;
 $btn-default-bg:                 $gray !default;
@@ -244,7 +244,7 @@ $dropdown-fallback-border:       #ccc !default;
 $dropdown-divider-bg:            #e5e5e5 !default;
 
 //** Dropdown link text color.
-$dropdown-link-color:            $gray-dark !default;
+$dropdown-link-color:            $gray !default;
 //** Hover color for dropdown links.
 $dropdown-link-hover-color:      #fff !default;
 //** Hover background for dropdown links.

@@ -50,11 +50,14 @@
 }
 
 .issue-list-form, .issue-list-footer {
+  display: block;
   flex: none;
 }
 .issue-list-form {
-  padding: $padding;
   font-size: 14px;
+}
+.issue-sortandfilter {
+  padding: $padding;
   a {
     color: $c-text;
     &:hover {
