@@ -34,26 +34,53 @@ class IssueFilter extends React.Component {
     let items = [];
 
     for (let k in opts.options) {
+        let section = [];
+        let body = [];
+        let item = [];
         let choices = opts.options[k]
         let selections = opts.selections[k] || []
         if (choices.length === 0) { continue; }
         // push the top level
-        items.push(<li className="dropdown-header" key={'option-group-' + k}>
-            {k}
-        </li>)
+        
+        item.push(
+            <div className="filter-head flex-container flex-vCenter" key={'option-group-' + k}>
+              <div className="flex-col">
+                <h5 className="filter-heading">
+                  {k.charAt(0).toUpperCase() + k.slice(1)}
+                </h5>
+                </div>
+                <div className="flex-col text-right">
+                  <a className="filter-toggle" href="#" data-toggle="collapse" data-target={"#issueFilter-" + k}>Hide {k} <span className="icon icon-chevron"></span></a>
+                </div>
+              </div>
+              )
         // create select links
         let choice_items = choices.map((c) => {
           let active = selections.indexOf(c) > -1;
-          return <li key={k + '-choice-' + c}>
-            <a href='#' onClick={this.handleToggle.bind(this, k, c, !active)}>
-              { active ? <Icon name='check' /> : ' ' } &nbsp;
-              {c}&nbsp;
-              { k === 'type' ? <Icon name={getIconClassForIssueType({slug: c})} /> : null }
-            </a>
-          </li>
+          return (<div className={classNames("filter-item", {'is-active' : active})} key={k + '-choice-' + c} onClick={this.handleToggle.bind(this, k, c, !active)}>
+                  <div className="filter-check text-center">
+                    <input type="checkbox" checked={active}></input>
+                  </div>
+                  <div className="filter-title">
+                    <span className="filter-icon icon icon-lg icon-shelter"></span>
+                    {c}&nbsp;
+                  </div>
+                </div>
+          )
         })
+        body.push(
+          <div className='filter-body collapse in' id={ 'issueFilter-' + k }>
+          {choice_items}
+          </div>
+        )
+        item.push(body);
+        section.push(
+          <div className="filter-section">
+          {item}
+          </div>
+        )
         // and push those too
-        Array.prototype.push.apply(items, choice_items);
+        Array.prototype.push.apply(items, section);
     }
 
 
@@ -64,18 +91,23 @@ class IssueFilter extends React.Component {
     input_textual = input_textual.join(', ')
 
     return (
-      <div className="flex-container">
-        <div className="flex-col">
-          <a href="#" className="dropdown-toggle" data-toggle="collapse" data-target="#issueFilter">
-            <span className="icon icon-filter"></span>
-            Filter
-          </a>
-          <ul className="dropdown-menu">
-              {items}
-          </ul>
+      <div>
+        <div className="issue-sortandfilter">
+        <div className="flex-container">
+          <div className="flex-col">
+            <a href="#" className="dropdown-toggle" data-toggle="collapse" data-target="#issueFilter">
+              <span className="icon icon-filter"></span>
+              Filter
+            </a>
+            
+          </div>
+          <div className="flex-col text-right">
+            <span className="text-muted">Sort by: </span><a href="#">Newest <span className="icon icon-chevron"></span></a>
+          </div>
         </div>
-        <div className="flex-col text-right">
-          <span className="text-muted">Sort by: </span><a href="#">Newest <span className="icon icon-chevron"></span></a>
+        </div>
+        <div className="filter collapse" id="issueFilter">
+            {items}
         </div>
       </div>
     );
@@ -137,116 +169,114 @@ class IssueListUI extends React.Component {
             </div>
             {/*the filtering interface*/}
             <div className="issue-list-form">
-            <div className="issue-sortandfilter">
-                <IssueFilter {...this.props} filterOptions={this.props.filterOptions}/>
-            </div>
+            <IssueFilter {...this.props} filterOptions={this.props.filterOptions}/>
 
-            <div className="filter collapse" id="issueFilter">
-              <div className="filter-section">
-                <div className="filter-head flex-container flex-vCenter">
-                  <div className="flex-col">
-                  <h5 className="filter-heading">
-                    Categories
-                  </h5>
+              <div className="filter collapse" id="issueFilter">
+                <div className="filter-section">
+                  <div className="filter-head flex-container flex-vCenter">
+                    <div className="flex-col">
+                    <h5 className="filter-heading">
+                      Categories
+                    </h5>
+                    </div>
+                    <div className="flex-col text-right">
+                      <a className="filter-toggle" href="#" data-toggle="collapse" data-target="#issueFilterCategories">Hide categories <span className="icon icon-chevron"></span></a>
+                    </div>
                   </div>
-                  <div className="flex-col text-right">
-                    <a className="filter-toggle" href="#" data-toggle="collapse" data-target="#issueFilterCategories">Hide categories <span className="icon icon-chevron"></span></a>
+                  <div className="filter-body collapse in" id="issueFilterCategories">
+                    <div className="filter-item">
+                      <div className="filter-check text-center">
+                        <input type="checkbox"></input>
+                      </div>
+                      <div className="filter-title">
+                        <span className="filter-icon icon icon-lg icon-core-relief-item"></span>
+                        Core Relief Items
+                      </div>
+                    </div>
+                    <div className="filter-item">
+                      <div className="filter-check text-center">
+                        <input type="checkbox"></input>
+                      </div>
+                      <div className="filter-title">
+                        <span className="filter-icon icon icon-lg icon-shelter"></span>
+                        Shelter
+                      </div>
+                    </div>
+                    <div className="filter-item">
+                      <div className="filter-check text-center">
+                        <input type="checkbox"></input>
+                      </div>
+                      <div className="filter-title">
+                        <span className="filter-icon icon icon-lg icon-health"></span>
+                        Health
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="filter-body collapse in" id="issueFilterCategories">
-                  <div className="filter-item">
-                    <div className="filter-check text-center">
-                      <input type="checkbox"></input>
+                <div className="filter-section">
+                  <div className="filter-head flex-container flex-vCenter">
+                    <div className="flex-col">
+                    <h5 className="filter-heading">
+                      Status
+                    </h5>
                     </div>
-                    <div className="filter-title">
-                      <span className="filter-icon icon icon-lg icon-core-relief-items"></span>
-                      Core Relief Items
-                    </div>
-                  </div>
-                  <div className="filter-item">
-                    <div className="filter-check text-center">
-                      <input type="checkbox"></input>
-                    </div>
-                    <div className="filter-title">
-                      <span className="filter-icon icon icon-lg icon-shelter"></span>
-                      Shelter
+                    <div className="flex-col text-right">
+                      <a className="filter-toggle" href="#" data-toggle="collapse" data-target="#issueFilterStatus">Hide status <span className="icon icon-chevron"></span></a>
                     </div>
                   </div>
-                  <div className="filter-item">
-                    <div className="filter-check text-center">
-                      <input type="checkbox"></input>
+                  <div className="filter-body collapse in" id="issueFilterStatus">
+                    <div className="filter-item">
+                      <div className="filter-check text-center">
+                        <input type="checkbox"></input>
+                      </div>
+                      <div className="filter-title">
+                        Open
+                      </div>
                     </div>
-                    <div className="filter-title">
-                      <span className="filter-icon icon icon-lg icon-health"></span>
-                      Health
+                    <div className="filter-item">
+                      <div className="filter-check text-center">
+                        <input type="checkbox"></input>
+                      </div>
+                      <div className="filter-title">
+                        In Progress
+                      </div>
+                    </div>
+                    <div className="filter-item">
+                      <div className="filter-check text-center">
+                        <input type="checkbox"></input>
+                      </div>
+                      <div className="filter-title">
+                        Resolved
+                      </div>
                     </div>
                   </div>
+                </div>
+                <div className="filter-section">
+                  <div className="filter-head flex-container flex-vCenter">
+                    <div className="flex-col">
+                    <h5 className="filter-heading">
+                      Organisations
+                    </h5>
+                    </div>
+                    <div className="flex-col text-right">
+                      <a className="filter-toggle" href="#" data-toggle="collapse" data-target="#issueFilterOrg">More <span className="icon icon-chevron"></span></a>
+                    </div>
+                  </div>
+                  <div className="filter-body collapse" id="issueFilterOrg">
+                    <div className="filter-item">
+                      <div className="filter-check text-center">
+                        <input type="checkbox"></input>
+                      </div>
+                      <div className="filter-title">
+                        Fadrat
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="filter-foot">
+                <button className="btn btn-info btn-block btn-sm">See results</button>
                 </div>
               </div>
-              <div className="filter-section">
-                <div className="filter-head flex-container flex-vCenter">
-                  <div className="flex-col">
-                  <h5 className="filter-heading">
-                    Status
-                  </h5>
-                  </div>
-                  <div className="flex-col text-right">
-                    <a className="filter-toggle" href="#" data-toggle="collapse" data-target="#issueFilterStatus">Hide status <span className="icon icon-chevron"></span></a>
-                  </div>
-                </div>
-                <div className="filter-body collapse in" id="issueFilterStatus">
-                  <div className="filter-item">
-                    <div className="filter-check text-center">
-                      <input type="checkbox"></input>
-                    </div>
-                    <div className="filter-title">
-                      Open
-                    </div>
-                  </div>
-                  <div className="filter-item">
-                    <div className="filter-check text-center">
-                      <input type="checkbox"></input>
-                    </div>
-                    <div className="filter-title">
-                      In Progress
-                    </div>
-                  </div>
-                  <div className="filter-item">
-                    <div className="filter-check text-center">
-                      <input type="checkbox"></input>
-                    </div>
-                    <div className="filter-title">
-                      Resolved
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="filter-section">
-                <div className="filter-head flex-container flex-vCenter">
-                  <div className="flex-col">
-                  <h5 className="filter-heading">
-                    Organisations
-                  </h5>
-                  </div>
-                  <div className="flex-col text-right">
-                    <a className="filter-toggle" href="#" data-toggle="collapse" data-target="#issueFilterOrg">More <span className="icon icon-chevron"></span></a>
-                  </div>
-                </div>
-                <div className="filter-body collapse" id="issueFilterOrg">
-                  <div className="filter-item">
-                    <div className="filter-check text-center">
-                      <input type="checkbox"></input>
-                    </div>
-                    <div className="filter-title">
-                      Fadrat
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="filter-foot">
-              <button className="btn btn-info btn-block btn-sm">See results</button>
-              </div>
-            </div>
             </div>
             <ScrollContainer scrollKey='toucan-issue-list'>
             {/* the actual list of issues */}

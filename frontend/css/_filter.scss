@@ -23,6 +23,10 @@
   border-radius: $radius;
   padding: $padding/2 0;
   margin-bottom: $padding/2;
+  &.is-active {
+    border-color: $c-turquoise;
+    background-color: rgba($c-turquoise, .06);
+  }
 }
 .filter-icon {
   margin-right: $padding;
