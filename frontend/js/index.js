@@ -13,22 +13,11 @@ import IssueList from "./containers/issueList";
 import UserDetail from "./containers/userDetail";
 import OrganisationsList from "./containers/organisationsIndex";
 
-import {
-  Router,
-  Route,
-  IndexRoute,
-  useRouterHistory,
-  applyRouterMiddleware,
-  browserHistory,
-  withRouter
-} from "react-router";
-import { syncHistoryWithStore, routerReducer } from "react-router-redux";
-import { useScroll } from "react-router-scroll";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 // create the root reducer
 let issueTrackerApp = combineReducers({
-  ...reducers,
-  routing: routerReducer
+  ...reducers
 });
 
 // construct middleWare
@@ -44,43 +33,55 @@ if (process.env.NODE_ENV !== "production") {
 // and create the store
 let store = createStore(issueTrackerApp, applyMiddleware(...middleware));
 
-// Create an enhanced history that syncs navigation events with the store
-let bHistory = useRouterHistory(() => browserHistory)({
-  basename: "/map"
-});
-
-export const history = syncHistoryWithStore(bHistory, store);
-
 // Listen for changes to the current location and update the nav part
 // this is currently a hack, but will be cleaned up once we upgrade
 // react router or move to a completely client side rendered menu
-const unlisten = history.listen((location, action) => {
-  let parts = location.pathname.split("/");
-  let active = "needs";
-  if (parts[1] === "orgs") {
-    active = "orgs";
-  }
-  render(
-    <Nav active={active} push={history.push} />,
-    document.getElementById("react-navbar")
-  );
-});
+// const unlisten = history.listen((location, action) => {
+//   let parts = location.pathname.split("/");
+//   let active = "needs";
+//   if (parts[1] === "orgs") {
+//     active = "orgs";
+//   }
+//   render(
+//     <Nav active={active} push={history.push} />,
+//     document.getElementById("react-navbar")
+//   );
+// });
 
 render(
   <Provider store={store}>
-    <Router history={history} render={applyRouterMiddleware(useScroll())}>
-      <Route path="/detail/">
-        <Route path=":username" component={UserDetail} name="userDetail" />
-      </Route>
-      <Route path="/" component={App} name="issueList">
-        <IndexRoute component={IssueList} name="issueListIndex" />
+    <Router basename="/map">
+      <Switch>
         <Route
-          path="issue/:IssueID"
-          component={IssueDetail}
-          name="issueDetail"
+          path="/detail/:username"
+          exact
+          component={UserDetail}
+          name="userDetail"
         />
-        <Route path="orgs/" component={OrganisationsList} name="orglist" />
-      </Route>
+        <Route>
+          <App>
+            <Switch>
+              <Route
+                path="/"
+                exact
+                component={IssueList}
+                name="issueListIndex"
+              />
+              <Route
+                path="issue/:IssueID"
+                component={IssueDetail}
+                name="issueDetail"
+              />
+              <Route
+                exact
+                path="orgs/"
+                component={OrganisationsList}
+                name="orglist"
+              />
+            </Switch>
+          </App>
+        </Route>
+      </Switch>
     </Router>
   </Provider>,
   document.getElementsByTagName("main")[0]
