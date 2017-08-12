@@ -1,11 +1,11 @@
 export const default_icon = "circle-o";
 
 export const un_ocha_icon_mapping = {
-  "core-relief-item": "core-relief-items", // FIXME
-  shelter: null, // FIXME!
+  "core-relief-item": "core-relief-item",
+  shelter: "shelter",
   health: "health",
   nutrition: "nutrition",
-  "sanitation-water-hygiene": "water-hygiene", // FIXME
+  "sanitation-water-hygiene": "sanitation-water-hygiene",
   logistics: "logistics",
   protection: "protection",
   "legal-advice": "legal-advice",
