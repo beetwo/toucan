@@ -13,7 +13,8 @@ import IssueList from "./containers/issueList";
 import UserDetail from "./containers/userDetail";
 import OrganisationsList from "./containers/organisationsIndex";
 
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { Router, Route, Link, Switch } from "react-router-dom";
+import createBrowserHistory from "history/createBrowserHistory";
 
 // create the root reducer
 let issueTrackerApp = combineReducers({
@@ -33,24 +34,26 @@ if (process.env.NODE_ENV !== "production") {
 // and create the store
 let store = createStore(issueTrackerApp, applyMiddleware(...middleware));
 
+export const history = createBrowserHistory();
+
 // Listen for changes to the current location and update the nav part
 // this is currently a hack, but will be cleaned up once we upgrade
 // react router or move to a completely client side rendered menu
-// const unlisten = history.listen((location, action) => {
-//   let parts = location.pathname.split("/");
-//   let active = "needs";
-//   if (parts[1] === "orgs") {
-//     active = "orgs";
-//   }
-//   render(
-//     <Nav active={active} push={history.push} />,
-//     document.getElementById("react-navbar")
-//   );
-// });
+const unlisten = history.listen((location, action) => {
+  let parts = location.pathname.split("/");
+  let active = "needs";
+  if (parts[1] === "orgs") {
+    active = "orgs";
+  }
+  render(
+    <Nav active={active} push={history.push} />,
+    document.getElementById("react-navbar")
+  );
+});
 
 render(
   <Provider store={store}>
-    <Router basename="/map">
+    <Router history={history} basename="/map">
       <Switch>
         <Route
           path="/detail/:username"
