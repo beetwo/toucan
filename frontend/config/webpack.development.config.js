@@ -9,6 +9,7 @@ module.exports = opts => {
 
   return {
     ...config,
+    cache: true,
     devtool: "source-map",
     output: {
       ...config.output,

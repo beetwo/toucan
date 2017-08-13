@@ -59,6 +59,7 @@ render(
         <Route path="/issue/:IssueID" component={IssueDetail} />
         <Route exact path="/orgs/" component={OrganisationsList} />
         <Route path="/detail/:username" exact component={UserDetail} />
+        <Route render={() => <h1>404</h1>} />
       </Switch>
     </Router>
   </Provider>,
