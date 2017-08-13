@@ -3,7 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import TimeAgo from "react-timeago";
 import isEmpty from "lodash/isEmpty";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import Icon from "react-fa";
 import Remarkable from "remarkable";
 
@@ -11,7 +11,7 @@ import { CommentList, CommentForm } from "./comments";
 import DateDisplay from "./date";
 import UserLink from "./userLink";
 import Status from "./status";
-import getIconClassForIssueType from "./icons/issueType";
+import { getIconClassForIssueType } from "./icons/issueType";
 import { HiddenMedium, VisibleMedium } from "./responsive";
 import Loading from "./loading";
 

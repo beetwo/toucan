@@ -108,7 +108,6 @@ export function invalidateIssue(issue_id) {
 
 export function fetchIssueIfNeeded(issue_id) {
   return (dispatch, getState) => {
-    dispatch(selectIssue(issue_id));
     dispatch(requestIssue(issue_id));
     return fetch(`/api/issue/${issue_id}/`, { credentials: "same-origin" })
       .then(response => response.json())

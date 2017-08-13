@@ -34,7 +34,7 @@ if (process.env.NODE_ENV !== "production") {
 // and create the store
 let store = createStore(issueTrackerApp, applyMiddleware(...middleware));
 
-export const history = createBrowserHistory();
+export const history = createBrowserHistory({ basename: "/map" });
 
 // Listen for changes to the current location and update the nav part
 // this is currently a hack, but will be cleaned up once we upgrade
@@ -53,37 +53,12 @@ const unlisten = history.listen((location, action) => {
 
 render(
   <Provider store={store}>
-    <Router history={history} basename="/map">
+    <Router history={history}>
       <Switch>
-        <Route
-          path="/detail/:username"
-          exact
-          component={UserDetail}
-          name="userDetail"
-        />
-        <Route>
-          <App>
-            <Switch>
-              <Route
-                path="/"
-                exact
-                component={IssueList}
-                name="issueListIndex"
-              />
-              <Route
-                path="issue/:IssueID"
-                component={IssueDetail}
-                name="issueDetail"
-              />
-              <Route
-                exact
-                path="orgs/"
-                component={OrganisationsList}
-                name="orglist"
-              />
-            </Switch>
-          </App>
-        </Route>
+        <Route exact path="/" component={IssueList} />
+        <Route path="/issue/:IssueID" component={IssueDetail} />
+        <Route exact path="/orgs/" component={OrganisationsList} />
+        <Route path="/detail/:username" exact component={UserDetail} />
       </Switch>
     </Router>
   </Provider>,

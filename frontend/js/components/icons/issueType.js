@@ -1,4 +1,5 @@
-export const default_icon = "circle-o";
+import React from "react";
+export const default_icon = "fa fa-circle-o";
 
 export const un_ocha_icon_mapping = {
   "core-relief-item": "core-relief-item",
@@ -13,25 +14,34 @@ export const un_ocha_icon_mapping = {
   "camp-management": "camp-management"
 };
 
-function getIconClassForIssueType(issueType, prefix = "") {
-  let cls = default_icon;
+export function getIconClassForIssueType(issueType, prefix = "icon-") {
+  let cls;
   switch (typeof issueType) {
     case "string":
-      cls = un_ocha_icon_mapping[issueType] || default_icon;
+      cls = un_ocha_icon_mapping[issueType];
       break;
     case "object":
       if (issueType.slug) {
         let key = issueType.slug;
         cls =
-          un_ocha_icon_mapping[key] ||
-          un_ocha_icon_mapping[key.toLowerCase()] ||
-          default_icon;
+          un_ocha_icon_mapping[key] || un_ocha_icon_mapping[key.toLowerCase()];
         break;
       }
-    default:
-      cls = default_icon;
   }
-  return prefix + cls;
+  if (cls) {
+    return `${prefix}${cls}`;
+  } else {
+    return default_icon;
+  }
 }
 
-export default getIconClassForIssueType;
+const ToucanIcon = ({ issue_type }) => {
+  return (
+    <span
+      className={getIconClassForIssueType(issue_type)}
+      title={issue_type.name}
+    />
+  );
+};
+
+export default ToucanIcon;

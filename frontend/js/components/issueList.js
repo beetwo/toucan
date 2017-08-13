@@ -5,8 +5,9 @@ import TimeAgo from "react-timeago";
 import classNames from "classnames";
 import urls from "../urls";
 import Status from "./status";
-import getIconClassForIssueType from "./icons/issueType";
+import ToucanIcon, { getIconClassForIssueType } from "./icons/issueType";
 import { DateOnlyDisplay, DateOrTimeDisplay } from "./date";
+import { Link } from "react-router-dom";
 
 function CommentCount({ count }) {
   return (
@@ -93,7 +94,7 @@ class IssueFilter extends React.Component {
 IssueFilter.propTypes = {
   addIssueFilter: PropTypes.func.isRequired,
   removeIssueFilter: PropTypes.func.isRequired,
-  refreshIssueList: PropTypes.func.isRequired,
+  fetchIssues: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired
 };
 
@@ -114,37 +115,34 @@ class IssueListUI extends React.Component {
     let issues = this.props.issues || [];
     let rows = issues.map((issue, index) => {
       return (
-        <div
-          className="issue media"
-          key={issue.id}
-          onClick={e => {
-            e.preventDefault();
-            this.props.handleIssueChange(issue);
-          }}
-        >
-          <div className="issue-icon media-left media-middle">
-            <span className="icon icon-health" />
-            {/*{issue.issue_types.map((it) => <Icon key={it.slug} name={getIconClassForIssueType(it)} title={it.name} /> )}*/}
-          </div>
-          <div className="media-body">
-            <div className="issue-basics">
-              <span className="issue-title">
-                {issue.title}
-              </span>
-              <span className="issue-comments">
-                <CommentCount count={issue.comment_count} />
-              </span>
+        <Link to={`/issue/${issue.id}`} key={issue.id}>
+          <div className="issue media">
+            <div className="issue-icon media-left media-middle">
+              {issue.issue_types.map(it => {
+                console.log(it);
+                return <ToucanIcon key={it.slug} issue_type={it} />;
+              })}
             </div>
-            <div className="issue-details">
-              <span className="issue-organisation">
-                {issue.organisation ? issue.organisation.name : null}
-              </span>
-              <span className="issue-date">
-                , <TimeAgo date={issue.created} />
-              </span>
+            <div className="media-body">
+              <div className="issue-basics">
+                <span className="issue-title">
+                  {issue.title}
+                </span>
+                <span className="issue-comments">
+                  <CommentCount count={issue.comment_count} />
+                </span>
+              </div>
+              <div className="issue-details">
+                <span className="issue-organisation">
+                  {issue.organisation ? issue.organisation.name + ", " : null}
+                </span>
+                <span className="issue-date">
+                  <TimeAgo date={issue.created} />
+                </span>
+              </div>
             </div>
           </div>
-        </div>
+        </Link>
       );
     });
     return (
@@ -174,18 +172,12 @@ class IssueListUI extends React.Component {
             {rows}
           </div>
         </div>
-
-        {/*issue list control*/}
-        {this.props.mapOpenable
-          ? <IssueListFooter openMap={this.props.openMap} />
-          : null}
       </div>
     );
   }
 }
 
 IssueListUI.propTypes = {
-  handleIssueChange: PropTypes.func.isRequired,
   issues: PropTypes.array.isRequired
 };
 
