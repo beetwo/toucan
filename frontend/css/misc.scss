@@ -35,3 +35,9 @@ div.toolbar {
   margin-bottom: $padding-base-vertical*2;
 }
 
+.profile-section {
+  margin: $padding-base-vertical*4 0;
+  table {
+    margin-bottom: $padding-base-vertical;
+  }
+}

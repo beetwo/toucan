@@ -9,143 +9,150 @@
 
 {% block content %}
 
-    <h2>{% trans 'Contact information' %}</h2>
-    <p class="text-muted">
-        Contact information is not public and only shown to you.
-    </p>
+<div class="profile-section">
+  <h2>{% trans 'Contact information' %}</h2>
+  <p class="text-muted">
+    Contact information is not public and only shown to you.
+  </p>
+
+  <table class="table table-striped">
+    <tbody>
+      <tr>
+        <td>
+          {% trans 'Email' %}
+        </td>
+        <td>
+          {{ user.email }}
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>
+          {% trans 'Telephone' %}
+        </td>
+        <td>
+          {{ profile.phone_number|default:'-' }}
+        </td>
+        <td>
+          <a class="" href="{% url 'user_profile:update_phone' %}">
+            Change phone number
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
     <hr />
-
-    <table class="table table-striped">
-        <tbody>
-            <tr>
-                <td>
-                    {% trans 'Email' %}
-                </td>
-                <td>
-                    {{ user.email }}
-                </td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>
-                    {% trans 'Telephone' %}
-                </td>
-                <td>
-                    {{ profile.phone_number|default:'-' }}
-                </td>
-                <td>
-                    <a class="btn btn-default btn-sm" href="{% url 'user_profile:update_phone' %}">
-                        Change
-                    </a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    {{ block.super }}
-    <hr />
-
-    <h2>{% trans 'Notification settings' %}</h2>
-
-    <h3>@ Mentioning</h3>
-
-    <table class="table table-striped">
-        <tbody>
-            <tr>
-                <td>
-                    {% trans 'Notification when mentioned' %}
-                    <p class="text-muted">
-                        somebody mentions you by typing @{{ user.username }}
-                    </p>
-                </td>
-                <td>
-                    {{ profile.get_user_mention_notification_display }}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    {% trans 'Notification when your organisation is mentioned' %}
-                    <p class="text-muted">
-                        somebody mentions your organisation by typing @{{ user.membership.org.short_name }}
-                    </p>
-                </td>
-                <td>
-                    {{ profile.get_org_mention_notification_display }}
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="text-right">
-        <a class='btn btn-primary btn-sm' href="{% url 'user_profile:update_profile' %}">
-            {% trans 'Change' %}
-        </a>
+    <div class="profile-section">
+      {{ block.super }}
     </div>
 
-    <h3>Geographic notifications</h3>
+    <hr />
+    <div class="profile-section">
+      <h2>{% trans 'Notification settings' %}</h2>
 
-    <p class="text-muted">
-        You can configure Toucan to notify you of new issues within a defined geographic radius.
-    </p>
+      <h4 class="form-heading">@ Mentioning</h4>
 
-    {% if notification_settings|length %}
-    <table class="table table-striped">
-        <tbody>
-        {% for ns in notification_settings%}
-        <tr>
-            <td>
-                <h5>{{ forloop.counter }}.</h5>
-            </td>
-            <td>
-                <h5>{% trans 'Issue types' %}</h5>
-                <ul>
-                    {% for it in ns.issue_types.all %}
-                        <li>{{ it.name }}</li>
-                    {% empty %}
-                        <li class="text-muted">{% trans 'all' %}</li>
-                    {% endfor %}
-                </ul>
-            </td>
-            <td>
-                <h5>{% trans 'Organisations' %}</h5>
-                <ul>
-                    {% for org in ns.organisations.all %}
-                        <li>{{ org.name }}</li>
-                    {% empty %}
-                        <li class="text-muted">{% trans 'all' %}</li>
-                    {% endfor %}
-                </ul>
-            </td>
-            <td>
-                <h5>{{ ns.created|date:'SHORT_DATETIME_FORMAT' }}</h5>
-            </td>
-            <td class="text-right">
-                <a class="btn btn-info btn-sm" href="{% url 'user_profile:notification_edit' notification_id=ns.pk %}">
-                    {% trans 'Edit' %}
-                </a>
-                <a class="btn btn-danger btn-sm" href="{% url 'user_profile:notification_delete' notification_id=ns.pk %}">
-                    {% trans 'Delete' %}
-                </a>
-            </td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    {% else %}
-    <p class="alert alert-info">
-        {% blocktrans %}
-            You have no notifications configured.
-            Add your first notification rule to be notified when something happens around you.
-        {% endblocktrans %}
-    </p>
-    {% endif %}
+      <table class="table table-striped">
+          <tbody>
+              <tr>
+                  <td>
+                      {% trans 'Notification when mentioned' %}
+                      <p class="text-muted">
+                          somebody mentions you by typing @{{ user.username }}
+                      </p>
+                  </td>
+                  <td>
+                      {{ profile.get_user_mention_notification_display }}
+                  </td>
+              </tr>
+              <tr>
+                  <td>
+                      {% trans 'Notification when your organisation is mentioned' %}
+                      <p class="text-muted">
+                          somebody mentions your organisation by typing @{{ user.membership.org.short_name }}
+                      </p>
+                  </td>
+                  <td>
+                      {{ profile.get_org_mention_notification_display }}
+                  </td>
+              </tr>
+          </tbody>
+      </table>
 
-    <div class="text-right" style="margin-bottom: 3em">
-        <a class="btn btn-primary btn-sm" href="{% url 'user_profile:notification_create' %}">
-            <i class="fa fa-plus"></i>
-            {% trans 'Add notification rule' %}
-        </a>
+      <div>
+          <a class='btn btn-primary btn-sm' href="{% url 'user_profile:update_profile' %}">
+              {% trans 'Change mention settings' %}
+          </a>
+      </div>
+
+    </div>
+    <div class="profile-section">
+      <h4 class="form-heading">Geographic notifications</h4>
+
+      <p class="text-muted">
+          You can configure Toucan to notify you of new issues within a defined geographic radius.
+      </p>
+
+      {% if notification_settings|length %}
+      <table class="table table-striped">
+          <tbody>
+          {% for ns in notification_settings%}
+          <tr>
+              <td>
+                  <h5>{{ forloop.counter }}.</h5>
+              </td>
+              <td>
+                  <h5>{% trans 'Issue types' %}</h5>
+                  <ul>
+                      {% for it in ns.issue_types.all %}
+                          <li>{{ it.name }}</li>
+                      {% empty %}
+                          <li class="text-muted">{% trans 'all' %}</li>
+                      {% endfor %}
+                  </ul>
+              </td>
+              <td>
+                  <h5>{% trans 'Organisations' %}</h5>
+                  <ul>
+                      {% for org in ns.organisations.all %}
+                          <li>{{ org.name }}</li>
+                      {% empty %}
+                          <li class="text-muted">{% trans 'all' %}</li>
+                      {% endfor %}
+                  </ul>
+              </td>
+              <td>
+                  <h5>{{ ns.created|date:'SHORT_DATETIME_FORMAT' }}</h5>
+              </td>
+              <td>
+                  <a class="btn btn-info btn-sm" href="{% url 'user_profile:notification_edit' notification_id=ns.pk %}">
+                      {% trans 'Edit' %}
+                  </a>
+                  <a class="btn btn-danger btn-sm" href="{% url 'user_profile:notification_delete' notification_id=ns.pk %}">
+                      {% trans 'Delete' %}
+                  </a>
+              </td>
+          </tr>
+          {% endfor %}
+          </tbody>
+      </table>
+      {% else %}
+      <p class="alert alert-info">
+          {% blocktrans %}
+              You have no notifications configured.
+              Add your first notification rule to be notified when something happens around you.
+          {% endblocktrans %}
+      </p>
+      {% endif %}
+
+      <div style="margin-bottom: 3em">
+          <a class="btn btn-primary btn-sm" href="{% url 'user_profile:notification_create' %}">
+              <i class="fa fa-plus"></i>
+              {% trans 'Add notification rule' %}
+          </a>
+      </div>
     </div>
 
     {%  comment %}
