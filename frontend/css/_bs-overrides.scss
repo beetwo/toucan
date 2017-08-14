@@ -1,3 +1,4 @@
+@import './bs-themes/flatly/variables';
 .navbar-brand {
   padding: 10px;
 }
@@ -7,4 +8,9 @@
 }
 h4, h5, h6 {
   font-weight: bold;
+}
+.input-short {
+  textarea {
+    height: $line-height-computed*3.5;
+  }
 }
