@@ -144,9 +144,9 @@ export class CommentForm extends React.Component {
                 <span className="icon icon-paperclip icon-md icon-baseline"></span> Add an attachment
                 </a>
                 &nbsp;
-                <a href="#" className="btn btn-primary comment-button btn-sm">
+                <button type="submit" disabled={isEmpty} className="btn btn-info btn-sm">
                 Send <span className="icon icon-send icon-lg"></span>
-                </a>
+                </button>
               </p>
 
             </Dropzone>
@@ -154,11 +154,6 @@ export class CommentForm extends React.Component {
           <div className='panel-footer'>
             <div className='btn-toolbar' style={{marginTop: '0.3em'}}>
 
-              <button className='btn btn-sm btn-success pull-right'
-                      type='submit'
-                      disabled={isEmpty}>
-                Comment
-              </button>
               <button className='btn btn-sm btn-default'
                       type='button'
                       onClick={this.handleStatusChangeAndSubmit}>
