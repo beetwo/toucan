@@ -6,7 +6,13 @@
 {% load account socialaccount %}
 
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
-{% block auth-header %}{% trans "Sign In" %}{% endblock %}
+{% block auth-header %}
+{% trans "Sign In" %}
+  Sign in to Toucan
+{% endblock %}
+{% block auth-subheader %}
+  Please enter your details
+{% endblock %}
 
 {% block auth-content %}
     {% get_providers as socialaccount_providers %}
