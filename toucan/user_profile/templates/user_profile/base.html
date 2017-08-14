@@ -1,15 +1,18 @@
 {% extends 'default/base.html' %}
+{% block body-classes %}form-beige{% endblock %}
 {% load i18n %}
 {% block main %}
-<div class="container">
-    <div class="page-header">
-        <h1>
-            {% block profile-title %}
-            {% trans 'Profile for' %} {{ user.username }}
-            {% endblock %}
-        </h1>
-        {% block profile-title-body %}{% endblock %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
+      <h1>
+        {% block profile-title %}
+        {% trans 'Profile for' %} {{ user.username }}
+        {% endblock %}
+      </h1>
+      {% block profile-title-body %}{% endblock %}
+      {% block content %}{% endblock content %}
     </div>
-    {% block content %}{% endblock content %}
+  </div>
 </div>
 {% endblock main %}

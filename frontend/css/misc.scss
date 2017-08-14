@@ -18,6 +18,9 @@ div.toolbar {
 }
 
 
+.form-beige {
+  background-color: $c-beige;
+}
 .body-beige {
   background-color: $c-beige;
   a, a:hover {
@@ -25,9 +28,6 @@ div.toolbar {
   }
 }
 
-.form-title {
-  font-size: 27px;
-}
 
 .form-heading {
   font-weight: bold;
