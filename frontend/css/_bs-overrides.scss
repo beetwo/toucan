@@ -1,6 +1,6 @@
 @import './bs-themes/flatly/variables';
 .navbar-brand {
-  padding: 10px;
+  padding: 10px $navbar-padding-horizontal;
 }
 .navbar-logo {
   width: 120px;
