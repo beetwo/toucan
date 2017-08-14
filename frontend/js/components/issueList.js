@@ -99,10 +99,15 @@ class IssueFilter extends React.Component {
               <span className="icon icon-filter"></span>
               Filter
             </a>
-            
           </div>
           <div className="flex-col text-right">
-            <span className="text-muted">Sort by: </span><a href="#">Newest <span className="icon icon-chevron"></span></a>
+            <a href="#" className="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span className="text-muted">Sort by: </span><a href="#">Newest <span className="icon icon-chevron"></span></a>
+            </a>
+            <ul className="dropdown-menu pull-right">
+              <li><a href="#">Newest</a></li>
+              <li><a href="#">Nearest</a></li>
+            </ul>
           </div>
         </div>
         </div>

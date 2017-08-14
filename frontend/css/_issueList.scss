@@ -60,7 +60,7 @@
   padding: $padding;
   a {
     color: $c-text;
-    &:hover {
+    &:hover, &:focus, &:focus:active, &:active {
       text-decoration: none;
       color: $c-yellow;
     }
