@@ -7,11 +7,11 @@ import cn from "classnames";
 const ToucanLogo = require("../assets/toucan_logo.png");
 
 const Nav = ({ location, current_user }) => {
-  console.log("NAV:", current_user);
   const user = current_user.user || {};
   const links = current_user.links || [];
   let active =
     (location.pathname.split("/")[1] === "orgs" && "orgs") || "needs";
+  console.warn("Nav active", active);
   return (
     <NavBar>
       <NavBar.Header>
@@ -28,12 +28,12 @@ const Nav = ({ location, current_user }) => {
       </NavBar.Header>
 
       <NavBar.Nav>
-        <li className={cn({ active: active === "needs" })}>
+        <li className={active === "needs" ? "active" : ""}>
           <Link to="/">
             <i className="fa fa-globe" /> Needs
           </Link>
         </li>
-        <li className={cn({ active: active === "orgs" })}>
+        <li className={active === "orgs" ? "active" : ""}>
           <Link to="/orgs/">
             <i className="fa fa-address-card-o" /> Organisations
           </Link>
@@ -58,8 +58,11 @@ const Nav = ({ location, current_user }) => {
   );
 };
 
-const ToucanNav = connect((state, ownProps) => {
-  return { ...ownProps, current_user: state.currentUser };
+const ToucanNav = connect((state, { location }) => {
+  return {
+    location,
+    current_user: state.currentUser
+  };
 })(Nav);
 
 export default withRouter(ToucanNav);

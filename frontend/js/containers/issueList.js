@@ -32,7 +32,6 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  let { history } = ownProps;
   return {
     fetchIssues: () => dispatch(fetchIssues()),
     addIssueFilter: (prop, value) => dispatch(addIssueFilter(prop, value)),

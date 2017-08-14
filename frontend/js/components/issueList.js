@@ -98,79 +98,79 @@ IssueFilter.propTypes = {
   loading: PropTypes.bool.isRequired
 };
 
-class IssueListFooter extends React.Component {
-  render() {
-    return (
-      <footer className="issue-list-footer bg-primary">
-        <div className="btn btn-primary btn-block" onClick={this.props.openMap}>
-          <Icon name="map-o" />&nbsp;Show Map
+const IssueListItem = ({ issue }) => {
+  return (
+    <Link to={`/issue/${issue.id}`} key={issue.id}>
+      <div className="issue media">
+        <div className="issue-icon media-left media-middle">
+          {issue.issue_types.map(it => {
+            return <ToucanIcon key={it.slug} issue_type={it} />;
+          })}
         </div>
-      </footer>
-    );
-  }
-}
+        <div className="media-body">
+          <div className="issue-basics">
+            <span className="issue-title">
+              {issue.title}
+            </span>
+            <span className="issue-comments">
+              <CommentCount count={issue.comment_count} />
+            </span>
+          </div>
+          <div className="issue-details">
+            <span className="issue-organisation">
+              {issue.organisation ? issue.organisation.name + ", " : null}
+            </span>
+            <span className="issue-date">
+              <TimeAgo date={issue.created} />
+            </span>
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+};
+
+const MapHandle = () =>
+  <div className="issue-list-mapHandle">
+    <a href="#" className="mapHandle">
+      &nbsp;
+    </a>
+  </div>;
 
 class IssueListUI extends React.Component {
   render() {
     let issues = this.props.issues || [];
-    let rows = issues.map((issue, index) => {
-      return (
-        <Link to={`/issue/${issue.id}`} key={issue.id}>
-          <div className="issue media">
-            <div className="issue-icon media-left media-middle">
-              {issue.issue_types.map(it => {
-                return <ToucanIcon key={it.slug} issue_type={it} />;
-              })}
-            </div>
-            <div className="media-body">
-              <div className="issue-basics">
-                <span className="issue-title">
-                  {issue.title}
-                </span>
-                <span className="issue-comments">
-                  <CommentCount count={issue.comment_count} />
-                </span>
-              </div>
-              <div className="issue-details">
-                <span className="issue-organisation">
-                  {issue.organisation ? issue.organisation.name + ", " : null}
-                </span>
-                <span className="issue-date">
-                  <TimeAgo date={issue.created} />
-                </span>
-              </div>
-            </div>
-          </div>
-        </Link>
-      );
-    });
+    let rows = issues.map((issue, index) =>
+      <IssueListItem key={issue.id} issue={issue} />
+    );
     return (
-      <div className="issue-list">
-        <div className="issue-list-mapHandle">
-          <a href="#" className="mapHandle">
-            &nbsp;
-          </a>
-        </div>
-        {/*the filtering interface*/}
-        <div className="issue-list-form">
-          <IssueFilter
-            {...this.props}
-            filterOptions={this.props.filterOptions}
-          />
-        </div>
-        {/* the actual list of issues */}
-        <div className="issue-list-body">
-          {/*adding new items*/}
-          <div className="issues">
-            <a href={urls.createIssue()} className="issue issue-addNew media">
-              <div className="issue-icon media-left media-middle">
-                <span className="icon icon-plus" />
-              </div>
-              <div className="media-body media-middle">Add Need</div>
-            </a>
-            {rows}
+      <div className="app-container">
+        <div className="issue-list">
+          <MapHandle />
+
+          {/*the filtering interface*/}
+          <div className="issue-list-form">
+            <IssueFilter
+              {...this.props}
+              filterOptions={this.props.filterOptions}
+            />
+          </div>
+
+          {/* the actual list of issues */}
+          <div className="issue-list-body">
+            {/*adding new items*/}
+            <div className="issues">
+              <a href={urls.createIssue()} className="issue issue-addNew media">
+                <div className="issue-icon media-left media-middle">
+                  <span className="icon icon-plus" />
+                </div>
+                <div className="media-body media-middle">Add Need</div>
+              </a>
+              {rows}
+            </div>
           </div>
         </div>
+        <div className="map-container">Here be map</div>
       </div>
     );
   }

@@ -38,10 +38,9 @@ class OrganisationsApp extends React.Component {
         </div>
         {this.props.organisations.map(org => {
           return (
-            <div className="org-list-body">
+            <div className="org-list-body" key={org.pk}>
               <div
                 className="org"
-                key={org.pk}
                 onClick={e => {
                   e.preventDefault();
                   window.location.href = org.profile_url;
