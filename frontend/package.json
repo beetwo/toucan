@@ -80,6 +80,7 @@
     "resolve-url-loader": "^1.4.3",
     "sass-loader": "^6.0.6",
     "selectize": "^0.12.4",
+    "simple-react-bootstrap": "^0.2.7",
     "style-loader": "^0.13.1",
     "twitter-text": "^1.13.4",
     "url-loader": "^0.5.7",

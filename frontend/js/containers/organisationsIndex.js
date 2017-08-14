@@ -75,7 +75,6 @@ class OrganisationsApp extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state);
   let organisations = Object.values(state.organisationsByID);
   return {
     organisations
@@ -83,7 +82,6 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  console.log(fetchOrganisations);
   return {
     loadOrganisations: () => dispatch(fetchOrganisations())
   };

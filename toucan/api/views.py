@@ -1,12 +1,16 @@
 from django.contrib.auth import get_user_model
 from django.db.models import Count
 from django.shortcuts import get_object_or_404
+from django.utils.translation import ugettext_lazy as _
+
+
 from drf_multiple_model.views import MultipleModelAPIView
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import ListAPIView, RetrieveAPIView, ListCreateAPIView, CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.reverse import reverse
 
 
 from ..issues.models import Issue, IssueComment, IssueStatus
@@ -27,7 +31,17 @@ class UserInformationApi(APIView):
         response = {
             'user': None,
             'notificationAreas': [],
-            'canComment': False
+            'canComment': False,
+            'links': [
+                {
+                    'name': _('Settings and Profile'),
+                    'url': reverse('user_profile:personal_profile', request=request)
+                },
+                {
+                    'name': _('Logout'),
+                    'url': reverse('account_logout', request=request)
+                },
+            ]
         }
 
         if request.user.is_authenticated():
@@ -37,8 +51,13 @@ class UserInformationApi(APIView):
                     NotificationSettings.objects.filter(user=request.user), many=True
                 ).data,
                 'canComment': True
-
             })
+        if request.user.is_staff:
+            response['links'].append({
+                'name': _('Administration Interface'),
+                'url': reverse('admin:index', request=request)
+            })
+
 
         return Response(response)
 

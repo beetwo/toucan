@@ -19,7 +19,7 @@ class IssueTrackerApp extends React.Component {
   }
 
   render() {
-    console.log("urxn");
+    // console.log("urxn");
     return <UI {...this.props} />;
   }
 }

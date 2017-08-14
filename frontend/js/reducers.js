@@ -302,7 +302,7 @@ function allOrganisations(state = [], action) {
 
 function currentUser(
   state = {
-    user: null,
+    user: {},
     notificationAreas: [],
     canComment: false,
     bbox: defaultMapBounds

@@ -6,7 +6,6 @@ require("Leaflet.extra-markers/src/assets/css/leaflet.extra-markers.css");
 let extraMarkers = require("Leaflet.extra-markers/src/assets/js/leaflet.extra-markers");
 
 function getMarkerForIssue(issue = {}, opts = {}) {
-  console.log(issue);
   let issue_type = issue.issue_types[0];
   const defaulIconProps = {
     icon: getIconClassForIssueType(issue_type),

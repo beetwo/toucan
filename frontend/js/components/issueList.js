@@ -119,7 +119,6 @@ class IssueListUI extends React.Component {
           <div className="issue media">
             <div className="issue-icon media-left media-middle">
               {issue.issue_types.map(it => {
-                console.log(it);
                 return <ToucanIcon key={it.slug} issue_type={it} />;
               })}
             </div>
