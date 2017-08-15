@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'toucan';
-  src:  url('fonts/toucan.eot?8givrw');
-  src:  url('fonts/toucan.eot?8givrw#iefix') format('embedded-opentype'),
-    url('fonts/toucan.ttf?8givrw') format('truetype'),
-    url('fonts/toucan.woff?8givrw') format('woff'),
-    url('fonts/toucan.svg?8givrw#toucan') format('svg');
+  src:  url('fonts/toucan.eot?u1jhb5');
+  src:  url('fonts/toucan.eot?u1jhb5#iefix') format('embedded-opentype'),
+    url('fonts/toucan.ttf?u1jhb5') format('truetype'),
+    url('fonts/toucan.woff?u1jhb5') format('woff'),
+    url('fonts/toucan.svg?u1jhb5#toucan') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,6 +24,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-check:before {
+  content: "\e914";
+}
 .icon-shelter:before {
   content: "\e913";
   color: #fab400;

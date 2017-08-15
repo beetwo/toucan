@@ -59,6 +59,9 @@ class IssueFilter extends React.Component {
           let active = selections.indexOf(c) > -1;
           return (<div className={classNames("filter-item", {'is-active' : active})} key={k + '-choice-' + c} onClick={this.handleToggle.bind(this, k, c, !active)}>
                   <div className="filter-check text-center">
+                  {active &&
+                    <span className="icon icon-lg icon-check"></span>
+                  }
                     <input type="checkbox" checked={active}></input>
                   </div>
                   <div className="filter-title">

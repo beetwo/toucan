@@ -23,9 +23,13 @@
   border-radius: $radius;
   padding: $padding/2 0;
   margin-bottom: $padding/2;
+  cursor: pointer;
   &.is-active {
     border-color: $c-turquoise;
     background-color: rgba($c-turquoise, .06);
+    .icon-check {
+      color: $c-turquoise;
+    }
   }
 }
 .filter-icon {
@@ -33,6 +37,9 @@
 }
 .filter-check {
   width: 8%;
+  input {
+    display: none;
+  }
 }
 .filter-title {
   width: 85%;
