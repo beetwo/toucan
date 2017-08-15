@@ -7,11 +7,15 @@
     right: 0;
     z-index: 99999;
     background-color: #fff;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch !important;
+    height: 100%;
+    overflow-y: hidden;
     .fullscreen-content {
-      padding-top: 38px;
-      padding-bottom: 60px;
+      position: absolute;
+      top: 45px;
+      bottom: 65px;
+      width: 100%;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch !important;
     }
   }
 }
@@ -29,6 +33,7 @@
   border-bottom: 1px solid $c-lightgrey;
   top: 0;
   box-shadow: 0 2px 4px rgba(0,0,0, .05);
+  height: 45px;
   @include screen-sm-min {
     display: none;
   }
@@ -37,6 +42,7 @@
   border-top: 1px solid $c-lightgrey;
   bottom: 0;
   box-shadow: 0 -2px 4px rgba(0,0,0, .05);
+  height: 65px;
   @include screen-sm-min {
     display: none;
   }
