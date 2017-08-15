@@ -329,14 +329,38 @@ const DefaultIcon = Leaflet.icon({
   shadowUrl: require("leaflet/dist/images/marker-shadow.png")
 });
 
-const DummyMap = () => {
-  const position = [51.505, -0.09];
-  return (
-    <Map center={position} zoom={13}>
-      <ToucanTileLayer />
-      <Marker position={position} color="orange" icon={DefaultIcon} />
-    </Map>
-  );
-};
+class DummyMap extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      marker_positions: [[51.505, -0.09]]
+    };
+    this.addMarker = this.addMarker.bind(this);
+  }
+
+  addMarker(position) {
+    this.setState(state => ({
+      marker_positions: [...state.marker_positions, position]
+    }));
+  }
+
+  render() {
+    return (
+      <Map
+        center={this.state.marker_positions[0]}
+        zoom={13}
+        onContextmenu={e => {
+          console.log(e);
+          this.addMarker(e.latlng);
+        }}
+      >
+        <ToucanTileLayer />
+        {this.state.marker_positions.map((p, index) =>
+          <Marker position={p} color="orange" icon={DefaultIcon} key={index} />
+        )}
+      </Map>
+    );
+  }
+}
 
 export { DummyMap };
