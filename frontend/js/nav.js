@@ -11,7 +11,7 @@ const Nav = ({ location, current_user }) => {
   const links = current_user.links || [];
   let active =
     (location.pathname.split("/")[1] === "orgs" && "orgs") || "needs";
-  console.warn("Nav active", active);
+
   return (
     <NavBar>
       <NavBar.Header>
