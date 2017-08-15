@@ -22,6 +22,8 @@ import {
 } from "react-router-dom";
 import createBrowserHistory from "history/createBrowserHistory";
 
+require("../css/app.scss");
+
 // create the root reducer
 let issueTrackerApp = combineReducers({
   ...reducers

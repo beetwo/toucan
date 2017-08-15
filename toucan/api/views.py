@@ -53,11 +53,10 @@ class UserInformationApi(APIView):
                 'canComment': True
             })
         if request.user.is_staff:
-            response['links'].append({
+            response['links'].insert(1, {
                 'name': _('Administration Interface'),
                 'url': reverse('admin:index', request=request)
             })
-
 
         return Response(response)
 

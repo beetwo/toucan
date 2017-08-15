@@ -8,6 +8,8 @@ import Status from "./status";
 import ToucanIcon, { getIconClassForIssueType } from "./icons/issueType";
 import { DateOnlyDisplay, DateOrTimeDisplay } from "./date";
 import { Link } from "react-router-dom";
+import { SplitUIView } from "./main";
+import Map from "./map";
 
 function CommentCount({ count }) {
   return (
@@ -140,44 +142,55 @@ const MapHandle = () =>
 class IssueListUI extends React.Component {
   render() {
     let issues = this.props.issues || [];
+
+    const map = (
+      <Map
+        geojson={this.props.geojson}
+        visibleIssueIDs={issues.map(issue => issue.id)}
+        selectIssue={this.props.selectIssue}
+        initial_bounds={this.props.initial_bounds}
+      />
+    );
+
     let rows = issues.map((issue, index) =>
       <IssueListItem key={issue.id} issue={issue} />
     );
-    return (
-      <div className="app-container">
-        <div className="issue-list">
-          <MapHandle />
+    const issue_view = (
+      <div className="issue-list">
+        <MapHandle />
 
-          {/*the filtering interface*/}
-          <div className="issue-list-form">
-            <IssueFilter
-              {...this.props}
-              filterOptions={this.props.filterOptions}
-            />
-          </div>
+        {/*the filtering interface*/}
+        <div className="issue-list-form">
+          <IssueFilter
+            {...this.props}
+            filterOptions={this.props.filterOptions}
+          />
+        </div>
 
-          {/* the actual list of issues */}
-          <div className="issue-list-body">
-            {/*adding new items*/}
-            <div className="issues">
-              <a href={urls.createIssue()} className="issue issue-addNew media">
-                <div className="issue-icon media-left media-middle">
-                  <span className="icon icon-plus" />
-                </div>
-                <div className="media-body media-middle">Add Need</div>
-              </a>
-              {rows}
-            </div>
+        {/* the actual list of issues */}
+        <div className="issue-list-body">
+          {/*adding new items*/}
+          <div className="issues">
+            <a href={urls.createIssue()} className="issue issue-addNew media">
+              <div className="issue-icon media-left media-middle">
+                <span className="icon icon-plus" />
+              </div>
+              <div className="media-body media-middle">Add Need</div>
+            </a>
+            {rows}
           </div>
         </div>
-        <div className="map-container">Here be map</div>
       </div>
     );
+
+    return <SplitUIView map={map} issue_view={issue_view} />;
   }
 }
 
 IssueListUI.propTypes = {
-  issues: PropTypes.array.isRequired
+  issues: PropTypes.array.isRequired,
+  geojson: PropTypes.object.isRequired,
+  selectIssue: PropTypes.func.isRequired
 };
 
 export default IssueListUI;

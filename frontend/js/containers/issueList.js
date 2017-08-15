@@ -27,7 +27,9 @@ const mapStateToProps = (state, ownProps) => {
       state.issueFilters.selections
     ),
     filterOptions: state.issueFilters,
-    loading: state.loadingStatus.issues
+    loading: state.loadingStatus.issues,
+    geojson: state.geojson,
+    initial_bounds: state.initial_bounds
   };
 };
 
@@ -35,7 +37,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     fetchIssues: () => dispatch(fetchIssues()),
     addIssueFilter: (prop, value) => dispatch(addIssueFilter(prop, value)),
-    removeIssueFilter: (prop, value) => dispatch(removeIssueFilter(prop, value))
+    removeIssueFilter: (prop, value) =>
+      dispatch(removeIssueFilter(prop, value)),
+    selectIssue: issue => ownProps.history.push(`/issues/${issue.id}/`)
   };
 };
 

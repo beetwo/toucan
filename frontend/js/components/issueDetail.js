@@ -15,6 +15,11 @@ import { getIconClassForIssueType } from "./icons/issueType";
 import { HiddenMedium, VisibleMedium } from "./responsive";
 import Loading from "./loading";
 
+import { SplitUIView } from "./main";
+import ToucanTileLayer from "./map/tiles";
+
+import { Map, Marker } from "react-leaflet";
+
 function MarkdownBody(props) {
   let md = new Remarkable();
   return <HtmlBody html={md.render(props.text)} />;
@@ -133,7 +138,12 @@ class IssueDetailUI extends React.Component {
     let gjs = issue_loader.issue_data;
     let issue = gjs.properties;
 
-    return (
+    const map = (
+      <Map center={[51.505, -0.09]} zoom={13}>
+        <ToucanTileLayer />
+      </Map>
+    );
+    const detail_view = (
       <div className="issue-detail">
         <div className="issue-detail-body">
           <div className="issue-list-mapHandle">
@@ -164,6 +174,8 @@ class IssueDetailUI extends React.Component {
         </HiddenMedium>
       </div>
     );
+
+    return <SplitUIView map={map} issue_view={detail_view} />;
   }
 }
 
