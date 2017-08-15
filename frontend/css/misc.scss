@@ -41,3 +41,22 @@ div.toolbar {
     margin-bottom: $padding-base-vertical;
   }
 }
+ul {
+  padding-left: 1em;
+  margin-left: 0;
+}
+.notification {
+  border: 1px solid $c-lightgrey;
+  margin-bottom: $padding-base-vertical;
+  border-radius: $border-radius-base;
+  padding: $padding-base-vertical/2 $padding-base-horizontal;
+}
+.text-org {
+  color: $c-organisations;
+  &:hover {
+    color: $c-organisations;
+  }
+}
+form {
+  margin: $padding-base-vertical 0;
+}

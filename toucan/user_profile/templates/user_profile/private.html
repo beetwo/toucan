@@ -14,33 +14,35 @@
   <p class="text-muted">
     Contact information is not public and only shown to you.
   </p>
-
-  <table class="table table-striped">
-    <tbody>
-      <tr>
-        <td>
+  <div class="form-group">
+    <div class="row">
+      <div class="col-sm-4">
+        <label>
           {% trans 'Email' %}
-        </td>
-        <td>
-          {{ user.email }}
-        </td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>
+        </label>
+      </div>
+      <div class="col-sm-4">
+        {{ user.email }}
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="row">
+      <div class="col-sm-4">
+        <label>
           {% trans 'Telephone' %}
-        </td>
-        <td>
-          {{ profile.phone_number|default:'-' }}
-        </td>
-        <td>
-          <a class="" href="{% url 'user_profile:update_phone' %}">
-            Change phone number
-          </a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+        </label>
+      </div>
+      <div class="col-sm-4">
+        {{ profile.phone_number|default:'-' }}
+      </div>
+      <div class="col-sm-4">
+        <a class="" href="{% url 'user_profile:update_phone' %}">
+          Change phone number
+        </a>
+      </div>
+    </div>
+  </div>
 </div>
 
     <hr />
@@ -54,36 +56,37 @@
 
       <h4 class="form-heading">@ Mentioning</h4>
 
-      <table class="table table-striped">
-          <tbody>
-              <tr>
-                  <td>
-                      {% trans 'Notification when mentioned' %}
-                      <p class="text-muted">
-                          somebody mentions you by typing @{{ user.username }}
-                      </p>
-                  </td>
-                  <td>
-                      {{ profile.get_user_mention_notification_display }}
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      {% trans 'Notification when your organisation is mentioned' %}
-                      <p class="text-muted">
-                          somebody mentions your organisation by typing @{{ user.membership.org.short_name }}
-                      </p>
-                  </td>
-                  <td>
-                      {{ profile.get_org_mention_notification_display }}
-                  </td>
-              </tr>
-          </tbody>
-      </table>
-
-      <div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-sm-7">
+            {% trans 'Notification when mentioned' %}
+            <p class="text-muted">
+              somebody mentions you by typing @{{ user.username }}
+            </p>
+          </div>
+          <div class="col-sm-5">
+            {{ profile.get_user_mention_notification_display }}
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-sm-7">
+            {% trans 'Notification when your organisation is mentioned' %}
+            <p class="text-muted">
+              somebody mentions your organisation by typing @{{ user.membership.org.short_name }}
+            </p>
+          </div>
+          <div class="col-sm-5">
+            {{ profile.get_org_mention_notification_display }}
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+      </div>
+      <div class="form-group">
           <a class='btn btn-primary btn-sm' href="{% url 'user_profile:update_profile' %}">
-              {% trans 'Change mention settings' %}
+              {% trans 'Change mentioning settings' %}
           </a>
       </div>
 
@@ -96,48 +99,48 @@
       </p>
 
       {% if notification_settings|length %}
-      <table class="table table-striped">
-          <tbody>
-          {% for ns in notification_settings%}
-          <tr>
-              <td>
-                  <h5>{{ forloop.counter }}.</h5>
-              </td>
-              <td>
-                  <h5>{% trans 'Issue types' %}</h5>
-                  <ul>
-                      {% for it in ns.issue_types.all %}
-                          <li>{{ it.name }}</li>
-                      {% empty %}
-                          <li class="text-muted">{% trans 'all' %}</li>
-                      {% endfor %}
-                  </ul>
-              </td>
-              <td>
-                  <h5>{% trans 'Organisations' %}</h5>
-                  <ul>
-                      {% for org in ns.organisations.all %}
-                          <li>{{ org.name }}</li>
-                      {% empty %}
-                          <li class="text-muted">{% trans 'all' %}</li>
-                      {% endfor %}
-                  </ul>
-              </td>
-              <td>
-                  <h5>{{ ns.created|date:'SHORT_DATETIME_FORMAT' }}</h5>
-              </td>
-              <td>
-                  <a class="btn btn-info btn-sm" href="{% url 'user_profile:notification_edit' notification_id=ns.pk %}">
-                      {% trans 'Edit' %}
+        {% for ns in notification_settings%}
+        <div class="notification">
+          <div class="row">
+            <div class="col-sm-1">
+              <strong>{{ forloop.counter }}.</strong>
+            </div>
+            <div class="col-sm-2">
+              <strong>{% trans 'Issue types' %}</strong>
+              <ul>
+                {% for it in ns.issue_types.all %}
+                <li>{{ it.name }}</li>
+                {% empty %}
+                <li class="text-muted">{% trans 'all' %}</li>
+                {% endfor %}
+              </ul>
+            </div>
+            <div class="col-sm-3">
+              <strong>{% trans 'Organisations' %}</strong>
+              <ul>
+                {% for org in ns.organisations.all %}
+                <li>{{ org.name }}</li>
+                {% empty %}
+                <li class="text-muted">{% trans 'all' %}</li>
+                {% endfor %}
+              </div>
+              <div class="col-sm-3">
+                <strong>{{ ns.created|date:'SHORT_DATETIME_FORMAT' }}</strong>
+              </div>
+              <div class="col-sm-3">
+                <div class="text-right">
+                  <a class="btn btn-info btn-xs" href="{% url 'user_profile:notification_edit' notification_id=ns.pk %}">
+                    {% trans 'Edit' %}
                   </a>
-                  <a class="btn btn-danger btn-sm" href="{% url 'user_profile:notification_delete' notification_id=ns.pk %}">
-                      {% trans 'Delete' %}
+                  <a class="btn btn-danger btn-xs" href="{% url 'user_profile:notification_delete' notification_id=ns.pk %}">
+                    {% trans 'Delete' %}
                   </a>
-              </td>
-          </tr>
+                </div>
+              </div>
+            </div>
+          </div>
+          
           {% endfor %}
-          </tbody>
-      </table>
       {% else %}
       <p class="alert alert-info">
           {% blocktrans %}
