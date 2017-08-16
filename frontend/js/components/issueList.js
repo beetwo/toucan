@@ -35,56 +35,71 @@ class IssueFilter extends React.Component {
     let items = [];
 
     for (let k in opts.options) {
-        let section = [];
-        let body = [];
-        let item = [];
-        let choices = opts.options[k]
-        let selections = opts.selections[k] || []
-        if (choices.length === 0) { continue; }
-        // push the top level
-        
-        item.push(
-            <div className="filter-head flex-container flex-vCenter" key={'option-group-' + k}>
-              <div className="flex-col">
-                <h5 className="filter-heading">
-                  {k.charAt(0).toUpperCase() + k.slice(1)}
-                </h5>
-                </div>
-                <div className="flex-col text-right">
-                  <a className="filter-toggle" href="#" data-toggle="collapse" data-target={"#issueFilter-" + k}>Hide {k} <span className="icon icon-chevron"></span></a>
-                </div>
-              </div>
-              )
-        // create select links
-        let choice_items = choices.map((c) => {
-          let active = selections.indexOf(c) > -1;
-          return (<div className={classNames("filter-item", {'is-active' : active})} key={k + '-choice-' + c} onClick={this.handleToggle.bind(this, k, c, !active)}>
-                  <div className="filter-check text-center">
-                  {active &&
-                    <span className="icon icon-lg icon-check"></span>
-                  }
-                    <input type="checkbox" checked={active}></input>
-                  </div>
-                  <div className="filter-title">
-                    <span className="filter-icon icon icon-lg icon-shelter"></span>
-                    {c}&nbsp;
-                  </div>
-                </div>
-          )
-        })
-        body.push(
-          <div className='filter-body collapse in' id={ 'issueFilter-' + k }>
+      let section = [];
+      let body = [];
+      let item = [];
+      let choices = opts.options[k];
+      let selections = opts.selections[k] || [];
+      if (choices.length === 0) {
+        continue;
+      }
+      // push the top level
+
+      item.push(
+        <div
+          className="filter-head flex-container flex-vCenter"
+          key={"option-group-" + k}
+        >
+          <div className="flex-col">
+            <h5 className="filter-heading">
+              {k.charAt(0).toUpperCase() + k.slice(1)}
+            </h5>
+          </div>
+          <div className="flex-col text-right">
+            <a
+              className="filter-toggle"
+              href="#"
+              data-toggle="collapse"
+              data-target={"#issueFilter-" + k}
+            >
+              Hide {k} <span className="icon icon-chevron" />
+            </a>
+          </div>
+        </div>
+      );
+      // create select links
+      let choice_items = choices.map(c => {
+        let active = selections.indexOf(c) > -1;
+        return (
+          <div
+            className={classNames("filter-item", { "is-active": active })}
+            key={k + "-choice-" + c}
+            onClick={this.handleToggle.bind(this, k, c, !active)}
+          >
+            <div className="filter-check text-center">
+              {active && <span className="icon icon-lg icon-check" />}
+              <input type="checkbox" checked={active} />
+            </div>
+            <div className="filter-title">
+              <span className="filter-icon icon icon-lg icon-shelter" />
+              {c}&nbsp;
+            </div>
+          </div>
+        );
+      });
+      body.push(
+        <div className="filter-body collapse in" id={"issueFilter-" + k}>
           {choice_items}
-          </div>
-        )
-        item.push(body);
-        section.push(
-          <div className="filter-section">
+        </div>
+      );
+      item.push(body);
+      section.push(
+        <div className="filter-section">
           {item}
-          </div>
-        )
-        // and push those too
-        Array.prototype.push.apply(items, section);
+        </div>
+      );
+      // and push those too
+      Array.prototype.push.apply(items, section);
     }
 
     let input_textual = [];
@@ -96,43 +111,70 @@ class IssueFilter extends React.Component {
     return (
       <div>
         <div className="issue-sortandfilter">
-        <div className="flex-container">
-          <div className="flex-col">
-            <a href="#" className="dropdown-toggle" data-toggle="collapse" data-target="#issueFilter">
-              <span className="icon icon-filter"></span>
-              Filter
-            </a>
+          <div className="flex-container">
+            <div className="flex-col">
+              <a
+                href="#"
+                className="dropdown-toggle"
+                data-toggle="collapse"
+                data-target="#issueFilter"
+              >
+                <span className="icon icon-filter" />
+                Filter
+              </a>
+            </div>
+            <div className="flex-col text-right">
+              <a
+                href="#"
+                className="dropdown-toggle"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <span className="text-muted">Sort by: </span>
+                <a href="#">
+                  Newest <span className="icon icon-chevron" />
+                </a>
+              </a>
+              <ul className="dropdown-menu pull-right">
+                <li>
+                  <a href="#">Newest</a>
+                </li>
+                <li>
+                  <a href="#">Nearest</a>
+                </li>
+              </ul>
+            </div>
           </div>
-          <div className="flex-col text-right">
-            <a href="#" className="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span className="text-muted">Sort by: </span><a href="#">Newest <span className="icon icon-chevron"></span></a>
-            </a>
-            <ul className="dropdown-menu pull-right">
-              <li><a href="#">Newest</a></li>
-              <li><a href="#">Nearest</a></li>
-            </ul>
-          </div>
-        </div>
         </div>
         <div className="filter collapse fullscreen-sm" id="issueFilter">
-            <div className="fullscreen-header flex-container">
-              <div className="flex-col">
-                <a href="#" className="fullscreen-close" data-toggle="collapse" data-target="#issueFilter">
-                  <span className="icon icon-close"></span> Filter
-                </a>
-              </div>
-              <div className="flex-col text-right">
-                <a href="#">
-                  Reset
-                </a>
-              </div>
+          <div className="fullscreen-header flex-container">
+            <div className="flex-col">
+              <a
+                href="#"
+                className="fullscreen-close"
+                data-toggle="collapse"
+                data-target="#issueFilter"
+              >
+                <span className="icon icon-close" /> Filter
+              </a>
             </div>
-            <div className="fullscreen-content">
-              {items}
+            <div className="flex-col text-right">
+              <a href="#">Reset</a>
             </div>
-            <div className="fullscreen-footer">
-              <button className="btn btn-primary btn-block" data-toggle="collapse" data-target="#issueFilter">Show results</button>
-            </div>
+          </div>
+          <div className="fullscreen-content">
+            {items}
+          </div>
+          <div className="fullscreen-footer">
+            <button
+              className="btn btn-primary btn-block"
+              data-toggle="collapse"
+              data-target="#issueFilter"
+            >
+              Show results
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -149,29 +191,29 @@ IssueFilter.propTypes = {
 const IssueListItem = ({ issue }) => {
   return (
     <Link to={`/issue/${issue.id}`} key={issue.id} className="issue media">
-        <div className="issue-icon media-left media-middle">
-          {issue.issue_types.map(it => {
-            return <ToucanIcon key={it.slug} issue_type={it} />;
-          })}
+      <div className="issue-icon media-left media-middle">
+        {issue.issue_types.map(it => {
+          return <ToucanIcon key={it.slug} issue_type={it} />;
+        })}
+      </div>
+      <div className="media-body">
+        <div className="issue-basics">
+          <span className="issue-title">
+            {issue.title}
+          </span>
+          <span className="issue-comments">
+            <CommentCount count={issue.comment_count} />
+          </span>
         </div>
-        <div className="media-body">
-          <div className="issue-basics">
-            <span className="issue-title">
-              {issue.title}
-            </span>
-            <span className="issue-comments">
-              <CommentCount count={issue.comment_count} />
-            </span>
-          </div>
-          <div className="issue-details">
-            <span className="issue-organisation">
-              {issue.organisation ? issue.organisation.name + ", " : null}
-            </span>
-            <span className="issue-date">
-              <TimeAgo date={issue.created} />
-            </span>
-          </div>
+        <div className="issue-details">
+          <span className="issue-organisation">
+            {issue.organisation ? issue.organisation.name + ", " : null}
+          </span>
+          <span className="issue-date">
+            <TimeAgo date={issue.created} />
+          </span>
         </div>
+      </div>
     </Link>
   );
 };
@@ -195,7 +237,6 @@ class IssueListUI extends React.Component {
         initial_bounds={this.props.initial_bounds}
       />
     );
-
 
     let rows = issues.map((issue, index) =>
       <IssueListItem key={issue.id} issue={issue} />
