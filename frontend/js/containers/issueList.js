@@ -39,7 +39,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     addIssueFilter: (prop, value) => dispatch(addIssueFilter(prop, value)),
     removeIssueFilter: (prop, value) =>
       dispatch(removeIssueFilter(prop, value)),
-    selectIssue: issue => ownProps.history.push(`/issues/${issue.id}/`)
+    selectIssue: issue => ownProps.history.push(`/issue/${issue.id}/`)
   };
 };
 
