@@ -32,16 +32,17 @@ class IssueFilter extends React.Component {
 
   render() {
     let opts = this.props.filterOptions;
+    console.log(opts);
     let items = [];
 
-    for (let k in opts.options) {
+    Object.keys(opts.options).forEach(k => {
       let section = [];
       let body = [];
       let item = [];
       let choices = opts.options[k];
       let selections = opts.selections[k] || [];
       if (choices.length === 0) {
-        continue;
+        return;
       }
       // push the top level
 
@@ -78,7 +79,6 @@ class IssueFilter extends React.Component {
           >
             <div className="filter-check text-center">
               {active && <span className="icon icon-lg icon-check" />}
-              <input type="checkbox" checked={active} />
             </div>
             <div className="filter-title">
               <span className="filter-icon icon icon-lg icon-shelter" />
@@ -94,13 +94,13 @@ class IssueFilter extends React.Component {
       );
       item.push(body);
       section.push(
-        <div className="filter-section">
+        <div className="filter-section" key={`filter-section-${k}`}>
           {item}
         </div>
       );
       // and push those too
       Array.prototype.push.apply(items, section);
-    }
+    });
 
     let input_textual = [];
     for (let k in opts.selections) {
@@ -132,9 +132,9 @@ class IssueFilter extends React.Component {
                 aria-expanded="false"
               >
                 <span className="text-muted">Sort by: </span>
-                <a href="#">
-                  Newest <span className="icon icon-chevron" />
-                </a>
+                {/* <a href="#"> */}
+                Newest <span className="icon icon-chevron" />
+                {/* </a> */}
               </a>
               <ul className="dropdown-menu pull-right">
                 <li>
