@@ -1,25 +1,26 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import Icon from 'react-fa'
-import TimeAgo from 'react-timeago'
-import classNames from 'classnames'
-import urls from '../urls'
-import { ScrollContainer } from 'react-router-scroll';
-import Status from './status'
-import getIconClassForIssueType from './icons/issueType'
-import {DateOnlyDisplay, DateOrTimeDisplay} from './date'
+import PropTypes from "prop-types";
+import React from "react";
+import Icon from "react-fa";
+import TimeAgo from "react-timeago";
+import classNames from "classnames";
+import urls from "../urls";
+import Status from "./status";
+import ToucanIcon, { getIconClassForIssueType } from "./icons/issueType";
+import { DateOnlyDisplay, DateOrTimeDisplay } from "./date";
+import { Link } from "react-router-dom";
+import { SplitUIView } from "./main";
+import Map from "./map";
 
-
-function CommentCount({count}) {
-    return (<span className={classNames('comments', {'text-muted': count === 0})}>
-        <span className='icon icon-comment icon-lg'/>
-        {count}
-    </span>);
+function CommentCount({ count }) {
+  return (
+    <span className={classNames("comments", { "text-muted": count === 0 })}>
+      <span className="icon icon-comment icon-lg" />
+      {count}
+    </span>
+  );
 }
 
-
 class IssueFilter extends React.Component {
-
   handleToggle(prop_name, value, enable, e) {
     e.preventDefault();
     if (enable) {
@@ -86,12 +87,11 @@ class IssueFilter extends React.Component {
         Array.prototype.push.apply(items, section);
     }
 
-
     let input_textual = [];
-    for(let k in opts.selections) {
+    for (let k in opts.selections) {
       Array.prototype.push.apply(input_textual, opts.selections[k] || []);
     }
-    input_textual = input_textual.join(', ')
+    input_textual = input_textual.join(", ");
 
     return (
       <div>
@@ -142,92 +142,100 @@ class IssueFilter extends React.Component {
 IssueFilter.propTypes = {
   addIssueFilter: PropTypes.func.isRequired,
   removeIssueFilter: PropTypes.func.isRequired,
-  refreshIssueList: PropTypes.func.isRequired,
+  fetchIssues: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired
-}
+};
 
-class IssueListFooter extends React.Component {
-    render() {
-        return <footer className="issue-list-footer bg-primary">
-            <div className="btn btn-primary btn-block" onClick={this.props.openMap}>
-                <Icon name="map-o"/>&nbsp;Show Map
-            </div>
-        </footer>
-    }
-}
+const IssueListItem = ({ issue }) => {
+  return (
+    <Link to={`/issue/${issue.id}`} key={issue.id} className="issue media">
+        <div className="issue-icon media-left media-middle">
+          {issue.issue_types.map(it => {
+            return <ToucanIcon key={it.slug} issue_type={it} />;
+          })}
+        </div>
+        <div className="media-body">
+          <div className="issue-basics">
+            <span className="issue-title">
+              {issue.title}
+            </span>
+            <span className="issue-comments">
+              <CommentCount count={issue.comment_count} />
+            </span>
+          </div>
+          <div className="issue-details">
+            <span className="issue-organisation">
+              {issue.organisation ? issue.organisation.name + ", " : null}
+            </span>
+            <span className="issue-date">
+              <TimeAgo date={issue.created} />
+            </span>
+          </div>
+        </div>
+    </Link>
+  );
+};
+
+const MapHandle = () =>
+  <div className="issue-list-mapHandle">
+    <a href="#" className="mapHandle">
+      &nbsp;
+    </a>
+  </div>;
 
 class IssueListUI extends React.Component {
+  render() {
+    let issues = this.props.issues || [];
 
-    render() {
-        let issues = this.props.issues || [];
-        let rows = issues.map((issue, index) => {
-            return (
-              <div className="issue media" key={issue.id} onClick={(e) => {e.preventDefault(); this.props.handleIssueChange(issue)}}>
-                <div className="issue-icon media-left media-middle">
-                  <span className="icon icon-health"></span>
-                  {/*{issue.issue_types.map((it) => <Icon key={it.slug} name={getIconClassForIssueType(it)} title={it.name} /> )}*/}
-                </div>
-                <div className="media-body">
-                  <div className="issue-basics">
-                    <span className="issue-title">
-                      {issue.title}
-                    </span>
-                    <span className="issue-comments">
-                      <CommentCount count={issue.comment_count} />
-                    </span>
-                  </div>
-                  <div className="issue-details">
-                    <span className="issue-organisation">
-                      {issue.organisation ? issue.organisation.name : null}
-                    </span>
-                    <span className="issue-date">
-                      , <TimeAgo date={issue.created} />
-                    </span>
-                  </div>
-                </div>
-              </div>);
-        });
-        return (
-          <div className="issue-list">
-            <div className="issue-list-mapHandle">
-              <a href="#" className="mapHandle">&nbsp;</a>
-            </div>
-            {/*the filtering interface*/}
-            <div className="issue-list-form">
-            <IssueFilter {...this.props} filterOptions={this.props.filterOptions}/>
+    const map = (
+      <Map
+        geojson={this.props.geojson}
+        visibleIssueIDs={issues.map(issue => issue.id)}
+        selectIssue={this.props.selectIssue}
+        initial_bounds={this.props.initial_bounds}
+      />
+    );
 
-            </div>
-            <ScrollContainer scrollKey='toucan-issue-list'>
-            {/* the actual list of issues */}
-            <div className="issue-list-body">
-                {/*adding new items*/}
-                <div className="issues">
-                  <a href={urls.createIssue()} className="issue issue-addNew media">
-                    <div className="issue-icon media-left media-middle">
-                      <span className="icon icon-plus"></span>
-                    </div>
-                    <div className="media-body media-middle">
-                      Add Need
-                    </div>
-                  </a>
-                  {rows}
-                </div>
-            </div>
-            </ScrollContainer>
 
-            {/*issue list control*/}
-            {
-                this.props.mapOpenable ?
-                    <IssueListFooter openMap={this.props.openMap}/>
-                    : null
-            }
-      </div>);
-    }
+    let rows = issues.map((issue, index) =>
+      <IssueListItem key={issue.id} issue={issue} />
+    );
+    const issue_view = (
+      <div className="issue-list">
+        <MapHandle />
+
+        {/*the filtering interface*/}
+        <div className="issue-list-form">
+          <IssueFilter
+            {...this.props}
+            filterOptions={this.props.filterOptions}
+          />
+        </div>
+
+        {/* the actual list of issues */}
+        <div className="issue-list-body">
+          {/*adding new items*/}
+          <div className="issues">
+            <a href={urls.createIssue()} className="issue issue-addNew media">
+              <div className="issue-icon media-left media-middle">
+                <span className="icon icon-plus" />
+              </div>
+              <div className="media-body media-middle">Add Need</div>
+            </a>
+            {rows}
+          </div>
+        </div>
+      </div>
+    );
+
+    return <SplitUIView map={map} issue_view={issue_view} />;
+  }
 }
 
 IssueListUI.propTypes = {
-  handleIssueChange: PropTypes.func.isRequired,
-  issues: PropTypes.array.isRequired
-}
+  issues: PropTypes.array.isRequired,
+  geojson: PropTypes.object.isRequired,
+  selectIssue: PropTypes.func.isRequired
+};
 
-export default IssueListUI
+export default IssueListUI;

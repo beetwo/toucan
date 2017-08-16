@@ -24,7 +24,7 @@ export const REMOVE_ISSUES_FILTER = "REMOVE_ISSUES_FILTER";
 export const FETCH_CURRENT_USER_DATA = "FETCH_CURRENT_USER_DATA";
 export const RECEIVE_USER_INFORMATION = "RECEIVE_USER_INFORMATION";
 
-export const FETCH_ORGANISATIONS = "FETCH_ORAGNISATIONS";
+export const FETCH_ORGANISATIONS = "FETCH_ORGANISATIONS";
 export const RECEIVE_ORGANISATIONS = "RECEIVE_ORGANISATIONS";
 
 export function requestIssues() {
@@ -108,7 +108,6 @@ export function invalidateIssue(issue_id) {
 
 export function fetchIssueIfNeeded(issue_id) {
   return (dispatch, getState) => {
-    dispatch(selectIssue(issue_id));
     dispatch(requestIssue(issue_id));
     return fetch(`/api/issue/${issue_id}/`, { credentials: "same-origin" })
       .then(response => response.json())

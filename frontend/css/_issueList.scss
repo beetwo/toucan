@@ -1,7 +1,12 @@
 .issue {
   @include listItem;
+  color: $c-text;
+  &:hover {
+    color: $c-text;
+  }
 }
 .issue-icon {
+  color: $c-issues;
   .icon {
     font-size: 30px;
   }
@@ -84,6 +89,9 @@
     cursor: pointer;
     background-color: $c-yellow;
     color: $c-beige;
+    .issue-icon {
+      color: $c-beige;
+    }
   }
 }
 

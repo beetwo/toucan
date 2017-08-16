@@ -3,7 +3,9 @@
   border-bottom: 1px solid $c-lightgrey;
   margin: 0;
   padding: $padding;
+  text-decoration: none;
   &:hover {
+    text-decoration: none;
     cursor: pointer;
     background-color: $c-beige;
   }

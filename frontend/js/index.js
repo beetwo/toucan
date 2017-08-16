@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import thunkMiddleware from "redux-thunk";
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import reducers from "./reducers";
-import App from "./containers/issuesIndex";
+import AppShell from "./containers/main";
 import Nav from "./nav";
 
 import IssueDetail from "./containers/issueDetail";
@@ -14,21 +14,19 @@ import UserDetail from "./containers/userDetail";
 import OrganisationsList from "./containers/organisationsIndex";
 
 import {
-  Router,
+  BrowserRouter as Router,
   Route,
-  IndexRoute,
-  useRouterHistory,
-  applyRouterMiddleware,
-  browserHistory,
+  Link,
+  Switch,
   withRouter
-} from "react-router";
-import { syncHistoryWithStore, routerReducer } from "react-router-redux";
-import { useScroll } from "react-router-scroll";
+} from "react-router-dom";
+import createBrowserHistory from "history/createBrowserHistory";
+
+require("../css/app.scss");
 
 // create the root reducer
 let issueTrackerApp = combineReducers({
-  ...reducers,
-  routing: routerReducer
+  ...reducers
 });
 
 // construct middleWare
@@ -44,43 +42,26 @@ if (process.env.NODE_ENV !== "production") {
 // and create the store
 let store = createStore(issueTrackerApp, applyMiddleware(...middleware));
 
-// Create an enhanced history that syncs navigation events with the store
-let bHistory = useRouterHistory(() => browserHistory)({
-  basename: "/map"
-});
-
-export const history = syncHistoryWithStore(bHistory, store);
-
-// Listen for changes to the current location and update the nav part
-// this is currently a hack, but will be cleaned up once we upgrade
-// react router or move to a completely client side rendered menu
-const unlisten = history.listen((location, action) => {
-  let parts = location.pathname.split("/");
-  let active = "needs";
-  if (parts[1] === "orgs") {
-    active = "orgs";
-  }
-  render(
-    <Nav active={active} push={history.push} />,
-    document.getElementById("react-navbar")
-  );
-});
-
 render(
   <Provider store={store}>
-    <Router history={history} render={applyRouterMiddleware(useScroll())}>
-      <Route path="/detail/">
-        <Route path=":username" component={UserDetail} name="userDetail" />
-      </Route>
-      <Route path="/" component={App} name="issueList">
-        <IndexRoute component={IssueList} name="issueListIndex" />
+    <Router basename="/map">
+      <AppShell>
+        <Nav />
         <Route
-          path="issue/:IssueID"
-          component={IssueDetail}
-          name="issueDetail"
+          path="/jfsdkjfds/"
+          children={props => {
+            console.log("Always:", props);
+            return null;
+          }}
         />
-        <Route path="orgs/" component={OrganisationsList} name="orglist" />
-      </Route>
+        <Switch>
+          <Route exact path="/issue/:IssueID/" component={IssueDetail} />
+          <Route exact path="/orgs/" component={OrganisationsList} />
+          <Route exact path="/detail/:username/" component={UserDetail} />
+          <Route exact path="/" component={IssueList} />
+          {/*<Route render={() => <h1>404</h1>} />*/}
+        </Switch>
+      </AppShell>
     </Router>
   </Provider>,
   document.getElementsByTagName("main")[0]

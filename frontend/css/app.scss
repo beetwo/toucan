@@ -14,117 +14,130 @@
 @import 'orgList';
 @import 'userLink';
 @import 'comments';
-html, body {
-    height: 100%;
-    width: 100%;
-    margin: 0;
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
 }
 
-body {
-    display: flex;
-    flex-direction: column;
+main,
+.toucan-main {
+  height: 100vh;
+  width: 100vw;
+}
+
+.toucan-main {
+  display: flex;
+  flex-direction: column;
 }
 
 nav {
-    flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 nav.navbar {
-    margin-bottom: 0;
+  margin-bottom: 0;
+}
+
+.navbar-brand > img {
+  width: auto;
+  height: 100%;
+}
+
+.navbar-logo {
+  width: 120px;
+  height: auto;
 }
 
 main {
-    flex-grow: 1;
-    display: flex;
-    overflow: hidden;
+  flex-grow: 1;
+  display: flex;
+  overflow: hidden;
 }
 
 .hide-overflow {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 /* this is the react root */
 .app-container {
-    overflow: hidden;
-    display: -webkit-flex;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    @include screen-sm-min {
-      flex-direction: row-reverse;
-    }
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  @include screen-sm-min {
+    flex-direction: row-reverse;
+  }
 }
 
 .app-container > * {
-    flex: 1;
-    overflow: auto;
+  flex: 1;
+  overflow: auto;
 }
 
 .map-container {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    @include screen-sm-min {
-      flex-grow: 6;
-    }
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  @include screen-sm-min {
+    flex-grow: 6;
+  }
 }
 
 .map-container .leaflet-container {
-    width: 100%;
-    flex: 1 1 auto;
+  width: 100%;
+  flex: 1 1 auto;
 }
 
 .map-container footer {
-    flex: 0 0 auto;
-    display: flex;
+  flex: 0 0 auto;
+  display: flex;
 }
 
 .map-container footer > * {
-    flex: 1;
+  flex: 1;
 }
 
 /* currently not used*/
 .marker-cluster {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #3498db;
-    color: #fff;
-    text-align: center;
-    font-size: 24px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #3498db;
+  color: #fff;
+  text-align: center;
+  font-size: 24px;
 }
 
 .leaflet-cluster-anim .leaflet-marker-icon,
 .leaflet-cluster-anim .leaflet-marker-shadow {
-    transition: transform 0.3s ease-out, opacity 0.3s ease-in;
+  transition: transform 0.3s ease-out, opacity 0.3s ease-in;
 }
 
 .issues tr:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
-
 .issue-filter {
-    flex: 1;
+  flex: 1;
 }
 
 @media only screen and (max-width: 922px) {
+  h3:first-child {
+    margin-top: 0px;
+  }
 
-    h3:first-child {
-        margin-top: 0px;
-    }
-
-    div.page-header {
-        margin-top: 0px;
-    }
-
+  div.page-header {
+    margin-top: 0px;
+  }
 }
 
 @media (min-width: 922px) {
-    .issue-list-form {
-        /*padding: 1em;*/
-    }
-
+  .issue-list-form {
+    /*padding: 1em;*/
+  }
 }
 
 /*a[target=_blank] {
@@ -132,30 +145,28 @@ main {
 }*/
 
 .toucanLoadingSpinner {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .alert.alert-dismissable {
-    opacity: 0.8;
-
+  opacity: 0.8;
 }
 
 #message-container {
-    position: absolute;
-    bottom: 5vh;
-    right: 5vw;
-    width: 90vw;
+  position: absolute;
+  bottom: 5vh;
+  right: 5vw;
+  width: 90vw;
 }
 
-
 @media (min-width: 922px) {
-    #message-container {
-        width: 40vw;
-    }
+  #message-container {
+    width: 40vw;
+  }
 }
 
 .mapbox-wordmark {
@@ -175,4 +186,3 @@ main {
   background-position: 0 0;
   background-size: 65px 20px;
 }
-
