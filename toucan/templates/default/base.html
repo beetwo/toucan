@@ -15,7 +15,7 @@
     {% include './favicons.html' %}
     <title>{% block head_title %}{% trans 'Toucan' %}{% endblock %}</title>
     {% include './raven.html' %}
-    {#{% render_bundle 'manifest' %}#}
+    {% render_bundle 'manifest' %}
     {% render_bundle 'vendor' %}
     {% render_bundle 'bootstrap' %}
     <style>
@@ -26,14 +26,7 @@
       .navbar-brand {
         padding: 10px;
       }
-      .navbar-brand>img {
-        /*width: auto;*/
-        /*height: 100%;*/
-      }
-      .navbar-logo {
-        width: 120px;
-        height: auto;
-      }
+
     </style>{% block extra-head %}{% endblock %}
 </head>
 

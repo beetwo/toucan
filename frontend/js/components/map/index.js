@@ -13,7 +13,6 @@ import {
   Marker,
   Popup
 } from "react-leaflet";
-import geojsonExtent from "geojson-extent";
 import getMarkerForIssue from "./markers";
 import LocationControl from "./locationControl";
 
@@ -31,7 +30,7 @@ class IssueMarker extends React.Component {
     let props = {
       position: this.props.position,
       layerContainer: this.props.layerContainer,
-      onClick: () => this.props.handleMarkerClick(),
+      onClick: () => this.props.handleMarkerClick(issue),
       zIndexOffset: this.props.zIndexOffset || 0
     };
     let opts = {};
@@ -104,18 +103,20 @@ export class LeafletMap extends React.Component {
     // and reset during the render method
     this._panToUserLocation = false;
 
+    this.state = {
+      bounds: props.initial_bounds,
+      // this flag is set as soon as the user zooms in/out
+      user_modified_zoom: false
+    };
+
     if (props.selectedIssue && props.geojson) {
       let issue = this._getIssueById(props.selectedIssue, props.geojson);
       this.state = {
+        ...this.state,
         zoom: 13,
         center: this._getIssueLatLng(issue)
       };
-    } else if (props.bounds) {
-      this.state = {
-        bounds: props.bounds
-      };
     }
-
     // bind event handlers
     this.handleClick = this.handleClick.bind(this);
     this.handleMove = this.handleMove.bind(this);
@@ -125,6 +126,11 @@ export class LeafletMap extends React.Component {
     );
     this.handleLocate = this.handleLocate.bind(this);
     this.handleLocationFound = this.handleLocationFound.bind(this);
+    this.setUserModifiedFlag = this.setUserModifiedFlag.bind(this);
+  }
+
+  setUserModifiedFlag() {
+    return this.setState(state => ({ user_modified_zoom: true }));
   }
 
   _getIssueById(issueId, geojson) {
@@ -211,7 +217,7 @@ export class LeafletMap extends React.Component {
     if (this.props.beforeMarkerNavigation) {
       this.props.beforeMarkerNavigation(issue);
     }
-    history.push(`/issue/${issue.id}`);
+    this.props.selectIssue(issue);
   }
 
   render() {
@@ -251,8 +257,6 @@ export class LeafletMap extends React.Component {
       center = this.state.center;
     }
 
-    let bounds = this.props.bounds || this._computeBounds(geojson);
-
     let mapSettings = {
       bounds: this.state.bounds,
       center: center || this.state.center,
@@ -267,6 +271,7 @@ export class LeafletMap extends React.Component {
         onPopupclose={this.handlePopupClose}
         onMoveEnd={this.handleMove}
         onLocationfound={this.handleLocationFound}
+        onZoomstart={this.setUserModifiedFlag}
         animate={true}
         ref={m => (this._map = m)}
       >
@@ -287,6 +292,9 @@ export class LeafletMap extends React.Component {
   }
 
   _computeBounds(geojson) {
+    if (geojson && geojson.features && geojson.features.length === 0) {
+      return defaultMapBounds;
+    }
     let extents = geojsonExtent(Object.assign({}, geojson));
     if (extents == null) {
       return defaultMapBounds;
@@ -309,7 +317,50 @@ LeafletMap.propTypes = {
   coordinates: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   setCoordinates: PropTypes.func,
   selectIssue: PropTypes.func.isRequired,
-  selectedIssue: PropTypes.number
+  selectedIssue: PropTypes.number,
+  initial_bounds: PropTypes.array.isRequired
 };
 
 export default LeafletMap;
+
+const DefaultIcon = Leaflet.icon({
+  iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+  iconUrl: require("leaflet/dist/images/marker-icon.png"),
+  shadowUrl: require("leaflet/dist/images/marker-shadow.png")
+});
+
+class DummyMap extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      marker_positions: [[51.505, -0.09]]
+    };
+    this.addMarker = this.addMarker.bind(this);
+  }
+
+  addMarker(position) {
+    this.setState(state => ({
+      marker_positions: [...state.marker_positions, position]
+    }));
+  }
+
+  render() {
+    return (
+      <Map
+        center={this.state.marker_positions[0]}
+        zoom={13}
+        onContextmenu={e => {
+          console.log(e);
+          this.addMarker(e.latlng);
+        }}
+      >
+        <ToucanTileLayer />
+        {this.state.marker_positions.map((p, index) =>
+          <Marker position={p} color="orange" icon={DefaultIcon} key={index} />
+        )}
+      </Map>
+    );
+  }
+}
+
+export { DummyMap };

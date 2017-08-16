@@ -20,6 +20,7 @@ import {
 import { defaultMapBounds } from "./globals";
 import uniq from "lodash/uniq";
 import flattenDeep from "lodash/flattenDeep";
+import geojsonExtent from "geojson-extent";
 
 function issues(state = [], action) {
   switch (action.type) {
@@ -302,7 +303,7 @@ function allOrganisations(state = [], action) {
 
 function currentUser(
   state = {
-    user: null,
+    user: {},
     notificationAreas: [],
     canComment: false,
     bbox: defaultMapBounds
@@ -369,6 +370,27 @@ function organisationsByID(state = {}, action) {
   }
 }
 
+const initial_bounds = (state = defaultMapBounds, action) => {
+  switch (action.type) {
+    case RECEIVE_ISSUES:
+      // geojsonExtent somehow alters the geojson object, so copy before use
+      let extents = geojsonExtent(Object.assign({}, action.issues));
+      let point1 = extents.slice(0, 2).reverse();
+      let point2 = extents.slice(2, 4).reverse();
+      if (point1[0] === point2[0] && point1[1] === point2[1]) {
+        // zoom out if point1 and point2 are equal
+        const x = 0.01;
+        return [
+          [point1[0] - x, point1[1] - x],
+          [point2[0] + x, [point2[1] + x]]
+        ];
+      }
+      return [point1, point2];
+    default:
+      return state;
+  }
+};
+
 const reducers = {
   geojson,
   redux_issues: issues,
@@ -384,7 +406,8 @@ const reducers = {
   currentUser,
   userInformationByUsername,
   loadingStatus,
-  organisationsByID
+  organisationsByID,
+  initial_bounds
 };
 
 export default reducers;
