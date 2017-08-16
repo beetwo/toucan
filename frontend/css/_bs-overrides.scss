@@ -2,6 +2,10 @@
 .navbar-brand {
   padding: 10px $navbar-padding-horizontal;
 }
+.navbar-brand > img {
+  width: auto;
+  height: 100%;
+}
 .navbar-logo {
   width: 120px;
   height: auto;

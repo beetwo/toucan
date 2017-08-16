@@ -14,11 +14,20 @@
 .issue-title {
   font-size: 16px;
   font-weight: bold;
+  float: left;
+  max-width: 85%;
 }
 .issue-comments {
   float: right;
 }
+.issue-basics {
+  float: left;
+  clear: both;
+  width: 100%;
+}
 .issue-details {
+  clear: both;
+  float: left;
   color: $c-darkgrey;
   font-size: 14px;
 }
