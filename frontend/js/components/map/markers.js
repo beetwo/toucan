@@ -8,7 +8,7 @@ let extraMarkers = require("Leaflet.extra-markers/src/assets/js/leaflet.extra-ma
 function getMarkerForIssue(issue = {}, opts = {}) {
   let issue_type = issue.issue_types[0];
   const defaulIconProps = {
-    icon: getIconClassForIssueType(issue_type),
+    icon: getIconClassForIssueType(issue_type, 'icon-w-'),
     // marker colors
     //'red', 'orange-dark', 'orange', 'yellow', 'blue-dark', 'cyan', 'purple',
     // 'violet', 'pink', 'green-dark', 'green', 'green-light', 'black', or 'white'
