@@ -10,6 +10,7 @@ import Nav from "./nav";
 
 import IssueDetail from "./containers/issueDetail";
 import IssueList from "./containers/issueList";
+import IssueContainer from "./containers/issueView";
 import UserDetail from "./containers/userDetail";
 import OrganisationsList from "./containers/organisationsIndex";
 
@@ -47,19 +48,24 @@ render(
     <Router basename="/map">
       <AppShell>
         <Nav />
-        <Route
-          path="/jfsdkjfds/"
-          children={props => {
-            console.log("Always:", props);
-            return null;
-          }}
-        />
         <Switch>
-          <Route exact path="/issue/:IssueID/" component={IssueDetail} />
+          <Route
+            exact
+            path="/issue/:IssueID/"
+            render={props =>
+              <IssueContainer
+                issue_id={parseInt(props.match.params.IssueID, 10)}
+                content={<IssueDetail {...props} />}
+              />}
+          />
+          <Route
+            exact
+            path="/"
+            render={props =>
+              <IssueContainer content={<IssueList {...props} />} />}
+          />
           <Route exact path="/orgs/" component={OrganisationsList} />
           <Route exact path="/detail/:username/" component={UserDetail} />
-          <Route exact path="/" component={IssueList} />
-          {/*<Route render={() => <h1>404</h1>} />*/}
         </Switch>
       </AppShell>
     </Router>
