@@ -10,7 +10,7 @@
     <form method="post">
         {% csrf_token %}
         {% bootstrap_form form %}
-        {% buttons submit=_('Save') %}{% endbuttons %}
+        <button type="submit" class="btn btn-primary">{% trans 'Save'%}</button>
     </form>
 {% endblock content %}
 

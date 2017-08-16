@@ -50,19 +50,21 @@ class OrganisationsList extends React.Component {
           </a>
         </div>
         <div className="issue-list-form">
-          <div className="flex-container">
-            <div className="flex-col">
-              <a href="#" className="dropdown-toggle" data-toggle="dropdown">
-                <span className="icon icon-filter" />
-                Filter
-              </a>
-              <ul className="dropdown-menu" />
-            </div>
-            <div className="flex-col text-right">
-              <span className="text-muted">Sort by: </span>
-              <a href="#">
-                Nearest <span className="icon icon-chevron" />
-              </a>
+          <div className="issue-sortandfilter">
+            <div className="flex-container">
+              <div className="flex-col">
+                <a href="#" className="dropdown-toggle" data-toggle="dropdown">
+                  <span className="icon icon-filter" />
+                  Filter
+                </a>
+                <ul className="dropdown-menu" />
+              </div>
+              <div className="flex-col text-right">
+                <span className="text-muted">Sort by: </span>
+                <a href="#">
+                  Nearest <span className="icon icon-chevron" />
+                </a>
+              </div>
             </div>
           </div>
         </div>

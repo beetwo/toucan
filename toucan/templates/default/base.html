@@ -18,16 +18,7 @@
     {% render_bundle 'manifest' %}
     {% render_bundle 'vendor' %}
     {% render_bundle 'bootstrap' %}
-    <style>
-      .body-beige {
-        /*c-beige*/
-        background-color: #FFF8EA;
-      }
-      .navbar-brand {
-        padding: 10px;
-      }
-
-    </style>{% block extra-head %}{% endblock %}
+    {% block extra-head %}{% endblock %}
 </head>
 
 <body class="{% block body-classes %}{% endblock %}">
@@ -36,7 +27,7 @@
             {% include './navbar.html' %}
         {% endblock navbar %}
         {% if messages %}
-        <div class="container" id="message-container">
+        <div class="container-fluid" id="message-container">
             {% bootstrap_messages %}
         </div>
         {% endif %}

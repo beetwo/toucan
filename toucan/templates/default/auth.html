@@ -13,10 +13,10 @@
 
           <div class="text-center"  style="margin-top: 40px;margin-bottom: 40px;">
             <h2>
-              Sign in to Toucan
+              {% block auth-header %}{% endblock %}
             </h2>
             <h4>
-              Please enter your details
+              {% block auth-subheader %}{% endblock %}
             </h4>
           </div>
 
@@ -27,7 +27,7 @@
         {% block public-links %}
         <hr style="margin-top: 3em;" />
         <p class="text-center">
-            <a href="{% url 'landing_page' %}">
+            <a class="text-info" href="{% url 'landing_page' %}">
                 {% trans 'About Toucan' %}
             </a>
         </p>

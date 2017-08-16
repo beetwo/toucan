@@ -1,11 +1,14 @@
+@import 'bs-themes/flatly/variables';
 @import 'colors';
 @import 'variables';
 @import 'helpers';
 @import 'flexGrid';
+@import 'fullscreen';
 @import 'navbar';
 @import 'iconfont';
 @import 'icons';
 @import 'lists';
+@import 'filter';
 @import 'issueList';
 @import 'issueDetail';
 @import 'orgList';
@@ -115,11 +118,6 @@ main {
 
 .issues tr:hover {
   cursor: pointer;
-}
-
-.issue-list-form {
-  display: flex;
-  flex-direction: row;
 }
 
 .issue-filter {

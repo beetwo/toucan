@@ -1,7 +1,12 @@
 .issue {
   @include listItem;
+  color: $c-text;
+  &:hover {
+    color: $c-text;
+  }
 }
 .issue-icon {
+  color: $c-issues;
   .icon {
     font-size: 30px;
   }
@@ -9,11 +14,20 @@
 .issue-title {
   font-size: 16px;
   font-weight: bold;
+  float: left;
+  max-width: 85%;
 }
 .issue-comments {
   float: right;
 }
+.issue-basics {
+  float: left;
+  clear: both;
+  width: 100%;
+}
 .issue-details {
+  clear: both;
+  float: left;
   color: $c-darkgrey;
   font-size: 14px;
 }
@@ -50,14 +64,17 @@
 }
 
 .issue-list-form, .issue-list-footer {
+  display: block;
   flex: none;
 }
 .issue-list-form {
-  padding: $padding;
   font-size: 14px;
+}
+.issue-sortandfilter {
+  padding: $padding;
   a {
     color: $c-text;
-    &:hover {
+    &:hover, &:focus, &:focus:active, &:active {
       text-decoration: none;
       color: $c-yellow;
     }
@@ -81,6 +98,9 @@
     cursor: pointer;
     background-color: $c-yellow;
     color: $c-beige;
+    .issue-icon {
+      color: $c-beige;
+    }
   }
 }
 

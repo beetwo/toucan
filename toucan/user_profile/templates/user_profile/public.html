@@ -3,37 +3,39 @@
 
 {% block content %}
    <h2>{% trans 'Membership' %}</h2>
-    <hr />
     {% if memberships|length %}
     <table class="table table-striped">
         {% if memberships|length > 1 %}
-        <thead>
-            <tr>
-                <th>{% trans 'Organisation' %}</th>
-                <th>{% trans 'Membership status' %}</th>
-            </tr>
-        </thead>
+        <div class="row row-padded">
+          <div class="col-sm-6">
+            {% trans 'Organisation' %}
+          </div>
+          <div class="col-sm-6">
+            {% trans 'Membership status' %}
+          </div>
+        </div>
+        <div class="row row-padded">
+        </div>
         {% endif %}
-        <tbody>
         {% for membership in memberships %}
-            <tr>
-                <td>
-                    <a href="{% url 'organisations:organisation_detail' org_id=membership.org.pk %}">
-                        {{ membership.org.name }}
-                    </a>
-                </td>
-                <td>
-                    {% if membership.active %}
-                        <span class="label label-success">
-                            {% trans 'Active' %}
-                        </span>
-                    {% else %}
-                        <span class="label label-default">
-                            {% trans 'Inactive' %}
-                        </span>
-                    {% endif %}
-                </td>
-            </tr>
+        <div class="row row-padded">
+          <div class="col-sm-6">
+            <a class="text-org" href="{% url 'organisations:organisation_detail' org_id=membership.org.pk %}">
+              {{ membership.org.name }}
+            </a>
+          </div>
+          <div class="col-sm-6">
+            {% if membership.active %}
+            <span class="label label-success">
+              {% trans 'Active' %}
+            </span>
+            {% else %}
+            <span class="label label-default">
+              {% trans 'Inactive' %}
+            </span>
+            {% endif %}
+          </div>
+        </div>
         {% endfor %}
         </tbody>
     </table>

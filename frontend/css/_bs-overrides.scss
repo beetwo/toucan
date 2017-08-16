@@ -1,0 +1,33 @@
+@import './bs-themes/flatly/variables';
+.navbar-brand {
+  padding: 10px $navbar-padding-horizontal;
+}
+.navbar-brand > img {
+  width: auto;
+  height: 100%;
+}
+.navbar-logo {
+  width: 120px;
+  height: auto;
+}
+h4, h5, h6 {
+  font-weight: bold;
+}
+.input-short {
+  textarea {
+    height: $line-height-computed*3.5;
+  }
+}
+.btn {
+  padding: $padding-base-vertical $padding-base-horizontal*4;
+}
+.btn-lg {
+  padding: $padding-base-vertical $padding-base-horizontal*4;
+}
+.btn-sm {
+  padding: $padding-base-vertical/2 $padding-base-horizontal*2;
+}
+.btn-xs {
+  font-size: 80%;
+  padding: $padding-base-vertical/4 $padding-base-horizontal;
+}

@@ -1,17 +1,15 @@
-<!DOCTYPE html>
-{% load static from staticfiles %}
-{% load render_bundle from webpack_loader %}
+<!DOCTYPE html> {% load static from staticfiles %} {% load render_bundle from webpack_loader %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Toucan</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    {% render_bundle 'vendor' %}
-    {% render_bundle 'bootstrap' %}
+    <meta name="viewport" content="width=device-width, initial-scale=1"> {% render_bundle 'manifest' %} {% render_bundle 'vendor' %} {% render_bundle 'bootstrap' %}
     <link href="{% static 'toucan/css/landing_page.css' %}" type="text/css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css">
 </head>
+
 <body>
 
     <!-- Navigation -->
@@ -23,10 +21,10 @@
             <div class="row">
                 <div class="col-lg-6 col-lg-offset-3 text-center">
 
-                  <img alt="Toucan Logo" class="toucan-logo img-responsive" src="{% static 'toucan/logos/Toucan_Logo_Main@2x.png' %}">
-                  <h1 class="intro-message-heading heading-blue">Resources where they’re needed.</h1>
-                  <a href="{% url 'account_login' %}" class="btn btn-success btn-signIn">Sign in</a>
-                  <a href="{% url 'request_invitation_form' %}" class="btn btn-info btn-access">Request access</a>
+                    <img alt="Toucan Logo" class="toucan-logo img-responsive" src="{% static 'toucan/logos/Toucan_Logo_Main@2x.png' %}">
+                    <h1 class="intro-message-heading heading-blue">Resources where they’re needed.</h1>
+                    <a href="{% url 'account_login' %}" class="btn btn-success btn-signIn">Sign in</a>
+                    <a href="{% url 'request_invitation_form' %}" class="btn btn-info btn-access">Request access</a>
                 </div>
             </div>
 
@@ -36,53 +34,51 @@
     <!-- /.intro-header -->
 
     <div class="container-beige">
-    <div class="container-fluid">
-      <div class="row intro-text">
-        <div class="col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
-                        <h3 class="intro-text-heading text-center heading-blue">A tool for better emergency relief coordination.</h3>
-                        <p>Humanitarian organisations often struggle to access real-time information about the urgent
-                            needs in an emergency situation, especially at times of rapid change. Sometimes, several
-                            organisations duplicate their efforts to reach solve the same issues, while others aren’t
-                            reached at all.</p>
+        <div class="container-fluid">
+            <div class="row intro-text">
+                <div class="col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
+                    <h3 class="intro-text-heading text-center heading-blue">A tool for better emergency relief coordination.</h3>
+                    <p>Humanitarian organisations often struggle to access real-time information about the urgent needs in an
+                        emergency situation, especially at times of rapid change. Sometimes, several organisations duplicate
+                        their efforts to reach solve the same issues, while others aren’t reached at all.</p>
 
-                        <p>Toucan is an online emergency relief platform. It enables communication among humanitarian
-                            actors and facilitates sharing information and coordinating resources, whether supplying
-                            food or urgent medical assistance. Organisations become more aware of who provides what
-                            services
-                            where.</p>
-                      <p>
-                          <a class="center-block btn btn-info btn-factsheet" href="{% static 'toucan/factsheet.pdf' %}">
+                    <p>Toucan is an online emergency relief platform. It enables communication among humanitarian actors and
+                        facilitates sharing information and coordinating resources, whether supplying food or urgent medical
+                        assistance. Organisations become more aware of who provides what services where.
+                    </p>
+                    <p>
+                        <a class="center-block btn btn-info btn-factsheet" href="{% static 'toucan/factsheet.pdf' %}">
                               Download Factsheet (PDF)
                           </a>
-                      </p>
+                    </p>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
     </div>
     <div class="container-fluid">
-    <div class="supporters">
-        <div class="row">
-            <div class="col-md-6 text-center">
-                <h3>Partners</h3>
-                <div class="row">
-                    <div class="col-md-12 vc-image text-center">
-                        <img src="{% static 'toucan/img/sos.png' %}" alt="3rd party logo">
+        <div class="supporters">
+            <div class="row">
+                <div class="col-md-6 text-center">
+                    <h3>Partners</h3>
+                    <div class="row">
+                        <div class="col-md-12 vc-image text-center">
+                            <img src="{% static 'toucan/img/sos.png' %}" alt="3rd party logo">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6 text-center">
-                <h3>Funders</h3>
-                <div class="row">
-                    <div class="col-sm-12 vc-image text-center">
-                        <img src="{% static 'toucan/img/erste_stiftung.png' %}" alt="3rd party logo">
-                    </div>
-                    <div class="col-sm-12 vc-image text-center">
-                        <img src="{% static 'toucan/img/bka.png' %}" alt="3rd party logo">
+                <div class="col-md-6 text-center">
+                    <h3>Funders</h3>
+                    <div class="row">
+                        <div class="col-sm-12 vc-image text-center">
+                            <img src="{% static 'toucan/img/erste_stiftung.png' %}" alt="3rd party logo">
+                        </div>
+                        <div class="col-sm-12 vc-image text-center">
+                            <img src="{% static 'toucan/img/bka.png' %}" alt="3rd party logo">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
     </div>
 
@@ -102,4 +98,5 @@
         </div>
     </footer>
 </body>
+
 </html>

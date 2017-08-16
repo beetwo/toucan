@@ -17,9 +17,9 @@ $gray:                   $c-text !default; // #555
 $gray-lighter:           $c-lightgrey !default; // #eee
 $gray-light:             darken($gray-lighter, 13.5%) !default;   // #999
 
-$brand-primary:         $c-yellow !default;
+$brand-primary:         $c-turquoise !default;
 $brand-success:         $c-green !default;
-$brand-info:            #3498DB !default;
+$brand-info:            $c-yellow !default;
 $brand-warning:         #F39C12 !default;
 $brand-danger:          #D32A19 !default;
 
@@ -55,10 +55,10 @@ $font-size-base:          15px !default;
 $font-size-large:         ceil(($font-size-base * 1.25)) !default; // ~18px
 $font-size-small:         ceil(($font-size-base * 0.85)) !default; // ~12px
 
-$font-size-h1:            floor(($font-size-base * 2.6)) !default; // ~36px
-$font-size-h2:            floor(($font-size-base * 2.15)) !default; // ~30px
-$font-size-h3:            ceil(($font-size-base * 1.7)) !default; // ~24px
-$font-size-h4:            ceil(($font-size-base * 1.25)) !default; // ~18px
+$font-size-h1:            floor(($font-size-base * 2)) !default; // ~36px
+$font-size-h2:            floor(($font-size-base * 1.4)) !default; // ~30px
+$font-size-h3:            ceil(($font-size-base * 1.2)) !default; // ~24px
+$font-size-h4:            ceil(($font-size-base * 1.1)) !default; // ~18px
 $font-size-h5:            $font-size-base !default;
 $font-size-h6:            ceil(($font-size-base * 0.85)) !default; // ~12px
 
@@ -93,7 +93,7 @@ $icon-font-svg-id:        "glyphicons_halflingsregular" !default;
 $padding-base-vertical:     10px !default;
 $padding-base-horizontal:   10px !default;
 
-$padding-large-vertical:    18px !default;
+$padding-large-vertical:    $padding-base-vertical !default;
 $padding-large-horizontal:  27px !default;
 
 $padding-small-vertical:    6px !default;
@@ -132,7 +132,7 @@ $table-condensed-cell-padding:  5px !default;
 //** Default background color used for all tables.
 $table-bg:                      transparent !default;
 //** Background color used for `.table-striped`.
-$table-bg-accent:               #f9f9f9 !default;
+$table-bg-accent:               darken( $c-beige, 3% ) !default;
 //** Background color used for `.table-hover`.
 $table-bg-hover:                $gray-lighter !default;
 $table-bg-active:               $table-bg-hover !default;
@@ -145,7 +145,7 @@ $table-border-color:            $gray-lighter !default;
 //
 //## For each of Bootstrap's buttons, define text, background and border color.
 
-$btn-font-weight:                normal !default;
+$btn-font-weight:                bold !default;
 
 $btn-default-color:              #fff !default;
 $btn-default-bg:                 $gray !default;
@@ -244,7 +244,7 @@ $dropdown-fallback-border:       #ccc !default;
 $dropdown-divider-bg:            #e5e5e5 !default;
 
 //** Dropdown link text color.
-$dropdown-link-color:            $gray-dark !default;
+$dropdown-link-color:            $gray !default;
 //** Hover color for dropdown links.
 $dropdown-link-hover-color:      #fff !default;
 //** Hover background for dropdown links.

@@ -11,16 +11,16 @@
 
 
 {% block main %}
-<div class="container">
+<div class="container-fluid">
     <div class="row toolbar">
-        <div class="col-md-8 page-header">
-            <h1>{% block issue_heading_title %}Issues{% endblock %}</h1>
-        </div>
-        <div class="col-md-4 text-right header-controls">
-            {% block issue_heading_controls %}
-            {% endblock %}
+        <div class="col-sm-12 col-md-8 col-md-offset-2">
+          <h1>{% block issue_heading_title %}Issues{% endblock %}</h1>
+          <div class="text-right header-controls">
+              {% block issue_heading_controls %}
+              {% endblock %}
+          </div>
+          {% block content %}{% endblock content %}
         </div>
     </div>
-    {% block content %}{% endblock content %}
 </div>
 {% endblock %}
