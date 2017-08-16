@@ -19,6 +19,9 @@
     }
   }
 }
+.fullscreen-content {
+  padding-bottom: $padding-base-vertical;
+}
 .fullscreen-footer, .fullscreen-header {
   padding: 0 $padding;
   position: fixed;
