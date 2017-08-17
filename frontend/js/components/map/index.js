@@ -324,7 +324,7 @@ LeafletMap.propTypes = {
 export default LeafletMap;
 
 const ToucanMap = ({ children, ...props }) => {
-  console.log(children);
+  // console.log("Map:", props);
   return (
     <Map {...props}>
       <ToucanTileLayer />

@@ -24,7 +24,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     issues: getFilteredIssues(
       state.redux_issues,
-      state.issueFilters.selections
+      state.issueFilters.selections,
+      state.boundaryFilter
     ),
     filterOptions: state.issueFilters,
     loading: state.loadingStatus.issues,

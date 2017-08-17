@@ -14,7 +14,8 @@ import {
   REMOVE_ISSUES_FILTER,
   FETCH_CURRENT_USER_DATA,
   RECEIVE_USER_INFORMATION,
-  RECEIVE_ORGANISATIONS
+  RECEIVE_ORGANISATIONS,
+  SET_MAP_BOUNDS
 } from "./actions";
 
 import { defaultMapBounds } from "./globals";
@@ -233,6 +234,15 @@ function issueFiltersSelections(state, action) {
   }
 }
 
+function boundaryFilter(state = false, action) {
+  switch (action.type) {
+    case SET_MAP_BOUNDS:
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
 function issueFilters(
   state = {
     options: {
@@ -405,7 +415,8 @@ const reducers = {
   userInformationByUsername,
   loadingStatus,
   organisationsByID,
-  initial_bounds
+  initial_bounds,
+  boundaryFilter
 };
 
 export default reducers;

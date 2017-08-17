@@ -2,18 +2,24 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
-import IssueDetailUI from "../components/issueDetail";
-import { fetchIssueIfNeeded, postComment, invalidateIssue } from "../actions";
-import { addIssueFilter, removeIssueFilter, selectIssue } from "../actions";
+import { setMapBounds } from "../actions";
 
-import Comments from "./comments";
 import { SplitUIView } from "../components/main";
 import { ToucanMap } from "../components/map";
 import { Marker } from "react-leaflet";
 import getMarkerForIssue from "../components/map/markers";
 
+const utils = {
+  serializeLatLng: bounds => {
+    let sw = bounds.getSouthWest();
+    let ne = bounds.getNorthEast();
+    return [[sw.lat, sw.lng], [ne.lat, ne.lng]];
+  }
+};
+
 const getIssueMarker = (issue, selected = false, clickHandler) => {
   let position = [...issue.geometry.coordinates].reverse();
+  // console.log(position);
   let props = {
     position
   };
@@ -40,23 +46,30 @@ class IssueContainer extends React.Component {
       issues,
       initial_bounds,
       navigateToIssue,
+      changeBounds,
       ...props
     } = this.props;
     let markers = null;
-
+    const onBoundsChanged = function(e) {
+      changeBounds(utils.serializeLatLng(e.target.getBounds()));
+    };
     // construct the map
     let map_props = {
-      animate: true
+      animate: true,
+      onZoomend: onBoundsChanged,
+      onMoveend: onBoundsChanged
     };
     // for selected issue
     if (issue_detail && issue.isLoading === false) {
       map_props = {
+        ...map_props,
         center: [...issue.issue_data.geometry.coordinates].reverse(),
         zoom: 13 // this should probably be saved in the global state object
       };
       markers = getIssueMarker(issue.issue_data, true);
     } else if (!issue_detail) {
       map_props = {
+        ...map_props,
         bounds: initial_bounds
       };
       markers = issues.map(i => getIssueMarker(i, false, navigateToIssue));
@@ -101,4 +114,13 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps)(IssueContainer);
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    changeBounds: e => {
+      console.warn("Bounds", e);
+      dispatch(setMapBounds(e));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(IssueContainer);
