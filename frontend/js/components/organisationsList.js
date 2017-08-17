@@ -3,38 +3,36 @@ import OrganisationDetails from "./details/organisation";
 import { SplitUIView } from "./main";
 import Loading from "./loading";
 import { DummyMap } from "./map";
+import { Link } from "react-router-dom";
 
 const OrgListItem = ({ org }) => {
+  console.log(org);
   return (
     <div className="org-list-body" key={org.pk}>
-      <div
-        className="org"
-        onClick={e => {
-          e.preventDefault();
-          window.location.href = org.profile_url;
-        }}
-      >
-        <div className="flex-container flex-vCenter">
-          <div className="flex-col">
-            <div className="issue-basics">
-              <span className="issue-title">
-                {org.name}
-              </span>
+      <Link to={`/orgs/${org.short_name}/`}>
+        <div className="org">
+          <div className="flex-container flex-vCenter">
+            <div className="flex-col">
+              <div className="issue-basics">
+                <span className="issue-title">
+                  {org.name}
+                </span>
+              </div>
+              <div className="org-details">
+                <span className="icon icon-pin org-pin" />
+                <span className="org-location">
+                  {org.location || "Athens, Greece"}
+                </span>
+              </div>
             </div>
-            <div className="org-details">
-              <span className="icon icon-pin org-pin" />
-              <span className="org-location">
-                {org.location || "Athens, Greece"}
-              </span>
-            </div>
-          </div>
-          <div className="flex-col">
-            <div className="org-logo">
-              <img src={org.logo} alt="" />
+            <div className="flex-col">
+              <div className="org-logo">
+                <img src={org.logo} alt="" />
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 };
