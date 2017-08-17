@@ -35,10 +35,10 @@ export function getIconClassForIssueType(issueType, prefix = "icon-") {
   }
 }
 
-const ToucanIcon = ({ issue_type }) => {
+const ToucanIcon = ({ issue_type, css="" }) => {
   return (
     <span
-      className={"icon " + getIconClassForIssueType(issue_type)}
+      className={"icon " + getIconClassForIssueType(issue_type) + " " + css}
       title={issue_type.name}
     />
   );

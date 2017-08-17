@@ -81,7 +81,9 @@ class IssueFilter extends React.Component {
               {active && <span className="icon icon-lg icon-check" />}
             </div>
             <div className="filter-title">
-              <span className="filter-icon icon icon-lg icon-shelter" />
+              { k === 'type' &&
+                <ToucanIcon key={c} issue_type={c} css="filter-icon icon-lg"/>
+              }
               {c}&nbsp;
             </div>
           </div>
