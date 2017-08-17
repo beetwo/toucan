@@ -55,6 +55,7 @@ render(
             path="/issue/:IssueID/"
             render={props =>
               <IssueContainer
+                history={props.history}
                 issue_id={props.match.params.IssueID}
                 content={<IssueDetail {...props} />}
               />}
@@ -63,7 +64,10 @@ render(
             exact
             path="/"
             render={props =>
-              <IssueContainer content={<IssueList {...props} />} />}
+              <IssueContainer
+                history={props.history}
+                content={<IssueList {...props} />}
+              />}
           />
           <Route exact path="/orgs/" component={OrganisationsList} />
           <Route exact path="/orgs/:orgname/" component={OrganisationDetail} />
@@ -84,7 +88,6 @@ if (window && document) {
   window.setTimeout(() => {
     let alerts = document.querySelectorAll(".alert.alert-dismissable");
     forEach(alerts, node => {
-      console.log(node);
       node.remove();
     });
   }, 7000);

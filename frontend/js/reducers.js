@@ -28,7 +28,8 @@ function issues(state = [], action) {
       return action.issues.features.map(issue => {
         return {
           id: issue.id,
-          ...issue.properties
+          ...issue.properties,
+          geometry: issue.geometry
         };
       });
     case RECEIVE_ISSUE:
@@ -39,13 +40,10 @@ function issues(state = [], action) {
       if (index != -1) {
         let issue = {
           ...state[index],
-          ...action.payload.properties
+          ...action.payload.properties,
+          geometry: action.payload.geometry
         };
-        return [].concat(
-          ...state.slice(0, index),
-          issue,
-          ...state.slice(index + 1)
-        );
+        return [...state.slice(0, index), issue, ...state.slice(index + 1)];
       } else {
         return state;
       }
