@@ -41,7 +41,7 @@ const OrganisationDetail = props => {
             </div>
           </div>
           <div className="org-detail-desc">
-            Project Elea is a group of volunteers from around the world who have come together to work collaboratively with the residents of Eleonas Refugee Camp in Athens to improve living standards and community well-being. Approved by the Greek Ministry of Migration and working independently within the camp, the project is a long-term one. <a herf="#">read more…</a>
+            Project Elea is a group of volunteers from around the world who have come together to work collaboratively with the residents of Eleonas Refugee Camp in Athens to improve living standards and community well-being. Approved by the Greek Ministry of Migration and working independently within the camp, the project is a long-term one. <a href="#">read more…</a>
           </div>
           <div className="org-detail-contacts">
             <h2 className="org-detail-subhead">
