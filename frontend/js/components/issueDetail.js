@@ -55,8 +55,22 @@ class IssueDetailMain extends React.Component {
     }
     return (
       <div className="issue-detail-main" ref="scrollbar">
-        <div className="issue-detail-header media media-middle">
-          <div className="media-left">
+        <div className="issue-detail-header">
+            <div className="issue-detail-close pull-right">
+              <Link to="/">
+                <span className="icon icon-close" />
+              </Link>
+            </div>
+            <div className="issue-list-mapHandle">
+              <a href="#" className="mapHandle">
+                &nbsp;
+              </a>
+            </div>
+        </div>
+        {/*issue.issue_types.map((issue_type, index) => <li key={index}><Icon key={index} name={getIconClassForIssueType(issue_type)} /></li>) */}
+        <div className="issue-detail-content">
+        <div className="issue-detail-lead media">
+          <div className="media-left media-middle">
             <span className="icon icon-nutrition icon-xl" />
           </div>
           <div className="media-body">
@@ -66,7 +80,6 @@ class IssueDetailMain extends React.Component {
             </h1>
           </div>
         </div>
-        {/*issue.issue_types.map((issue_type, index) => <li key={index}><Icon key={index} name={getIconClassForIssueType(issue_type)} /></li>) */}
 
         <div className="flex-container flex-container--bordered">
           <div className="flex-col">
@@ -110,6 +123,16 @@ class IssueDetailMain extends React.Component {
           </div>
           {children}
         </div>
+          {this.props.canComment
+            ? <CommentForm
+                onComment={this.props.onComment.bind(this, gjs.id)}
+                status={issue.status}
+                users={this.props.mentions}
+              />
+            : <p className="text-center text-muted">
+                <em>Please login to comment.</em>
+              </p>}
+        </div>
       </div>
     );
   }
@@ -152,30 +175,8 @@ class IssueDetailUI extends React.Component {
     );
     const detail_view = (
       <div className="issue-detail">
-        <div className="issue-detail-body">
-          <div className="issue-list-mapHandle">
-            <a href="#" className="mapHandle">
-              &nbsp;
-            </a>
-          </div>
-          <div className="issue-detail-close pull-right">
-            <Link to="/">
-              <span className="icon icon-close" />
-            </Link>
-          </div>
-
           <IssueDetailMain {...this.props} gjs={gjs} issue={issue} />
 
-          {this.props.canComment
-            ? <CommentForm
-                onComment={this.props.onComment.bind(this, gjs.id)}
-                status={issue.status}
-                users={this.props.mentions}
-              />
-            : <p className="text-center text-muted">
-                <em>Please login to comment.</em>
-              </p>}
-        </div>
         <HiddenMedium>
           <IssueDetailFooter openMap={this.props.openMap} />
         </HiddenMedium>

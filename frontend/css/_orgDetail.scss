@@ -1,11 +1,20 @@
 .org-detail {
   @extend .issue-detail;
 }
-.org-detail-body {
-  @extend .issue-detail-body;
+.org-detail-content {
+  @extend .issue-detail-content;
 }
-.org-detail-header, .org-detail-subhead, .org-detail-desc, .org-detail-contact, .org-detail-member, .org-detail-edit {
+.org-detail-main {
+  @extend .issue-detail-main;
+}
+.org-detail-header {
+  @extend .issue-detail-header;
+}
+.org-detail-subhead, .org-detail-desc, .org-detail-contact, .org-detail-member, .org-detail-edit {
   padding: $padding;
+}
+.org-detail-lead {
+  @extend .issue-detail-lead;
 }
 .org-detail-title {
   font-size: 20px;

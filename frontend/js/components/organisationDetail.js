@@ -5,34 +5,33 @@ import { DummyMap } from "./map";
 const OrganisationDetail = props => {
   const content = (
     <div className="org-detail">
-      <div className="org-detail-body">
-        <div className="issue-list-mapHandle">
-          <a href="#" className="mapHandle">
-            &nbsp;
-          </a>
+      <div className="org-detail-main" ref="scrollbar">
+        <div className="org-detail-header">
+          <div className="issue-detail-close pull-right">
+            <a href="/map/orgs/">
+              <span className="icon icon-close" />
+            </a>
+          </div>
+          <div className="issue-list-mapHandle">
+            <a href="#" className="mapHandle">
+              &nbsp;
+            </a>
+          </div>
         </div>
-        <div className="issue-detail-close pull-right">
-          <a href="/map/orgs/">
-            <span className="icon icon-close" />
-          </a>
-        </div>
-
-        <div className="org-detail-main" ref="scrollbar">
-          <div className="org-detail-header">
-            <div className="media">
-              <div className="media-left media-middle">
-                <img className="org-detail-logo"width="194" height="51" src="/media/CACHE/images/fadrat-logo/3bab5950eb11ee876bba51d417c536ab.png" />
-              </div>
-              <div className="media-body">
-                <h1 className="org-detail-title">
-                  Fadrat
-                </h1>
-                <div className="org-details">
-                  <span className="icon icon-pin org-pin" />
-                  <span className="org-location">
-                    Athens, Greece
-                  </span>
-                </div>
+        <div className="org-detail-content">
+          <div className="org-detail-lead media">
+            <div className="media-left media-middle">
+              <img className="org-detail-logo"width="194" height="51" src="/media/CACHE/images/fadrat-logo/3bab5950eb11ee876bba51d417c536ab.png" />
+            </div>
+            <div className="media-body">
+              <h1 className="org-detail-title">
+                Fadrat
+              </h1>
+              <div className="org-details">
+                <span className="icon icon-pin org-pin" />
+                <span className="org-location">
+                  Athens, Greece
+                </span>
               </div>
             </div>
           </div>
@@ -117,6 +116,7 @@ const OrganisationDetail = props => {
           </div>
         </div>
       </div>
+      
     </div>
   );
   return <SplitUIView map={<DummyMap />} issue_view={content} />;

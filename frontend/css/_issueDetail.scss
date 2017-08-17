@@ -4,12 +4,25 @@
   height: 100%;
   flex:1;
 }
-.issue-detail-header, .issue-detail-status, .issue-detail-organisation {
-  padding: $padding;
+.issue-detail-main {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex: 1;
 }
-.issue-detail-body {
+.issue-detail-content {
   flex: 1 1 auto;
   overflow-y: auto;
+}
+.issue-detail-header {
+  padding-bottom: $padding/4;
+  flex: 0 0 auto;
+}
+.issue-detail-lead {
+  margin-bottom: $padding;
+}
+.issue-detail-status, .issue-detail-organisation, .issue-detail-lead {
+  padding: $padding;
 }
 .issue-detail-title {
   font-size: 20px;
@@ -34,7 +47,7 @@
     padding-top: 1em;
 }
 .issue-detail-close {
-  padding-right: $padding;
+  margin-right: $padding*2;
   a {
     color: $c-darkgrey;
     &:hover {
