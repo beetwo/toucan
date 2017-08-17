@@ -8,7 +8,6 @@ import Status from "./status";
 import ToucanIcon, { getIconClassForIssueType } from "./icons/issueType";
 import { DateOnlyDisplay, DateOrTimeDisplay } from "./date";
 import { Link } from "react-router-dom";
-import { SplitUIView } from "./main";
 import Map from "./map";
 
 function CommentCount({ count }) {
@@ -268,8 +267,7 @@ class IssueListUI extends React.Component {
         </div>
       </div>
     );
-
-    return <SplitUIView map={map} issue_view={issue_view} />;
+    return issue_view;
   }
 }
 

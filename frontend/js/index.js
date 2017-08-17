@@ -55,7 +55,7 @@ render(
             path="/issue/:IssueID/"
             render={props =>
               <IssueContainer
-                issue_id={parseInt(props.match.params.IssueID, 10)}
+                issue_id={props.match.params.IssueID}
                 content={<IssueDetail {...props} />}
               />}
           />

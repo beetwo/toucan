@@ -323,6 +323,17 @@ LeafletMap.propTypes = {
 
 export default LeafletMap;
 
+const ToucanMap = ({ map_props, children }) => {
+  return (
+    <Map {...map_props}>
+      <ToucanTileLayer />
+      {children}
+    </Map>
+  );
+};
+
+export { ToucanMap };
+
 const DefaultIcon = Leaflet.icon({
   iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
   iconUrl: require("leaflet/dist/images/marker-icon.png"),

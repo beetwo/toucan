@@ -21,6 +21,7 @@ class NotificationAreaSerializer(GeoFeatureModelSerializer):
             'point_radius',
         ]
 
+
 class OrganisationLocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Location
@@ -29,6 +30,7 @@ class OrganisationLocationSerializer(serializers.ModelSerializer):
             'city',
             'location'
         ]
+
 
 class OrganisationSerializer(serializers.ModelSerializer):
 
@@ -53,8 +55,6 @@ class OrganisationSerializer(serializers.ModelSerializer):
             'profile_url',
             'location_set'
         ]
-
-
 
 
 class MembershipSerializer(serializers.ModelSerializer):
@@ -112,6 +112,7 @@ class FullUserSerializer(serializers.ModelSerializer):
             'membership'
         ]
 
+
 class FullOrganisationSerializer(OrganisationSerializer):
 
     members = UserSerializer(many=True, read_only=True)
@@ -122,7 +123,6 @@ class FullOrganisationSerializer(OrganisationSerializer):
             "description",
             "homepage"
         ]
-
 
 
 class PublicUserSerializer(UserSerializer):
@@ -177,7 +177,8 @@ class CommentSerializer(serializers.ModelSerializer):
             return
 
         user = request.user if request.user.is_authenticated else None
-        choices = list(MediaFile.objects.filter(uploader=user, comment__isnull=True).values_list('pk', flat=True))
+        choices = list(MediaFile.objects.filter(
+            uploader=user, comment__isnull=True).values_list('pk', flat=True))
         if request.method in ['POST', 'PATCH']:
             self.fields['attachments'] = serializers.MultipleChoiceField(
                 choices=choices,
@@ -191,7 +192,8 @@ class CommentSerializer(serializers.ModelSerializer):
 
     toggleState = serializers.BooleanField(write_only=True, required=False)
 
-    attachments = SimpleImageSerializer(many=True, read_only=True, source='get_attachments')
+    attachments = SimpleImageSerializer(
+        many=True, read_only=True, source='get_attachments')
 
     def get_comment(self, comment):
         return comment.get_comment()
@@ -290,8 +292,9 @@ class IssueSerializer(GeoFeatureModelSerializer):
             # model fields
             'id',
             'title',
-            'priority',
-            'visibility',
+            'point',
+            # 'priority',
+            # 'visibility',
             'status',
             # 'get_status_display',
             'created',
@@ -372,6 +375,7 @@ class UserMentionSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserSerializer.Meta.model
         fields = ['name', 'slug']
+
 
 class ImageUploadSerializer(serializers.ModelSerializer):
 
