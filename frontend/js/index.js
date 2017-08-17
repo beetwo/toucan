@@ -13,6 +13,7 @@ import IssueList from "./containers/issueList";
 import IssueContainer from "./containers/issueView";
 import UserDetail from "./containers/userDetail";
 import OrganisationsList from "./containers/organisationsIndex";
+import OrganisationDetail from "./containers/organisationDetail";
 
 import {
   BrowserRouter as Router,
@@ -65,6 +66,7 @@ render(
               <IssueContainer content={<IssueList {...props} />} />}
           />
           <Route exact path="/orgs/" component={OrganisationsList} />
+          <Route exact path="/orgs/:orgname/" component={OrganisationDetail} />
           <Route exact path="/detail/:username/" component={UserDetail} />
         </Switch>
       </AppShell>
