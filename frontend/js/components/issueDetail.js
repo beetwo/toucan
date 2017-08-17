@@ -81,11 +81,18 @@ class IssueDetailMain extends React.Component {
           </div>
           <div className="flex-col">
             <div className="issue-detail-status">
-              <div className="issue-detail-label">Status</div>
-              {issue.status}{" "}
-              <a href="#" className="statusChange">
-                change
-              </a>
+              <div className="dropdown">
+                <div className="issue-detail-label">Status</div>
+                {issue.status}{" "}
+                <a href="#" className="statusChange dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  change
+                </a>
+                <ul className="dropdown-menu">
+                  <li><a href="#" className="text-open">open</a></li>
+                  <li><a href="#" className="text-inprogress">in progress</a></li>
+                  <li><a href="#" className="text-resolved">resolved</a></li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
