@@ -176,6 +176,12 @@ const IssueListItem = ({ issue }) => {
             <TimeAgo date={issue.created} />
           </span>
         </div>
+        {/* use for display of status badge */}
+        {/*<div className="pull-right">
+          <div className="badge badge-pill badge-status badge-inprogress">
+            in progress
+          </div>
+        </div>*/}
       </div>
     </Link>
   );

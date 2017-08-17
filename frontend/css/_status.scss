@@ -19,3 +19,12 @@
     background-color: $c-resolved !important;
   }
 }
+.badge-status {
+  font-size: 12px;
+}
+.badge-inprogress {
+  background-color: $c-inprogress;
+}
+.badge-resolved {
+  background-color: $c-resolved;
+}
