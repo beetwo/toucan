@@ -177,9 +177,10 @@ class IssueDetailUI extends React.Component {
       <div className="issue-detail">
           <IssueDetailMain {...this.props} gjs={gjs} issue={issue} />
 
+          {/*
         <HiddenMedium>
           <IssueDetailFooter openMap={this.props.openMap} />
-        </HiddenMedium>
+        </HiddenMedium>*/}
       </div>
     );
 
