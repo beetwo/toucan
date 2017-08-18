@@ -8,6 +8,8 @@ import { SplitUIView } from "../components/main";
 import { ToucanMap } from "../components/map";
 import { Marker } from "react-leaflet";
 import getMarkerForIssue from "../components/map/markers";
+import IssueDetail from "./issueDetail";
+import IssueList from "./issueList";
 
 const utils = {
   serializeLatLng: bounds => {
@@ -42,9 +44,9 @@ const getIssueMarker = (issue, selected = false, clickHandler) => {
 class IssueContainer extends React.Component {
   render() {
     let {
-      content,
       issue_detail,
       issue,
+      issue_id,
       issues,
       map_bounds,
       navigateToIssue,
@@ -52,23 +54,27 @@ class IssueContainer extends React.Component {
       ...props
     } = this.props;
     let markers = null;
+    let content = null;
 
     // construct the map
     let map_props = {
       animate: true
     };
     // for selected issue
-    if (issue_detail && issue.isLoading === false) {
-      const saveZoom = e => {
-        this.props.setZoom(e.zoom);
-      };
-      map_props = {
-        ...map_props,
-        center: [...issue.issue_data.geometry.coordinates].reverse(),
-        onViewportChanged: saveZoom,
-        zoom: 13 // this should probably be saved in the global state object
-      };
-      markers = getIssueMarker(issue.issue_data, true);
+    if (issue_detail) {
+      if (issue.isLoading === false) {
+        const saveZoom = e => {
+          this.props.setZoom(e.zoom);
+        };
+        map_props = {
+          ...map_props,
+          center: [...issue.issue_data.geometry.coordinates].reverse(),
+          onViewportChanged: saveZoom,
+          zoom: 13 // this should probably be saved in the global state object
+        };
+        markers = getIssueMarker(issue.issue_data, true);
+      }
+      content = <IssueDetail issue_id={issue_id} />;
     } else if (!issue_detail) {
       const onBoundsChanged = function(e) {
         changeBounds(utils.serializeLatLng(e.target.getBounds()));
@@ -80,8 +86,9 @@ class IssueContainer extends React.Component {
         bounds: map_bounds
       };
       markers = issues.map(i => getIssueMarker(i, false, navigateToIssue));
+      content = <IssueList />;
     }
-
+    console.log(content);
     return (
       <SplitUIView
         map={
@@ -96,7 +103,6 @@ class IssueContainer extends React.Component {
 }
 
 IssueContainer.propTypes = {
-  content: PropTypes.node.isRequired,
   issue_detail: PropTypes.bool.isRequired,
   issue: PropTypes.object.isRequired,
   issues: PropTypes.array.isRequired
@@ -106,13 +112,14 @@ const mapStateToProps = (state, ownProps) => {
   let issue_detail = false;
   let issues = [];
   let issue = {};
+  let issue_id = ownProps.issue_id ? parseInt(ownProps.issue_id, 10) : null;
   if (ownProps.issue_id) {
     issue_detail = true;
-    let issue_id = parseInt(ownProps.issue_id, 10);
     issue = state.issueDetails[issue_id] || {};
   }
   return {
     issue,
+    issue_id,
     issue_detail,
     content: ownProps.content,
     issues: state.redux_issues,

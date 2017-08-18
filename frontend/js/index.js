@@ -8,8 +8,6 @@ import reducers from "./reducers";
 import AppShell from "./containers/main";
 import Nav from "./nav";
 
-import IssueDetail from "./containers/issueDetail";
-import IssueList from "./containers/issueList";
 import IssueContainer from "./containers/issueView";
 import UserDetail from "./containers/userDetail";
 import OrganisationsList from "./containers/organisationsIndex";
@@ -57,17 +55,12 @@ render(
               <IssueContainer
                 history={props.history}
                 issue_id={props.match.params.IssueID}
-                content={<IssueDetail {...props} />}
               />}
           />
           <Route
             exact
             path="/"
-            render={props =>
-              <IssueContainer
-                history={props.history}
-                content={<IssueList {...props} />}
-              />}
+            render={props => <IssueContainer history={props.history} />}
           />
           <Route exact path="/orgs/" component={OrganisationsList} />
           <Route exact path="/orgs/:orgname/" component={OrganisationDetail} />
