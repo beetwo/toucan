@@ -1,0 +1,30 @@
+.text-open {
+  color: $c-open !important;
+  &:hover {
+    color: #fff !important;
+    background-color: $c-open !important;
+  }
+}
+.text-inprogress {
+  color: darken( $c-inprogress, 5% ) !important;
+  &:hover {
+    color: #fff !important;
+    background-color: $c-inprogress !important;
+  }
+}
+.text-resolved {
+  color: $c-resolved !important;
+  &:hover {
+    color: #fff !important;
+    background-color: $c-resolved !important;
+  }
+}
+.badge-status {
+  font-size: 12px;
+}
+.badge-inprogress {
+  background-color: $c-inprogress;
+}
+.badge-resolved {
+  background-color: $c-resolved;
+}

@@ -14,7 +14,9 @@ import {
   REMOVE_ISSUES_FILTER,
   FETCH_CURRENT_USER_DATA,
   RECEIVE_USER_INFORMATION,
-  RECEIVE_ORGANISATIONS
+  RECEIVE_ORGANISATIONS,
+  SET_MAP_BOUNDS,
+  SET_DETAIL_ZOOM_LEVEL
 } from "./actions";
 
 import { defaultMapBounds } from "./globals";
@@ -28,7 +30,8 @@ function issues(state = [], action) {
       return action.issues.features.map(issue => {
         return {
           id: issue.id,
-          ...issue.properties
+          ...issue.properties,
+          geometry: issue.geometry
         };
       });
     case RECEIVE_ISSUE:
@@ -39,13 +42,10 @@ function issues(state = [], action) {
       if (index != -1) {
         let issue = {
           ...state[index],
-          ...action.payload.properties
+          ...action.payload.properties,
+          geometry: action.payload.geometry
         };
-        return [].concat(
-          ...state.slice(0, index),
-          issue,
-          ...state.slice(index + 1)
-        );
+        return [...state.slice(0, index), issue, ...state.slice(index + 1)];
       } else {
         return state;
       }
@@ -391,6 +391,23 @@ const initial_bounds = (state = defaultMapBounds, action) => {
   }
 };
 
+function map(state = { detail: 13, list: false }, action) {
+  switch (action.type) {
+    case SET_MAP_BOUNDS:
+      return {
+        ...state,
+        list: action.payload
+      };
+    case SET_DETAIL_ZOOM_LEVEL:
+      return {
+        ...state,
+        detail: action.payload
+      };
+    default:
+      return state;
+  }
+}
+
 const reducers = {
   geojson,
   redux_issues: issues,
@@ -407,7 +424,8 @@ const reducers = {
   userInformationByUsername,
   loadingStatus,
   organisationsByID,
-  initial_bounds
+  initial_bounds,
+  map
 };
 
 export default reducers;

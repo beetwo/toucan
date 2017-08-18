@@ -12,15 +12,15 @@ import isEmpty from "lodash/isEmpty";
 
 class IssueDetailContainer extends React.Component {
   componentWillMount() {
-    this.props.loadIssue(this.props.issueID);
+    this.props.loadIssue(this.props.issue_id);
   }
 
   componentWillReceiveProps(next_props) {
     if (
-      next_props.issueID != this.props.issueID ||
+      next_props.issue_id != this.props.issue_id ||
       next_props.issue.didInvalidate
     ) {
-      this.props.loadIssue(next_props.issueID);
+      this.props.loadIssue(next_props.issue_id);
     }
   }
 
@@ -28,7 +28,7 @@ class IssueDetailContainer extends React.Component {
     return (
       <IssueDetailUI {...this.props}>
         <Comments
-          issue_id={this.props.issueID}
+          issue_id={this.props.issue_id}
           users={this.props.usernames}
           mentions={this.props.mentions}
         />
@@ -39,19 +39,19 @@ class IssueDetailContainer extends React.Component {
 
 IssueDetailContainer.propTypes = {
   issue: PropTypes.object.isRequired,
-  issueID: PropTypes.number.isRequired,
+  issue_id: PropTypes.number.isRequired,
   users: PropTypes.array.isRequired,
   orgs: PropTypes.array.isRequired,
   mentions: PropTypes.array.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => {
-  let issue_id = parseInt(ownProps.match.params.IssueID, 10);
-  let issue = state.issueDetails[issue_id] || {};
+  console.warn("Detail view", ownProps);
+  let issue = state.issueDetails[ownProps.issue_id] || {};
   let mentions = [...state.allUsers, ...state.allOrganisations];
   return {
     issue,
-    issueID: issue_id,
+    issue_id: ownProps.issue_id,
     users: state.allUsers,
     orgs: state.allOrganisations,
     mentions: mentions,

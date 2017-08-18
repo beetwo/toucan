@@ -8,7 +8,6 @@ import Status from "./status";
 import ToucanIcon, { getIconClassForIssueType } from "./icons/issueType";
 import { DateOnlyDisplay, DateOrTimeDisplay } from "./date";
 import { Link } from "react-router-dom";
-import { SplitUIView } from "./main";
 import Map from "./map";
 
 function CommentCount({ count }) {
@@ -63,7 +62,7 @@ class IssueFilter extends React.Component {
               data-toggle="collapse"
               data-target={"#issueFilter-" + k}
             >
-              Hide {k} <span className="icon icon-chevron" />
+              Toggle {k} <span className="icon icon-chevron" />
             </a>
           </div>
         </div>
@@ -81,14 +80,19 @@ class IssueFilter extends React.Component {
               {active && <span className="icon icon-lg icon-check" />}
             </div>
             <div className="filter-title">
-              <span className="filter-icon icon icon-lg icon-shelter" />
+              {k === "type" &&
+                <ToucanIcon
+                  key={c}
+                  issue_type={c}
+                  className="filter-icon icon-lg"
+                />}
               {c}&nbsp;
             </div>
           </div>
         );
       });
       body.push(
-        <div className="filter-body collapse in" id={"issueFilter-" + k}>
+        <div className={classNames("filter-body collapse", {'in' : k !== 'organisation'})} id={"issueFilter-" + k}>
           {choice_items}
         </div>
       );
@@ -176,6 +180,12 @@ const IssueListItem = ({ issue }) => {
             <TimeAgo date={issue.created} />
           </span>
         </div>
+        {/* use for display of status badge */}
+        {/*<div className="pull-right">
+          <div className="badge badge-pill badge-status badge-inprogress">
+            in progress
+          </div>
+        </div>*/}
       </div>
     </Link>
   );
@@ -192,19 +202,10 @@ class IssueListUI extends React.Component {
   render() {
     let issues = this.props.issues || [];
 
-    const map = (
-      <Map
-        geojson={this.props.geojson}
-        visibleIssueIDs={issues.map(issue => issue.id)}
-        selectIssue={this.props.selectIssue}
-        initial_bounds={this.props.initial_bounds}
-      />
-    );
-
     let rows = issues.map((issue, index) =>
       <IssueListItem key={issue.id} issue={issue} />
     );
-    const issue_view = (
+    return (
       <div className="issue-list">
         <MapHandle />
 
@@ -266,14 +267,11 @@ class IssueListUI extends React.Component {
         </div>
       </div>
     );
-
-    return <SplitUIView map={map} issue_view={issue_view} />;
   }
 }
 
 IssueListUI.propTypes = {
   issues: PropTypes.array.isRequired,
-  geojson: PropTypes.object.isRequired,
   selectIssue: PropTypes.func.isRequired
 };
 

@@ -8,32 +8,28 @@ import { Link } from "react-router-dom";
 const OrgListItem = ({ org }) => {
   console.log(org);
   return (
-    <div className="org-list-body" key={org.pk}>
-      <Link to={`/orgs/${org.short_name}/`}>
-        <div className="org">
-          <div className="flex-container flex-vCenter">
-            <div className="flex-col">
-              <div className="issue-basics">
-                <span className="issue-title">
-                  {org.name}
-                </span>
-              </div>
-              <div className="org-details">
-                <span className="icon icon-pin org-pin" />
-                <span className="org-location">
-                  {org.location || "Athens, Greece"}
-                </span>
-              </div>
+      <Link className="org" to={`/orgs/${org.short_name}/`} key={org.pk}>
+        <div className="flex-container flex-vCenter">
+          <div className="flex-col col-lg">
+            <div className="issue-basics">
+              <span className="issue-title">
+                {org.name}
+              </span>
             </div>
-            <div className="flex-col">
-              <div className="org-logo">
-                <img src={org.logo} alt="" />
-              </div>
+            <div className="org-details">
+              <span className="icon icon-pin org-pin" />
+              <span className="org-location">
+                {org.location || "Athens, Greece"}
+              </span>
+            </div>
+          </div>
+          <div className="flex-col">
+            <div className="org-logo">
+              <img src={org.logo} alt="" />
             </div>
           </div>
         </div>
       </Link>
-    </div>
   );
 };
 
@@ -66,7 +62,7 @@ class OrganisationsList extends React.Component {
             </div>
           </div>
         </div>
-        <div className="issue-list-body">
+        <div className="org-list-body">
           {this.props.organisations.map(org =>
             <OrgListItem org={org} key={org.pk} />
           )}

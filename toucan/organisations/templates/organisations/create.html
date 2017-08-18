@@ -6,24 +6,18 @@
 {% endblock %}
 
 {% block organisation_main %}
-<hr />
-
-<div class="row">
-    <div class="col-sm-12">
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {% bootstrap_form form %}
-{#            {% if user.membership %}#}
-{#                {% include 'organisations/apply_warning.html' %}#}
-{#            {% endif %}#}
-            {% buttons %}
-            <button type="submit" class="btn btn-primary">
-                {% block submit-button-text %}
-                {% trans 'Create new organisation' %}
-                {% endblock %}
-            </button>
-            {% endbuttons %}
-        </form>
-    </div>
-</div>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  {#            {% if user.membership %}#}
+  {#                {% include 'organisations/apply_warning.html' %}#}
+  {#            {% endif %}#}
+  {% buttons %}
+  <button type="submit" class="btn btn-primary">
+    {% block submit-button-text %}
+    {% trans 'Create new organisation' %}
+    {% endblock %}
+  </button>
+  {% endbuttons %}
+</form>
 {% endblock %}

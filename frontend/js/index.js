@@ -8,8 +8,7 @@ import reducers from "./reducers";
 import AppShell from "./containers/main";
 import Nav from "./nav";
 
-import IssueDetail from "./containers/issueDetail";
-import IssueList from "./containers/issueList";
+import IssueContainer from "./containers/issueView";
 import UserDetail from "./containers/userDetail";
 import OrganisationsList from "./containers/organisationsIndex";
 import OrganisationDetail from "./containers/organisationDetail";
@@ -48,20 +47,24 @@ render(
     <Router basename="/map">
       <AppShell>
         <Nav />
-        <Route
-          path="/jfsdkjfds/"
-          children={props => {
-            console.log("Always:", props);
-            return null;
-          }}
-        />
         <Switch>
-          <Route exact path="/issue/:IssueID/" component={IssueDetail} />
+          <Route
+            exact
+            path="/issue/:IssueID/"
+            render={props =>
+              <IssueContainer
+                history={props.history}
+                issue_id={props.match.params.IssueID}
+              />}
+          />
+          <Route
+            exact
+            path="/"
+            render={props => <IssueContainer history={props.history} />}
+          />
           <Route exact path="/orgs/" component={OrganisationsList} />
           <Route exact path="/orgs/:orgname/" component={OrganisationDetail} />
           <Route exact path="/detail/:username/" component={UserDetail} />
-          <Route exact path="/" component={IssueList} />
-          {/*<Route render={() => <h1>404</h1>} />*/}
         </Switch>
       </AppShell>
     </Router>
@@ -78,7 +81,6 @@ if (window && document) {
   window.setTimeout(() => {
     let alerts = document.querySelectorAll(".alert.alert-dismissable");
     forEach(alerts, node => {
-      console.log(node);
       node.remove();
     });
   }, 7000);

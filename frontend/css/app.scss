@@ -12,8 +12,10 @@
 @import 'issueList';
 @import 'issueDetail';
 @import 'orgList';
+@import 'orgDetail';
 @import 'userLink';
 @import 'comments';
+@import 'status';
 
 html,
 body {
@@ -67,6 +69,13 @@ main {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  @include screen-sm-max {
+    &.listExpanded {
+      .issues-container, .org-container {
+        flex-grow: 4;
+      }
+    }
+  }
   @include screen-sm-min {
     flex-direction: row-reverse;
   }
@@ -84,6 +93,9 @@ main {
   @include screen-sm-min {
     flex-grow: 6;
   }
+}
+.issues-container {
+  flex-grow: 2;
 }
 
 .map-container .leaflet-container {

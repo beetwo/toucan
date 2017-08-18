@@ -24,12 +24,11 @@ const mapStateToProps = (state, ownProps) => {
   return {
     issues: getFilteredIssues(
       state.redux_issues,
-      state.issueFilters.selections
+      state.issueFilters.selections,
+      state.map.list
     ),
     filterOptions: state.issueFilters,
-    loading: state.loadingStatus.issues,
-    geojson: state.geojson,
-    initial_bounds: state.initial_bounds
+    loading: state.loadingStatus.issues
   };
 };
 
