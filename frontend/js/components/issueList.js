@@ -63,7 +63,7 @@ class IssueFilter extends React.Component {
               data-toggle="collapse"
               data-target={"#issueFilter-" + k}
             >
-              Hide {k} <span className="icon icon-chevron" />
+              Toggle {k} <span className="icon icon-chevron" />
             </a>
           </div>
         </div>
@@ -88,7 +88,7 @@ class IssueFilter extends React.Component {
         );
       });
       body.push(
-        <div className="filter-body collapse in" id={"issueFilter-" + k}>
+        <div className={classNames("filter-body collapse", {'in' : k !== 'organisation'})} id={"issueFilter-" + k}>
           {choice_items}
         </div>
       );
