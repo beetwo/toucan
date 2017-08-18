@@ -25,12 +25,10 @@ const mapStateToProps = (state, ownProps) => {
     issues: getFilteredIssues(
       state.redux_issues,
       state.issueFilters.selections,
-      state.boundaryFilter
+      state.map.list
     ),
     filterOptions: state.issueFilters,
-    loading: state.loadingStatus.issues,
-    geojson: state.geojson,
-    initial_bounds: state.initial_bounds
+    loading: state.loadingStatus.issues
   };
 };
 

@@ -133,7 +133,7 @@ class IssueDetailUI extends React.Component {
     let gjs = issue_loader.issue_data;
     let issue = gjs.properties;
 
-    const detail_view = (
+    return (
       <div className="issue-detail">
         <div className="issue-detail-body">
           <div className="issue-list-mapHandle">
@@ -164,7 +164,6 @@ class IssueDetailUI extends React.Component {
         </HiddenMedium>
       </div>
     );
-    return detail_view;
   }
 }
 

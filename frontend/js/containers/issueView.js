@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
-import { setMapBounds } from "../actions";
+import { setMapBounds, setDetailZoom } from "../actions";
 
 import { SplitUIView } from "../components/main";
 import { ToucanMap } from "../components/map";
@@ -30,6 +30,8 @@ const getIssueMarker = (issue, selected = false, clickHandler) => {
   if (clickHandler) {
     props.onClick = () => clickHandler(issue.id);
   }
+  console.log(issue.properties || issue);
+
   let icon = getMarkerForIssue(issue.properties || issue, opts);
   if (icon != undefined) {
     props.icon = icon;
@@ -44,33 +46,38 @@ class IssueContainer extends React.Component {
       issue_detail,
       issue,
       issues,
-      initial_bounds,
+      map_bounds,
       navigateToIssue,
       changeBounds,
       ...props
     } = this.props;
     let markers = null;
-    const onBoundsChanged = function(e) {
-      changeBounds(utils.serializeLatLng(e.target.getBounds()));
-    };
+
     // construct the map
     let map_props = {
-      animate: true,
-      onZoomend: onBoundsChanged,
-      onMoveend: onBoundsChanged
+      animate: true
     };
     // for selected issue
     if (issue_detail && issue.isLoading === false) {
+      const saveZoom = e => {
+        this.props.setZoom(e.zoom);
+      };
       map_props = {
         ...map_props,
         center: [...issue.issue_data.geometry.coordinates].reverse(),
+        onViewportChanged: saveZoom,
         zoom: 13 // this should probably be saved in the global state object
       };
       markers = getIssueMarker(issue.issue_data, true);
     } else if (!issue_detail) {
+      const onBoundsChanged = function(e) {
+        changeBounds(utils.serializeLatLng(e.target.getBounds()));
+      };
       map_props = {
         ...map_props,
-        bounds: initial_bounds
+        onZoomend: onBoundsChanged,
+        onMoveend: onBoundsChanged,
+        bounds: map_bounds
       };
       markers = issues.map(i => getIssueMarker(i, false, navigateToIssue));
     }
@@ -109,16 +116,19 @@ const mapStateToProps = (state, ownProps) => {
     issue_detail,
     content: ownProps.content,
     issues: state.redux_issues,
-    initial_bounds: state.initial_bounds,
-    navigateToIssue: id => ownProps.history.push(`/issue/${id}/`)
+    navigateToIssue: id => ownProps.history.push(`/issue/${id}/`),
+    detail_zoom: state.map.detail,
+    map_bounds: state.map.list || state.initial_bounds
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     changeBounds: e => {
-      console.warn("Bounds", e);
       dispatch(setMapBounds(e));
+    },
+    setZoom: zoom => {
+      dispatch(setDetailZoom(zoom));
     }
   };
 };

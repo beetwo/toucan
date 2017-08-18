@@ -15,7 +15,8 @@ import {
   FETCH_CURRENT_USER_DATA,
   RECEIVE_USER_INFORMATION,
   RECEIVE_ORGANISATIONS,
-  SET_MAP_BOUNDS
+  SET_MAP_BOUNDS,
+  SET_DETAIL_ZOOM_LEVEL
 } from "./actions";
 
 import { defaultMapBounds } from "./globals";
@@ -234,15 +235,6 @@ function issueFiltersSelections(state, action) {
   }
 }
 
-function boundaryFilter(state = false, action) {
-  switch (action.type) {
-    case SET_MAP_BOUNDS:
-      return action.payload;
-    default:
-      return state;
-  }
-}
-
 function issueFilters(
   state = {
     options: {
@@ -399,6 +391,23 @@ const initial_bounds = (state = defaultMapBounds, action) => {
   }
 };
 
+function map(state = { detail: 13, list: false }, action) {
+  switch (action.type) {
+    case SET_MAP_BOUNDS:
+      return {
+        ...state,
+        list: action.payload
+      };
+    case SET_DETAIL_ZOOM_LEVEL:
+      return {
+        ...state,
+        detail: action.payload
+      };
+    default:
+      return state;
+  }
+}
+
 const reducers = {
   geojson,
   redux_issues: issues,
@@ -416,7 +425,7 @@ const reducers = {
   loadingStatus,
   organisationsByID,
   initial_bounds,
-  boundaryFilter
+  map
 };
 
 export default reducers;
