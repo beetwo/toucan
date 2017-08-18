@@ -21,7 +21,6 @@ const utils = {
 
 const getIssueMarker = (issue, selected = false, clickHandler) => {
   let position = [...issue.geometry.coordinates].reverse();
-  // console.log(position);
   let props = {
     position
   };
@@ -32,7 +31,6 @@ const getIssueMarker = (issue, selected = false, clickHandler) => {
   if (clickHandler) {
     props.onClick = () => clickHandler(issue.id);
   }
-  console.log(issue.properties || issue);
 
   let icon = getMarkerForIssue(issue.properties || issue, opts);
   if (icon != undefined) {

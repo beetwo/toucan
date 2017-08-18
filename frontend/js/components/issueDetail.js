@@ -37,7 +37,7 @@ class IssueDetailMain extends React.Component {
     let { gjs, issue, children } = this.props;
     let description = issue.description;
     let body = null;
-
+    let issue_type = issue.issue_types[0] || {};
     switch (issue.description_format) {
       case "html":
         body = <HtmlBody html={description} />;
@@ -51,72 +51,92 @@ class IssueDetailMain extends React.Component {
     return (
       <div className="issue-detail-main" ref="scrollbar">
         <div className="issue-detail-header">
-            <div className="issue-detail-close pull-right">
-              <Link to="/">
-                <span className="icon icon-close" />
-              </Link>
-            </div>
-            <div className="issue-list-mapHandle">
-              <a href="#" className="mapHandle">
-                &nbsp;
-              </a>
-            </div>
+          <div className="issue-detail-close pull-right">
+            <Link to="/">
+              <span className="icon icon-close" />
+            </Link>
+          </div>
+          <div className="issue-list-mapHandle">
+            <a href="#" className="mapHandle">
+              &nbsp;
+            </a>
+          </div>
         </div>
         <div className="issue-detail-content">
-        <div className="issue-detail-lead media">
-          <div className="media-left media-middle">
-            {issue.issue_types.map((issue_type, index) => <ToucanIcon key={index} issue_type={issue_type} className="icon-xl" />)}
-          </div>
-          <div className="media-body">
-            <h1 className="issue-detail-title">
-              <div className="issue-detail-label">Nutrition</div>
-              {issue.title}
-            </h1>
-          </div>
-        </div>
-
-        <div className="flex-container flex-container--bordered">
-          <div className="flex-col">
-            {issue.organisation
-              ? <div className="issue-detail-organisation">
-                  <div className="issue-detail-label">Organisation</div>
-                  <UserLink username={issue.organisation.short_name}>
-                    {issue.organisation.name}
-                  </UserLink>
+          <div className="issue-detail-lead media">
+            <div className="media-left media-middle">
+              <ToucanIcon issue_type={issue_type} className="icon-xl" />
+            </div>
+            <div className="media-body">
+              <h1 className="issue-detail-title">
+                <div className="issue-detail-label">
+                  {issue_type.name}
                 </div>
-              : null}
+                {issue.title}
+              </h1>
+            </div>
           </div>
-          <div className="flex-col">
-            <div className="issue-detail-status">
-              <div className="dropdown">
-                <div className="issue-detail-label">Status</div>
-                {issue.status}{" "}
-                <a href="#" className="statusChange dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  change
-                </a>
-                <ul className="dropdown-menu">
-                  <li><a href="#" className="text-open">open</a></li>
-                  <li><a href="#" className="text-inprogress">in progress</a></li>
-                  <li><a href="#" className="text-resolved">resolved</a></li>
-                </ul>
+
+          <div className="flex-container flex-container--bordered">
+            <div className="flex-col">
+              {issue.organisation
+                ? <div className="issue-detail-organisation">
+                    <div className="issue-detail-label">Organisation</div>
+                    <UserLink username={issue.organisation.short_name}>
+                      {issue.organisation.name}
+                    </UserLink>
+                  </div>
+                : null}
+            </div>
+            <div className="flex-col">
+              <div className="issue-detail-status">
+                <div className="dropdown">
+                  <div className="issue-detail-label">Status</div>
+                  {issue.status}{" "}
+                  <a
+                    href="#"
+                    className="statusChange dropdown-toggle"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="true"
+                  >
+                    change
+                  </a>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <a href="#" className="text-open">
+                        open
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" className="text-inprogress">
+                        in progress
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" className="text-resolved">
+                        resolved
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="issue-detail-comments">
-          <div className="comment comment-primary">
-            <div className="comment-header">
-              <UserLink username={issue.creator.username} />,{" "}
-              <span className="comment-time">
-                <TimeAgo date={issue.created} />
-              </span>
+          <div className="issue-detail-comments">
+            <div className="comment comment-primary">
+              <div className="comment-header">
+                <UserLink username={issue.creator.username} />,{" "}
+                <span className="comment-time">
+                  <TimeAgo date={issue.created} />
+                </span>
+              </div>
+              <div className="comment-body">
+                {body}
+              </div>
             </div>
-            <div className="comment-body">
-              {body}
-            </div>
+            {children}
           </div>
-          {children}
-        </div>
           {this.props.canComment
             ? <CommentForm
                 onComment={this.props.onComment.bind(this, gjs.id)}
@@ -164,9 +184,9 @@ class IssueDetailUI extends React.Component {
 
     return (
       <div className="issue-detail">
-          <IssueDetailMain {...this.props} gjs={gjs} issue={issue} />
+        <IssueDetailMain {...this.props} gjs={gjs} issue={issue} />
 
-          {/*
+        {/*
         <HiddenMedium>
           <IssueDetailFooter openMap={this.props.openMap} />
         </HiddenMedium>*/}
