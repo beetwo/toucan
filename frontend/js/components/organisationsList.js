@@ -41,7 +41,7 @@ class OrganisationsList extends React.Component {
   render() {
     const map = <DummyMap />;
     const org_list = (
-      <div>
+      <div className="issue-list">
         <div className="issue-list-mapHandle">
           <a href="#" className="mapHandle">
             &nbsp;
@@ -66,9 +66,11 @@ class OrganisationsList extends React.Component {
             </div>
           </div>
         </div>
-        {this.props.organisations.map(org =>
-          <OrgListItem org={org} key={org.pk} />
-        )}
+        <div className="issue-list-body">
+          {this.props.organisations.map(org =>
+            <OrgListItem org={org} key={org.pk} />
+          )}
+        </div>
       </div>
     );
     return <SplitUIView map={map} issue_view={org_list} />;
