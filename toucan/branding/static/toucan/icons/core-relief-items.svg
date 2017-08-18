@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.1 (44463) - http://www.bohemiancoding.com/sketch -->
+    <title>icons/core-relief-items</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icons/core-relief-items">
+            <g id="Group-8">
+                <circle id="yellow-oval" fill="#FAB400" cx="16" cy="16" r="16"></circle>
+                <path d="M23.6090518,8.3608 C22.6739709,7.4524 21.5361458,7 20.188204,7 L18.9262748,7 C18.7468769,8.11 17.5279541,8.974 16.0350195,8.974 C14.5420848,8.974 13.323162,8.11 13.1425353,7 L11.8879787,7 C10.5461806,7 9.39238173,7.4524 8.43641204,8.3608 C7.4792136,9.2704 7,10.3804 7,11.6908 L7,14.998 L10.2598812,14.998 L10.2598812,12.832 L11.1150932,12.832 L11.1150932,25 L20.8885931,25 L20.8885931,12.832 L21.7425763,12.832 L21.7425763,14.9152 L25,14.9152 L25,11.6908 C25,10.3804 24.5343027,9.2704 23.6090518,8.3608" id="icon" fill="#FFFFFF"></path>
+            </g>
+        </g>
+    </g>
+</svg>

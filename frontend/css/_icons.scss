@@ -23,8 +23,39 @@
   }
 }
 
-div.toucan-div-icon-marker {
-  border: 1px solid black;
-  height: 3px;
-  width: 3px;
+.toucan-div-icon-marker {
+  background: url(/static/toucan/icons/default.svg) center center no-repeat;
+}
+.marker-organisation {
+  background-image: url(/static/toucan/icons/default-org.svg);
+}
+.marker-camp-management {
+  background-image: url(/static/toucan/icons/camp-management.svg);
+}
+.marker-core-relief-items {
+  background-image: url(/static/toucan/icons/core-relief-items.svg);
+}
+.marker-education {
+  background-image: url(/static/toucan/icons/education.svg);
+}
+.marker-health {
+  background-image: url(/static/toucan/icons/health.svg);
+}
+.marker-legal-advice {
+  background-image: url(/static/toucan/icons/legal-advice.svg);
+}
+.marker-logistics {
+  background-image: url(/static/toucan/icons/logistics.svg);
+}
+.marker-nutrition {
+  background-image: url(/static/toucan/icons/nutrition.svg);
+}
+.marker-protection {
+  background-image: url(/static/toucan/icons/protection.svg);
+}
+.marker-sanitation-water-hygiene {
+  background-image: url(/static/toucan/icons/sanitation-water-hygiene.svg);
+}
+.marker-shelter {
+  background-image: url(/static/toucan/icons/shelter.svg);
 }
