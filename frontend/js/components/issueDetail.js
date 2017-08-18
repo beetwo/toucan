@@ -11,9 +11,9 @@ import { CommentList, CommentForm } from "./comments";
 import DateDisplay from "./date";
 import UserLink from "./userLink";
 import Status from "./status";
-import { getIconClassForIssueType } from "./icons/issueType";
 import { HiddenMedium, VisibleMedium } from "./responsive";
 import Loading from "./loading";
+import ToucanIcon, { getIconClassForIssueType } from "./icons/issueType";
 
 import { SplitUIView } from "./main";
 import ToucanTileLayer from "./map/tiles";
@@ -67,11 +67,10 @@ class IssueDetailMain extends React.Component {
               </a>
             </div>
         </div>
-        {/*issue.issue_types.map((issue_type, index) => <li key={index}><Icon key={index} name={getIconClassForIssueType(issue_type)} /></li>) */}
         <div className="issue-detail-content">
         <div className="issue-detail-lead media">
           <div className="media-left media-middle">
-            <span className="icon icon-nutrition icon-xl" />
+            {issue.issue_types.map((issue_type, index) => <ToucanIcon key={index} issue_type={issue_type} className="icon-xl" />)}
           </div>
           <div className="media-body">
             <h1 className="issue-detail-title">
