@@ -56,6 +56,7 @@ class OrganisationsList extends React.Component {
                   <span className="icon icon-filter" />
                   Filter
                 </a>
+                <a className="filter-reset" href="#">Reset</a>
               </div>
               <div className="flex-col text-right">
                 <span className="text-muted">Sort by: </span>
