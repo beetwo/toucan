@@ -47,11 +47,15 @@ class OrganisationsList extends React.Component {
           <div className="issue-sortandfilter">
             <div className="flex-container">
               <div className="flex-col">
-                <a href="#" className="dropdown-toggle" data-toggle="dropdown">
+                <a
+                  href="#"
+                  className="dropdown-toggle"
+                  data-toggle="collapse"
+                  data-target="#orgFilter"
+                >
                   <span className="icon icon-filter" />
                   Filter
                 </a>
-                <ul className="dropdown-menu" />
               </div>
               <div className="flex-col text-right">
                 <span className="text-muted">Sort by: </span>
@@ -63,6 +67,38 @@ class OrganisationsList extends React.Component {
           </div>
         </div>
         <div className="org-list-body">
+          <div>
+            <div className="filter collapse fullscreen-sm" id="orgFilter">
+              <div className="fullscreen-header flex-container">
+                <div className="flex-col">
+                  <a
+                    href="#"
+                    className="fullscreen-close"
+                    data-toggle="collapse"
+                    data-target="#orgFilter"
+                  >
+                    <span className="icon icon-close" /> Filter
+                  </a>
+                </div>
+                <div className="flex-col text-right">
+                  <a href="#">Reset</a>
+                </div>
+              </div>
+              <div className="fullscreen-content">
+              Put filter options here
+              </div>
+              <div className="fullscreen-footer">
+                <button
+                  className="btn btn-primary btn-block"
+                  data-toggle="collapse"
+                  data-target="#orgFilter"
+                >
+                  Show results
+                </button>
+              </div>
+            </div>
+          </div>
+        
           {this.props.organisations.map(org =>
             <OrgListItem org={org} key={org.pk} />
           )}
