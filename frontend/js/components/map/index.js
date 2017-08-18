@@ -368,7 +368,11 @@ class DummyMap extends React.Component {
       >
         <ToucanTileLayer />
         {this.state.marker_positions.map((p, index) =>
-          <Marker position={p} color="orange" icon={DefaultIcon} key={index} />
+          <Marker
+            position={p}
+            icon={Leaflet.divIcon({ className: "toucan-div-icon-marker" })}
+            key={index}
+          />
         )}
       </Map>
     );
