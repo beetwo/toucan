@@ -10,7 +10,7 @@ const OrgListItem = ({ org }) => {
   return (
       <Link className="org" to={`/orgs/${org.short_name}/`} key={org.pk}>
         <div className="flex-container flex-vCenter">
-          <div className="flex-col">
+          <div className="flex-col col-lg">
             <div className="issue-basics">
               <span className="issue-title">
                 {org.name}
