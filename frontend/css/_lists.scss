@@ -24,7 +24,7 @@
     text-decoration: none;
     background-color: $c-lightgrey - 20;
   }
-  @include screen-md-min {
+  @include screen-sm-min {
     display: none;
   }
 }

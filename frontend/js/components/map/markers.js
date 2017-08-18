@@ -12,7 +12,7 @@ function getMarkerForIssue(issue = {}, opts = {}) {
     // marker colors
     //'red', 'orange-dark', 'orange', 'yellow', 'blue-dark', 'cyan', 'purple',
     // 'violet', 'pink', 'green-dark', 'green', 'green-light', 'black', or 'white'
-    markerColor: issue.status === "closed" ? "orange-dark" : "cyan",
+    markerColor: issue.status === "closed" ? "orange-dark" : "yellow",
     //'circle', 'square', 'star', or 'penta'
     shape: "circle",
     prefix: ""

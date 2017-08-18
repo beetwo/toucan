@@ -1,5 +1,10 @@
 .org {
   @include listItem;
+  color: $c-text;
+  &:hover {
+    color: $c-text;
+    text-decoration: none;
+  }
 }
 .org-pin {
   color: $c-organisations;

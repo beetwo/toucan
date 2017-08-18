@@ -1,0 +1,72 @@
+.org-detail {
+  @extend .issue-detail;
+}
+.org-detail-content {
+  @extend .issue-detail-content;
+}
+.org-detail-main {
+  @extend .issue-detail-main;
+}
+.org-detail-header {
+  @extend .issue-detail-header;
+}
+.org-detail-subhead, .org-detail-desc, .org-detail-contact, .org-detail-member, .org-detail-edit {
+  padding: $padding;
+}
+.org-detail-lead {
+  @extend .issue-detail-lead;
+}
+.org-detail-title {
+  font-size: 20px;
+  margin: 0 0 5px;
+  font-weight: bold;
+}
+.org-detail-logo {
+  box-sizing: border-box;
+  padding: 5px;
+  width: 76px;
+  height: auto;
+}
+.org-detail-desc {
+  font-size: 14px;
+}
+.org-detail-subhead {
+  margin: $padding-base-vertical 0 0 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+.org-detail-contacts {
+  border-bottom: 1px solid $c-lightgrey;
+  a {
+    color: $c-text;
+    &:hover {
+      color: $c-organisations;
+    }
+  }
+}
+.org-detail-contact {
+  border-top: 1px solid $c-lightgrey;
+  font-size: 14px;
+}
+.org-detail-members {
+  border-bottom: 1px solid $c-lightgrey;
+}
+.org-detail-member {
+  border-top: 1px solid $c-lightgrey;
+}
+.org-detail-member-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: $c-turquoise;
+}
+.org-detail-member-position {
+  color: $c-darkgrey;
+  font-size: 14px;
+}
+.label-organisation {
+  background-color: $c-organisations;
+}
+.org-detail-member-image {
+  border-radius: 45px;
+  background-color: $c-lightgrey;
+}

@@ -1,10 +1,11 @@
 @font-face {
   font-family: 'toucan';
-  src: url('fonts/toucan.eot?qq85fn');
-  src: url('fonts/toucan.eot?qq85fn#iefix') format('embedded-opentype'),
-    url('fonts/toucan.ttf?qq85fn') format('truetype'),
-    url('fonts/toucan.woff?qq85fn') format('woff'),
-    url('fonts/toucan.svg?qq85fn#toucan') format('svg');
+
+  src:  url('fonts/toucan.eot?unt0q7');
+  src:  url('fonts/toucan.eot?unt0q7#iefix') format('embedded-opentype'),
+    url('fonts/toucan.ttf?unt0q7') format('truetype'),
+    url('fonts/toucan.woff?unt0q7') format('woff'),
+    url('fonts/toucan.svg?unt0q7#toucan') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -25,6 +26,22 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-contact-address:before {
+  content: "\e91f";
+  color: #3268a8;
+}
+.icon-contact-email:before {
+  content: "\e920";
+  color: #3268a8;
+}
+.icon-contact-phone:before {
+  content: "\e921";
+  color: #3268a8;
+}
+.icon-contact-web:before {
+  content: "\e922";
+  color: #3268a8;
+}
 .icon-w-camp-management:before {
   content: "\e915";
   color: #fff;
