@@ -8,7 +8,7 @@ function getMarkerForIssue(issue = {}, opts = {}) {
     issue_type,
     "toucan-div-icon-marker marker-"
   );
-  return divIcon({ className: cls });
+  return divIcon({ className: cls, iconSize: null });
 }
 
 export default getMarkerForIssue;
