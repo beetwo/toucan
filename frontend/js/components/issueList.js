@@ -8,7 +8,6 @@ import Status from "./status";
 import ToucanIcon, { getIconClassForIssueType } from "./icons/issueType";
 import { DateOnlyDisplay, DateOrTimeDisplay } from "./date";
 import { Link } from "react-router-dom";
-import { SplitUIView } from "./main";
 import Map from "./map";
 
 function CommentCount({ count }) {
@@ -203,19 +202,10 @@ class IssueListUI extends React.Component {
   render() {
     let issues = this.props.issues || [];
 
-    const map = (
-      <Map
-        geojson={this.props.geojson}
-        visibleIssueIDs={issues.map(issue => issue.id)}
-        selectIssue={this.props.selectIssue}
-        initial_bounds={this.props.initial_bounds}
-      />
-    );
-
     let rows = issues.map((issue, index) =>
       <IssueListItem key={issue.id} issue={issue} />
     );
-    const issue_view = (
+    return (
       <div className="issue-list">
         <MapHandle />
 
@@ -277,14 +267,11 @@ class IssueListUI extends React.Component {
         </div>
       </div>
     );
-
-    return <SplitUIView map={map} issue_view={issue_view} />;
   }
 }
 
 IssueListUI.propTypes = {
   issues: PropTypes.array.isRequired,
-  geojson: PropTypes.object.isRequired,
   selectIssue: PropTypes.func.isRequired
 };
 

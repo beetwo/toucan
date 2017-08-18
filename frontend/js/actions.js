@@ -27,6 +27,9 @@ export const RECEIVE_USER_INFORMATION = "RECEIVE_USER_INFORMATION";
 export const FETCH_ORGANISATIONS = "FETCH_ORGANISATIONS";
 export const RECEIVE_ORGANISATIONS = "RECEIVE_ORGANISATIONS";
 
+export const SET_MAP_BOUNDS = "SET_MAP_BOUNDS";
+export const SET_DETAIL_ZOOM_LEVEL = "SET_DETAIL_ZOOM_LEVEL";
+
 export function requestIssues() {
   return {
     type: REQUEST_ISSUES
@@ -230,5 +233,19 @@ export function fetchOrganisations() {
         payload: data
       });
     });
+  };
+}
+
+export function setMapBounds(latLng) {
+  return {
+    type: SET_MAP_BOUNDS,
+    payload: latLng
+  };
+}
+
+export function setDetailZoom(zoom) {
+  return {
+    type: SET_DETAIL_ZOOM_LEVEL,
+    payload: zoom
   };
 }
