@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'toucan';
-  src:  url('fonts/toucan.eot?qq85fn');
-  src:  url('fonts/toucan.eot?qq85fn#iefix') format('embedded-opentype'),
+  src: url('fonts/toucan.eot?qq85fn');
+  src: url('fonts/toucan.eot?qq85fn#iefix') format('embedded-opentype'),
     url('fonts/toucan.ttf?qq85fn') format('truetype'),
     url('fonts/toucan.woff?qq85fn') format('woff'),
     url('fonts/toucan.svg?qq85fn#toucan') format('svg');
@@ -9,7 +9,8 @@
   font-style: normal;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[class^="icon-"],
+[class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'toucan' !important;
   speak: none;
@@ -28,7 +29,7 @@
   content: "\e915";
   color: #fff;
 }
-.icon-w-core-relief-items:before {
+.icon-w-core-relief-item:before {
   content: "\e916";
   color: #fff;
 }
