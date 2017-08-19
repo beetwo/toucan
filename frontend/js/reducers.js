@@ -357,7 +357,6 @@ function loadingStatus(
 }
 
 function organisationsByID(state = {}, action) {
-  console.log(action.type, action);
   switch (action.type) {
     case RECEIVE_ORGANISATIONS:
       let new_state = {};

@@ -61,9 +61,8 @@ render(
               <Route exact path="/orgs/" render={props => <OrgContainer />} />
               <Route
                 exact
-                path="/orgs/:orgname/"
-                render={props =>
-                  <OrgContainer org_id={props.match.params.orgname} />}
+                path="/orgs/:org_id/"
+                render={props => <OrgContainer {...props.match.params} />}
               />
             </Switch>
           </Route>
