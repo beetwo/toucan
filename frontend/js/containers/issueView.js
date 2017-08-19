@@ -56,7 +56,7 @@ class IssueContainer extends React.Component {
 
     // construct the map
     let map_props = {
-      animate: true
+      animate: false
     };
     // for selected issue
     if (issue_detail) {

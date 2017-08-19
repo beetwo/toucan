@@ -6,30 +6,29 @@ import { DummyMap } from "./map";
 import { Link } from "react-router-dom";
 
 const OrgListItem = ({ org }) => {
-  console.log(org);
   return (
-      <Link className="org" to={`/orgs/${org.short_name}/`} key={org.pk}>
-        <div className="flex-container flex-vCenter">
-          <div className="flex-col col-lg">
-            <div className="issue-basics">
-              <span className="issue-title">
-                {org.name}
-              </span>
-            </div>
-            <div className="org-details">
-              <span className="icon icon-pin org-pin" />
-              <span className="org-location">
-                {org.location || "Athens, Greece"}
-              </span>
-            </div>
+    <Link className="org" to={`/orgs/${org.short_name}/`} key={org.pk}>
+      <div className="flex-container flex-vCenter">
+        <div className="flex-col col-lg">
+          <div className="issue-basics">
+            <span className="issue-title">
+              {org.name}
+            </span>
           </div>
-          <div className="flex-col">
-            <div className="org-logo">
-              <img src={org.logo} alt="" />
-            </div>
+          <div className="org-details">
+            <span className="icon icon-pin org-pin" />
+            <span className="org-location">
+              {org.location || "Athens, Greece"}
+            </span>
           </div>
         </div>
-      </Link>
+        <div className="flex-col">
+          <div className="org-logo">
+            <img src={org.logo} alt="" />
+          </div>
+        </div>
+      </div>
+    </Link>
   );
 };
 

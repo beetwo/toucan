@@ -10,7 +10,8 @@ module.exports = opts => {
   return {
     ...config,
     cache: true,
-    devtool: "source-map",
+    // devtool: "source-map",
+    devtool: "cheap-eval-source-map",
     output: {
       ...config.output,
       publicPath: "/static/wp/",

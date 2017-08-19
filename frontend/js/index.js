@@ -9,9 +9,8 @@ import AppShell from "./containers/main";
 import Nav from "./nav";
 
 import IssueContainer from "./containers/issueView";
+import OrgContainer from "./containers/organisations";
 import UserDetail from "./containers/userDetail";
-import OrganisationsList from "./containers/organisationsIndex";
-import OrganisationDetail from "./containers/organisationDetail";
 
 import {
   BrowserRouter as Router,
@@ -62,8 +61,16 @@ render(
             path="/"
             render={props => <IssueContainer history={props.history} />}
           />
-          <Route exact path="/orgs/" component={OrganisationsList} />
-          <Route exact path="/orgs/:orgname/" component={OrganisationDetail} />
+          <Route path="/orgs/">
+            <Switch>
+              <Route exact path="/" render={props => <OrgContainer />} />
+              <Route
+                exact
+                path="/:orgname/"
+                render={props => <OrgContainer />}
+              />
+            </Switch>
+          </Route>
           <Route exact path="/detail/:username/" component={UserDetail} />
         </Switch>
       </AppShell>
