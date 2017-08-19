@@ -214,15 +214,16 @@ class IssueListUI extends React.Component {
           <div className="issue-sortandfilter">
             <div className="flex-container">
               <div className="flex-col">
-                <a
-                  href="#"
-                  className="dropdown-toggle"
-                  data-toggle="collapse"
-                  data-target="#issueFilter"
-                >
-                  <span className="icon icon-filter" />
-                  Filter
-                </a>
+              <a
+                href="#"
+                className="dropdown-toggle"
+                data-toggle="collapse"
+                data-target="#issueFilter"
+              >
+                <span className="icon icon-filter" />
+                Filter
+              </a>
+                <a className="filter-reset" href="#">Reset</a>
               </div>
               <div className="flex-col text-right">
                 <a
