@@ -5,7 +5,7 @@ import { DummyMap } from "./map";
 const OrganisationDetail = props => {
   const content = (
     <div className="org-detail">
-      <div className="org-detail-main" ref="scrollbar">
+      <div className="org-detail-main">
         <div className="org-detail-header">
           <div className="issue-detail-close pull-right">
             <a href="/map/orgs/">
@@ -21,17 +21,18 @@ const OrganisationDetail = props => {
         <div className="org-detail-content">
           <div className="org-detail-lead media">
             <div className="media-left media-middle">
-              <img className="org-detail-logo"width="194" height="51" src="/media/CACHE/images/fadrat-logo/3bab5950eb11ee876bba51d417c536ab.png" />
+              <img
+                className="org-detail-logo"
+                width="194"
+                height="51"
+                src="/media/CACHE/images/fadrat-logo/3bab5950eb11ee876bba51d417c536ab.png"
+              />
             </div>
             <div className="media-body">
-              <h1 className="org-detail-title">
-                Fadrat
-              </h1>
+              <h1 className="org-detail-title">Fadrat</h1>
               <div className="org-details">
                 <span className="icon icon-pin org-pin" />
-                <span className="org-location">
-                  Athens, Greece
-                </span>
+                <span className="org-location">Athens, Greece</span>
               </div>
             </div>
           </div>
@@ -41,16 +42,19 @@ const OrganisationDetail = props => {
             </div>
           </div>
           <div className="org-detail-desc">
-            Project Elea is a group of volunteers from around the world who have come together to work collaboratively with the residents of Eleonas Refugee Camp in Athens to improve living standards and community well-being. Approved by the Greek Ministry of Migration and working independently within the camp, the project is a long-term one. <a href="#">read more…</a>
+            Project Elea is a group of volunteers from around the world who have
+            come together to work collaboratively with the residents of Eleonas
+            Refugee Camp in Athens to improve living standards and community
+            well-being. Approved by the Greek Ministry of Migration and working
+            independently within the camp, the project is a long-term one.{" "}
+            <a href="#">read more…</a>
           </div>
           <div className="org-detail-contacts">
-            <h2 className="org-detail-subhead">
-              Contact
-            </h2>
+            <h2 className="org-detail-subhead">Contact</h2>
             <div className="org-detail-contact">
               <div className="media">
                 <div className="media-left media-middle">
-                  <div className="icon icon-contact-phone icon-xl"></div>
+                  <div className="icon icon-contact-phone icon-xl" />
                 </div>
                 <a href="#" className="media-body media-middle">
                   +30 69 40938140
@@ -60,7 +64,7 @@ const OrganisationDetail = props => {
             <div className="org-detail-contact">
               <div className="media">
                 <div className="media-left media-middle">
-                  <div className="icon icon-contact-email icon-xl"></div>
+                  <div className="icon icon-contact-email icon-xl" />
                 </div>
                 <a href="#" className="media-body media-middle">
                   info@projectelea.org
@@ -70,7 +74,7 @@ const OrganisationDetail = props => {
             <div className="org-detail-contact">
               <div className="media">
                 <div className="media-left media-middle">
-                  <div className="icon icon-contact-web icon-xl"></div>
+                  <div className="icon icon-contact-web icon-xl" />
                 </div>
                 <a href="#" className="media-body media-middle">
                   www.projectelea.org
@@ -80,7 +84,7 @@ const OrganisationDetail = props => {
             <div className="org-detail-contact">
               <div className="media">
                 <div className="media-left media-middle">
-                  <div className="icon icon-contact-address icon-xl"></div>
+                  <div className="icon icon-contact-address icon-xl" />
                 </div>
                 <a href="#" className="media-body media-middle">
                   Agiou Polikarpou 87, Votanikos, <br />
@@ -99,9 +103,7 @@ const OrganisationDetail = props => {
                       <div className="label label-organisation">Admin</div>
                     </div>
                   </div>
-                  <div className="org-detail-member-name">
-                    Maria Kotrou
-                  </div>
+                  <div className="org-detail-member-name">Maria Kotrou</div>
                   <div className="org-detail-member-position">
                     Camp Coordinator
                   </div>
@@ -116,7 +118,6 @@ const OrganisationDetail = props => {
           </div>
         </div>
       </div>
-      
     </div>
   );
   return <SplitUIView map={<DummyMap />} issue_view={content} />;

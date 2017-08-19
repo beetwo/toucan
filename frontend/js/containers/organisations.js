@@ -23,6 +23,7 @@ const mapStateToProps = (state, ownProps) => {
     detail_view = true;
     org_id = ownProps.org_id;
   }
+  console.log(detail_view, ownProps);
   return {
     detail_view,
     org_id
