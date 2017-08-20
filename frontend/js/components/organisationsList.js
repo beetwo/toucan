@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const OrgListItem = ({ org }) => {
   return (
-    <Link className="org" to={`/orgs/${org.short_name}/`} key={org.pk}>
+    <Link className="org" to={`/orgs/${org.pk}/`} key={org.pk}>
       <div className="flex-container flex-vCenter">
         <div className="flex-col col-lg">
           <div className="issue-basics">
@@ -55,7 +55,9 @@ class OrganisationsList extends React.Component {
                   <span className="icon icon-filter" />
                   Filter
                 </a>
-                <a className="filter-reset" href="#">Reset</a>
+                <a className="filter-reset" href="#">
+                  Reset
+                </a>
               </div>
               <div className="flex-col text-right">
                 <span className="text-muted">Sort by: </span>
@@ -84,9 +86,7 @@ class OrganisationsList extends React.Component {
                   <a href="#">Reset</a>
                 </div>
               </div>
-              <div className="fullscreen-content">
-              Put filter options here
-              </div>
+              <div className="fullscreen-content">Put filter options here</div>
               <div className="fullscreen-footer">
                 <button
                   className="btn btn-primary btn-block"
@@ -98,7 +98,7 @@ class OrganisationsList extends React.Component {
               </div>
             </div>
           </div>
-        
+
           {this.props.organisations.map(org =>
             <OrgListItem org={org} key={org.pk} />
           )}

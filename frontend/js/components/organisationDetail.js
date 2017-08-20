@@ -1,16 +1,23 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { SplitUIView } from "./main";
 import { DummyMap } from "./map";
+import Loading from "./loading";
 
-const OrganisationDetail = props => {
+import history from "../history";
+
+const OrganisationDetail = ({ org }) => {
+  if (!org) {
+    return <Loading />;
+  }
   const content = (
     <div className="org-detail">
       <div className="org-detail-main">
         <div className="org-detail-header">
           <div className="issue-detail-close pull-right">
-            <a href="/map/orgs/">
+            <Link to="/orgs/">
               <span className="icon icon-close" />
-            </a>
+            </Link>
           </div>
           <div className="issue-list-mapHandle">
             <a href="#" className="mapHandle">
@@ -29,10 +36,14 @@ const OrganisationDetail = props => {
               />
             </div>
             <div className="media-body">
-              <h1 className="org-detail-title">Fadrat</h1>
+              <h1 className="org-detail-title">
+                {org.name}
+              </h1>
               <div className="org-details">
                 <span className="icon icon-pin org-pin" />
-                <span className="org-location">Athens, Greece</span>
+                <span className="org-location">
+                  {"Unknown Location"}
+                </span>
               </div>
             </div>
           </div>
@@ -42,12 +53,9 @@ const OrganisationDetail = props => {
             </div>
           </div>
           <div className="org-detail-desc">
-            Project Elea is a group of volunteers from around the world who have
-            come together to work collaboratively with the residents of Eleonas
-            Refugee Camp in Athens to improve living standards and community
-            well-being. Approved by the Greek Ministry of Migration and working
-            independently within the camp, the project is a long-term one.{" "}
-            <a href="#">read more…</a>
+            {org.detail
+              ? org.detail
+              : <span className="text-muted">No description provided.</span>}
           </div>
           <div className="org-detail-contacts">
             <h2 className="org-detail-subhead">Contact</h2>
