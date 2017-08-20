@@ -11,7 +11,6 @@ import { Marker } from "react-leaflet";
 import Leaflet from "leaflet";
 
 const OrganisationsListMap = ({ organisations }) => {
-  console.log(organisations);
   if (!organisations.length) {
     return null;
   }
@@ -26,9 +25,10 @@ const OrganisationsListMap = ({ organisations }) => {
 
     return locations.concat(org_locations);
   }, []);
-  console.log(locations);
+  let bounds = Leaflet.latLngBounds(locations.map(l => l.coordinates));
+
   return (
-    <ToucanMap center={locations[0].coordinates} zoom={13}>
+    <ToucanMap bounds={bounds}>
       {locations.map(location =>
         <Marker
           key={location.key}
@@ -43,6 +43,8 @@ const OrganisationsListMap = ({ organisations }) => {
     </ToucanMap>
   );
 };
+
+export { OrganisationsListMap };
 
 const OrgListItem = ({ org }) => {
   return (
@@ -140,7 +142,6 @@ class OrganisationsList extends React.Component {
           </div>
 
           {this.props.organisations.map(org => {
-            console.log(org.id);
             return <OrgListItem org={org} key={org.id} />;
           })}
         </div>

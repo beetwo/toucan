@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { SplitUIView } from "./main";
-import { DummyMap } from "./map";
 import Loading from "./loading";
+import { OrganisationsListMap } from "./organisationsList";
 
 import history from "../history";
 
@@ -10,6 +10,8 @@ const OrganisationDetail = ({ org }) => {
   if (!org) {
     return <Loading />;
   }
+
+  let map = <OrganisationsListMap organisations={[org]} />;
   const content = (
     <div className="org-detail">
       <div className="org-detail-main">
@@ -128,7 +130,7 @@ const OrganisationDetail = ({ org }) => {
       </div>
     </div>
   );
-  return <SplitUIView map={<DummyMap />} issue_view={content} />;
+  return <SplitUIView map={map} issue_view={content} />;
 };
 
 export default OrganisationDetail;
