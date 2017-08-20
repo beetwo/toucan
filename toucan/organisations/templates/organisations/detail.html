@@ -30,7 +30,7 @@
     {% if can_edit_details %}
     <br />
     <p class="text-right">
-        <a href="{% url 'organisations:organisation_edit' org_id=organisation.pk %}"
+        <a href="{% url 'organisations:organisation_edit' %}"
             class="btn btn-primary">
             {% trans 'Edit organisation details' %}
             <i class="fa fa-edit"></i>
@@ -75,9 +75,6 @@
             {% endfor %}
             </tbody>
         </table>
-
-
-
     </div>
 </div>
 

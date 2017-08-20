@@ -179,3 +179,8 @@ class ImageCreateView(CreateAPIView):
 class OrganisationListView(ListAPIView):
     serializer_class = OrganisationSerializer
     queryset = Organisation.objects.all()
+
+
+class OrganisationDetailView(RetrieveAPIView):
+    queryset = Organisation.objects.all()
+    serializer_class = FullOrganisationSerializer

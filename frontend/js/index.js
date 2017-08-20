@@ -9,18 +9,12 @@ import AppShell from "./containers/main";
 import Nav from "./nav";
 
 import IssueContainer from "./containers/issueView";
+import OrgContainer from "./containers/organisations";
 import UserDetail from "./containers/userDetail";
-import OrganisationsList from "./containers/organisationsIndex";
-import OrganisationDetail from "./containers/organisationDetail";
 
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Switch,
-  withRouter
-} from "react-router-dom";
-import createBrowserHistory from "history/createBrowserHistory";
+import { Route, Link, Switch, withRouter } from "react-router-dom";
+
+import { Router } from "./history";
 
 require("../css/app.scss");
 
@@ -44,7 +38,7 @@ let store = createStore(issueTrackerApp, applyMiddleware(...middleware));
 
 render(
   <Provider store={store}>
-    <Router basename="/map">
+    <Router>
       <AppShell>
         <Nav />
         <Switch>
@@ -62,8 +56,16 @@ render(
             path="/"
             render={props => <IssueContainer history={props.history} />}
           />
-          <Route exact path="/orgs/" component={OrganisationsList} />
-          <Route exact path="/orgs/:orgname/" component={OrganisationDetail} />
+          <Route path="/orgs/">
+            <Switch>
+              <Route exact path="/orgs/" render={props => <OrgContainer />} />
+              <Route
+                exact
+                path="/orgs/:org_id/"
+                render={props => <OrgContainer {...props.match.params} />}
+              />
+            </Switch>
+          </Route>
           <Route exact path="/detail/:username/" component={UserDetail} />
         </Switch>
       </AppShell>

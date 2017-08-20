@@ -4,38 +4,79 @@ import { SplitUIView } from "./main";
 import Loading from "./loading";
 import { DummyMap } from "./map";
 import { Link } from "react-router-dom";
+import history from "../history";
+
+import { ToucanMap } from "./map";
+import { Marker } from "react-leaflet";
+import Leaflet from "leaflet";
+
+const OrganisationsListMap = ({ organisations }) => {
+  if (!organisations.length) {
+    return null;
+  }
+  let locations = organisations.reduce((locations, org) => {
+    let clickHandler = () => history.push(`/orgs/${org.id}/`);
+    let org_locations = org.locations.map(org_loc => ({
+      name: org_loc.city,
+      coordinates: [...org_loc.location.coordinates].reverse(),
+      key: `${org.id}-${org_loc.id}`,
+      clickHandler
+    }));
+
+    return locations.concat(org_locations);
+  }, []);
+  let bounds = Leaflet.latLngBounds(locations.map(l => l.coordinates));
+
+  return (
+    <ToucanMap bounds={bounds}>
+      {locations.map(location =>
+        <Marker
+          key={location.key}
+          position={location.coordinates}
+          icon={Leaflet.divIcon({
+            className: "toucan-div-icon-marker marker-organisation",
+            iconSize: null
+          })}
+          onClick={location.clickHandler}
+        />
+      )}
+    </ToucanMap>
+  );
+};
+
+export { OrganisationsListMap };
 
 const OrgListItem = ({ org }) => {
-  console.log(org);
   return (
-      <Link className="org" to={`/orgs/${org.short_name}/`} key={org.pk}>
-        <div className="flex-container flex-vCenter">
-          <div className="flex-col col-lg">
-            <div className="issue-basics">
-              <span className="issue-title">
-                {org.name}
-              </span>
-            </div>
-            <div className="org-details">
-              <span className="icon icon-pin org-pin" />
-              <span className="org-location">
-                {org.location || "Athens, Greece"}
-              </span>
-            </div>
+    <Link className="org" to={`/orgs/${org.id}/`}>
+      <div className="flex-container flex-vCenter">
+        <div className="flex-col col-lg">
+          <div className="issue-basics">
+            <span className="issue-title">
+              {org.name}
+            </span>
           </div>
-          <div className="flex-col">
-            <div className="org-logo">
-              <img src={org.logo} alt="" />
-            </div>
+          <div className="org-details">
+            <span className="icon icon-pin org-pin" />
+            <span className="org-location">
+              {org.location || "Athens, Greece"}
+            </span>
           </div>
         </div>
-      </Link>
+        <div className="flex-col">
+          <div className="org-logo">
+            <img src={org.logo} alt="" />
+          </div>
+        </div>
+      </div>
+    </Link>
   );
 };
 
 class OrganisationsList extends React.Component {
   render() {
-    const map = <DummyMap />;
+    const { organisations } = this.props;
+    const map = <OrganisationsListMap organisations={organisations} />;
     const org_list = (
       <div className="issue-list">
         <div className="issue-list-mapHandle">
@@ -56,7 +97,9 @@ class OrganisationsList extends React.Component {
                   <span className="icon icon-filter" />
                   Filter
                 </a>
-                <a className="filter-reset" href="#">Reset</a>
+                <a className="filter-reset" href="#">
+                  Reset
+                </a>
               </div>
               <div className="flex-col text-right">
                 <span className="text-muted">Sort by: </span>
@@ -85,9 +128,7 @@ class OrganisationsList extends React.Component {
                   <a href="#">Reset</a>
                 </div>
               </div>
-              <div className="fullscreen-content">
-              Put filter options here
-              </div>
+              <div className="fullscreen-content">Put filter options here</div>
               <div className="fullscreen-footer">
                 <button
                   className="btn btn-primary btn-block"
@@ -99,10 +140,10 @@ class OrganisationsList extends React.Component {
               </div>
             </div>
           </div>
-        
-          {this.props.organisations.map(org =>
-            <OrgListItem org={org} key={org.pk} />
-          )}
+
+          {this.props.organisations.map(org => {
+            return <OrgListItem org={org} key={org.id} />;
+          })}
         </div>
       </div>
     );
