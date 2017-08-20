@@ -26,7 +26,7 @@ class OrganisationLocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Location
         fields = [
-            'pk',
+            'id',
             'city',
             'location'
         ]
@@ -35,25 +35,16 @@ class OrganisationLocationSerializer(serializers.ModelSerializer):
 class OrganisationSerializer(serializers.ModelSerializer):
 
     logo = serializers.ImageField()
-    profile_url = serializers.SerializerMethodField()
-    location_set = OrganisationLocationSerializer(many=True, read_only=True)
-
-    def get_profile_url(self, org):
-        return reverse(
-            'organisations:organisation_detail',
-            kwargs={'org_id': org.pk},
-            request=self.context['request']
-        )
+    locations = OrganisationLocationSerializer(many=True, read_only=True, source='location_set')
 
     class Meta:
         model = Organisation
         fields = [
-            'pk',
+            'id',
             'name',
             'short_name',
             'logo',
-            'profile_url',
-            'location_set'
+            'locations'
         ]
 
 

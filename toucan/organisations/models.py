@@ -106,7 +106,6 @@ class Membership(TimeStampedModel):
     ROLES_CHOICES = [
         (0, _('member')),
         (5, _('admin')),
-        # (10, _('owner'))
     ]
 
     org = models.ForeignKey(Organisation)

@@ -4,10 +4,49 @@ import { SplitUIView } from "./main";
 import Loading from "./loading";
 import { DummyMap } from "./map";
 import { Link } from "react-router-dom";
+import history from "../history";
+
+import { ToucanMap } from "./map";
+import { Marker } from "react-leaflet";
+import Leaflet from "leaflet";
+
+const OrganisationsListMap = ({ organisations }) => {
+  console.log(organisations);
+  if (!organisations.length) {
+    return null;
+  }
+  let locations = organisations.reduce((locations, org) => {
+    let clickHandler = () => history.push(`/orgs/${org.id}/`);
+    let org_locations = org.locations.map(org_loc => ({
+      name: org_loc.city,
+      coordinates: [...org_loc.location.coordinates].reverse(),
+      key: `${org.id}-${org_loc.id}`,
+      clickHandler
+    }));
+
+    return locations.concat(org_locations);
+  }, []);
+  console.log(locations);
+  return (
+    <ToucanMap center={locations[0].coordinates} zoom={13}>
+      {locations.map(location =>
+        <Marker
+          key={location.key}
+          position={location.coordinates}
+          icon={Leaflet.divIcon({
+            className: "toucan-div-icon-marker marker-organisation",
+            iconSize: null
+          })}
+          onClick={location.clickHandler}
+        />
+      )}
+    </ToucanMap>
+  );
+};
 
 const OrgListItem = ({ org }) => {
   return (
-    <Link className="org" to={`/orgs/${org.pk}/`} key={org.pk}>
+    <Link className="org" to={`/orgs/${org.id}/`}>
       <div className="flex-container flex-vCenter">
         <div className="flex-col col-lg">
           <div className="issue-basics">
@@ -34,7 +73,8 @@ const OrgListItem = ({ org }) => {
 
 class OrganisationsList extends React.Component {
   render() {
-    const map = <DummyMap />;
+    const { organisations } = this.props;
+    const map = <OrganisationsListMap organisations={organisations} />;
     const org_list = (
       <div className="issue-list">
         <div className="issue-list-mapHandle">
@@ -99,9 +139,10 @@ class OrganisationsList extends React.Component {
             </div>
           </div>
 
-          {this.props.organisations.map(org =>
-            <OrgListItem org={org} key={org.pk} />
-          )}
+          {this.props.organisations.map(org => {
+            console.log(org.id);
+            return <OrgListItem org={org} key={org.id} />;
+          })}
         </div>
       </div>
     );

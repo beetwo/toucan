@@ -15,6 +15,7 @@ import {
   FETCH_CURRENT_USER_DATA,
   RECEIVE_USER_INFORMATION,
   RECEIVE_ORGANISATIONS,
+  RECEIVE_ORGANISATION_DETAILS,
   SET_MAP_BOUNDS,
   SET_DETAIL_ZOOM_LEVEL
 } from "./actions";
@@ -361,9 +362,20 @@ function organisationsByID(state = {}, action) {
     case RECEIVE_ORGANISATIONS:
       let new_state = {};
       action.payload.forEach(org => {
-        new_state[parseInt(org.pk, 10)] = org;
+        let id = parseInt(org.id, 10);
+        new_state[id] = org;
       });
       return new_state;
+    case RECEIVE_ORGANISATION_DETAILS:
+      let id = parseInt(action.payload.id, 10);
+      return {
+        ...state,
+        [id]: {
+          ...state[id],
+          ...action.payload,
+          details_loaded: true
+        }
+      };
     default:
       return state;
   }

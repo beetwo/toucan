@@ -14,12 +14,14 @@ urlpatterns = [
     # these next 2 lines are important!
     url(r'^accounts/signup/', InvitedSignupView.as_view(), name='account_signup'),
     url(r'^accounts/', include('allauth.urls')),
-    url(r'^invitations/', include('toucan.invitations.urls')),
     url(r'^api/', include('toucan.api.urls')),
-    url(r'^org/', include('toucan.organisations.urls', 'organisations')),
-    url(r'^issues/', include('toucan.issues.urls', 'issue_app')),
-    url(r'^profile/', include('toucan.user_profile.urls', 'user_profile')),
-    url(r'^help/', include('toucan.help.urls', 'help'))
+    url(r'^toucan/', include([
+        url(r'^organisation/', include('toucan.organisations.urls', 'organisations')),
+        url(r'^invitations/', include('toucan.invitations.urls')),
+        url(r'^issues/', include('toucan.issues.urls', 'issue_app')),
+        url(r'^profile/', include('toucan.user_profile.urls', 'user_profile')),
+        url(r'^help/', include('toucan.help.urls', 'help'))
+    ])),
 ]
 
 
