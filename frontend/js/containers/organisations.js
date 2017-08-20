@@ -11,7 +11,7 @@ class OrganisationView extends React.Component {
   constructor(props) {
     super(props);
     this.loadData = this.loadData.bind(this);
-    this.loadData();
+    this.loadData(props.detail_view ? props.org_id : null);
   }
 
   loadData(org_id = null) {
@@ -50,11 +50,9 @@ const mapStateToProps = (state, ownProps) => {
   let detail_view = false;
   let org_id;
   if (ownProps.org_id) {
-    console.log("Detail!!");
     detail_view = true;
     org_id = parseInt(ownProps.org_id, 10);
   }
-  // console.warn("Map State:", ownProps, detail_view, org_id);
 
   return {
     detail_view,

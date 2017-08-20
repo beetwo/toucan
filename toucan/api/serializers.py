@@ -92,7 +92,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class FullUserSerializer(serializers.ModelSerializer):
 
-    membership = MembershipSerializer(many=False, read_only=True)
+    # membership = MembershipSerializer(many=False, read_only=True)
 
     class Meta:
         model = get_user_model()
@@ -100,13 +100,32 @@ class FullUserSerializer(serializers.ModelSerializer):
             'username',
             'first_name',
             'last_name',
-            'membership'
+            # 'membership'
         ]
 
 
+class OrgMembershipSerializer(serializers.ModelSerializer):
+
+    user = FullUserSerializer()
+    role = serializers.SerializerMethodField()
+
+    def get_role(self, membership):
+        return membership.get_role_display()
+
+    class Meta:
+        model = Membership
+        fields = [
+            'role',
+            'user'
+        ]
+
 class FullOrganisationSerializer(OrganisationSerializer):
 
-    members = UserSerializer(many=True, read_only=True)
+    members = serializers.SerializerMethodField()
+
+    def get_members(self, org):
+        members = org.membership_set.filter(active=True).select_related('user')
+        return OrgMembershipSerializer(members, many=True).data
 
     class Meta(OrganisationSerializer.Meta):
         fields = OrganisationSerializer.Meta.fields + [
