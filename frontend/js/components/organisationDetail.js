@@ -72,12 +72,14 @@ class OrganisationDetail extends React.Component {
           <div className="org-detail-content">
             <div className="org-detail-lead media">
               <div className="media-left media-middle">
-                <img
-                  className="org-detail-logo"
-                  width="194"
-                  height="51"
-                  src="/media/CACHE/images/fadrat-logo/3bab5950eb11ee876bba51d417c536ab.png"
-                />
+                {org.logo
+                  ? <img
+                      className="org-detail-logo"
+                      width="194"
+                      height="51"
+                      src={org.logo}
+                    />
+                  : null}
               </div>
               <div className="media-body">
                 <h1 className="org-detail-title">
@@ -97,8 +99,8 @@ class OrganisationDetail extends React.Component {
               </div>
             </div>
             <div className="org-detail-desc">
-              {org.detail
-                ? org.detail
+              {org.description
+                ? org.description
                 : <span className="text-muted">No description provided.</span>}
             </div>
             <div className="org-detail-contacts">

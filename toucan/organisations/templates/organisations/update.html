@@ -1,9 +1,23 @@
-{% extends 'organisations/create.html' %}
-{% load i18n %}
+{% extends 'organisations/base.html' %}
+{% load i18n bootstrap3 %}
+
 {% block organisation_page_title %}
     {% trans 'Edit organisation details' %}
 {% endblock %}
 
-{% block submit-button-text %}
-{% trans 'Save' %}
+{% block organisation_main %}
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  {#            {% if user.membership %}#}
+  {#                {% include 'organisations/apply_warning.html' %}#}
+  {#            {% endif %}#}
+  {% buttons %}
+  <button type="submit" class="btn btn-primary">
+    {% block submit-button-text %}
+    {% trans 'Save' %}
+    {% endblock %}
+  </button>
+  {% endbuttons %}
+</form>
 {% endblock %}
