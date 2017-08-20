@@ -1,6 +1,7 @@
 from django.conf.urls import url, include
 from .views import LocationApi, IssueView, IssueCommentView, UserSearch, IssueStatusView, CommentDetailView, \
-    MentionView, UserInformationApi, UserDetailView, ImageCreateView, UserOrOrgDetailView, OrganisationListView
+    MentionView, UserInformationApi, UserDetailView, ImageCreateView, UserOrOrgDetailView, OrganisationListView, \
+    OrganisationDetailView
 
 app_name = 'toucan_api'
 
@@ -33,7 +34,8 @@ urlpatterns = [
     ),
     url(r'^organisations/',
         include([
-            url(r'^$', OrganisationListView.as_view(), name='organisation_list')
+            url(r'^$', OrganisationListView.as_view(), name='organisation_list'),
+            url(r'^(?P<pk>\d+)/$', OrganisationDetailView.as_view(), name='organisation_detail')
         ])
     )
 ]
