@@ -1,7 +1,13 @@
 const urls = {
   createIssue(lat, lng) {
-    return '/issues/create/?' + 'lat=' + encodeURIComponent(lat) + '&lng=' + encodeURIComponent(lng)
+    return (
+      "/toucan/issues/create/?" +
+      "lat=" +
+      encodeURIComponent(lat || "") +
+      "&lng=" +
+      encodeURIComponent(lng || "")
+    );
   }
-}
+};
 
-export default urls
+export default urls;
