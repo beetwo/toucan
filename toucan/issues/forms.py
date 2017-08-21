@@ -32,11 +32,11 @@ class IssueForm(forms.ModelForm):
         ]
         widgets = {
             'point': forms.TextInput,
-            # 'issue_types': forms.CheckboxSelectMultiple
+            # 'issue_types': forms.Select
         }
         labels = {
-            'title': 'Title',
-            'issue_types': 'Categories'
+            'title': _('Title'),
+            'issue_types': _('Category')
         }
         help_texts = {
             'title': _('Add a concise title for your issue, e.g. milk shortage.'),

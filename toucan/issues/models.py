@@ -93,7 +93,7 @@ class Issue(TimeStampedModel):
     issue_types = models.ManyToManyField(
         IssueType,
         blank=False,
-        verbose_name=_('issue type')
+        verbose_name=_('category')
     )
 
     priority = models.SmallIntegerField(choices=PRIORITY_CHOICES, default=1)

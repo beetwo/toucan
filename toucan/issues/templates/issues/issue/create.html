@@ -81,7 +81,9 @@ var props = {
 render_map(issueMap, props);
 
 // selectize the issue type selector
-$('select[multiple]').selectize();
+$('select[multiple]').selectize({
+    maxItems: 1
+});
 
 })();
 </script>
