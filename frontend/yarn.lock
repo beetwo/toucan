@@ -939,7 +939,7 @@ babel-register@^6.18.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.2"
 
-babel-runtime@^6.0.0, babel-runtime@^6.11.6, babel-runtime@^6.18.0, babel-runtime@^6.25.0, babel-runtime@^6.9.1:
+babel-runtime@^6.0.0, babel-runtime@^6.11.6, babel-runtime@^6.18.0, babel-runtime@^6.9.1:
   version "6.25.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.25.0.tgz#33b98eaa5d482bb01a8d1aa6b437ad2b01aec41c"
   dependencies:
@@ -3159,6 +3159,10 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
+lodash-es@^4.0.0:
+  version "4.17.4"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.4.tgz#dcc1d7552e150a0640073ba9cb31d70f032950e7"
+
 lodash-es@^4.2.0, lodash-es@^4.2.1:
   version "4.17.2"
   resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.2.tgz#59011b585166e613eb9dd5fc256b2cd1a30f3712"
@@ -4522,12 +4526,12 @@ react-images@^0.5.1:
     react-addons-css-transition-group "^15.3.0"
     react-scrolllock "^1.0.1"
 
-react-leaflet@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/react-leaflet/-/react-leaflet-1.5.0.tgz#d7a77e2f439fabddff745749a41df3ac57d873e7"
+react-leaflet@^1.6.3:
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/react-leaflet/-/react-leaflet-1.6.3.tgz#3203bc5953c08a6aff2ec45f0e0abf80e55eec41"
   dependencies:
-    babel-runtime "^6.25.0"
     lodash "^4.0.0"
+    lodash-es "^4.0.0"
     warning "^3.0.0"
 
 react-markdown@^2.5.0:

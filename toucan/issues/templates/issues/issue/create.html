@@ -16,8 +16,11 @@
 
   <h4 class="form-heading">What is needed? </h4>
   {% bootstrap_field form.title placeholder="Winter clothes for 20 adults"%}
-  {% bootstrap_field form.description placeholder="Demand on 21 Dec 2017" field_class="input-short"%}
+
   {% bootstrap_field form.issue_types %}
+
+  {% bootstrap_field form.description placeholder="Demand on 21 Dec 2017" field_class="input-short"%}
+
   <h4 class="form-heading">Where do you need it?</h4>
   {# the point field needs some special rendering #}
   {% if form.errors.point %}
@@ -35,6 +38,7 @@
   {# end point field #}
 
    {% bootstrap_field form.pick_up_flag %}
+
 
 
   {% buttons %}
