@@ -34,12 +34,8 @@
   <div class="help-block" style="margin-bottom: 1em">{{ form.point.help_text }}</div>
   {# end point field #}
 
-  <div class="form-group">
-    <label>
-      <input type="checkbox" >
-      I can pick it up by myself.
-    </label>
-  </div>
+   {% bootstrap_field form.pick_up_flag %}
+
 
   {% buttons %}
   <button type="submit" class="btn btn-info">

@@ -29,6 +29,7 @@ class IssueForm(forms.ModelForm):
             'title',
             'issue_types',
             'description',
+            'pick_up_flag'
         ]
         widgets = {
             'point': forms.TextInput,
@@ -36,7 +37,8 @@ class IssueForm(forms.ModelForm):
         }
         labels = {
             'title': _('Title'),
-            'issue_types': _('Category')
+            'issue_types': _('Category'),
+            'pick_up_flag': _('I can pick it up myself.')
         }
         help_texts = {
             'title': _('Add a concise title for your issue, e.g. milk shortage.'),

@@ -96,6 +96,8 @@ class Issue(TimeStampedModel):
         verbose_name=_('category')
     )
 
+    pick_up_flag = models.BooleanField(default=False)
+
     priority = models.SmallIntegerField(choices=PRIORITY_CHOICES, default=1)
     visibility = models.SmallIntegerField(choices=VISIBILITY_CHOICES, default=3)
 
