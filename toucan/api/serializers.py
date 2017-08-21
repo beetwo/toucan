@@ -292,6 +292,8 @@ class IssueSerializer(GeoFeatureModelSerializer):
 
     status = serializers.SerializerMethodField()
 
+    pick_up = serializers.BooleanField(source='pick_up_flag')
+
     def get_status(self, obj):
         return obj.get_current_status_display()
 
@@ -313,6 +315,7 @@ class IssueSerializer(GeoFeatureModelSerializer):
             'issue_types',
             'comment_count',
             'organisation',
+            'pick_up'
         ]
 
 
