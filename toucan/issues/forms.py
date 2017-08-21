@@ -22,6 +22,12 @@ class CommentForm(forms.ModelForm):
 
 class IssueForm(forms.ModelForm):
 
+    def clean_issue_types(self):
+        types = self.cleaned_data['issue_types']
+        if len(types) > 1:
+            raise forms.ValidationError(_('Only a single category can be assigned.'))
+        return types
+
     class Meta:
         model = Issue
         fields = [
