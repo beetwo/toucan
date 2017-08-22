@@ -103,7 +103,7 @@ class Issue(TimeStampedModel):
 
     current_status = models.CharField(
         choices=STATUS_CHOICES,
-        max_length=10,
+        max_length=11,
         db_index=True,
         default='open',
         verbose_name=_('issue status')
@@ -193,7 +193,7 @@ class IssueStatus(AbstractIssueRelatedModel):
 
     STATUS_CHOICES = ISSUE_STATUS_CHOICES
 
-    status = models.CharField(max_length=10, db_index=True, choices=STATUS_CHOICES)
+    status = models.CharField(max_length=11, db_index=True, choices=STATUS_CHOICES)
 
     class Meta:
         verbose_name = _('issue status')

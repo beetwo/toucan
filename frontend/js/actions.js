@@ -162,10 +162,8 @@ export function postComment(issue_id, comment) {
     let url = `/api/issue/${issue_id}/comment/`;
     let data = {
       draft_struct: comment.draft_struct,
-      toggleState: comment.toggleState || false,
       attachments: comment.attachments || []
     };
-
     jsonPost(url, data).then(response => dispatch(invalidateIssue(issue_id)));
   };
 }
@@ -205,7 +203,6 @@ export function loadUserInformation(username) {
   };
 }
 
-// these are currently not used
 export function changeIssueStatus(issue_id, status) {
   return (dispatch, getState) => {
     let url = `/api/issue/${issue_id}/status/`;
@@ -216,6 +213,7 @@ export function changeIssueStatus(issue_id, status) {
   };
 }
 
+// these are currently not used
 export function closeIssue(issue_id) {
   return changeIssueStatus(issue_id, "closed");
 }

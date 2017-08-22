@@ -2,7 +2,12 @@ import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
 import IssueDetailUI from "../components/issueDetail";
-import { fetchIssueIfNeeded, postComment, invalidateIssue } from "../actions";
+import {
+  fetchIssueIfNeeded,
+  postComment,
+  invalidateIssue,
+  changeIssueStatus
+} from "../actions";
 import { addIssueFilter, removeIssueFilter, selectIssue } from "../actions";
 
 import Comments from "./comments";
@@ -60,6 +65,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
+  let issue_id = ownProps.issue_id;
   return {
     loadIssue: issue_id => {
       dispatch(selectIssue(issue_id));
@@ -70,6 +76,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     invalidateIssue: issue_id => {
       dispatch(invalidateIssue(issue_id));
+    },
+    changeIssueStatus: status => {
+      console.log(issue_id, status);
+      dispatch(changeIssueStatus(issue_id, status));
     }
   };
 };

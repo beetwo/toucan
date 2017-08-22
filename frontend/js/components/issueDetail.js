@@ -35,6 +35,7 @@ function RawTextBody(props) {
 class IssueDetailMain extends React.Component {
   render() {
     let { gjs, issue, children } = this.props;
+    console.log(this.props);
     let description = issue.description;
     let body = null;
     let issue_type = issue.issue_types[0] || {};
@@ -104,17 +105,30 @@ class IssueDetailMain extends React.Component {
                   </a>
                   <ul className="dropdown-menu">
                     <li>
-                      <a href="#" className="text-open">
+                      <a
+                        href="#"
+                        onClick={() => this.props.changeIssueStatus("open")}
+                        className="text-open"
+                      >
                         open
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="text-inprogress">
+                      <a
+                        href="#"
+                        onClick={() =>
+                          this.props.changeIssueStatus("in_progress")}
+                        className="text-inprogress"
+                      >
                         in progress
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="text-resolved">
+                      <a
+                        href="#"
+                        onClick={() => this.props.changeIssueStatus("closed")}
+                        className="text-resolved"
+                      >
                         resolved
                       </a>
                     </li>
