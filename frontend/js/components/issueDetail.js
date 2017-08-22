@@ -153,7 +153,7 @@ class IssueDetailMain extends React.Component {
           </div>
           {this.props.canComment
             ? <CommentForm
-                onComment={this.props.onComment.bind(this, gjs.id)}
+                onComment={this.props.onComment}
                 status={issue.status}
                 users={this.props.mentions}
               />

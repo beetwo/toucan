@@ -200,8 +200,6 @@ class CommentSerializer(serializers.ModelSerializer):
 
     comment = serializers.SerializerMethodField()
 
-    toggleState = serializers.BooleanField(write_only=True, required=False)
-
     attachments = SimpleImageSerializer(
         many=True, read_only=True, source='get_attachments')
 
@@ -217,7 +215,6 @@ class CommentSerializer(serializers.ModelSerializer):
             'modified',
             'draft_struct',
             'comment',
-            'toggleState',
             'attachments',
         ]
         read_only_fields = [
@@ -228,8 +225,7 @@ class CommentSerializer(serializers.ModelSerializer):
         ]
 
     def create(self, validated_data):
-
-        toggle = validated_data.pop('toggleState', False)
+        print(validated_data)
         attachments = validated_data.pop('attachments', [])
         comment = super().create(validated_data)
 
@@ -238,16 +234,6 @@ class CommentSerializer(serializers.ModelSerializer):
             comment__isnull=True,
             uploader=comment.user,
             pk__in=attachments).update(comment=comment.pk)
-
-        # open or close as a side effect
-        if toggle:
-            cs = comment.issue.status
-            status = 'open' if cs == 'closed' else 'closed'
-            IssueStatus.objects.create(
-                user=comment.user,
-                issue=comment.issue,
-                status=status
-            )
 
         msg = {
             'pk': comment.pk

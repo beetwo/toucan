@@ -160,10 +160,12 @@ export function loadComments(issue_id) {
 export function postComment(issue_id, comment) {
   return (dispatch, getState) => {
     let url = `/api/issue/${issue_id}/comment/`;
+    console.log(issue_id, typeof issue_id, comment);
     let data = {
       draft_struct: comment.draft_struct,
       attachments: comment.attachments || []
     };
+    console.warn(data);
     jsonPost(url, data).then(response => dispatch(invalidateIssue(issue_id)));
   };
 }

@@ -23,12 +23,10 @@ import TimeAgo from "react-timeago";
 export class CommentForm extends React.Component {
   constructor(props) {
     super(props);
+    console.log(this.props);
     this.state = this._getInitialState();
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleEditorStateChange = this.handleEditorStateChange.bind(this);
-    this.handleStatusChangeAndSubmit = this.handleStatusChangeAndSubmit.bind(
-      this
-    );
     this.handleAttachmentAdded = this.handleAttachmentAdded.bind(this);
     this.handleAttachmentRemoved = this.handleAttachmentRemoved.bind(this);
     this.handleAttachmentDropped = this.handleAttachmentDropped.bind(this);
@@ -37,7 +35,6 @@ export class CommentForm extends React.Component {
   _getInitialState() {
     return {
       editorState: CommentEditor.getEmptyEditorState(),
-      toggleState: false,
       attachments: [],
       files: [],
       isEmpty: true
@@ -45,16 +42,6 @@ export class CommentForm extends React.Component {
   }
 
   resetEditorState() {
-    // let editorState = EditorState.push(
-    //   this.state.editorState,
-    //   ContentState.createFromText('')
-    // );
-    // this.setState({
-    //   editorState,
-    //   attachments: [],
-    //   files: []
-    // })
-    //   console.log(this._getInitialState());
     this.setState(this._getInitialState());
   }
 
@@ -70,9 +57,9 @@ export class CommentForm extends React.Component {
       user: {
         username: "You"
       },
-      toggleState: this.state.toggleState,
       attachments: this.state.attachments
     };
+    console.warn(comment);
     this.props.onComment(comment);
     this.resetEditorState();
   }
@@ -81,17 +68,6 @@ export class CommentForm extends React.Component {
     this.setState({
       editorState: state
     });
-  }
-
-  handleStatusChangeAndSubmit(e) {
-    this.setState(
-      {
-        toggleState: true
-      },
-      () => {
-        this.postComment();
-      }
-    );
   }
 
   handleAttachmentAdded(attachmentID) {
@@ -134,13 +110,6 @@ export class CommentForm extends React.Component {
       />
     );
 
-    let closeIssueButtonText = isEmpty
-      ? "Resolve issue"
-      : "Comment and resolve issue";
-    let reopenIssueButtonText = isEmpty
-      ? "Reopen issue"
-      : "Comment and reopen issue";
-
     return (
       <form
         className="issue-detail-form"
@@ -166,8 +135,8 @@ export class CommentForm extends React.Component {
               className="comment-attachment"
               onClick={this.handleFileSelectorClick}
             >
-              <span className="icon icon-paperclip icon-md icon-baseline" /> Add
-              an attachment
+              <span className="icon icon-paperclip icon-md icon-baseline" />
+              Add an attachment
             </a>
             &nbsp;
             <button
@@ -175,24 +144,12 @@ export class CommentForm extends React.Component {
               disabled={isEmpty}
               className="btn btn-info btn-sm"
             >
-              Send <span className="icon icon-send icon-lg" />
+              Send
+              <span className="icon icon-send icon-lg" />
             </button>
           </p>
         </Dropzone>
         {uploadControl}
-        {/* <div className='panel-footer'>
-            <div className='btn-toolbar' style={{marginTop: '0.3em'}}>
-
-              <button className='btn btn-sm btn-default'
-                      type='button'
-                      onClick={this.handleStatusChangeAndSubmit}>
-                  {
-                    this.props.status == 'open' ?
-                      closeIssueButtonText : reopenIssueButtonText
-                  }
-              </button>
-           </div>
-        </div> */}
       </form>
     );
   }

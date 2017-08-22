@@ -51,7 +51,6 @@ IssueDetailContainer.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  console.warn("Detail view", ownProps);
   let issue = state.issueDetails[ownProps.issue_id] || {};
   let mentions = [...state.allUsers, ...state.allOrganisations];
   return {
@@ -65,20 +64,20 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  let issue_id = ownProps.issue_id;
+  const issue_id = ownProps.issue_id;
   return {
-    loadIssue: issue_id => {
+    loadIssue: () => {
       dispatch(selectIssue(issue_id));
       dispatch(fetchIssueIfNeeded(issue_id));
     },
-    onComment: (issue_id, comment) => {
+    onComment: comment => {
+      console.warn(comment);
       dispatch(postComment(issue_id, comment));
     },
-    invalidateIssue: issue_id => {
+    invalidateIssue: () => {
       dispatch(invalidateIssue(issue_id));
     },
     changeIssueStatus: status => {
-      console.log(issue_id, status);
       dispatch(changeIssueStatus(issue_id, status));
     }
   };
