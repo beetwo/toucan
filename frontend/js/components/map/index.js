@@ -323,14 +323,42 @@ LeafletMap.propTypes = {
 
 export default LeafletMap;
 
-const ToucanMap = ({ children, ...props }) => {
-  return (
-    <Map {...props}>
-      <ToucanTileLayer />
-      {children}
-    </Map>
-  );
-};
+class ToucanMap extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onViewportChanged = this.onViewportChanged.bind(this);
+    this.saveMapRef = this.saveMapRef.bind(this);
+    this._map = null;
+  }
+
+  saveMapRef(elem) {
+    if (elem && elem.leafletElement) {
+      this._map = elem.leafletElement;
+    }
+  }
+
+  onViewportChanged(viewport) {
+    if (this._map) {
+      let bounds = this._map.getBounds();
+      this.props.onViewportChanged &&
+        this.props.onViewportChanged(viewport, bounds);
+    }
+  }
+
+  render() {
+    let { children, onViewportChanged, ...props } = this.props;
+    return (
+      <Map
+        {...props}
+        onViewportChanged={this.onViewportChanged}
+        ref={this.saveMapRef}
+      >
+        <ToucanTileLayer />
+        {children}
+      </Map>
+    );
+  }
+}
 
 export { ToucanMap };
 

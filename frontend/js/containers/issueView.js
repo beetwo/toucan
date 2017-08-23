@@ -40,6 +40,24 @@ const getIssueMarker = (issue, selected = false, clickHandler) => {
 };
 
 class IssueContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onViewportChanged = this.onViewportChanged.bind(this);
+    this.state = {
+      detail_zoom_level: 13
+    };
+  }
+  onViewportChanged(viewport, bounds) {
+    console.warn(this.props.issue_detail ? "Detail" : "List", viewport, bounds);
+    if (this.props.issue_detail) {
+      // set the detail zoom level
+      this.props.setZoom(viewport.zoom);
+    } else {
+      // set the viewport
+      this.props.changeBounds(utils.serializeLatLng(bounds));
+    }
+  }
+
   render() {
     let {
       issue_detail,
@@ -56,33 +74,23 @@ class IssueContainer extends React.Component {
 
     // construct the map
     let map_props = {
-      animate: false
+      animate: false,
+      onViewportChanged: this.onViewportChanged,
+      bounds: map_bounds
     };
+
     // for selected issue
     if (issue_detail) {
       if (issue.isLoading === false) {
-        const saveZoom = e => {
-          this.props.setZoom(e.zoom);
-        };
         map_props = {
           ...map_props,
           center: [...issue.issue_data.geometry.coordinates].reverse(),
-          onViewportChanged: saveZoom,
-          zoom: 13 // this should probably be saved in the global state object
+          zoom: this.state.detail_zoom_level
         };
         markers = getIssueMarker(issue.issue_data, true);
       }
       content = <IssueDetail issue_id={issue_id} />;
     } else if (!issue_detail) {
-      const onBoundsChanged = function(e) {
-        changeBounds(utils.serializeLatLng(e.target.getBounds()));
-      };
-      map_props = {
-        ...map_props,
-        onZoomend: onBoundsChanged,
-        onMoveend: onBoundsChanged,
-        bounds: map_bounds
-      };
       markers = issues.map(i => getIssueMarker(i, false, navigateToIssue));
       content = <IssueList />;
     }
@@ -123,7 +131,7 @@ const mapStateToProps = (state, ownProps) => {
     issues: state.redux_issues,
     navigateToIssue: id => ownProps.history.push(`/issue/${id}/`),
     detail_zoom: state.map.detail,
-    map_bounds: state.map.list || state.initial_bounds
+    map_bounds: state.initial_bounds
   };
 };
 

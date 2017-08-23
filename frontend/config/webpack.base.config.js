@@ -63,7 +63,7 @@ module.exports = opts => {
     entry: {
       main: ["babel-polyfill", "./js/index"],
       vendor: [
-        './css/misc.scss',
+        "./css/misc.scss",
         "react",
         "react-dom",
         "leaflet",
@@ -76,12 +76,11 @@ module.exports = opts => {
         "selectize/dist/css/selectize.bootstrap3.css"
       ],
       b2MapSelector: "./js/location_selector",
-      editor: "./js/editor",
       bootstrap: [
         "jquery",
         "bootstrap-loader",
         "font-awesome/css/font-awesome.css",
-        './css/_bs-overrides.scss'
+        "./css/_bs-overrides.scss"
       ]
     },
     output: {
