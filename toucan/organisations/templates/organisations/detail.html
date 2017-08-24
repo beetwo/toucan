@@ -98,5 +98,24 @@
     {% endif %}
 </div>
 
+<div>
+<h2>{% trans 'Locations' %}</h2>
+{% for location in locations %}
+    {{ location|pprint }} -
+    {% if can_edit_locations %}
+        <a href="{% url 'organisations:locations:edit' pk=location.pk %}">Edit</a>
+    {% endif %}
+    <br />
+{% endfor %}
+
+{% if can_edit_locations %}
+    <p class="text-right">
+        <a class="btn btn-primary" href="{% url 'organisations:locations:add' %}">
+            {% trans 'Add Location' %} <i class="fa fa-globe"></i>
+        </a>
+    </p>
+{% endif %}
+</div>
+
 {% endwith %}
 {% endblock %}

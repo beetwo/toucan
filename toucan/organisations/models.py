@@ -90,6 +90,9 @@ class Organisation(TimeStampedModel):
     def can_edit_details(self, user):
         return self.membership_set.filter(user=user, role__gte=5).exists()
 
+    def is_admin(self, user):
+        return self.can_edit_details(user)
+
     class Meta:
         verbose_name = _('Organisation')
         verbose_name_plural = _('Organisations')

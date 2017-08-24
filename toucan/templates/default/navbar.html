@@ -4,6 +4,7 @@
 <nav class="navbar navbar-default navbar-static-top">
 
     <div class="container-fluid">
+        {% url 'home' as home %}
 
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
@@ -13,7 +14,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{% url 'home' %}">
+            <a class="navbar-brand" href="{{ home }}">
                 <img alt="Toucan Logo" class="navbar-logo img-responsive" src="{% static 'toucan/logos/toucan_logo@2x.png' %}">
             </a>
         </div>
@@ -24,40 +25,27 @@
             {# react will just replace the content of this dom node #}
             <div id="react-navbar">
                 <ul class="nav navbar-nav">
-                    {% url 'home' as home %}
                     <li>
                         <a href="{{ home }}">
-                            <i class="fa fa-globe"></i>
-                            {% trans 'Needs' %}
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ home }}orgs/">
-                            <i class="fa fa-address-card-o"></i>
-                            {% trans 'Organisations' %}
+                            <i class="fa fa-arrow-left"></i>
+                            {% trans 'Return to Toucan' %}
                         </a>
                     </li>
                 </ul>
             </div>
             {# purely django controlled nav #}
-            <ul class="nav navbar-nav">
-
-                <li {% if 'help' in namespaces %}class="active"{% endif %}>
-                    <a href="{% url 'help:start' %}">
-                        <i class="fa fa-question-circle"></i>
-                        {% trans 'Help' %}
-                    </a>
-                </li>
-            </ul>
+{#            <ul class="nav navbar-nav">#}
+{##}
+{#                <li {% if 'help' in namespaces %}class="active"{% endif %}>#}
+{#                    <a href="{% url 'help:start' %}">#}
+{#                        <i class="fa fa-question-circle"></i>#}
+{#                        {% trans 'Help' %}#}
+{#                    </a>#}
+{#                </li>#}
+{#            </ul>#}
 
             {# navbar right #}
             <ul class="nav navbar-nav navbar-right">
-                <li {% if 'issue_app' in namespaces %}class="active"{% endif %}>
-                    <a href="{% url 'issues:issue_create' %}">
-                        <i class="fa fa-plus"></i>
-                        {% trans 'Add Need' %}
-                    </a>
-                </li>
                 {% if user.is_authenticated %}
                     <li class="dropdown {% if 'user_profile' in namespaces %}active{% endif %}">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -66,11 +54,6 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li>
-                                    <a href="{% url 'user_profile:personal_profile' %}">
-                                        {% trans 'Settings and Profile' %}
-                                    </a>
-                                </li>
                                 <li>
                                     <a href="{% url 'account_logout' %}">
                                         {% trans 'Logout' %}
@@ -83,18 +66,14 @@
                                     </a>
                                 </li>
                                 {% endif %}
-{#                                <li>#}
-{#                                    <a href="{% url 'landing_page' %}">#}
-{#                                        {% trans 'About Toucan' %}#}
-{#                                    </a>#}
-{#                                </li>#}
+
                                 {% if debug %}
                                 <li class="divider"></li>
-                                    <li>
-                                        <a href="{% url 'generate_notifications' %}">
-                                            Generate Notifications
-                                        </a>
-                                    </li>
+                                <li>
+                                    <a href="{% url 'generate_notifications' %}">
+                                        Generate Notifications
+                                    </a>
+                                </li>
                                 {% endif %}
                             </ul>
                     </li>
