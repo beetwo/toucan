@@ -58,7 +58,7 @@ class OrganisationEdit(PermissionRequiredMixin, FormValidMessageMixin, Organisat
     form_valid_message = _('Organisation details updated')
 
     def get_success_url(self):
-        return reverse('organisations:organisation_detail')
+        return reverse('organisations:detail')
 
     def has_permission(self, *args, **kwarg):
         org = self.get_object()
@@ -67,23 +67,34 @@ class OrganisationEdit(PermissionRequiredMixin, FormValidMessageMixin, Organisat
 
 
 
-class LocationCreate(OrganisationAdminRequiredMixin, CreateView):
+class LocationCreate(OrganisationAdminRequiredMixin, FormValidMessageMixin, CreateView):
     model = Location
     template_name = 'organisations/locations/create.html'
+    form_valid_message = _('Location created.')
+
+    def get_success_url(self):
+        return reverse('organisations:detail')
+
     fields = [
         'city',
         'location'
     ]
 
 
-class LocationEdit(OrganisationAdminRequiredMixin, UpdateView):
+class LocationEdit(OrganisationAdminRequiredMixin, FormValidMessageMixin, UpdateView):
     model = Location
     template_name = 'organisations/locations/edit.html'
+
+    form_valid_message = _('Location updated.')
 
     def get_object(self, queryset=None):
         location = super().get_object(queryset=queryset)
         if self.request.user.membership.org == location.org:
             return location
+
+    def get_success_url(self):
+
+        return reverse('organisations:detail')
 
     fields = [
         'city',
