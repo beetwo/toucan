@@ -44,7 +44,8 @@ class IssueContainer extends React.Component {
     super(props);
     this.onViewportChanged = this.onViewportChanged.bind(this);
     this.state = {
-      detail_zoom_level: 13
+      detail_zoom_level: 13,
+      viewport: null
     };
   }
   onViewportChanged(viewport, bounds) {
@@ -55,6 +56,7 @@ class IssueContainer extends React.Component {
     } else {
       // set the viewport
       this.props.changeBounds(utils.serializeLatLng(bounds));
+      this.setState({ viewport });
     }
   }
 
@@ -92,6 +94,12 @@ class IssueContainer extends React.Component {
       content = <IssueDetail issue_id={issue_id} />;
     } else if (!issue_detail) {
       markers = issues.map(i => getIssueMarker(i, false, navigateToIssue));
+      if (this.state.viewport) {
+        map_props = {
+          ...map_props,
+          viewport: this.state.viewport
+        };
+      }
       content = <IssueList />;
     }
     console.log(content);
