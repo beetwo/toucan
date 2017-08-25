@@ -152,7 +152,8 @@ class Membership(TimeStampedModel):
 
 
 class Location(models.Model):
-    city = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, blank=True)
+    city = models.CharField(max_length=255, verbose_name='Address')
     location = LocationField()
     org = models.ForeignKey(Organisation, null=True)
 

@@ -1,9 +1,21 @@
 {% extends './base.html' %}
+{% load bootstrap3 i18n %}
+
+{% block organisation_page_title %}{% trans 'Add a new location' %}{% endblock %}
+
 
 {% block locations_main %}
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-    <input type="submit">
+    {% bootstrap_form form %}
+
+    {% buttons %}
+        <button type="submit" class="btn btn-primary">
+        {% block submit-button-text %}
+        {% trans 'Save' %}
+        {% endblock %}
+        </button>
+    {% endbuttons %}
+
     </form>
 {% endblock locations_main %}

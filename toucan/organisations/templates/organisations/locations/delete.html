@@ -1,0 +1,21 @@
+{% extends './base.html' %}
+{% load i18n bootstrap3 %}
+
+{% block organisation_page_title %}{% trans 'Delete location' %}{% endblock %}
+
+
+{% block locations_main %}
+    <form method="post">
+    {% csrf_token %}
+
+    <div class="alert alert-danger">
+        {% trans  "Are you sure that you want to delete this location?" %}
+    </div>
+    {% buttons %}
+        <button type="submit" class="btn btn-delete">
+        {% trans 'Yes, delete.' %}
+        </button>
+    {% endbuttons %}
+
+    </form>
+{% endblock locations_main %}
