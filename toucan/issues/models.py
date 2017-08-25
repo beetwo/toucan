@@ -137,6 +137,9 @@ class Issue(TimeStampedModel):
     def gis_location(self):
         return self.point
 
+    def allow_edit(self, user):
+        return self.created_by == user
+
     class Meta:
         verbose_name = _('issue')
         verbose_name_plural = _('issues')

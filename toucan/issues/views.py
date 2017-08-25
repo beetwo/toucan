@@ -1,77 +1,18 @@
 from django.views.generic import TemplateView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
-from django.contrib.gis.db.models import Extent
-from django.contrib.gis.geos import Point
-from django import forms
 from django.utils.translation import ugettext_lazy as _
-from django.db.models import Count
 
-import django_filters
-from django_filters.views import FilterView
 from braces.views import FormValidMessageMixin
 
 from .models import Issue
-from .forms import CommentForm, IssueForm
+from .forms import IssueForm, LatLngForm
 
 
 class HomeView(LoginRequiredMixin, TemplateView):
 
     template_name = 'issues/map.html'
-
-
-
-class IssueFilter(django_filters.FilterSet):
-
-    current_status = django_filters.ChoiceFilter(
-        choices=Issue.STATUS_CHOICES,
-        initial='open'
-    )
-
-    class Meta:
-        model = Issue
-        fields = [
-            'issue_types',
-            'organisation',
-            'current_status'
-        ]
-
-
-class IssueList(LoginRequiredMixin, FilterView):
-
-    template_name = 'issues/issue/list.html'
-    filterset_class = IssueFilter
-
-    def get_queryset(self):
-        # TODO: limit by visibility field
-        return Issue.objects.order_by('-created') \
-            .annotate(comment_count=Count('comments'))\
-            .select_related('organisation')
-
-
-class IssueDetail(LoginRequiredMixin, DetailView):
-
-    template_name = 'issues/issue/detail.html'
-    model = Issue
-    pk_url_kwarg = 'issue_id'
-
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        ctx.update({'comment_form': CommentForm()})
-        return ctx
-
-
-class LatLngForm(forms.Form):
-    lat = forms.FloatField()
-    lng = forms.FloatField()
-
-    def to_point(self):
-        return Point(
-            self.cleaned_data['lng'],
-            self.cleaned_data['lat']
-        )
 
 
 class IssueCreateView(LoginRequiredMixin, FormValidMessageMixin, CreateView):
@@ -118,11 +59,14 @@ class IssueCreateView(LoginRequiredMixin, FormValidMessageMixin, CreateView):
 
 
 class EditIssueView(LoginRequiredMixin, FormValidMessageMixin, UpdateView):
-    model = Issue
+
     template_name = 'issues/issue/edit.html'
     form_class = IssueForm
     form_valid_message = _('Issue updated.')
     pk_url_kwarg = 'issue_id'
+
+    def get_queryset(self):
+        return Issue.objects.filter(created_by=self.request.user)
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
@@ -138,36 +82,3 @@ class EditIssueView(LoginRequiredMixin, FormValidMessageMixin, UpdateView):
             current_app=self.request.resolver_match.namespace
         )
 
-
-class BaseIssueMixin(object):
-
-    def get_issue(self):
-        return get_object_or_404(Issue, pk=self.kwargs.get('issue_id'))
-
-    @property
-    def issue(self):
-        return self.get_issue()
-
-
-class CommentCreateView(LoginRequiredMixin, FormValidMessageMixin, BaseIssueMixin, CreateView):
-
-    template_name = 'issues/comment_form_full.html'
-    form_class = CommentForm
-    form_valid_message = _('comment saved')
-
-    def get_form_class(self):
-        fc = super().get_form_class()
-        return fc
-
-    def form_valid(self, form):
-        comment = form.instance
-        comment.user = self.request.user
-        comment.issue = self.issue
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        return reverse(
-            'issues:issue_detail',
-            kwargs={'issue_id': self.issue.pk},
-            current_app=self.request.resolver_match.namespace
-        )

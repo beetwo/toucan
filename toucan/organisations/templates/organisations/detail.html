@@ -30,7 +30,7 @@
     {% if can_edit_details %}
     <br />
     <p class="text-right">
-        <a href="{% url 'organisations:organisation_edit' %}"
+        <a href="{% url 'organisations:edit' %}"
             class="btn btn-primary">
             {% trans 'Edit organisation details' %}
             <i class="fa fa-edit"></i>
@@ -90,12 +90,41 @@
             </a>
         </p>
         {% endif %}
-    {% else %}
-{# Applications are currently disabled #}
-{#        <a href="{% url 'organisations:organisation_apply' org_id=organisation.pk %}" class="btn btn-success">#}
-{#            {% trans 'Become a member by applying' %}#}
-{#        </a>#}
     {% endif %}
+</div>
+
+<div id="'locations">
+
+<h2>{% trans 'Locations' %}</h2>
+
+<hr />
+
+<table class="table table-striped">
+    <tbody>
+    {% for location in locations %}
+    <tr>
+        <td>
+            {% if location.name %}<b>{{ location.name }}</b><br />{% endif %}
+            {{ location.city }}
+        </td>
+        <td>
+            {% if can_edit_locations %}
+                <a class='btn btn-sm btn-primary' href="{% url 'organisations:locations:edit' pk=location.pk %}">Edit</a>
+                <a class='btn btn-sm btn-default' href="{% url 'organisations:locations:delete' pk=location.pk %}">Delete</a>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% if can_edit_locations %}
+    <p class="text-right">
+        <a class="btn btn-primary" href="{% url 'organisations:locations:add' %}">
+            {% trans 'Add Location' %} <i class="fa fa-globe"></i>
+        </a>
+    </p>
+{% endif %}
 </div>
 
 {% endwith %}

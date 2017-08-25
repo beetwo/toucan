@@ -1,23 +1,20 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from .models import IssueComment, Issue
+from .models import Issue
 
 from django.contrib.gis import forms
+from django.contrib.gis.geos import Point
 
+class LatLngForm(forms.Form):
+    lat = forms.FloatField()
+    lng = forms.FloatField()
 
-class CommentForm(forms.ModelForm):
-
-    toggle_status = forms.BooleanField(required=False, label=_('toggle'))
-
-    class Meta:
-        model = IssueComment
-        fields = [
-            'comment',
-        ]
-        widgets = {
-            'comment': forms.Textarea(attrs={'rows': 3})
-        }
+    def to_point(self):
+        return Point(
+            self.cleaned_data['lng'],
+            self.cleaned_data['lat']
+        )
 
 
 class IssueForm(forms.ModelForm):

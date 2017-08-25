@@ -90,6 +90,9 @@ class Organisation(TimeStampedModel):
     def can_edit_details(self, user):
         return self.membership_set.filter(user=user, role__gte=5).exists()
 
+    def is_admin(self, user):
+        return self.can_edit_details(user)
+
     class Meta:
         verbose_name = _('Organisation')
         verbose_name_plural = _('Organisations')
@@ -149,7 +152,8 @@ class Membership(TimeStampedModel):
 
 
 class Location(models.Model):
-    city = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, blank=True)
+    city = models.CharField(max_length=255, verbose_name='Address')
     location = LocationField()
     org = models.ForeignKey(Organisation, null=True)
 
