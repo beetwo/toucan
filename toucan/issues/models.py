@@ -5,6 +5,7 @@ from django.contrib.postgres.fields import JSONField
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 from django.contrib.sites.models import Site
+from django.core.exceptions import ValidationError
 
 from model_utils import Choices
 from model_utils.models import TimeStampedModel
@@ -81,7 +82,7 @@ class Issue(TimeStampedModel):
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
 
     point = models.PointField(verbose_name=_('location'), null=True)
-    # location = models.ForeignKey('organisations.Location', null=True, verbose_name='location')
+    location = models.ForeignKey('organisations.Location', null=True, verbose_name='location')
 
     organisation = models.ForeignKey(
         'organisations.Organisation',
@@ -139,6 +140,10 @@ class Issue(TimeStampedModel):
 
     def allow_edit(self, user):
         return self.created_by == user
+
+    def clean(self):
+        if all([self.location, self.point]):
+            raise ValidationError({'location': _('A need can have either a location or coordinates, but not both.')})
 
     class Meta:
         verbose_name = _('issue')

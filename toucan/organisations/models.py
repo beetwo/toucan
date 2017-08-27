@@ -161,4 +161,7 @@ class Location(models.Model):
     display_on_map = models.BooleanField(default=True, verbose_name=_('Display on organisation map'))
 
     def __str__(self):
+        return self.name if self.name else self.city
+
+    def __str__(self):
         return self.city

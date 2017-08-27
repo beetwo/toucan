@@ -28,6 +28,7 @@ class IssueForm(forms.ModelForm):
     class Meta:
         model = Issue
         fields = [
+            'location',
             'point',
             'title',
             'issue_types',
@@ -35,6 +36,7 @@ class IssueForm(forms.ModelForm):
             'pick_up_flag'
         ]
         widgets = {
+            'location': forms.RadioSelect,
             'point': forms.TextInput,
             # 'issue_types': forms.Select
         }

@@ -1,4 +1,4 @@
-{% extends './base.html' %}
+{% extends '../base.html' %}
 {% block body-classes %}body-beige{% endblock %}
 {% load i18n bootstrap3 widget_tweaks %}
 
@@ -13,6 +13,7 @@
 
   {% for f in form.hidden_fields %}{{ f }}{% endfor %}
 
+    {% bootstrap_form_errors form %}
 
   <h4 class="form-heading">What is needed? </h4>
   {% bootstrap_field form.title placeholder="Winter clothes for 20 adults"%}
@@ -32,6 +33,8 @@
     {% endfor %}
   </div>
   {% endif %}
+  {% bootstrap_field form.location %}
+
   <div id="issueMap" style="height:300px;"></div>
   {{ form.point }}
   <div class="help-block" style="margin-bottom: 1em">{{ form.point.help_text }}</div>

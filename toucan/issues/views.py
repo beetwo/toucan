@@ -8,14 +8,24 @@ from braces.views import FormValidMessageMixin
 
 from .models import Issue
 from .forms import IssueForm, LatLngForm
-
+from toucan.organisations.models import Location
 
 class HomeView(LoginRequiredMixin, TemplateView):
 
     template_name = 'issues/map.html'
 
 
-class IssueCreateView(LoginRequiredMixin, FormValidMessageMixin, CreateView):
+class IssueMixin(LoginRequiredMixin, FormValidMessageMixin):
+
+    def get_form(self, form_class=None):
+        issue_form = super().get_form(form_class=form_class)
+        user_locations = Location.objects.filter(org=self.request.user.membership.org)
+        choices = [(l.pk, str(l)) for l in user_locations] + [('', _('Custom location'))]
+        issue_form.fields['location'].choices = choices
+        return issue_form
+
+
+class IssueCreateView(IssueMixin, CreateView):
 
     model = Issue
     template_name = 'issues/issue/create.html'
@@ -58,7 +68,7 @@ class IssueCreateView(LoginRequiredMixin, FormValidMessageMixin, CreateView):
         )
 
 
-class EditIssueView(LoginRequiredMixin, FormValidMessageMixin, UpdateView):
+class EditIssueView(IssueMixin, UpdateView):
 
     template_name = 'issues/issue/edit.html'
     form_class = IssueForm
