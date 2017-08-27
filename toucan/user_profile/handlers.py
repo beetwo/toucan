@@ -4,17 +4,15 @@ from django.db.models import F, Count
 
 
 def issue_created(*args, **kwargs):
-    created = kwargs.get('created')
-    issue = kwargs['instance']
 
-    if not created:
-        return
+    issue = kwargs['instance']
 
     # TODO: this is too costly and probably just plain stupid
     # some reading material:
     # http://gis.stackexchange.com/questions/176735/geodjango-distance-filter-based-on-database-column
     # http://stackoverflow.com/questions/9547069/geodjango-distance-filter-with-distance-value-stored-within-model-query
     # http://postgis.refractions.net/docs/ST_DWithin.html
+
     notification_qs = NotificationSettings.objects\
         .annotate(
             distance=Distance('point', issue.gis_location),

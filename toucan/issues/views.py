@@ -8,6 +8,7 @@ from braces.views import FormValidMessageMixin
 
 from .models import Issue
 from .forms import IssueForm, LatLngForm
+from .signals import issue_created_signal
 from toucan.organisations.models import Location
 
 class HomeView(LoginRequiredMixin, TemplateView):
@@ -61,6 +62,7 @@ class IssueCreateView(IssueMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
+        issue_created_signal.send(sender=Issue, instance=self.object)
         return reverse(
             'home_issue',
             kwargs={'issue_id': self.object.pk},

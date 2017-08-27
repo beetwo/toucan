@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db.models.signals import post_save
 
-from toucan.issues.models import Issue
+from toucan.issues.signals import issue_created_signal
 from .handlers import issue_created
 from .models import Profile
 
@@ -13,4 +13,4 @@ def create_user_profile(**kwargs):
 
 post_save.connect(create_user_profile, sender=settings.AUTH_USER_MODEL)
 
-post_save.connect(issue_created, sender=Issue)
+issue_created_signal.connect(issue_created)
