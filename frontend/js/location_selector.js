@@ -2,7 +2,7 @@ import "babel-polyfill";
 
 import PropTypes from "prop-types";
 import React from "react";
-import { render } from "react-dom";
+import { render, unmountComponentAtNode } from "react-dom";
 import { Map, Marker, Popup, Circle } from "react-leaflet";
 import L from "leaflet";
 import TileLayer from "./components/map/tiles";
@@ -81,19 +81,27 @@ class B2SelectorMap extends React.Component {
     }
 
     return (
-      <Map
-        center={position}
-        onClick={e => this.onPositionChange(e.latlng)}
-        zoom={this.state.zoom}
-        ref={m => (this._map = m)}
-        onLocationfound={this.handleLocationFound}
-        onLocationerror={this.handleLocationError}
-        animate={true}
-      >
-        <TileLayer />
-        {marker}
-        <LocationControl locate={() => this._map.leafletElement.locate()} />
-      </Map>
+      <div>
+        <div style={{height: 300}}>
+        <Map
+          center={position}
+          onClick={e => this.onPositionChange(e.latlng)}
+          zoom={this.state.zoom}
+          ref={m => (this._map = m)}
+          onLocationfound={this.handleLocationFound}
+          onLocationerror={this.handleLocationError}
+          animate={true}
+        >
+          <TileLayer />
+          {marker}
+          <LocationControl locate={() => this._map.leafletElement.locate()} />
+        </Map>
+        </div>
+      <div className="help-block" style={{marginBottom: 20}}>
+        Specify a location for your issue by clicking the map and/or dragging the marker.
+      </div>
+
+      </div>
     );
   }
   componentDidUpdate() {
@@ -126,6 +134,8 @@ function render_map(element, props = {}) {
   // and return as callback
   return cb;
 }
+
 window.render_map = render_map;
+window.unmount_map = (container) => unmountComponentAtNode(container);
 
 export default render_map;

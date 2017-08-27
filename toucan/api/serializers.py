@@ -2,7 +2,7 @@ from channels import Channel
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework.reverse import reverse
-from rest_framework_gis.serializers import GeoFeatureModelSerializer
+from rest_framework_gis.serializers import GeoFeatureModelSerializer, GeometrySerializerMethodField
 
 from ..issues.models import Issue, IssueComment, IssueType, IssueStatus
 from ..media.models import ImageFile, MediaFile
@@ -119,6 +119,7 @@ class OrgMembershipSerializer(serializers.ModelSerializer):
             'user'
         ]
 
+
 class FullOrganisationSerializer(OrganisationSerializer):
 
     members = serializers.SerializerMethodField()
@@ -225,7 +226,6 @@ class CommentSerializer(serializers.ModelSerializer):
         ]
 
     def create(self, validated_data):
-        print(validated_data)
         attachments = validated_data.pop('attachments', [])
         comment = super().create(validated_data)
 
@@ -279,6 +279,11 @@ class IssueSerializer(GeoFeatureModelSerializer):
     status = serializers.SerializerMethodField()
 
     pick_up = serializers.BooleanField(source='pick_up_flag')
+
+    point = GeometrySerializerMethodField()
+
+    def get_point(self, issue):
+        return issue.gis_location
 
     def get_status(self, obj):
         return obj.get_current_status_display()

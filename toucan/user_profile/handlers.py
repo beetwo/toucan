@@ -17,7 +17,7 @@ def issue_created(*args, **kwargs):
     # http://postgis.refractions.net/docs/ST_DWithin.html
     notification_qs = NotificationSettings.objects\
         .annotate(
-            distance=Distance('point', issue.point),
+            distance=Distance('point', issue.gis_location),
             org_count=Count('organisations'),
             type_count=Count('issue_types')
         )\

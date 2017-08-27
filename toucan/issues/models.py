@@ -81,8 +81,8 @@ class Issue(TimeStampedModel):
 
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
 
-    point = models.PointField(verbose_name=_('location'), null=True)
-    location = models.ForeignKey('organisations.Location', null=True, verbose_name='location')
+    point = models.PointField(verbose_name=_('location'), null=True, blank=True)
+    location = models.ForeignKey('organisations.Location', null=True, blank=True, verbose_name='location')
 
     organisation = models.ForeignKey(
         'organisations.Organisation',
@@ -136,7 +136,7 @@ class Issue(TimeStampedModel):
 
     @property
     def gis_location(self):
-        return self.point
+        return self.point if self.point else self.location.location
 
     def allow_edit(self, user):
         return self.created_by == user

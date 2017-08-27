@@ -35,9 +35,8 @@
   {% endif %}
   {% bootstrap_field form.location %}
 
-  <div id="issueMap" style="height:300px;"></div>
+  <div id="issueMap"></div>
   {{ form.point }}
-  <div class="help-block" style="margin-bottom: 1em">{{ form.point.help_text }}</div>
   {# end point field #}
 
    {% bootstrap_field form.pick_up_flag %}
@@ -67,7 +66,9 @@ var position = false;
 {% endif %}
 
 var issueMap = document.getElementById('issueMap'),
-    location_field = document.getElementById('id_point');
+    location_field = document.getElementById('id_point'),
+    location_radio_inputs= $('input[type=radio][name=location]'),
+    empty_location_input = location_radio_inputs.filter(function() {return !this.value;})[0];
 
 $(location_field).hide();
 
@@ -79,9 +80,30 @@ var props = {
     editable: true,
     position: position,
     onPositionChange: cb
+};
+
+function toggleMap() {
+    render_map(issueMap, props);
+};
+
+location_radio_inputs.on(
+    'change',
+    function(e) {
+        console.log('Changed', e.target, empty_location_input, e.target === empty_location_input);
+        if (e.target === empty_location_input && e.target.checked) {
+            toggleMap();
+        } else {
+            {# console.warn('Unchecked ... not implemented');#}
+            location_field.value = '';
+            unmount_map(issueMap);
+        }
+    }
+);
+
+if (empty_location_input.checked) {
+    toggleMap();
 }
 
-render_map(issueMap, props);
 
 // selectize the issue type selector
 $('select[multiple]').selectize({
