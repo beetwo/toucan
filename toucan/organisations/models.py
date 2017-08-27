@@ -157,5 +157,8 @@ class Location(models.Model):
     location = LocationField()
     org = models.ForeignKey(Organisation, null=True)
 
+    can_assign_issue = models.BooleanField(default=True, verbose_name=_('Issue assignable'))
+    display_on_map = models.BooleanField(default=True, verbose_name=_('Display on organisation map'))
+
     def __str__(self):
         return self.city
