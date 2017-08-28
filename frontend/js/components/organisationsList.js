@@ -9,6 +9,12 @@ import history from "../history";
 import { ToucanMap } from "./map";
 import { Marker } from "react-leaflet";
 import Leaflet from "leaflet";
+import { defaultMapBounds } from "../globals";
+
+const OrgIconMarker = Leaflet.divIcon({
+  className: "toucan-div-icon-marker marker-organisation",
+  iconSize: null
+});
 
 const OrganisationsListMap = ({ organisations }) => {
   if (!organisations.length) {
@@ -25,18 +31,16 @@ const OrganisationsListMap = ({ organisations }) => {
 
     return locations.concat(org_locations);
   }, []);
+
   let bounds = Leaflet.latLngBounds(locations.map(l => l.coordinates));
 
   return (
-    <ToucanMap bounds={bounds}>
+    <ToucanMap bounds={bounds.isValid() ? bounds : defaultMapBounds}>
       {locations.map(location =>
         <Marker
           key={location.key}
           position={location.coordinates}
-          icon={Leaflet.divIcon({
-            className: "toucan-div-icon-marker marker-organisation",
-            iconSize: null
-          })}
+          icon={OrgIconMarker}
           onClick={location.clickHandler}
         />
       )}

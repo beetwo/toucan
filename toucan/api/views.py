@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from django.db.models import Count
+from django.db.models import Count, Prefetch
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 
@@ -13,7 +13,7 @@ from rest_framework.views import APIView
 from rest_framework.reverse import reverse
 
 
-from ..issues.models import Issue, IssueComment, IssueStatus
+from ..issues.models import Issue, IssueComment, IssueStatus, IssueType
 from ..organisations.models import Organisation
 from ..user_profile.models import NotificationSettings
 
@@ -73,6 +73,11 @@ class BaseIssueMixin(object):
 
 
 class LocationApi(BaseIssueMixin, ListAPIView):
+
+    def get_queryset(self):
+        return Issue.objects.select_related('organisation', 'location')\
+            .prefetch_related(Prefetch('issue_types', queryset=IssueType.objects.all()))\
+            .annotate(comment_count=Count('comments'))
 
     serializer_class = IssueSerializer
 
@@ -176,9 +181,10 @@ class ImageCreateView(CreateAPIView):
     def perform_create(self, serializer):
         serializer.save(uploader=self.request.user)
 
+
 class OrganisationListView(ListAPIView):
     serializer_class = OrganisationSerializer
-    queryset = Organisation.objects.all()
+    queryset = Organisation.objects.all().prefetch_related('location_set')
 
 
 class OrganisationDetailView(RetrieveAPIView):

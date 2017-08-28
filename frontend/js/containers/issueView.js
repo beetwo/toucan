@@ -145,7 +145,6 @@ const mapStateToProps = (state, ownProps) => {
     issue = state.issueDetails[issue_id] || {};
   }
 
-  console.log(getFilteredIssues(state));
   return {
     issue,
     issue_id,

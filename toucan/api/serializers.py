@@ -32,17 +32,22 @@ class OrganisationLocationSerializer(serializers.ModelSerializer):
         ]
 
 
-class OrganisationSerializer(serializers.ModelSerializer):
-
-    logo = serializers.ImageField()
-    locations = OrganisationLocationSerializer(many=True, read_only=True, source='location_set')
-
+class SimpleOrganisationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Organisation
         fields = [
             'id',
             'name',
-            'short_name',
+            'short_name'
+        ]
+
+class OrganisationSerializer(SimpleOrganisationSerializer):
+
+    logo = serializers.ImageField()
+    locations = OrganisationLocationSerializer(many=True, read_only=True, source='location_set')
+
+    class Meta(SimpleOrganisationSerializer.Meta):
+        fields = SimpleOrganisationSerializer.Meta.fields + [
             'logo',
             'locations'
         ]
@@ -274,7 +279,7 @@ class IssueSerializer(GeoFeatureModelSerializer):
 
     comment_count = serializers.IntegerField(read_only=True)
 
-    organisation = OrganisationSerializer()
+    organisation = SimpleOrganisationSerializer()
 
     status = serializers.SerializerMethodField()
 

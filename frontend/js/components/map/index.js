@@ -347,7 +347,7 @@ class ToucanMap extends React.Component {
 
   render() {
     let { children, onViewportChanged, ...props } = this.props;
-    // console.warn("Rendering map with props: ", props);
+    console.warn("Rendering map with props: ", props);
     return (
       <Map
         {...props}
