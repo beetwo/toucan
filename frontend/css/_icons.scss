@@ -26,38 +26,39 @@
 .toucan-div-icon-marker {
   height: 30px;
   width: 30px;
-  background: url("./icons/default.svg") center center no-repeat;
+  background-color: $c-issues;
+  mask: url("./icons/default.svg") center center no-repeat;
 }
 .marker-organisation {
-  background-image: url("./icons/default-org.svg");
+  mask-image: url("./icons/default-org.svg");
 }
 .marker-camp-management {
-  background-image: url("./icons/camp-management.svg");
+  mask-image: url("./icons/camp-management.svg");
 }
 .marker-core-relief-item {
-  background-image: url("icons/core-relief-items.svg");
+  mask-image: url("icons/core-relief-items.svg");
 }
 .marker-education {
-  background-image: url("./icons/education.svg");
+  mask-image: url("./icons/education.svg");
 }
 .marker-health {
-  background-image: url("./icons/health.svg");
+  mask-image: url("./icons/health.svg");
 }
 .marker-legal-advice {
-  background-image: url("./icons/legal-advice.svg");
+  mask-image: url("./icons/legal-advice.svg");
 }
 .marker-logistics {
-  background-image: url("./icons/logistics.svg");
+  mask-image: url("./icons/logistics.svg");
 }
 .marker-nutrition {
-  background-image: url("./icons/nutrition.svg");
+  mask-image: url("./icons/nutrition.svg");
 }
 .marker-protection {
-  background-image: url("./icons/protection.svg");
+  mask-image: url("./icons/protection.svg");
 }
 .marker-sanitation-water-hygiene {
-  background-image: url("./icons/sanitation-water-hygiene.svg");
+  mask-image: url("./icons/sanitation-water-hygiene.svg");
 }
 .marker-shelter {
-  background-image: url("./icons/shelter.svg");
+  mask-image: url("./icons/shelter.svg");
 }
