@@ -353,7 +353,7 @@ class FullIssueSerializer(IssueSerializer):
             'users',
         ]
 
-        readonly_fields = [
+        read_only_fields = [
             'description_format',
         ]
 
