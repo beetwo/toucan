@@ -1,26 +1,24 @@
 div.toolbar {
-    padding: 0.5em;
+  padding: 0.5em;
 }
 
 .navbar-brand {
-    padding: 0px;
+  padding: 0px;
 }
-.navbar-brand>img {
-    height: 100%;
-    padding: 15px;
-    width: auto;
+.navbar-brand > img {
+  height: 100%;
+  width: auto;
 }
 
 @media (max-width: 922px) {
-    /*save some space on mobile devices*/
-    .page-header,
-    .page-header h1:first-child,
-    div.toolbar,
-    h3:first-child {
-        margin-top: 0px;
-    }
-    .page-header {
-        margin-bottom: 7px;
-    }
-
+  /*save some space on mobile devices*/
+  .page-header,
+  .page-header h1:first-child,
+  div.toolbar,
+  h3:first-child {
+    margin-top: 0px;
+  }
+  .page-header {
+    margin-bottom: 7px;
+  }
 }
