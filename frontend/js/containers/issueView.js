@@ -2,25 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
-import { setMapBounds, setDetailZoom } from "../actions";
+import { setMapBounds, setDetailZoom, fetchIssues } from "../actions";
 import { createSelector } from "reselect";
 
 import { SplitUIView } from "../components/main";
 import { ToucanMap } from "../components/map";
+import { serializeBounds } from "../components/map/utils";
 import { Marker } from "react-leaflet";
 import getMarkerForIssue from "../components/map/markers";
 import IssueDetail from "./issueDetail";
 import IssueList from "./issueList";
 
 import filter_issues from "../issueSelector";
-
-const utils = {
-  serializeLatLng: bounds => {
-    let sw = bounds.getSouthWest();
-    let ne = bounds.getNorthEast();
-    return [[sw.lat, sw.lng], [ne.lat, ne.lng]];
-  }
-};
 
 const getIssueMarker = (issue, selected = false, clickHandler) => {
   let position = [...issue.geometry.coordinates].reverse();
@@ -50,6 +43,7 @@ class IssueContainer extends React.Component {
       detail_zoom_level: 13,
       viewport: null
     };
+    this.props.fetchIssues();
   }
   onViewportChanged(viewport, bounds) {
     console.warn(this.props.issue_detail ? "Detail" : "List", viewport, bounds);
@@ -58,7 +52,7 @@ class IssueContainer extends React.Component {
       this.props.setZoom(viewport.zoom);
     } else {
       // set the viewport
-      this.props.changeBounds(utils.serializeLatLng(bounds));
+      this.props.changeBounds(serializeBounds(bounds));
       this.setState({ viewport });
     }
   }
@@ -105,7 +99,6 @@ class IssueContainer extends React.Component {
       }
       content = <IssueList issues={issues} />;
     }
-    console.log(content);
     return (
       <SplitUIView
         map={
@@ -128,7 +121,7 @@ IssueContainer.propTypes = {
 // some state selectors
 const issuesSelector = state => state.redux_issues;
 const filterSelector = state => state.issueFilters.selections;
-const boundsSelector = state => state.map.list || state.initial_bounds;
+const boundsSelector = state => state.map.list;
 
 // a function to filter the whole stuff
 const getFilteredIssues = createSelector(
@@ -152,7 +145,7 @@ const mapStateToProps = (state, ownProps) => {
     content: ownProps.content,
     issues: getFilteredIssues(state),
     detail_zoom: state.map.detail,
-    map_bounds: state.initial_bounds
+    map_bounds: boundsSelector(state)
   };
 };
 
@@ -164,7 +157,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     setZoom: zoom => {
       dispatch(setDetailZoom(zoom));
     },
-    navigateToIssue: id => ownProps.history.push(`/issue/${id}/`)
+    navigateToIssue: id => ownProps.history.push(`/issue/${id}/`),
+    fetchIssues: () => dispatch(fetchIssues())
   };
 };
 

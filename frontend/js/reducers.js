@@ -23,7 +23,6 @@ import {
 import { defaultMapBounds } from "./globals";
 import uniq from "lodash/uniq";
 import flattenDeep from "lodash/flattenDeep";
-import geojsonExtent from "geojson-extent";
 
 function issues(state = [], action) {
   switch (action.type) {
@@ -112,15 +111,6 @@ function issueDetails(state = {}, action) {
         ...state,
         [action.issue_id]: issueDetail(state[action.issue_id], action)
       };
-    default:
-      return state;
-  }
-}
-
-function geojson(state = { features: [] }, action) {
-  switch (action.type) {
-    case RECEIVE_ISSUES:
-      return action.issues;
     default:
       return state;
   }
@@ -381,29 +371,16 @@ function organisationsByID(state = {}, action) {
   }
 }
 
-const initial_bounds = (state = defaultMapBounds, action) => {
+function map(state = { detail: 13, list: defaultMapBounds }, action) {
   switch (action.type) {
     case RECEIVE_ISSUES:
-      // geojsonExtent somehow alters the geojson object, so copy before use
-      let extents = geojsonExtent(Object.assign({}, action.issues));
-      let point1 = extents.slice(0, 2).reverse();
-      let point2 = extents.slice(2, 4).reverse();
-      if (point1[0] === point2[0] && point1[1] === point2[1]) {
-        // zoom out if point1 and point2 are equal
-        const x = 0.01;
-        return [
-          [point1[0] - x, point1[1] - x],
-          [point2[0] + x, [point2[1] + x]]
-        ];
+      if (state.list === defaultMapBounds && action.bounds) {
+        state = {
+          ...state,
+          list: action.bounds
+        };
       }
-      return [point1, point2];
-    default:
       return state;
-  }
-};
-
-function map(state = { detail: 13, list: false }, action) {
-  switch (action.type) {
     case SET_MAP_BOUNDS:
       return {
         ...state,
@@ -420,7 +397,6 @@ function map(state = { detail: 13, list: false }, action) {
 }
 
 const reducers = {
-  geojson,
   redux_issues: issues,
   issueFilters,
   selectedIssue,
@@ -435,7 +411,6 @@ const reducers = {
   userInformationByUsername,
   loadingStatus,
   organisationsByID,
-  initial_bounds,
   map
 };
 

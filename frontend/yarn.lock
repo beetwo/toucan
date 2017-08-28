@@ -3096,6 +3096,10 @@ lcid@^1.0.0:
   dependencies:
     invert-kv "^1.0.0"
 
+leaflet.markercluster@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/leaflet.markercluster/-/leaflet.markercluster-1.1.0.tgz#547c480c46422a3c6199c8b757705f0c3afd2090"
+
 leaflet@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.2.0.tgz#fd5d93d9cb00091f5f8a69206d0d6744c1c82697"
@@ -4525,6 +4529,10 @@ react-images@^0.5.1:
     aphrodite "^0.5.0"
     react-addons-css-transition-group "^15.3.0"
     react-scrolllock "^1.0.1"
+
+react-leaflet-markercluster@^1.1.6:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/react-leaflet-markercluster/-/react-leaflet-markercluster-1.1.6.tgz#d6d6355738813f09fb43592a9448aef7392a319f"
 
 react-leaflet@^1.6.3:
   version "1.6.3"

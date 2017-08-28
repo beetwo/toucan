@@ -1,5 +1,6 @@
 import fetch from "isomorphic-fetch";
 import getCookie, { jsonPost, jsonGet } from "./utils";
+import { latLngBounds } from "leaflet";
 
 export const REQUEST_ISSUES = "REQUEST_ISSUES";
 export const RECEIVE_ISSUES = "RECEIVE_ISSUES";
@@ -33,6 +34,8 @@ export const RECEIVE_ORGANISATION_DETAILS = "RECEIVE_ORGANISATION_DETAILS";
 export const SET_MAP_BOUNDS = "SET_MAP_BOUNDS";
 export const SET_DETAIL_ZOOM_LEVEL = "SET_DETAIL_ZOOM_LEVEL";
 
+import { getBoundsFromGeoJSON } from "./components/map/utils";
+
 export function requestIssues() {
   return {
     type: REQUEST_ISSUES
@@ -43,7 +46,8 @@ export function receiveIssues(issues) {
   return {
     type: RECEIVE_ISSUES,
     issues: issues,
-    receivedAt: Date.now()
+    receivedAt: Date.now(),
+    bounds: getBoundsFromGeoJSON(issues)
   };
 }
 
