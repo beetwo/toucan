@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
 import { setMapBounds, setDetailZoom } from "../actions";
+import { createSelector } from "reselect";
 
 import { SplitUIView } from "../components/main";
 import { ToucanMap } from "../components/map";
@@ -10,6 +11,8 @@ import { Marker } from "react-leaflet";
 import getMarkerForIssue from "../components/map/markers";
 import IssueDetail from "./issueDetail";
 import IssueList from "./issueList";
+
+import filter_issues from "../issueSelector";
 
 const utils = {
   serializeLatLng: bounds => {
@@ -100,7 +103,7 @@ class IssueContainer extends React.Component {
           viewport: this.state.viewport
         };
       }
-      content = <IssueList />;
+      content = <IssueList issues={issues} />;
     }
     console.log(content);
     return (
@@ -122,22 +125,33 @@ IssueContainer.propTypes = {
   issues: PropTypes.array.isRequired
 };
 
+// some state selectors
+const issuesSelector = state => state.redux_issues;
+const filterSelector = state => state.issueFilters.selections;
+const boundsSelector = state => state.map.list || state.initial_bounds;
+
+// a function to filter the whole stuff
+const getFilteredIssues = createSelector(
+  [issuesSelector, filterSelector, boundsSelector],
+  filter_issues
+);
+
 const mapStateToProps = (state, ownProps) => {
   let issue_detail = false;
-  let issues = [];
   let issue = {};
   let issue_id = ownProps.issue_id ? parseInt(ownProps.issue_id, 10) : null;
   if (ownProps.issue_id) {
     issue_detail = true;
     issue = state.issueDetails[issue_id] || {};
   }
+
+  console.log(getFilteredIssues(state));
   return {
     issue,
     issue_id,
     issue_detail,
     content: ownProps.content,
-    issues: state.redux_issues,
-    navigateToIssue: id => ownProps.history.push(`/issue/${id}/`),
+    issues: getFilteredIssues(state),
     detail_zoom: state.map.detail,
     map_bounds: state.initial_bounds
   };
@@ -150,7 +164,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     setZoom: zoom => {
       dispatch(setDetailZoom(zoom));
-    }
+    },
+    navigateToIssue: id => ownProps.history.push(`/issue/${id}/`)
   };
 };
 

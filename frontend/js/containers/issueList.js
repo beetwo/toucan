@@ -22,11 +22,7 @@ class IssueListContainer extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    issues: getFilteredIssues(
-      state.redux_issues,
-      state.issueFilters.selections,
-      state.map.list
-    ),
+    issues: ownProps.issues,
     filterOptions: state.issueFilters,
     loading: state.loadingStatus.issues
   };

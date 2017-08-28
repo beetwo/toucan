@@ -76,7 +76,7 @@
     "redux-logger": "^2.6.1",
     "redux-thunk": "^2.0.1",
     "remarkable": "^1.6.2",
-    "reselect": "^2.5.1",
+    "reselect": "^3.0.1",
     "resolve-url-loader": "^1.4.3",
     "sass-loader": "^6.0.6",
     "selectize": "^0.12.4",
