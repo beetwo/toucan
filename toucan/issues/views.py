@@ -25,6 +25,13 @@ class IssueMixin(LoginRequiredMixin, FormValidMessageMixin):
         issue_form.fields['location'].choices = choices
         return issue_form
 
+    def get_success_url(self):
+        return reverse(
+            'home_issue',
+            kwargs={'issue_id': self.object.pk},
+            current_app=self.request.resolver_match.namespace
+        )
+
 
 class IssueCreateView(IssueMixin, CreateView):
 
@@ -62,12 +69,11 @@ class IssueCreateView(IssueMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
+        url = super().get_success_url()
         issue_created_signal.send(sender=Issue, instance=self.object)
-        return reverse(
-            'home_issue',
-            kwargs={'issue_id': self.object.pk},
-            current_app=self.request.resolver_match.namespace
-        )
+        return url
+
+
 
 
 class EditIssueView(IssueMixin, UpdateView):
@@ -87,10 +93,4 @@ class EditIssueView(IssueMixin, UpdateView):
         })
         return ctx
 
-    def get_success_url(self):
-        return reverse(
-            'issues:issue_detail',
-            kwargs={'issue_id': self.object.pk},
-            current_app=self.request.resolver_match.namespace
-        )
 
