@@ -30,6 +30,7 @@
   mask: url("./icons/default.svg") center center no-repeat;
 }
 .marker-organisation {
+  background-color: $c-organisations;
   mask-image: url("./icons/default-org.svg");
 }
 .marker-camp-management {

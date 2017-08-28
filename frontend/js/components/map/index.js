@@ -365,9 +365,23 @@ class ToucanMap extends React.Component {
 
 export { ToucanMap };
 
+const markerClusterOptions = {
+  // these are leaflet.markercluster options
+  options: {
+    showCoverageOnHover: false
+  },
+  wrapperOptions: {
+    enableDefaultStyle: false
+  }
+};
+
 const ToucanMarkerClusterGroup = ({ children, ...props }) => {
   return (
-    <MarkerClusterGroup {...props}>
+    <MarkerClusterGroup
+      options={markerClusterOptions.options}
+      wrapperOptions={markerClusterOptions.wrapperOptions}
+      {...props}
+    >
       {children}
     </MarkerClusterGroup>
   );
