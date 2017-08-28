@@ -6,11 +6,11 @@ import { DummyMap } from "./map";
 import { Link } from "react-router-dom";
 import history from "../history";
 
-import { ToucanMap } from "./map";
+import { ToucanMap, ToucanMarkerClusterGroup } from "./map";
+
 import { Marker } from "react-leaflet";
 import Leaflet from "leaflet";
 import { defaultMapBounds } from "../globals";
-import MarkerClusterGroup from "react-leaflet-markercluster";
 
 const OrgIconMarker = Leaflet.divIcon({
   className: "toucan-div-icon-marker marker-organisation",
@@ -37,7 +37,7 @@ const OrganisationsListMap = ({ organisations }) => {
 
   return (
     <ToucanMap bounds={bounds.isValid() ? bounds : defaultMapBounds}>
-      <MarkerClusterGroup>
+      <ToucanMarkerClusterGroup>
         {locations.map(location =>
           <Marker
             key={location.key}
@@ -46,7 +46,7 @@ const OrganisationsListMap = ({ organisations }) => {
             onClick={location.clickHandler}
           />
         )}
-      </MarkerClusterGroup>
+      </ToucanMarkerClusterGroup>
     </ToucanMap>
   );
 };

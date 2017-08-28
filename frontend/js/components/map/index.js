@@ -15,6 +15,7 @@ import {
 } from "react-leaflet";
 import getMarkerForIssue from "./markers";
 import LocationControl from "./locationControl";
+import MarkerClusterGroup from "react-leaflet-markercluster";
 
 import { defaultMapBounds } from "../../globals";
 import ToucanTileLayer from "./tiles";
@@ -273,6 +274,7 @@ export class LeafletMap extends React.Component {
         onLocationfound={this.handleLocationFound}
         onZoomstart={this.setUserModifiedFlag}
         animate={true}
+        useFlyTo={true}
         ref={m => (this._map = m)}
       >
         <ToucanTileLayer />
@@ -362,3 +364,13 @@ class ToucanMap extends React.Component {
 }
 
 export { ToucanMap };
+
+const ToucanMarkerClusterGroup = ({ children, ...props }) => {
+  return (
+    <MarkerClusterGroup {...props}>
+      {children}
+    </MarkerClusterGroup>
+  );
+};
+
+export { ToucanMarkerClusterGroup };
