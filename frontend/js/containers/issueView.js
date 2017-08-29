@@ -26,7 +26,7 @@ import IssueList from "./issueList";
 import { filterByFilterOptions, filterByBoundary } from "../issueSelector";
 
 const getIssueMarker = (issue, selected = false, clickHandler) => {
-  let position = [...issue.geometry.coordinates].reverse();
+  let position = issue.position;
   let props = {
     position
   };
@@ -35,7 +35,7 @@ const getIssueMarker = (issue, selected = false, clickHandler) => {
     props.onClick = () => clickHandler(issue.id);
   }
 
-  let icon = getMarkerForIssue(issue.properties || issue, selected);
+  let icon = getMarkerForIssue(issue, selected);
   if (icon != undefined) {
     props.icon = icon;
   }
@@ -135,7 +135,7 @@ class IssueContainer extends React.Component {
       if (issue.isLoading === false) {
         map_props = {
           ...map_props,
-          center: [...issue.issue_data.geometry.coordinates].reverse(),
+          center: issue.position,
           zoom: this.state.detail_zoom_level,
           bounds: null
         };
