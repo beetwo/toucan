@@ -31,8 +31,11 @@ export const RECEIVE_ORGANISATIONS = "RECEIVE_ORGANISATIONS";
 export const FETCH_ORGANISATION_DETAILS = "FETCH_ORGANISATION_DETAILS";
 export const RECEIVE_ORGANISATION_DETAILS = "RECEIVE_ORGANISATION_DETAILS";
 
-export const SET_MAP_BOUNDS = "SET_MAP_BOUNDS";
-export const SET_DETAIL_ZOOM_LEVEL = "SET_DETAIL_ZOOM_LEVEL";
+export const SET_ISSUE_MAP_BOUNDS = "SET_ISSUE_MAP_BOUNDS";
+export const SET_ISSUE_DETAIL_ZOOM_LEVEL = "SET_ISSUE_DETAIL_ZOOM_LEVEL";
+
+export const SET_ORG_MAP_BOUNDS = "SET_ORG_MAP_BOUNDS";
+export const SET_ORG_DETAIL_ZOOM_LEVEL = "SET_ORG_DETAIL_ZOOM_LEVEL";
 
 import { getBoundsFromGeoJSON } from "./components/map/utils";
 
@@ -258,16 +261,16 @@ export function fetchOrganisationDetails(id) {
   };
 }
 
-export function setMapBounds(latLng) {
+export function setIssueMapBounds(latLng) {
   return {
-    type: SET_MAP_BOUNDS,
+    type: SET_ISSUE_MAP_BOUNDS,
     payload: latLng
   };
 }
 
-export function setDetailZoom(zoom) {
+export function setIssueDetailZoom(zoom) {
   return {
-    type: SET_DETAIL_ZOOM_LEVEL,
+    type: SET_ISSUE_DETAIL_ZOOM_LEVEL,
     payload: zoom
   };
 }

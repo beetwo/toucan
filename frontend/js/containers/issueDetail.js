@@ -16,19 +16,6 @@ import IssuesFilter from "./issuesFilter";
 import isEmpty from "lodash/isEmpty";
 
 class IssueDetailContainer extends React.Component {
-  componentWillMount() {
-    this.props.loadIssue(this.props.issue_id);
-  }
-
-  componentWillReceiveProps(next_props) {
-    if (
-      next_props.issue_id != this.props.issue_id ||
-      next_props.issue.didInvalidate
-    ) {
-      this.props.loadIssue(next_props.issue_id);
-    }
-  }
-
   render() {
     return (
       <IssueDetailUI {...this.props}>
@@ -66,10 +53,6 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   const issue_id = ownProps.issue_id;
   return {
-    loadIssue: () => {
-      dispatch(selectIssue(issue_id));
-      dispatch(fetchIssueIfNeeded(issue_id));
-    },
     onComment: comment => {
       console.warn(comment);
       dispatch(postComment(issue_id, comment));

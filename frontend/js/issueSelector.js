@@ -14,10 +14,7 @@ const filterByBoundary = (issues, boundaries) => {
   });
 };
 
-const getFilteredIssues = function(issues, filters, boundaries) {
-  if (boundaries) {
-    issues = filterByBoundary(issues, boundaries);
-  }
+const filterByFilterOptions = function(issues, filters) {
   let active_filters = {};
 
   // filter out any keys from filters that have an empty array
@@ -48,4 +45,4 @@ const getFilteredIssues = function(issues, filters, boundaries) {
   return filtered_issues;
 };
 
-export default getFilteredIssues;
+export { filterByFilterOptions, filterByBoundary };

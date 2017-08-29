@@ -32,6 +32,10 @@ $marker-size: 30px;
   width: $marker-size;
   background-color: $c-issues;
   mask: url("./icons/default.svg") center center no-repeat;
+
+  &.selected {
+    background-color: $c-turquoise;
+  }
 }
 
 .marker-organisation {

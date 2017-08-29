@@ -16,8 +16,10 @@ import {
   RECEIVE_USER_INFORMATION,
   RECEIVE_ORGANISATIONS,
   RECEIVE_ORGANISATION_DETAILS,
-  SET_MAP_BOUNDS,
-  SET_DETAIL_ZOOM_LEVEL
+  SET_ISSUE_MAP_BOUNDS,
+  SET_ISSUE_DETAIL_ZOOM_LEVEL,
+  SET_ORG_MAP_BOUNDS,
+  SET_ORG_DETAIL_ZOOM_LEVEL
 } from "./actions";
 
 import { defaultMapBounds } from "./globals";
@@ -371,25 +373,43 @@ function organisationsByID(state = {}, action) {
   }
 }
 
-function map(state = { detail: 13, list: defaultMapBounds }, action) {
+function map(
+  state = {
+    issue_detail: 13,
+    org_detail: 13,
+    issue_list: defaultMapBounds,
+    org_list: defaultMapBounds
+  },
+  action
+) {
   switch (action.type) {
     case RECEIVE_ISSUES:
-      if (state.list === defaultMapBounds && action.bounds) {
+      if (state.issue_list === defaultMapBounds && action.bounds) {
         state = {
           ...state,
-          list: action.bounds
+          issue_list: action.bounds
         };
       }
       return state;
-    case SET_MAP_BOUNDS:
+    case SET_ISSUE_MAP_BOUNDS:
       return {
         ...state,
-        list: action.payload
+        issue_list: action.payload
       };
-    case SET_DETAIL_ZOOM_LEVEL:
+    case SET_ISSUE_DETAIL_ZOOM_LEVEL:
       return {
         ...state,
-        detail: action.payload
+        issue_detail: action.payload
+      };
+    case SET_ORG_MAP_BOUNDS:
+      return {
+        ...state,
+        org_list: action.payload
+      };
+    case SET_ORG_DETAIL_ZOOM_LEVEL:
+      return {
+        ...state,
+        org_detail: action.payload
       };
     default:
       return state;
