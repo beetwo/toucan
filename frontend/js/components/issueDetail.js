@@ -203,6 +203,7 @@ class IssueDetailUI extends React.Component {
 }
 
 IssueDetailUI.propType = {
+  issue: PropTypes.object.isRequired,
   onComment: PropTypes.func.isRequired,
   canComment: PropTypes.bool.isRequired
 };

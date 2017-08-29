@@ -20,7 +20,7 @@ class IssueDetailContainer extends React.Component {
     return (
       <IssueDetailUI {...this.props}>
         <Comments
-          issue_id={this.props.issue_id}
+          issue_id={this.props.issue.id}
           users={this.props.usernames}
           mentions={this.props.mentions}
         />
@@ -31,18 +31,17 @@ class IssueDetailContainer extends React.Component {
 
 IssueDetailContainer.propTypes = {
   issue: PropTypes.object.isRequired,
-  issue_id: PropTypes.number.isRequired,
   users: PropTypes.array.isRequired,
   orgs: PropTypes.array.isRequired,
-  mentions: PropTypes.array.isRequired
+  mentions: PropTypes.array.isRequired,
+  canComment: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => {
-  let issue = state.issueDetails[ownProps.issue_id] || {};
   let mentions = [...state.allUsers, ...state.allOrganisations];
+
   return {
-    issue,
-    issue_id: ownProps.issue_id,
+    issue: ownProps.issue,
     users: state.allUsers,
     orgs: state.allOrganisations,
     mentions: mentions,
@@ -51,10 +50,9 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  const issue_id = ownProps.issue_id;
+  const issue_id = ownProps.issue.id;
   return {
     onComment: comment => {
-      console.warn(comment);
       dispatch(postComment(issue_id, comment));
     },
     invalidateIssue: () => {

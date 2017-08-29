@@ -23,7 +23,6 @@ import TimeAgo from "react-timeago";
 export class CommentForm extends React.Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
     this.state = this._getInitialState();
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleEditorStateChange = this.handleEditorStateChange.bind(this);

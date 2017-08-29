@@ -42,7 +42,9 @@ const getIssueMarker = (issue, selected = false, clickHandler) => {
   return <Marker key={issue.id} {...props} />;
 };
 
-const clusterOptions = { iconCreateFunction: getIssueMarkerCluster };
+const clusterOptions = {
+  iconCreateFunction: getIssueMarkerCluster
+};
 
 class IssueContainer extends React.Component {
   constructor(props) {
@@ -51,6 +53,7 @@ class IssueContainer extends React.Component {
     this.onViewportChanged = this.onViewportChanged.bind(this);
     this.getIssueMarkers = this.getIssueMarkers.bind(this);
     this.isDetailView = this.isDetailView.bind(this);
+    this.navigateToCluster = this.navigateToCluster.bind(this);
 
     this.state = {
       detail_zoom_level: 13,
@@ -74,8 +77,15 @@ class IssueContainer extends React.Component {
   isDetailView() {
     return Boolean(this.props.issue_id);
   }
+
+  navigateToCluster(cluster) {
+    if (this.isDetailView()) {
+      let bounds = serializeBounds(cluster.getBounds());
+      this.props.navigateToBounds(bounds);
+    }
+  }
+
   onViewportChanged(viewport, bounds) {
-    console.warn(this.props.issue_detail ? "Detail" : "List", viewport, bounds);
     if (this.isDetailView()) {
       // set the detail zoom level
       this.props.setZoom(viewport.zoom);
@@ -88,22 +98,33 @@ class IssueContainer extends React.Component {
 
   getIssueMarkers() {
     let issues = this.props.filteredIssues;
+    let detail_issue;
     let markers = [];
-    if (this.isDetailView()) {
-      let detail_issue_index = issues.findIndex(
-        i => (i = i.id !== this.props.issue_id)
-      );
-      let detail_issue = issues[detail_issue_index];
-      issues = [
-        ...issues.slice(0, detail_issue_index),
-        ...issues.slice(detail_issue_index + 1)
-      ];
-      console.warn(getIssueMarker(detail_issue, true));
-      markers = [getIssueMarker(detail_issue, true)];
-    }
 
+    if (this.isDetailView()) {
+      let issue_index = issues.findIndex(
+        i => (i = i.id === this.props.issue_id)
+      );
+
+      if (issue_index === -1) {
+        console.warn(
+          `Issue with id ${this.props.issue_id} (${typeof this.props
+            .issue_id}) not found in ${issues}`
+        );
+      } else {
+        detail_issue = issues[issue_index];
+        console.log("Issue found", detail_issue);
+        issues = [
+          ...issues.slice(0, issue_index),
+          ...issues.slice(issue_index + 1)
+        ];
+        markers = [getIssueMarker(detail_issue, true)];
+      }
+    }
     return markers.concat(
-      issues.map(i => getIssueMarker(i, false, this.props.navigateToIssue))
+      issues.map(i => {
+        return getIssueMarker(i, false, this.props.navigateToIssue);
+      })
     );
   }
   render() {
@@ -131,7 +152,7 @@ class IssueContainer extends React.Component {
     let markers = this.getIssueMarkers();
 
     // for selected issue
-    if (issue_detail) {
+    if (this.isDetailView()) {
       if (issue.isLoading === false) {
         map_props = {
           ...map_props,
@@ -140,8 +161,8 @@ class IssueContainer extends React.Component {
           bounds: null
         };
       }
-      content = <IssueDetail issue_id={issue_id} />;
-    } else if (!issue_detail) {
+      content = <IssueDetail issue={issue} />;
+    } else {
       if (this.state.viewport) {
         map_props = {
           ...map_props,
@@ -154,7 +175,10 @@ class IssueContainer extends React.Component {
       <SplitUIView
         map={
           <ToucanMap {...map_props}>
-            <ToucanMarkerClusterGroup options={clusterOptions}>
+            <ToucanMarkerClusterGroup
+              options={clusterOptions}
+              onClusterClick={this.navigateToCluster}
+            >
               {markers}
             </ToucanMarkerClusterGroup>
           </ToucanMap>
@@ -221,6 +245,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(setIssueDetailZoom(zoom));
     },
     navigateToIssue: id => ownProps.history.push(`/issue/${id}/`),
+    navigateToBounds: bounds => {
+      dispatch(setIssueMapBounds(bounds));
+      ownProps.history.push("/");
+    },
     fetchIssues: () => dispatch(fetchIssues()),
     fetchSingleIssue: () => {
       if (issue_id) {

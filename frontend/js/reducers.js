@@ -36,22 +36,6 @@ function issues(state = [], action) {
           position: [...issue.location.coordinates].reverse()
         };
       });
-    case RECEIVE_ISSUE:
-      // update the issues array with the properties from the issue details
-      let issue = action.payload;
-      let index = state.findIndex(i => {
-        return i.id === action.issue_id;
-      });
-      if (index != -1) {
-        let issue = {
-          ...state[index],
-          ...issue,
-          position: [...issue.location.coordinates].reverse()
-        };
-        return [...state.slice(0, index), issue, ...state.slice(index + 1)];
-      } else {
-        return state;
-      }
     default:
       return state;
   }
@@ -69,8 +53,7 @@ function selectedIssue(state = null, action) {
 function issueDetail(
   state = {
     isLoading: true,
-    didInvalidate: false,
-    issue_data: {}
+    didInvalidate: false
   },
   action
 ) {
@@ -92,7 +75,8 @@ function issueDetail(
         ...state,
         isLoading: false,
         didInvalidate: false,
-        ...action.payload
+        ...action.payload,
+        position: [...action.payload.location.coordinates].reverse()
       };
     case INVALIDATE_ISSUE:
       return {
@@ -377,14 +361,14 @@ function map(
 ) {
   switch (action.type) {
     case RECEIVE_ISSUES:
-      // on;y set bounds for the intial loading of issues
+      // only set bounds for the intial loading of issues
       if (state.issue_list === defaultMapBounds) {
         let locations = action.issues.map(i =>
           [...i.location.coordinates].reverse()
         );
         state = {
           ...state,
-          issue_list: getBoundsFromPoints(...locations)
+          issue_list: getBoundsFromPoints(locations)
         };
       }
       return state;

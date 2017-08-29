@@ -6,7 +6,8 @@ export function serializeBounds(bounds) {
   return [[ne.lat, ne.lng], [sw.lat, sw.lng]];
 }
 
-export function getBoundsFromPoints(...points) {
+export function getBoundsFromPoints(points) {
+  console.log(points);
   let bounds = latLngBounds(points);
   return serializeBounds(bounds);
 }
