@@ -25,27 +25,28 @@ import {
 import { defaultMapBounds } from "./globals";
 import uniq from "lodash/uniq";
 import flattenDeep from "lodash/flattenDeep";
+import { getBoundsFromPoints } from "./components/map/utils";
 
 function issues(state = [], action) {
   switch (action.type) {
     case RECEIVE_ISSUES:
-      return action.issues.features.map(issue => {
+      return action.issues.map(issue => {
         return {
-          id: issue.id,
-          ...issue.properties,
-          geometry: issue.geometry
+          ...issue,
+          position: [...issue.location.coordinates].reverse()
         };
       });
     case RECEIVE_ISSUE:
       // update the issues array with the properties from the issue details
+      let issue = action.payload;
       let index = state.findIndex(i => {
         return i.id === action.issue_id;
       });
       if (index != -1) {
         let issue = {
           ...state[index],
-          ...action.payload.properties,
-          geometry: action.payload.geometry
+          ...issue,
+          position: [...issue.location.coordinates].reverse()
         };
         return [...state.slice(0, index), issue, ...state.slice(index + 1)];
       } else {
@@ -91,7 +92,7 @@ function issueDetail(
         ...state,
         isLoading: false,
         didInvalidate: false,
-        issue_data: action.payload
+        ...action.payload
       };
     case INVALIDATE_ISSUE:
       return {
@@ -138,7 +139,7 @@ function issueComments(
     case RECEIVE_ISSUE:
       return {
         isLoading: false,
-        comments: action.payload.properties.comments || []
+        comments: action.payload.comments || []
       };
     default:
       return state;
@@ -162,7 +163,7 @@ function statusChangesByIssueID(state = {}, action) {
     case RECEIVE_ISSUE:
       return {
         ...state,
-        [action.issue_id]: action.payload.properties.status_changes
+        [action.issue_id]: action.payload.status_changes
       };
     default:
       return state;
@@ -174,7 +175,7 @@ function usersByIssueID(state = {}, action) {
     case RECEIVE_ISSUE:
       return {
         ...state,
-        [action.issue_id]: action.payload.properties.users
+        [action.issue_id]: action.payload.users
       };
     default:
       return state;
@@ -184,19 +185,17 @@ function usersByIssueID(state = {}, action) {
 function issueFiltersOptions(state = {}, action) {
   switch (action.type) {
     case RECEIVE_ISSUES:
-      let issues_with_orgs = action.issues.features.filter(i => {
-        return i.properties.organisation !== null;
+      let issues_with_orgs = action.issues.filter(i => {
+        return i.organisation !== null;
       });
-      let org_names = uniq(
-        issues_with_orgs.map(i => i.properties.organisation.name)
-      );
+      let org_names = uniq(issues_with_orgs.map(i => i.organisation.name));
       return {
         ...state,
-        status: uniq(action.issues.features.map(i => i.properties.status)),
+        status: uniq(action.issues.map(i => i.status)),
         type: uniq(
           flattenDeep(
-            action.issues.features.map(i =>
-              i.properties.issue_types.map(issue_type => issue_type.slug)
+            action.issues.map(i =>
+              i.issue_types.map(issue_type => issue_type.slug)
             )
           )
         ),
@@ -263,9 +262,7 @@ function issueFilters(
 function allUsers(state = [], action) {
   switch (action.type) {
     case RECEIVE_ISSUE:
-      let users = new Set(
-        action.payload.properties.users.map(u => u.username) || []
-      );
+      let users = new Set(action.payload.users.map(u => u.username) || []);
       state.forEach(u => users.add(u));
       return Array.from(users.values());
     default:
@@ -276,18 +273,14 @@ function allUsers(state = [], action) {
 function allOrganisations(state = [], action) {
   switch (action.type) {
     case RECEIVE_ISSUE:
-      if (action.payload.properties.organisation !== null) {
-        let org_slug = action.payload.properties.organisation.short_name;
+      if (action.payload.organisation !== null) {
+        let org_slug = action.payload.organisation.short_name;
         return uniq([...state, org_slug]);
       }
       return state;
     case RECEIVE_ISSUES:
-      let issues_with_orgs = action.issues.features.filter(
-        i => i.properties.organisation !== null
-      );
-      let org_slugs = issues_with_orgs.map(
-        i => i.properties.organisation.short_name
-      );
+      let issues_with_orgs = action.issues.filter(i => i.organisation !== null);
+      let org_slugs = issues_with_orgs.map(i => i.organisation.short_name);
       return uniq([...state, ...org_slugs]);
     default:
       return state;
@@ -384,10 +377,14 @@ function map(
 ) {
   switch (action.type) {
     case RECEIVE_ISSUES:
-      if (state.issue_list === defaultMapBounds && action.bounds) {
+      // on;y set bounds for the intial loading of issues
+      if (state.issue_list === defaultMapBounds) {
+        let locations = action.issues.map(i =>
+          [...i.location.coordinates].reverse()
+        );
         state = {
           ...state,
-          issue_list: action.bounds
+          issue_list: getBoundsFromPoints(...locations)
         };
       }
       return state;

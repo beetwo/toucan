@@ -37,8 +37,6 @@ export const SET_ISSUE_DETAIL_ZOOM_LEVEL = "SET_ISSUE_DETAIL_ZOOM_LEVEL";
 export const SET_ORG_MAP_BOUNDS = "SET_ORG_MAP_BOUNDS";
 export const SET_ORG_DETAIL_ZOOM_LEVEL = "SET_ORG_DETAIL_ZOOM_LEVEL";
 
-import { getBoundsFromGeoJSON } from "./components/map/utils";
-
 export function requestIssues() {
   return {
     type: REQUEST_ISSUES
@@ -49,8 +47,7 @@ export function receiveIssues(issues) {
   return {
     type: RECEIVE_ISSUES,
     issues: issues,
-    receivedAt: Date.now(),
-    bounds: getBoundsFromGeoJSON(issues)
+    receivedAt: Date.now()
   };
 }
 

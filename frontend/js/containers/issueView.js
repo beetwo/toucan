@@ -16,7 +16,8 @@ import {
 import { SplitUIView } from "../components/main";
 import { ToucanMap, ToucanMarkerClusterGroup } from "../components/map";
 import { serializeBounds } from "../components/map/utils";
-import getMarkerForIssue, {
+import {
+  getMarkerForIssue,
   getIssueMarkerCluster
 } from "../components/map/markers";
 import IssueDetail from "./issueDetail";
@@ -25,9 +26,6 @@ import IssueList from "./issueList";
 import { filterByFilterOptions, filterByBoundary } from "../issueSelector";
 
 const getIssueMarker = (issue, selected = false, clickHandler) => {
-  if (selected) {
-    console.warn(issue);
-  }
   let position = [...issue.geometry.coordinates].reverse();
   let props = {
     position
@@ -52,6 +50,7 @@ class IssueContainer extends React.Component {
 
     this.onViewportChanged = this.onViewportChanged.bind(this);
     this.getIssueMarkers = this.getIssueMarkers.bind(this);
+    this.isDetailView = this.isDetailView.bind(this);
 
     this.state = {
       detail_zoom_level: 13,
@@ -72,9 +71,12 @@ class IssueContainer extends React.Component {
     }
   }
 
+  isDetailView() {
+    return Boolean(this.props.issue_id);
+  }
   onViewportChanged(viewport, bounds) {
     console.warn(this.props.issue_detail ? "Detail" : "List", viewport, bounds);
-    if (this.props.issue_detail) {
+    if (this.isDetailView()) {
       // set the detail zoom level
       this.props.setZoom(viewport.zoom);
     } else {
@@ -87,14 +89,19 @@ class IssueContainer extends React.Component {
   getIssueMarkers() {
     let issues = this.props.filteredIssues;
     let markers = [];
-    if (
-      this.props.issue_detail &&
-      this.props.issue.issue_data &&
-      Object.keys(this.props.issue.issue_data).length
-    ) {
-      issues = issues.filter(i => i.id !== this.props.issue_id);
-      markers = [getIssueMarker(this.props.issue.issue_data, true)];
+    if (this.isDetailView()) {
+      let detail_issue_index = issues.findIndex(
+        i => (i = i.id !== this.props.issue_id)
+      );
+      let detail_issue = issues[detail_issue_index];
+      issues = [
+        ...issues.slice(0, detail_issue_index),
+        ...issues.slice(detail_issue_index + 1)
+      ];
+      console.warn(getIssueMarker(detail_issue, true));
+      markers = [getIssueMarker(detail_issue, true)];
     }
+
     return markers.concat(
       issues.map(i => getIssueMarker(i, false, this.props.navigateToIssue))
     );

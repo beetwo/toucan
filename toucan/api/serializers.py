@@ -267,7 +267,7 @@ class StatusSerializer(serializers.ModelSerializer):
         ]
 
 
-class IssueSerializer(GeoFeatureModelSerializer):
+class IssueSerializer(serializers.ModelSerializer):
 
     url = serializers.HyperlinkedIdentityField(
         view_name='toucan_api:issue_detail',
@@ -285,22 +285,26 @@ class IssueSerializer(GeoFeatureModelSerializer):
 
     pick_up = serializers.BooleanField(source='pick_up_flag')
 
-    point = GeometrySerializerMethodField()
+    location = GeometrySerializerMethodField()
+    location_key = serializers.SerializerMethodField()
 
-    def get_point(self, issue):
+    def get_location(self, issue):
         return issue.gis_location
 
     def get_status(self, obj):
         return obj.get_current_status_display()
 
+    def get_location_key(self, obj):
+        return obj.location_id
+
     class Meta:
         model = Issue
-        geo_field = 'point'
         fields = [
             # model fields
             'id',
             'title',
-            'point',
+            'location',
+            'location_key',
             # 'priority',
             # 'visibility',
             'status',
@@ -344,7 +348,6 @@ class FullIssueSerializer(IssueSerializer):
 
     class Meta:
         model = Issue
-        geo_field = 'point'
 
         fields = IssueSerializer.Meta.fields + [
             'description',
