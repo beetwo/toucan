@@ -79,10 +79,8 @@ class IssueContainer extends React.Component {
   }
 
   navigateToCluster(cluster) {
-    if (this.isDetailView()) {
-      let bounds = serializeBounds(cluster.getBounds());
-      this.props.navigateToBounds(bounds);
-    }
+    let bounds = serializeBounds(cluster.getBounds());
+    this.props.navigateToBounds(bounds);
   }
 
   onViewportChanged(viewport, bounds) {

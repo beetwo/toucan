@@ -366,38 +366,59 @@ class ToucanMap extends React.Component {
 export { ToucanMap };
 
 const markerClusterOptions = {
-  showCoverageOnHover: false
+  showCoverageOnHover: false,
+  spiderifyOnMaxZoom: false,
+  spiderLegPolylineOptions: {
+    weight: 0
+    // opacity: 0
+  }
 };
 const markerClusterWrapperOptions = {
   enableDefaultStyle: false
 };
 
-const ToucanMarkerClusterGroup = ({
-  children,
-  options = {},
-  wrapperOptions = {},
-  ...props
-}) => {
-  // merge the options if passed
-  options = {
-    ...markerClusterOptions,
-    ...options
-  };
+class ToucanMarkerClusterGroup extends React.Component {
+  constructor(props) {
+    super(props);
+    this.setMarkerClusterGroup = this.setMarkerClusterGroup.bind(this);
+    this.mcg = null;
+  }
 
-  wrapperOptions = {
-    ...markerClusterWrapperOptions,
-    ...wrapperOptions
-  };
+  setMarkerClusterGroup(e) {
+    if (e && e.leafletElement) {
+      this.mcg = e.leafletElement;
+    }
+  }
 
-  return (
-    <MarkerClusterGroup
-      options={options}
-      wrapperOptions={wrapperOptions}
-      {...props}
-    >
-      {children}
-    </MarkerClusterGroup>
-  );
-};
+  componentDidUpdate() {
+    console.log("MCG updated");
+  }
+
+  render() {
+    let { children, options = {}, wrapperOptions = {}, ...props } = this.props;
+
+    // merge the options if passed
+    options = {
+      ...markerClusterOptions,
+      ...options
+    };
+
+    wrapperOptions = {
+      ...markerClusterWrapperOptions,
+      ...wrapperOptions
+    };
+
+    return (
+      <MarkerClusterGroup
+        ref={this.setMarkerClusterGroup}
+        options={options}
+        wrapperOptions={wrapperOptions}
+        {...props}
+      >
+        {children}
+      </MarkerClusterGroup>
+    );
+  }
+}
 
 export { ToucanMarkerClusterGroup };
