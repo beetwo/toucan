@@ -1,3 +1,7 @@
+// some variables for marker/cluster sizing
+$cluster-size: 45px;
+$marker-size: 30px;
+
 .icon {
   display: inline-block;
   vertical-align: middle;
@@ -24,11 +28,12 @@
 }
 
 .toucan-div-icon-marker {
-  height: 30px;
-  width: 30px;
+  height: $marker-size;
+  width: $marker-size;
   background-color: $c-issues;
   mask: url("./icons/default.svg") center center no-repeat;
 }
+
 .marker-organisation {
   background-color: $c-organisations;
   mask-image: url("./icons/default-org.svg");
@@ -62,4 +67,22 @@
 }
 .marker-shelter {
   mask-image: url("./icons/shelter.svg");
+}
+
+.toucan-div-icon-cluster {
+  height: $cluster-size;
+  width: $cluster-size;
+  line-height: $cluster-size;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 50%;
+  font-weight: bold;
+}
+
+.marker-cluster-organisation {
+  background-color: $c-organisations;
+}
+
+.marker-cluster-issue {
+  background-color: $c-issues;
 }
