@@ -161,7 +161,7 @@ IssueFilter.propTypes = {
 
 const IssueListItem = ({ issue }) => {
   return (
-    <Link to={`/issue/${issue.id}`} key={issue.id} className="issue media">
+    <Link to={`/issue/${issue.id}/`} key={issue.id} className="issue media">
       <div className="issue-icon media-left media-middle">
         {issue.issue_types.map(it => {
           return <ToucanIcon key={it.slug} issue_type={it} />;
@@ -278,8 +278,7 @@ class IssueListUI extends React.Component {
 }
 
 IssueListUI.propTypes = {
-  issues: PropTypes.array.isRequired,
-  selectIssue: PropTypes.func.isRequired
+  issues: PropTypes.array.isRequired
 };
 
 export default IssueListUI;

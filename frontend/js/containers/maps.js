@@ -83,11 +83,11 @@ const OrganisationMap = connect(
     return {
       marker_objects: ownProps.organisations,
       bounds: ownProps.bounds,
-      getMarker: getMarkersForOrganisation,
-      getClusterMarker: getOrganisationClusterMarker,
       selected_marker_objects: ownProps.selectedOrganisation
         ? [ownProps.selectedOrganisation]
-        : null
+        : null,
+      getMarker: getMarkersForOrganisation,
+      getClusterMarker: getOrganisationClusterMarker
     };
   },
   dispatch => {
@@ -97,4 +97,23 @@ const OrganisationMap = connect(
   }
 )(FilterMap);
 
-export { OrganisationMap };
+const IssueMap = connect(
+  (state, ownProps) => {
+    return {
+      marker_objects: ownProps.issues,
+      bounds: ownProps.bounds,
+      selected_marker_objects: ownProps.selectedIssue
+        ? [ownProps.selectedIssue]
+        : null,
+      getMarker: getMarkerForIssue,
+      getClusterMarker: getIssueMarkerCluster
+    };
+  },
+  dispatch => {
+    return {
+      onBoundsChanged: bounds => dispatch(setIssueMapBounds(bounds))
+    };
+  }
+)(FilterMap);
+
+export { OrganisationMap, IssueMap };

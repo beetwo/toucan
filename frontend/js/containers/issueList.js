@@ -21,9 +21,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     addIssueFilter: (prop, value) => dispatch(addIssueFilter(prop, value)),
-    removeIssueFilter: (prop, value) =>
-      dispatch(removeIssueFilter(prop, value)),
-    selectIssue: issue => ownProps.history.push(`/issue/${issue.id}/`)
+    removeIssueFilter: (prop, value) => dispatch(removeIssueFilter(prop, value))
   };
 };
 

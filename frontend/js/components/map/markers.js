@@ -4,13 +4,20 @@ import { Marker } from "react-leaflet";
 import { getIconClassForIssueType } from "../icons/issueType";
 import history from "../../history";
 
-function getMarkerForIssue(issue = {}, selected = false) {
+function getMarkerForIssue(issue, selected = false) {
   let issue_type = issue.issue_types[0];
   let cls = getIconClassForIssueType(
     issue_type,
     `toucan-div-icon-marker ${selected ? "selected" : ""} marker-`
   );
-  return divIcon({ className: cls, iconSize: null });
+  return (
+    <Marker
+      key={`issue-marker-${issue.id}`}
+      icon={divIcon({ className: cls, iconSize: null })}
+      position={issue.position}
+      onClick={() => history.push(`/issues/${issue.id}/`)}
+    />
+  );
 }
 
 const getIssueMarkerCluster = cluster => {
