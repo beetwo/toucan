@@ -48,6 +48,7 @@ class OrganisationView extends React.Component {
         <OrganisationMap
           organisations={this.props.organisations}
           bounds={this.props.bounds}
+          selected_organisation={this.props.organisation}
         />
       );
     } else {

@@ -26,7 +26,7 @@ class FilterMap extends React.Component {
 
     this.getMarkers = this.getMarkers.bind(this);
     this.getClusterMarker = this.getClusterMarker.bind(this);
-
+    console.warn("MAP", this.props);
     this.state = {
       viewport: null
     };

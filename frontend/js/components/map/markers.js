@@ -15,7 +15,7 @@ function getMarkerForIssue(issue, selected = false) {
       key={`issue-marker-${issue.id}`}
       icon={divIcon({ className: cls, iconSize: null })}
       position={issue.position}
-      onClick={() => history.push(`/issues/${issue.id}/`)}
+      onClick={() => history.push(`/issue/${issue.id}/`)}
     />
   );
 }

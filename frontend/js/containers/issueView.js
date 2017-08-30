@@ -36,7 +36,7 @@ class IssueContainer extends React.Component {
   render() {
     let map = null;
     let content = null;
-
+    console.warn(this.props.selectedIssue);
     // for selected issue
     if (this.isDetailView()) {
       content = <IssueDetail issue_id={this.props.issue_id} />;
