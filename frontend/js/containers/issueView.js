@@ -169,6 +169,7 @@ class IssueContainer extends React.Component {
       }
       content = <IssueList issues={geoFilteredIssues} />;
     }
+    console.warn("clusterOptions", clusterOptions);
     return (
       <SplitUIView
         map={

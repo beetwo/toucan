@@ -392,6 +392,22 @@ function map(
         ...state,
         org_detail: action.payload
       };
+    case RECEIVE_ORGANISATIONS:
+      if (state.org_list === defaultMapBounds) {
+        let location_coordinates = action.payload.reduce(
+          (coords, organisation) => {
+            let location_coords = organisation.locations.map(l =>
+              [...l.location.coordinates].reverse()
+            );
+            return coords.concat(location_coords);
+          },
+          []
+        );
+        return {
+          ...state,
+          org_list: getBoundsFromPoints(location_coordinates)
+        };
+      }
     default:
       return state;
   }

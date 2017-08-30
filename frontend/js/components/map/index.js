@@ -22,6 +22,7 @@ import ToucanTileLayer from "./tiles";
 import urls from "../../urls";
 import { history } from "../../index";
 import { setCoordinates } from "../../actions";
+import { serializeBounds } from "./utils";
 
 require("leaflet/dist/leaflet.css");
 
@@ -344,6 +345,9 @@ class ToucanMap extends React.Component {
       let bounds = this._map.getBounds();
       this.props.onViewportChanged &&
         this.props.onViewportChanged(viewport, bounds);
+
+      this.props.onBoundsChanged &&
+        this.props.onBoundsChanged(serializeBounds(bounds));
     }
   }
 
@@ -407,7 +411,7 @@ class ToucanMarkerClusterGroup extends React.Component {
       ...markerClusterWrapperOptions,
       ...wrapperOptions
     };
-
+    console.warn(options);
     return (
       <MarkerClusterGroup
         ref={this.setMarkerClusterGroup}

@@ -269,3 +269,17 @@ export function setIssueDetailZoom(zoom) {
     payload: zoom
   };
 }
+
+export function setOrgMapBounds(latLng) {
+  return {
+    type: SET_ORG_MAP_BOUNDS,
+    payload: latLng
+  };
+}
+
+export function setOrgDetailZoom(zoom) {
+  return {
+    type: SET_ORG_DETAIL_ZOOM_LEVEL,
+    payload: zoom
+  };
+}
