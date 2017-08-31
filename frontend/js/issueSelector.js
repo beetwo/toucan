@@ -7,9 +7,7 @@ const filterByBoundary = (issues, boundaries) => {
     L.latLng(boundaries[1])
   );
   return issues.filter(i => {
-    let coordinates = [...i.geometry.coordinates];
-    coordinates.reverse();
-    let latLng = L.latLng(coordinates);
+    let latLng = L.latLng(i.position);
     return bounds.contains(latLng);
   });
 };

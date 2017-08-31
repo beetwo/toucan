@@ -1,59 +1,10 @@
 import React from "react";
-import OrganisationDetails from "./details/organisation";
-import { SplitUIView } from "./main";
 import Loading from "./loading";
-import { DummyMap } from "./map";
-import { Link } from "react-router-dom";
-import history from "../history";
 
-import { ToucanMap, ToucanMarkerClusterGroup } from "./map";
-import { getOrganisationClusterMarker } from "./map/markers";
+import { Link } from "react-router-dom";
 
 import { Marker } from "react-leaflet";
 import Leaflet from "leaflet";
-import { defaultMapBounds } from "../globals";
-
-const OrgIconMarker = Leaflet.divIcon({
-  className: "toucan-div-icon-marker marker-organisation",
-  iconSize: null
-});
-
-const clusterOptions = { iconCreateFunction: getOrganisationClusterMarker };
-
-const OrganisationsListMap = ({ organisations }) => {
-  if (!organisations.length) {
-    return null;
-  }
-  let locations = organisations.reduce((locations, org) => {
-    let clickHandler = () => history.push(`/orgs/${org.id}/`);
-    let org_locations = org.locations.map(org_loc => ({
-      name: org_loc.city,
-      coordinates: [...org_loc.location.coordinates].reverse(),
-      key: `${org.id}-${org_loc.id}`,
-      clickHandler
-    }));
-
-    return locations.concat(org_locations);
-  }, []);
-
-  let bounds = Leaflet.latLngBounds(locations.map(l => l.coordinates));
-  return (
-    <ToucanMap bounds={bounds.isValid() ? bounds : defaultMapBounds}>
-      <ToucanMarkerClusterGroup options={clusterOptions}>
-        {locations.map(location =>
-          <Marker
-            key={location.key}
-            position={location.coordinates}
-            icon={OrgIconMarker}
-            onClick={location.clickHandler}
-          />
-        )}
-      </ToucanMarkerClusterGroup>
-    </ToucanMap>
-  );
-};
-
-export { OrganisationsListMap };
 
 const OrgListItem = ({ org }) => {
   return (
@@ -85,7 +36,6 @@ const OrgListItem = ({ org }) => {
 class OrganisationsList extends React.Component {
   render() {
     const { organisations } = this.props;
-    const map = <OrganisationsListMap organisations={organisations} />;
     const org_list = (
       <div className="issue-list">
         <div className="issue-list-mapHandle">
@@ -156,7 +106,7 @@ class OrganisationsList extends React.Component {
         </div>
       </div>
     );
-    return <SplitUIView map={map} issue_view={org_list} />;
+    return org_list;
   }
 }
 

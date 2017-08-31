@@ -3,12 +3,16 @@ import React from "react";
 import { connect } from "react-redux";
 import IssueDetailUI from "../components/issueDetail";
 import {
-  fetchIssueIfNeeded,
   postComment,
   invalidateIssue,
-  changeIssueStatus
+  changeIssueStatus,
+  selectIssue,
+  fetchIssueIfNeeded,
+  addIssueFilter,
+  removeIssueFilter
 } from "../actions";
-import { addIssueFilter, removeIssueFilter, selectIssue } from "../actions";
+
+import Loading from "../components/loading";
 
 import Comments from "./comments";
 import IssuesFilter from "./issuesFilter";
@@ -16,7 +20,24 @@ import IssuesFilter from "./issuesFilter";
 import isEmpty from "lodash/isEmpty";
 
 class IssueDetailContainer extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (this.props.issue_id !== newProps.issue_id) {
+      newProps.loadIssue();
+    }
+  }
+
+  componentDidMount() {
+    this.props.loadIssue();
+  }
+
   render() {
+    if (!this.props.issue) {
+      return <Loading />;
+    }
     return (
       <IssueDetailUI {...this.props}>
         <Comments
@@ -30,19 +51,20 @@ class IssueDetailContainer extends React.Component {
 }
 
 IssueDetailContainer.propTypes = {
-  issue: PropTypes.object.isRequired,
   issue_id: PropTypes.number.isRequired,
+  issue: PropTypes.object,
   users: PropTypes.array.isRequired,
   orgs: PropTypes.array.isRequired,
-  mentions: PropTypes.array.isRequired
+  mentions: PropTypes.array.isRequired,
+  canComment: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => {
-  let issue = state.issueDetails[ownProps.issue_id] || {};
   let mentions = [...state.allUsers, ...state.allOrganisations];
+
   return {
-    issue,
     issue_id: ownProps.issue_id,
+    issue: state.issueDetails[ownProps.issue_id],
     users: state.allUsers,
     orgs: state.allOrganisations,
     mentions: mentions,
@@ -54,7 +76,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   const issue_id = ownProps.issue_id;
   return {
     onComment: comment => {
-      console.warn(comment);
       dispatch(postComment(issue_id, comment));
     },
     invalidateIssue: () => {
@@ -62,6 +83,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     changeIssueStatus: status => {
       dispatch(changeIssueStatus(issue_id, status));
+    },
+    loadIssue: () => {
+      dispatch(selectIssue(issue_id));
+      dispatch(fetchIssueIfNeeded(issue_id));
     }
   };
 };

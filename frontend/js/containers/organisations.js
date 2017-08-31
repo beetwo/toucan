@@ -2,10 +2,17 @@ import React from "react";
 import { connect } from "react-redux";
 import history from "../history";
 import PropTypes from "prop-types";
+import { createSelector } from "reselect";
+
 import { fetchOrganisations, fetchOrganisationDetails } from "../actions";
+import { filterOrganisationsByBoundary } from "../orgSelector";
 
 import OrganisationsList from "../components/organisationsList";
 import OrganisationDetail from "../components/organisationDetail";
+
+import { OrganisationMap } from "./maps";
+
+import { SplitUIView } from "../components/main";
 
 class OrganisationView extends React.Component {
   constructor(props) {
@@ -33,11 +40,30 @@ class OrganisationView extends React.Component {
 
   render() {
     const { detail_view } = this.props;
+    let content = null;
+    let map = null;
     if (detail_view) {
-      return <OrganisationDetail org={this.props.organisation} />;
+      content = <OrganisationDetail org={this.props.organisation} />;
+      map = (
+        <OrganisationMap
+          organisations={this.props.organisations}
+          bounds={this.props.bounds}
+          selected_organisation={this.props.organisation}
+        />
+      );
     } else {
-      return <OrganisationsList organisations={this.props.organisations} />;
+      content = (
+        <OrganisationsList organisations={this.props.filteredOrganisations} />
+      );
+      map = (
+        <OrganisationMap
+          organisations={this.props.organisations}
+          bounds={this.props.bounds}
+        />
+      );
     }
+
+    return <SplitUIView map={map} issue_view={content} />;
   }
 }
 
@@ -46,6 +72,20 @@ OrganisationView.propTypes = {
   org_id: PropTypes.number
 };
 
+const organisationsSelector = state => state.organisationsByID;
+const boundsSelector = state => {
+  return state.map.org_list;
+};
+
+const getAllOrganisations = createSelector([organisationsSelector], orgsByIDs =>
+  Object.values(orgsByIDs)
+);
+
+const getGeoFilteredOrganisations = createSelector(
+  [getAllOrganisations, boundsSelector],
+  filterOrganisationsByBoundary
+);
+
 const mapStateToProps = (state, ownProps) => {
   let detail_view = false;
   let org_id;
@@ -53,11 +93,12 @@ const mapStateToProps = (state, ownProps) => {
     detail_view = true;
     org_id = parseInt(ownProps.org_id, 10);
   }
-
   return {
     detail_view,
     org_id,
-    organisations: Object.values(state.organisationsByID),
+    organisations: getAllOrganisations(state),
+    filteredOrganisations: getGeoFilteredOrganisations(state),
+    bounds: boundsSelector(state),
     organisation: state.organisationsByID[org_id]
   };
 };

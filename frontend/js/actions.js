@@ -37,8 +37,6 @@ export const SET_ISSUE_DETAIL_ZOOM_LEVEL = "SET_ISSUE_DETAIL_ZOOM_LEVEL";
 export const SET_ORG_MAP_BOUNDS = "SET_ORG_MAP_BOUNDS";
 export const SET_ORG_DETAIL_ZOOM_LEVEL = "SET_ORG_DETAIL_ZOOM_LEVEL";
 
-import { getBoundsFromGeoJSON } from "./components/map/utils";
-
 export function requestIssues() {
   return {
     type: REQUEST_ISSUES
@@ -49,8 +47,7 @@ export function receiveIssues(issues) {
   return {
     type: RECEIVE_ISSUES,
     issues: issues,
-    receivedAt: Date.now(),
-    bounds: getBoundsFromGeoJSON(issues)
+    receivedAt: Date.now()
   };
 }
 
@@ -167,12 +164,10 @@ export function loadComments(issue_id) {
 export function postComment(issue_id, comment) {
   return (dispatch, getState) => {
     let url = `/api/issue/${issue_id}/comment/`;
-    console.log(issue_id, typeof issue_id, comment);
     let data = {
       draft_struct: comment.draft_struct,
       attachments: comment.attachments || []
     };
-    console.warn(data);
     jsonPost(url, data).then(response => dispatch(invalidateIssue(issue_id)));
   };
 }
@@ -271,6 +266,20 @@ export function setIssueMapBounds(latLng) {
 export function setIssueDetailZoom(zoom) {
   return {
     type: SET_ISSUE_DETAIL_ZOOM_LEVEL,
+    payload: zoom
+  };
+}
+
+export function setOrgMapBounds(latLng) {
+  return {
+    type: SET_ORG_MAP_BOUNDS,
+    payload: latLng
+  };
+}
+
+export function setOrgDetailZoom(zoom) {
+  return {
+    type: SET_ORG_DETAIL_ZOOM_LEVEL,
     payload: zoom
   };
 }

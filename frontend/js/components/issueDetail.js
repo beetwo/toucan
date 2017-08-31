@@ -34,8 +34,7 @@ function RawTextBody(props) {
 
 class IssueDetailMain extends React.Component {
   render() {
-    let { gjs, issue, children } = this.props;
-    console.log(this.props);
+    let { issue, children } = this.props;
     let description = issue.description;
     let body = null;
     let issue_type = issue.issue_types[0] || {};
@@ -185,20 +184,14 @@ class IssueDetailFooter extends React.Component {
 
 class IssueDetailUI extends React.Component {
   render() {
-    let issue_loader = this.props.issue;
-    if (
-      isEmpty(issue_loader) ||
-      (issue_loader.isLoading && isEmpty(issue_loader.issue_data))
-    ) {
+    let issue = this.props.issue;
+    if (isEmpty(issue) || issue.isLoading) {
       return Loading();
     }
 
-    let gjs = issue_loader.issue_data;
-    let issue = gjs.properties;
-
     return (
       <div className="issue-detail">
-        <IssueDetailMain {...this.props} gjs={gjs} issue={issue} />
+        <IssueDetailMain {...this.props} issue={issue} />
 
         {/*
         <HiddenMedium>
@@ -210,6 +203,7 @@ class IssueDetailUI extends React.Component {
 }
 
 IssueDetailUI.propType = {
+  issue: PropTypes.object.isRequired,
   onComment: PropTypes.func.isRequired,
   canComment: PropTypes.bool.isRequired
 };

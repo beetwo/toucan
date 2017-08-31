@@ -1,13 +1,12 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import { connect } from 'react-redux'
-import { CommentList } from '../components/comments'
-import {loadComments as loadCommentsAction} from '../actions'
+import PropTypes from "prop-types";
+import React from "react";
+import { connect } from "react-redux";
+import { CommentList } from "../components/comments";
+import { loadComments as loadCommentsAction } from "../actions";
 
 export class Comments extends React.Component {
-
   render() {
-    return <CommentList { ...this.props }/>
+    return <CommentList {...this.props} />;
   }
 }
 
@@ -16,19 +15,16 @@ Comments.propTypes = {
   statusChanges: PropTypes.array.isRequired,
   users: PropTypes.array.isRequired,
   issue_id: PropTypes.number.isRequired
-}
-
+};
 
 const mapStateToProps = (state, ownProps) => {
-
   let issue_id = ownProps.issue_id;
-  let comment_struct = state.commentsByIssueID[issue_id] || {}
-
+  let comment_struct = state.commentsByIssueID[issue_id] || {};
   return {
     comments: comment_struct.comments || [],
     statusChanges: state.statusChangesByIssueID[issue_id] || [],
     users: state.allUsers
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps)(Comments)
+export default connect(mapStateToProps)(Comments);

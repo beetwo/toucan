@@ -22,6 +22,7 @@ import ToucanTileLayer from "./tiles";
 import urls from "../../urls";
 import { history } from "../../index";
 import { setCoordinates } from "../../actions";
+import { serializeBounds } from "./utils";
 
 require("leaflet/dist/leaflet.css");
 
@@ -90,9 +91,9 @@ class AddNewMarker extends React.Component {
 }
 
 const AttributionImage = () => {
-  return process.env.MAPBOX_API_KEY
-    ? <span className="mapbox-wordmark" />
-    : null;
+  return process.env.MAPBOX_API_KEY ? (
+    <span className="mapbox-wordmark" />
+  ) : null;
 };
 
 export class LeafletMap extends React.Component {
@@ -279,13 +280,13 @@ export class LeafletMap extends React.Component {
       >
         <ToucanTileLayer />
         {markers}
-        {has_coordinates
-          ? <AddNewMarker
-              ref={e => (this._add_new_marker = e)}
-              position={coordinates}
-              handleLatLng={this.handleAddMarkerPositionChange}
-            />
-          : null}
+        {has_coordinates ? (
+          <AddNewMarker
+            ref={e => (this._add_new_marker = e)}
+            position={coordinates}
+            handleLatLng={this.handleAddMarkerPositionChange}
+          />
+        ) : null}
         <LocationControl locate={this.handleLocate} />
         {this.props.children}
         <AttributionImage />
@@ -344,6 +345,9 @@ class ToucanMap extends React.Component {
       let bounds = this._map.getBounds();
       this.props.onViewportChanged &&
         this.props.onViewportChanged(viewport, bounds);
+
+      this.props.onBoundsChanged &&
+        this.props.onBoundsChanged(serializeBounds(bounds));
     }
   }
 
@@ -366,38 +370,59 @@ class ToucanMap extends React.Component {
 export { ToucanMap };
 
 const markerClusterOptions = {
-  showCoverageOnHover: false
+  showCoverageOnHover: false,
+  spiderifyOnMaxZoom: false,
+  spiderLegPolylineOptions: {
+    weight: 0
+    // opacity: 0
+  }
 };
 const markerClusterWrapperOptions = {
   enableDefaultStyle: false
 };
 
-const ToucanMarkerClusterGroup = ({
-  children,
-  options = {},
-  wrapperOptions = {},
-  ...props
-}) => {
-  // merge the options if passed
-  options = {
-    ...markerClusterOptions,
-    ...options
-  };
+class ToucanMarkerClusterGroup extends React.Component {
+  constructor(props) {
+    super(props);
+    this.setMarkerClusterGroup = this.setMarkerClusterGroup.bind(this);
+    this.mcg = null;
+  }
 
-  wrapperOptions = {
-    ...markerClusterWrapperOptions,
-    ...wrapperOptions
-  };
+  setMarkerClusterGroup(e) {
+    if (e && e.leafletElement) {
+      this.mcg = e.leafletElement;
+    }
+  }
 
-  return (
-    <MarkerClusterGroup
-      options={options}
-      wrapperOptions={wrapperOptions}
-      {...props}
-    >
-      {children}
-    </MarkerClusterGroup>
-  );
-};
+  componentDidUpdate() {
+    console.log("MCG updated");
+  }
+
+  render() {
+    let { children, options = {}, wrapperOptions = {}, ...props } = this.props;
+
+    // merge the options if passed
+    options = {
+      ...markerClusterOptions,
+      ...options
+    };
+
+    wrapperOptions = {
+      ...markerClusterWrapperOptions,
+      ...wrapperOptions
+    };
+
+    return (
+      <MarkerClusterGroup
+        ref={this.setMarkerClusterGroup}
+        options={options}
+        wrapperOptions={wrapperOptions}
+        {...props}
+      >
+        {children}
+      </MarkerClusterGroup>
+    );
+  }
+}
 
 export { ToucanMarkerClusterGroup };

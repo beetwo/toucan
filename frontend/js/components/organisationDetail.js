@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { SplitUIView } from "./main";
 import Loading from "./loading";
-import { OrganisationsListMap } from "./organisationsList";
 
 import history from "../history";
 
@@ -51,8 +50,6 @@ class OrganisationDetail extends React.Component {
     if (!org || !org.details_loaded) {
       return <Loading />;
     }
-    console.log(org);
-    let map = <OrganisationsListMap organisations={[org]} />;
 
     const content = (
       <div className="org-detail">
@@ -158,7 +155,7 @@ class OrganisationDetail extends React.Component {
         </div>
       </div>
     );
-    return <SplitUIView map={map} issue_view={content} />;
+    return content;
   }
 }
 
