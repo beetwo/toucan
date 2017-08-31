@@ -22,13 +22,16 @@ import isEmpty from "lodash/isEmpty";
 class IssueDetailContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.props.loadIssue();
   }
 
   componentWillReceiveProps(newProps) {
     if (this.props.issue_id !== newProps.issue_id) {
       newProps.loadIssue();
     }
+  }
+
+  componentDidMount() {
+    this.props.loadIssue();
   }
 
   render() {

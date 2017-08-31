@@ -26,7 +26,6 @@ class FilterMap extends React.Component {
 
     this.getMarkers = this.getMarkers.bind(this);
     this.getClusterMarker = this.getClusterMarker.bind(this);
-    console.warn("MAP", this.props);
     this.state = {
       viewport: null
     };
@@ -35,8 +34,16 @@ class FilterMap extends React.Component {
   }
 
   getMarkers() {
+    let selection;
+    if (this.props.selected_marker_objects) {
+      selection = new Set(this.props.selected_marker_objects);
+    }
+    let selected_markers = [];
     let markers = this.props.marker_objects.reduce((previous_markers, mo) => {
-      let object_markers = this.props.getMarker(mo);
+      if (selection && selection.has(mo)) {
+        console.log("Is selected", mo);
+      }
+      let object_markers = this.props.getMarker(mo, selection);
       if (!Array.isArray(object_markers)) {
         object_markers = [object_markers];
       }
@@ -54,8 +61,6 @@ class FilterMap extends React.Component {
     const mc_options = {
       iconCreateFunction: this.getClusterMarker
     };
-    console.warn(this.getClusterMarker, mc_options);
-
     return (
       <ToucanMap
         bounds={this.props.bounds}
@@ -83,8 +88,8 @@ const OrganisationMap = connect(
     return {
       marker_objects: ownProps.organisations,
       bounds: ownProps.bounds,
-      selected_marker_objects: ownProps.selectedOrganisation
-        ? [ownProps.selectedOrganisation]
+      selected_marker_objects: ownProps.selected_organisation
+        ? [ownProps.selected_organisation]
         : null,
       getMarker: getMarkersForOrganisation,
       getClusterMarker: getOrganisationClusterMarker

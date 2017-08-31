@@ -4,11 +4,14 @@ import { Marker } from "react-leaflet";
 import { getIconClassForIssueType } from "../icons/issueType";
 import history from "../../history";
 
-function getMarkerForIssue(issue, selected = false) {
+function getMarkerForIssue(issue, selected_issues = new Set()) {
   let issue_type = issue.issue_types[0];
+
   let cls = getIconClassForIssueType(
     issue_type,
-    `toucan-div-icon-marker ${selected ? "selected" : ""} marker-`
+    `toucan-div-icon-marker ${selected_issues.has(issue)
+      ? "selected"
+      : ""} marker-`
   );
   return (
     <Marker
@@ -35,19 +38,27 @@ const getOrganisationClusterMarker = cluster => {
     iconSize: null
   });
 };
-const orgIcon = divIcon({
-  className: "toucan-div-icon-marker marker-organisation",
-  iconSize: null
-});
 
-const getMarkersForOrganisation = organisation => {
+const orgIcon = (selected = false) =>
+  divIcon({
+    className: `toucan-div-icon-marker ${selected
+      ? "selected"
+      : ""} marker-organisation`,
+    iconSize: null
+  });
+
+const getMarkersForOrganisation = (
+  organisation,
+  selected_organisations = new Set()
+) => {
   const key = `organisation-marker-${organisation.id}`;
   const navigate = () => history.push(`/orgs/${organisation.id}/`);
+  let selected = selected_organisations.has(organisation);
   return organisation.locations.map(location => {
     return (
       <Marker
         key={`${key}-${location.id}`}
-        icon={orgIcon}
+        icon={orgIcon(selected)}
         position={[...location.location.coordinates].reverse()}
         onClick={navigate}
       />
