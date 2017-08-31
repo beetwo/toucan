@@ -20,17 +20,33 @@ import {
   getMarkersForOrganisation
 } from "../components/map/markers";
 
+import history from "../history";
+import { withRouter } from "react-router";
+
 class FilterMap extends React.Component {
   constructor(props) {
     super(props);
 
     this.getMarkers = this.getMarkers.bind(this);
     this.getClusterMarker = this.getClusterMarker.bind(this);
+    this.markerCallback = this.markerCallback.bind(this);
+    this.navigateToCluster = this.navigateToCluster.bind(this);
+
     this.state = {
       viewport: null
     };
 
     this.map = null;
+  }
+
+  markerCallback(marker_object, marker) {
+    // console.warn("Callback", marker_object, marker);
+  }
+
+  navigateToCluster(cluster) {
+    // this.props.onBoundsChanged(serializeBounds(cluster.getBounds()));
+    this.props.onClusterNavigate &&
+      this.props.onClusterNavigate(serializeBounds(cluster.getBounds()));
   }
 
   getMarkers() {
@@ -40,13 +56,12 @@ class FilterMap extends React.Component {
     }
     let selected_markers = [];
     let markers = this.props.marker_objects.reduce((previous_markers, mo) => {
-      if (selection && selection.has(mo)) {
-        console.log("Is selected", mo);
-      }
       let object_markers = this.props.getMarker(mo, selection);
       if (!Array.isArray(object_markers)) {
         object_markers = [object_markers];
       }
+      object_markers.forEach(m => this.markerCallback(mo, m));
+
       return previous_markers.concat(object_markers);
     }, []);
     return markers;
@@ -66,7 +81,10 @@ class FilterMap extends React.Component {
         bounds={this.props.bounds}
         onBoundsChanged={this.props.onBoundsChanged}
       >
-        <ToucanMarkerClusterGroup options={mc_options}>
+        <ToucanMarkerClusterGroup
+          options={mc_options}
+          onClusterClick={this.navigateToCluster}
+        >
           {markers}
         </ToucanMarkerClusterGroup>
       </ToucanMap>
@@ -83,42 +101,66 @@ FilterMap.propTypes = {
   bounds: PropTypes.array.isRequired
 };
 
-const OrganisationMap = connect(
-  (state, ownProps) => {
-    return {
-      marker_objects: ownProps.organisations,
-      bounds: ownProps.bounds,
-      selected_marker_objects: ownProps.selected_organisation
-        ? [ownProps.selected_organisation]
-        : null,
-      getMarker: getMarkersForOrganisation,
-      getClusterMarker: getOrganisationClusterMarker
-    };
-  },
-  dispatch => {
-    return {
-      onBoundsChanged: bounds => dispatch(setOrgMapBounds(bounds))
-    };
-  }
-)(FilterMap);
+const OrganisationMap = withRouter(
+  connect(
+    (state, ownProps) => {
+      return {
+        marker_objects: ownProps.organisations,
+        bounds: ownProps.bounds,
+        selected_marker_objects: ownProps.selected_organisation
+          ? [ownProps.selected_organisation]
+          : null,
+        getMarker: getMarkersForOrganisation,
+        getClusterMarker: getOrganisationClusterMarker
+      };
+    },
+    (dispatch, { history, location }) => {
+      return {
+        onClusterNavigate: bounds => {
+          console.log("Cluster navigate orgs");
+          if (location.pathname !== "/orgs/") {
+            history.push("/orgs/");
+          }
+        },
+        onBoundsChanged: bounds => dispatch(setOrgMapBounds(bounds))
+      };
+    }
+  )(FilterMap)
+);
 
-const IssueMap = connect(
-  (state, ownProps) => {
-    return {
-      marker_objects: ownProps.issues,
-      bounds: ownProps.bounds,
-      selected_marker_objects: ownProps.selectedIssue
-        ? [ownProps.selectedIssue]
-        : null,
-      getMarker: getMarkerForIssue,
-      getClusterMarker: getIssueMarkerCluster
-    };
-  },
-  dispatch => {
-    return {
-      onBoundsChanged: bounds => dispatch(setIssueMapBounds(bounds))
-    };
+class IssueFilterMap extends FilterMap {
+  markerCallback(issue, marker) {
+    // console.warn("Issue Marker callback", issue, marker);
   }
-)(FilterMap);
+}
+
+const IssueMap = withRouter(
+  connect(
+    (state, ownProps) => {
+      return {
+        ...ownProps,
+        marker_objects: ownProps.issues,
+        bounds: ownProps.bounds,
+        selected_marker_objects: ownProps.selectedIssue
+          ? [ownProps.selectedIssue]
+          : null,
+        getMarker: getMarkerForIssue,
+        getClusterMarker: getIssueMarkerCluster
+      };
+    },
+    (dispatch, { history, location, ...ownProps }) => {
+      return {
+        onClusterNavigate: bounds => {
+          if (location.pathname !== "/") {
+            history.push("/");
+          }
+        },
+        onBoundsChanged: bounds => {
+          dispatch(setIssueMapBounds(bounds));
+        }
+      };
+    }
+  )(IssueFilterMap)
+);
 
 export { OrganisationMap, IssueMap };

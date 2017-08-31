@@ -91,9 +91,9 @@ class AddNewMarker extends React.Component {
 }
 
 const AttributionImage = () => {
-  return process.env.MAPBOX_API_KEY
-    ? <span className="mapbox-wordmark" />
-    : null;
+  return process.env.MAPBOX_API_KEY ? (
+    <span className="mapbox-wordmark" />
+  ) : null;
 };
 
 export class LeafletMap extends React.Component {
@@ -280,13 +280,13 @@ export class LeafletMap extends React.Component {
       >
         <ToucanTileLayer />
         {markers}
-        {has_coordinates
-          ? <AddNewMarker
-              ref={e => (this._add_new_marker = e)}
-              position={coordinates}
-              handleLatLng={this.handleAddMarkerPositionChange}
-            />
-          : null}
+        {has_coordinates ? (
+          <AddNewMarker
+            ref={e => (this._add_new_marker = e)}
+            position={coordinates}
+            handleLatLng={this.handleAddMarkerPositionChange}
+          />
+        ) : null}
         <LocationControl locate={this.handleLocate} />
         {this.props.children}
         <AttributionImage />
@@ -411,7 +411,7 @@ class ToucanMarkerClusterGroup extends React.Component {
       ...markerClusterWrapperOptions,
       ...wrapperOptions
     };
-    console.warn(options);
+
     return (
       <MarkerClusterGroup
         ref={this.setMarkerClusterGroup}

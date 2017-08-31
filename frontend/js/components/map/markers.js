@@ -4,6 +4,15 @@ import { Marker } from "react-leaflet";
 import { getIconClassForIssueType } from "../icons/issueType";
 import history from "../../history";
 
+// this is never actually called
+// I believe the markercluster actually
+// clones child elements
+const ref = e => {
+  if (ref) {
+    console.log("Ref...", e);
+  }
+};
+
 function getMarkerForIssue(issue, selected_issues = new Set()) {
   let issue_type = issue.issue_types[0];
 
@@ -18,6 +27,7 @@ function getMarkerForIssue(issue, selected_issues = new Set()) {
       key={`issue-marker-${issue.id}`}
       icon={divIcon({ className: cls, iconSize: null })}
       position={issue.position}
+      ref={ref}
       onClick={() => history.push(`/issue/${issue.id}/`)}
     />
   );
