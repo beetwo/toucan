@@ -37,6 +37,8 @@ export const SET_ISSUE_DETAIL_ZOOM_LEVEL = "SET_ISSUE_DETAIL_ZOOM_LEVEL";
 export const SET_ORG_MAP_BOUNDS = "SET_ORG_MAP_BOUNDS";
 export const SET_ORG_DETAIL_ZOOM_LEVEL = "SET_ORG_DETAIL_ZOOM_LEVEL";
 
+export const SET_GEOLOCATION = "SET_GEOLOCATION";
+
 export function requestIssues() {
   return {
     type: REQUEST_ISSUES
@@ -232,12 +234,14 @@ export function fetchOrganisations() {
       type: FETCH_ORGANISATIONS
     });
     let url = "/api/organisations/";
-    jsonGet(url).then(response => response.json()).then(data => {
-      dispatch({
-        type: RECEIVE_ORGANISATIONS,
-        payload: data
+    jsonGet(url)
+      .then(response => response.json())
+      .then(data => {
+        dispatch({
+          type: RECEIVE_ORGANISATIONS,
+          payload: data
+        });
       });
-    });
   };
 }
 
@@ -247,12 +251,14 @@ export function fetchOrganisationDetails(id) {
       type: FETCH_ORGANISATION_DETAILS
     });
     let url = `/api/organisations/${id}/`;
-    jsonGet(url).then(response => response.json()).then(data => {
-      dispatch({
-        type: RECEIVE_ORGANISATION_DETAILS,
-        payload: data
+    jsonGet(url)
+      .then(response => response.json())
+      .then(data => {
+        dispatch({
+          type: RECEIVE_ORGANISATION_DETAILS,
+          payload: data
+        });
       });
-    });
   };
 }
 
@@ -281,5 +287,38 @@ export function setOrgDetailZoom(zoom) {
   return {
     type: SET_ORG_DETAIL_ZOOM_LEVEL,
     payload: zoom
+  };
+}
+
+const setGeoLocation = pos => {
+  return {
+    type: SET_GEOLOCATION,
+    payload: pos
+  };
+};
+
+const clearGeoLocation = () => {
+  return {
+    type: SET_GEOLOCATION,
+    payload: false
+  };
+};
+
+export function geolocate() {
+  return (dispatch, getState) => {
+    if (navigator && "geolocation" in navigator) {
+      navigator.geolocation.watchPosition(
+        // on success
+        position =>
+          dispatch(
+            setGeoLocation([
+              position.coords.latitude,
+              position.coords.longitude
+            ])
+          ),
+        // on err
+        err => dispatch(clearGeoLocation())
+      );
+    }
   };
 }

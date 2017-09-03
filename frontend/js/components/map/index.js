@@ -340,6 +340,13 @@ class ToucanMap extends React.Component {
     }
   }
 
+  componentDidMount() {
+    console.log("Mounted", this.map);
+    if (this._map) {
+      this._map.locate();
+    }
+  }
+
   onViewportChanged(viewport) {
     if (this._map) {
       let bounds = this._map.getBounds();
@@ -374,7 +381,6 @@ const markerClusterOptions = {
   spiderifyOnMaxZoom: false,
   spiderLegPolylineOptions: {
     weight: 0
-    // opacity: 0
   }
 };
 const markerClusterWrapperOptions = {

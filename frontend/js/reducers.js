@@ -19,7 +19,8 @@ import {
   SET_ISSUE_MAP_BOUNDS,
   SET_ISSUE_DETAIL_ZOOM_LEVEL,
   SET_ORG_MAP_BOUNDS,
-  SET_ORG_DETAIL_ZOOM_LEVEL
+  SET_ORG_DETAIL_ZOOM_LEVEL,
+  SET_GEOLOCATION
 } from "./actions";
 
 import { defaultMapBounds } from "./globals";
@@ -355,7 +356,8 @@ function map(
     issue_detail: 13,
     org_detail: 13,
     issue_list: defaultMapBounds,
-    org_list: defaultMapBounds
+    org_list: defaultMapBounds,
+    geolocation: false
   },
   action
 ) {
@@ -408,6 +410,11 @@ function map(
           org_list: getBoundsFromPoints(location_coordinates)
         };
       }
+    case SET_GEOLOCATION:
+      return {
+        ...state,
+        geolocation: action.payload
+      };
     default:
       return state;
   }

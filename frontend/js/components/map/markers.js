@@ -76,9 +76,20 @@ const getMarkersForOrganisation = (
   });
 };
 
+const GeoLocationMarker = ({ position }) => (
+  <Marker
+    position={position}
+    icon={divIcon({
+      className: "toucan-div-icon-marker geolocation",
+      iconSize: null
+    })}
+    title="Your position"
+  />
+);
 export {
   getOrganisationClusterMarker,
   getIssueMarkerCluster,
   getMarkerForIssue,
-  getMarkersForOrganisation
+  getMarkersForOrganisation,
+  GeoLocationMarker
 };

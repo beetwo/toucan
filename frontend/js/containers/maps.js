@@ -17,7 +17,8 @@ import {
   getOrganisationClusterMarker,
   getIssueMarkerCluster,
   getMarkerForIssue,
-  getMarkersForOrganisation
+  getMarkersForOrganisation,
+  GeoLocationMarker
 } from "../components/map/markers";
 
 import history from "../history";
@@ -31,7 +32,6 @@ class FilterMap extends React.Component {
     this.getClusterMarker = this.getClusterMarker.bind(this);
     this.markerCallback = this.markerCallback.bind(this);
     this.navigateToCluster = this.navigateToCluster.bind(this);
-
     this.state = {
       viewport: null
     };
@@ -81,6 +81,9 @@ class FilterMap extends React.Component {
         bounds={this.props.bounds}
         onBoundsChanged={this.props.onBoundsChanged}
       >
+        {this.props.geolocation ? (
+          <GeoLocationMarker position={this.props.geolocation} />
+        ) : null}
         <ToucanMarkerClusterGroup
           options={mc_options}
           onClusterClick={this.navigateToCluster}
@@ -98,7 +101,8 @@ FilterMap.propTypes = {
   getMarker: PropTypes.func.isRequired,
   getClusterMarker: PropTypes.func.isRequired,
   onBoundsChanged: PropTypes.func.isRequired,
-  bounds: PropTypes.array.isRequired
+  bounds: PropTypes.array.isRequired,
+  geolocation: PropTypes.array
 };
 
 const OrganisationMap = withRouter(
@@ -111,7 +115,8 @@ const OrganisationMap = withRouter(
           ? [ownProps.selected_organisation]
           : null,
         getMarker: getMarkersForOrganisation,
-        getClusterMarker: getOrganisationClusterMarker
+        getClusterMarker: getOrganisationClusterMarker,
+        geolocation: state.map.geolocation
       };
     },
     (dispatch, { history, location }) => {
@@ -145,7 +150,8 @@ const IssueMap = withRouter(
           ? [ownProps.selectedIssue]
           : null,
         getMarker: getMarkerForIssue,
-        getClusterMarker: getIssueMarkerCluster
+        getClusterMarker: getIssueMarkerCluster,
+        geolocation: state.map.geolocation
       };
     },
     (dispatch, { history, location, ...ownProps }) => {

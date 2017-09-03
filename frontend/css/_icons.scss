@@ -36,6 +36,14 @@ $marker-size: 30px;
   &.selected {
     background-color: $c-turquoise;
   }
+
+  &.geolocation {
+    background-color: rgba(0, 0, 255, 0.4);
+    height: calc(#{$marker-size} / 2);
+    width: calc(#{$marker-size} / 2);
+    mask-image: none;
+    border-radius: 50%;
+  }
 }
 
 .marker-organisation {
