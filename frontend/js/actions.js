@@ -21,6 +21,7 @@ export const CHANGE_ISSUE_STATUS = "CHANGE_ISSUE_STATUS";
 
 export const ADD_ISSUES_FILTER = "ADD_ISSUES_FILTER";
 export const REMOVE_ISSUES_FILTER = "REMOVE_ISSUES_FILTER";
+export const RESET_ISSUES_FILTER = "RESET_ISSUES_FILTER";
 
 export const FETCH_CURRENT_USER_DATA = "FETCH_CURRENT_USER_DATA";
 export const RECEIVE_USER_INFORMATION = "RECEIVE_USER_INFORMATION";
@@ -79,6 +80,12 @@ export function removeIssueFilter(property, value) {
       property: property,
       value: value
     }
+  };
+}
+
+export function resetIssueFilter() {
+  return {
+    type: RESET_ISSUES_FILTER
   };
 }
 

@@ -2,10 +2,12 @@ import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
 import IssueListUI from "../components/issueList";
+
 import getFilteredIssues from "../issueSelector";
 import {
   addIssueFilter,
   removeIssueFilter,
+  resetIssueFilter,
   fetchIssues,
   resetSelectedIssue
 } from "../actions";
@@ -18,10 +20,12 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = dispatch => {
   return {
     addIssueFilter: (prop, value) => dispatch(addIssueFilter(prop, value)),
-    removeIssueFilter: (prop, value) => dispatch(removeIssueFilter(prop, value))
+    removeIssueFilter: (prop, value) =>
+      dispatch(removeIssueFilter(prop, value)),
+    resetIssueFilter: () => dispatch(resetIssueFilter())
   };
 };
 

@@ -31,7 +31,6 @@ class IssueFilter extends React.Component {
 
   render() {
     let opts = this.props.filterOptions;
-    console.log(opts);
     let items = [];
 
     Object.keys(opts.options).forEach(k => {
@@ -44,7 +43,6 @@ class IssueFilter extends React.Component {
         return;
       }
       // push the top level
-
       item.push(
         <div
           className="filter-head flex-container flex-vCenter"
@@ -80,12 +78,13 @@ class IssueFilter extends React.Component {
               {active && <span className="icon icon-lg icon-check" />}
             </div>
             <div className="filter-title">
-              {k === "type" &&
+              {k === "type" && (
                 <ToucanIcon
                   key={c}
                   issue_type={c}
                   className="filter-icon icon-lg"
-                />}
+                />
+              )}
               {c}&nbsp;
             </div>
           </div>
@@ -135,9 +134,7 @@ class IssueFilter extends React.Component {
               <a href="#">Reset</a>
             </div>
           </div>
-          <div className="fullscreen-content">
-            {items}
-          </div>
+          <div className="fullscreen-content">{items}</div>
           <div className="fullscreen-footer">
             <button
               className="btn btn-primary btn-block"
@@ -169,9 +166,7 @@ const IssueListItem = ({ issue }) => {
       </div>
       <div className="media-body">
         <div className="issue-basics">
-          <span className="issue-title">
-            {issue.title}
-          </span>
+          <span className="issue-title">{issue.title}</span>
           <span className="issue-comments">
             <CommentCount count={issue.comment_count} />
           </span>
@@ -195,24 +190,23 @@ const IssueListItem = ({ issue }) => {
   );
 };
 
-const MapHandle = () =>
+const MapHandle = () => (
   <div className="issue-list-mapHandle">
     <a href="#" className="mapHandle">
       &nbsp;
     </a>
-  </div>;
+  </div>
+);
 
 class IssueListUI extends React.Component {
   render() {
     let issues = this.props.issues || [];
 
-    let rows = issues.map((issue, index) =>
+    let rows = issues.map((issue, index) => (
       <IssueListItem key={issue.id} issue={issue} />
-    );
+    ));
     return (
       <div className="issue-list">
-        <MapHandle />
-
         {/*the filtering interface*/}
         <div className="issue-list-form">
           <div className="issue-sortandfilter">
@@ -227,7 +221,11 @@ class IssueListUI extends React.Component {
                   <span className="icon icon-filter" />
                   Filter
                 </a>
-                <a className="filter-reset" href="#">
+                <a
+                  className="filter-reset"
+                  onClick={this.props.resetIssueFilter}
+                  href="#"
+                >
                   Reset
                 </a>
               </div>

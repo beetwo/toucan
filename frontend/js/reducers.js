@@ -12,6 +12,7 @@ import {
   RECEIVE_COMMENTS,
   ADD_ISSUES_FILTER,
   REMOVE_ISSUES_FILTER,
+  RESET_ISSUES_FILTER,
   FETCH_CURRENT_USER_DATA,
   RECEIVE_USER_INFORMATION,
   RECEIVE_ORGANISATIONS,
@@ -212,6 +213,12 @@ function issueFiltersSelections(state, action) {
   }
 }
 
+const defaultFilterSelection = {
+  status: ["open"],
+  type: [],
+  organisation: []
+};
+
 function issueFilters(
   state = {
     options: {
@@ -219,11 +226,7 @@ function issueFilters(
       type: [],
       organisation: []
     },
-    selections: {
-      status: ["open"],
-      type: [],
-      organisation: []
-    }
+    selections: defaultFilterSelection
   },
   action
 ) {
@@ -238,6 +241,11 @@ function issueFilters(
       return {
         ...state,
         selections: issueFiltersSelections(state.selections, action)
+      };
+    case RESET_ISSUES_FILTER:
+      return {
+        ...state,
+        selections: defaultFilterSelection
       };
     default:
       return state;

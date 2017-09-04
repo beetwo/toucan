@@ -105,6 +105,9 @@ FilterMap.propTypes = {
   geolocation: PropTypes.array
 };
 
+const selectGeoLocation = state =>
+  state.map.geolocation ? state.map.geolocation : undefined;
+
 const OrganisationMap = withRouter(
   connect(
     (state, ownProps) => {
@@ -116,7 +119,7 @@ const OrganisationMap = withRouter(
           : null,
         getMarker: getMarkersForOrganisation,
         getClusterMarker: getOrganisationClusterMarker,
-        geolocation: state.map.geolocation
+        geolocation: selectGeoLocation(state)
       };
     },
     (dispatch, { history, location }) => {
@@ -151,7 +154,7 @@ const IssueMap = withRouter(
           : null,
         getMarker: getMarkerForIssue,
         getClusterMarker: getIssueMarkerCluster,
-        geolocation: state.map.geolocation
+        geolocation: selectGeoLocation(state)
       };
     },
     (dispatch, { history, location, ...ownProps }) => {
