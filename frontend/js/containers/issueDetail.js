@@ -15,7 +15,6 @@ import {
 import Loading from "../components/loading";
 
 import Comments from "./comments";
-import IssuesFilter from "./issuesFilter";
 
 import isEmpty from "lodash/isEmpty";
 

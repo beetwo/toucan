@@ -4,13 +4,7 @@ import { connect } from "react-redux";
 import IssueListUI from "../components/issueList";
 
 import getFilteredIssues from "../issueSelector";
-import {
-  addIssueFilter,
-  removeIssueFilter,
-  resetIssueFilter,
-  fetchIssues,
-  resetSelectedIssue
-} from "../actions";
+import { resetIssueFilter, fetchIssues, resetSelectedIssue } from "../actions";
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -22,9 +16,6 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addIssueFilter: (prop, value) => dispatch(addIssueFilter(prop, value)),
-    removeIssueFilter: (prop, value) =>
-      dispatch(removeIssueFilter(prop, value)),
     resetIssueFilter: () => dispatch(resetIssueFilter())
   };
 };

@@ -36,7 +36,6 @@ class IssueContainer extends React.Component {
   render() {
     let map = null;
     let content = null;
-    console.warn(this.props.selectedIssue);
     // for selected issue
     if (this.isDetailView()) {
       content = <IssueDetail issue_id={this.props.issue_id} />;
@@ -78,7 +77,7 @@ const getFilteredIssues = createSelector(
   filterByFilterOptions
 );
 
-// and to filter those by bounds
+// and one to filter those by bounds
 const getGeoFilteredIssues = createSelector(
   [getFilteredIssues, boundsSelector],
   filterByBoundary

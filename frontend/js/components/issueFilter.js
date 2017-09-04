@@ -139,7 +139,7 @@ class IssueFilter extends React.Component {
 IssueFilter.propTypes = {
   addIssueFilter: PropTypes.func.isRequired,
   removeIssueFilter: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired
+  resetIssueFilter: PropTypes.func.isRequired
 };
 
 export default IssueFilter;

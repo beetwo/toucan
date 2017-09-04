@@ -9,7 +9,7 @@ import ToucanIcon, { getIconClassForIssueType } from "./icons/issueType";
 import { DateOnlyDisplay, DateOrTimeDisplay } from "./date";
 import { Link } from "react-router-dom";
 import Map from "./map";
-import IssueFilter from "./issueFilter";
+import IssueFilter from "../containers/issueFilter";
 
 function CommentCount({ count }) {
   return (
@@ -119,10 +119,7 @@ class IssueListUI extends React.Component {
 
         {/* the actual list of issues */}
         <div className="issue-list-body">
-          <IssueFilter
-            {...this.props}
-            filterOptions={this.props.filterOptions}
-          />
+          <IssueFilter />
           {/*adding new items*/}
           <div className="issues">
             <a href={urls.createIssue()} className="issue issue-addNew media">
