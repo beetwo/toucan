@@ -1,4 +1,4 @@
-Django==1.11.4
+Django==1.11.5
 django-allauth==0.27.0
 django-location-field==2.0.3
 django-braces==1.8.1
