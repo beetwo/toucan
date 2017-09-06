@@ -14,10 +14,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    resetIssueFilter: () => dispatch(resetIssueFilter())
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(IssueListUI);
+export default connect(mapStateToProps)(IssueListUI);

@@ -103,7 +103,41 @@ class IssueFilter extends React.Component {
     input_textual = input_textual.join(", ");
 
     return (
-      <div>
+      <div className="issue-list-form">
+        {/* header for triggering issue list form */}
+        <div className="issue-sortandfilter">
+          <div className="flex-container">
+            <div className="flex-col">
+              <a
+                href="#"
+                className="dropdown-toggle"
+                data-toggle="collapse"
+                data-target="#issueFilter"
+              >
+                <span className="icon icon-filter" />
+                Filter
+              </a>
+              <a
+                className="filter-reset"
+                onClick={this.props.resetIssueFilter}
+                href="#"
+              >
+                Reset
+              </a>
+            </div>
+            <div className="flex-col text-right">
+              <em>
+                {this.props.issueCount === 1 ? (
+                  "One need"
+                ) : (
+                  `${this.props.issueCount} needs`
+                )}
+              </em>
+            </div>
+          </div>
+        </div>
+
+        {/* The actual form  */}
         <div className="filter collapse fullscreen-sm" id="issueFilter">
           <div className="fullscreen-header flex-container">
             <div className="flex-col">
@@ -139,7 +173,8 @@ class IssueFilter extends React.Component {
 IssueFilter.propTypes = {
   addIssueFilter: PropTypes.func.isRequired,
   removeIssueFilter: PropTypes.func.isRequired,
-  resetIssueFilter: PropTypes.func.isRequired
+  resetIssueFilter: PropTypes.func.isRequired,
+  issueCount: PropTypes.number.isRequired
 };
 
 export default IssueFilter;

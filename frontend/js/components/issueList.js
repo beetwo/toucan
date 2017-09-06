@@ -72,54 +72,10 @@ class IssueListUI extends React.Component {
     return (
       <div className="issue-list">
         {/*the filtering interface*/}
-        <div className="issue-list-form">
-          <div className="issue-sortandfilter">
-            <div className="flex-container">
-              <div className="flex-col">
-                <a
-                  href="#"
-                  className="dropdown-toggle"
-                  data-toggle="collapse"
-                  data-target="#issueFilter"
-                >
-                  <span className="icon icon-filter" />
-                  Filter
-                </a>
-                <a
-                  className="filter-reset"
-                  onClick={this.props.resetIssueFilter}
-                  href="#"
-                >
-                  Reset
-                </a>
-              </div>
-              <div className="flex-col text-right">
-                <a
-                  href="#"
-                  className="dropdown-toggle"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <span className="text-muted">Sort by: </span>
-                  Newest <span className="icon icon-chevron" />
-                </a>
-                <ul className="dropdown-menu pull-right">
-                  <li>
-                    <a href="#">Newest</a>
-                  </li>
-                  <li>
-                    <a href="#">Nearest</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
 
         {/* the actual list of issues */}
         <div className="issue-list-body">
-          <IssueFilter />
+          <IssueFilter issueCount={rows.length} />
           {/*adding new items*/}
           <div className="issues">
             <a href={urls.createIssue()} className="issue issue-addNew media">
