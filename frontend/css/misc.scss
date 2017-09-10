@@ -18,11 +18,52 @@ div.toolbar {
 }
 
 
+.form-settings {
+  h1 {
+    font-size: 21px;
+    margin: 0;
+    margin-bottom: $padding-base-vertical*2;
+  }
+}
 .form-beige {
   background-color: $c-beige;
 }
 .form-blue {
   background-color: $c-lightblue;
+  .text-muted {
+    color: $c-darkgrey;
+  }
+  .settings-title {
+    color: $c-turquoise;
+  }
+}
+.settings-title {
+  padding: 0 $grid-gutter-width/2;
+}
+.settings-form {
+  margin: 0 auto;
+  max-width: 768px;
+  .form-group {
+    padding: $grid-gutter-width/2;
+    background-color: #fff;
+    margin-bottom: 0;
+    border: 1px solid $c-lightgrey;
+    @media screen and (max-width: 768px) {
+      border-left: 0;
+      border-right: 0;
+    }
+  }
+  .form-group + .form-group {
+    border-top: 0;
+  }
+  label {
+    margin-bottom: 0;
+  }
+}
+.profile-section {
+  h2, & > p {
+    padding: 0 $grid-gutter-width/2;
+  }
 }
 .body-beige {
   background-color: $c-beige;
@@ -51,8 +92,8 @@ ul {
 .notification {
   border: 1px solid $c-lightgrey;
   margin-bottom: $padding-base-vertical;
-  border-radius: $border-radius-base;
-  padding: $padding-base-vertical/2 $padding-base-horizontal;
+  padding: $padding-base-vertical $grid-gutter-width/2;
+  background-color: #fff;
 }
 .text-org {
   color: $c-organisations;

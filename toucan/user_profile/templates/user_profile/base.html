@@ -1,18 +1,15 @@
 {% extends 'default/base.html' %}
-{% block body-classes %}form-beige{% endblock %}
+{% block body-classes %}form-settings form-blue{% endblock %}
 {% load i18n %}
 {% block main %}
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-12 col-md-8 col-md-offset-2">
-      <h1>
-        {% block profile-title %}
-        {% trans 'Profile for' %} {{ user.username }}
-        {% endblock %}
-      </h1>
-      {% block profile-title-body %}{% endblock %}
-      {% block content %}{% endblock content %}
-    </div>
-  </div>
+
+<div class="settings-form">
+  <h1 class="settings-title">
+    {% block profile-title %}
+    {% trans 'Profile for' %} {{ user.username }}
+    {% endblock %}
+  </h1>
+  {% block profile-title-body %}{% endblock %}
+  {% block content %}{% endblock content %}
 </div>
 {% endblock main %}

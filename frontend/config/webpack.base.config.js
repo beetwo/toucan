@@ -63,7 +63,6 @@ module.exports = opts => {
     entry: {
       main: ["babel-polyfill", "./js/index"],
       vendor: [
-        "./css/misc.scss",
         "react",
         "react-dom",
         "leaflet",
@@ -80,6 +79,7 @@ module.exports = opts => {
         "jquery",
         "bootstrap-loader",
         "font-awesome/css/font-awesome.css",
+        "./css/misc.scss",
         "./css/_bs-overrides.scss"
       ]
     },

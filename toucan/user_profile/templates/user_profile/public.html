@@ -4,44 +4,49 @@
 {% block content %}
    <h2>{% trans 'Membership' %}</h2>
     {% if memberships|length %}
-    <table class="table table-striped">
-        {% if memberships|length > 1 %}
-        <div class="row row-padded">
-          <div class="col-sm-6">
-            {% trans 'Organisation' %}
-          </div>
-          <div class="col-sm-6">
-            {% trans 'Membership status' %}
-          </div>
+    <div class="form-group">
+      {% if memberships|length > 1 %}
+      <div class="row row-padded">
+        <div class="col-sm-6">
+          {% trans 'Organisation' %}
         </div>
-        <div class="row row-padded">
+        <div class="col-sm-6">
+          {% trans 'Membership status' %}
         </div>
-        {% endif %}
-        {% for membership in memberships %}
-        <div class="row row-padded">
-          <div class="col-sm-6">
-            <a class="text-org" href="{% url 'organisations:detail' %}">
-              {{ membership.org.name }}
-            </a>
-          </div>
-          <div class="col-sm-6">
-            {% if membership.active %}
-            <span class="label label-success">
-              {% trans 'Active' %}
-            </span>
-            {% else %}
-            <span class="label label-default">
-              {% trans 'Inactive' %}
-            </span>
-            {% endif %}
-          </div>
+      </div>
+      <div class="row row-padded">
+      </div>
+      {% endif %}
+      {% for membership in memberships %}
+      <div class="row row-padded">
+        <div class="col-xs-6">
+          <label>
+          {% trans 'Organisation' %}
+        </label><br>
+          <a class="text-org" href="{% url 'organisations:detail' %}">
+            {{ membership.org.name }}
+          </a>
         </div>
-        {% endfor %}
-        </tbody>
-    </table>
+        <div class="col-xs-6 text-right">
+          {% if membership.active %}
+          <span class="badge badge-success">
+            {% trans 'Active' %}
+          </span>
+          {% else %}
+          <span class="badge badge-default">
+            {% trans 'Inactive' %}
+          </span>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </tbody>
+    </div>
     {% else %}
+    <div class="form-group">
         <p class="text-muted">
         {% trans 'Not a member of an organisation.' %}
         </p>
+    </div>
     {% endif %}
 {% endblock %}
