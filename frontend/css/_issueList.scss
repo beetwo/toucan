@@ -12,7 +12,8 @@
   }
 }
 .issue-title {
-  font-size: 16px;
+  font-size: 15px;
+  line-height: 1.2;
   font-weight: bold;
   float: left;
   max-width: 85%;
@@ -99,7 +100,7 @@
   border-right: none;
   background-color: $c-beige;
   color: $c-yellow;
-  padding: $padding;
+  padding: $padding/2 $padding;
   font-weight: bold;
   &:hover {
     text-decoration: none;
