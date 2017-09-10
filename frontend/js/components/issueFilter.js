@@ -126,13 +126,13 @@ class IssueFilter extends React.Component {
               </a>
             </div>
             <div className="flex-col text-right">
-              <em>
+              <span className="text-subdued">
                 {this.props.issueCount === 1 ? (
                   "One need"
                 ) : (
                   `${this.props.issueCount} needs`
                 )}
-              </em>
+              </span>
             </div>
           </div>
         </div>
