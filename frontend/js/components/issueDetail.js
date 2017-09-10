@@ -56,16 +56,11 @@ class IssueDetailMain extends React.Component {
               <span className="icon icon-close" />
             </Link>
           </div>
-          <div className="issue-list-mapHandle">
-            <a href="#" className="mapHandle">
-              &nbsp;
-            </a>
-          </div>
         </div>
         <div className="issue-detail-content">
           <div className="issue-detail-lead media">
             <div className="media-left media-middle">
-              <ToucanIcon issue_type={issue_type} className="icon-xl" />
+              <ToucanIcon issue_type={issue_type} className="icon-xl icon-issue" />
             </div>
             <div className="media-body">
               <h1 className="issue-detail-title">

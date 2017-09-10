@@ -20,6 +20,12 @@ $marker-size: 30px;
 .icon-xl {
   font-size: 33px;
 }
+.icon-issue {
+  color: $c-issues;
+}
+.icon-organisation {
+  color: $c-organisations;
+}
 .text-muted {
   &.icon,
   .icon {

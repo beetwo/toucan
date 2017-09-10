@@ -60,11 +60,6 @@ class OrganisationDetail extends React.Component {
                 <span className="icon icon-close" />
               </Link>
             </div>
-            <div className="issue-list-mapHandle">
-              <a href="#" className="mapHandle">
-                &nbsp;
-              </a>
-            </div>
           </div>
           <div className="org-detail-content">
             <div className="org-detail-lead media">
