@@ -68,7 +68,7 @@ class IssueFilterForm extends React.Component {
                 <ToucanIcon
                   key={c}
                   issue_type={c}
-                  className="filter-icon icon-lg"
+                  className="filter-icon icon-issue icon-lg"
                 />
               )}
               {c}&nbsp;
@@ -108,7 +108,7 @@ class IssueFilterForm extends React.Component {
           <div className="flex-col">
             <a
               href="#"
-              onClik={this.props.toggleFilterForm}
+              onClick={this.props.toggleFilterForm}
               className="fullscreen-close"
             >
               <span className="icon icon-close" /> Filter

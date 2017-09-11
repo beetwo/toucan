@@ -42,6 +42,11 @@ body {
     background-color: #fff;
     z-index: 999;
   }
+  .modal-open {
+    .issues-container {
+      position: static;
+    }
+  }
   .navbar {
     position: fixed;
     top: 0;
