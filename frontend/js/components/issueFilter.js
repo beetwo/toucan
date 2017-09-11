@@ -106,17 +106,28 @@ class IssueFilterForm extends React.Component {
       <div className="filter fullscreen-sm" id="issueFilter">
         <div className="fullscreen-header flex-container">
           <div className="flex-col">
-            <a href="#" className="fullscreen-close">
+            <a
+              href="#"
+              onClik={this.props.toggleFilterForm}
+              className="fullscreen-close"
+            >
               <span className="icon icon-close" /> Filter
             </a>
           </div>
           <div className="flex-col text-right">
-            <a href="#">Reset</a>
+            <a href="#" onClick={this.props.resetIssueFilter}>
+              Reset
+            </a>
           </div>
         </div>
         <div className="fullscreen-content">{items}</div>
         <div className="fullscreen-footer">
-          <button className="btn btn-primary btn-block">Show results</button>
+          <button
+            className="btn btn-primary btn-block"
+            onClick={this.props.toggleFilterForm}
+          >
+            Show results
+          </button>
         </div>
       </div>
     );

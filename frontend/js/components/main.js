@@ -13,7 +13,6 @@ class SplitUIView extends React.Component {
   }
 
   toggleFilter() {
-    console.log("Setting filter form...", this.state);
     this.setState(state => ({ filter_opened: !state.filter_opened }));
   }
 
