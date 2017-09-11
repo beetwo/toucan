@@ -1,7 +1,11 @@
 import React from "react";
 import cn from "classnames";
 
-const MapHandle = () => <div className="issue-list-mapHandle" />;
+const MapHandle = () => (
+  <div className="text-center">
+    <span className="mapHandle" />
+  </div>
+);
 
 class SplitUIView extends React.Component {
   constructor(props) {
