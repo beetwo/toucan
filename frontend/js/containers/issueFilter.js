@@ -23,6 +23,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-console.log(IssueFilter);
-
 export default connect(mapStateToProps, mapDispatchToProps)(IssueFilter);

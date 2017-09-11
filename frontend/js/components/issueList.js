@@ -54,14 +54,6 @@ const IssueListItem = ({ issue }) => {
   );
 };
 
-const MapHandle = () => (
-  <div className="issue-list-mapHandle">
-    <a href="#" className="mapHandle">
-      &nbsp;
-    </a>
-  </div>
-);
-
 class IssueListUI extends React.Component {
   render() {
     let issues = this.props.issues || [];
@@ -71,11 +63,8 @@ class IssueListUI extends React.Component {
     ));
     return (
       <div className="issue-list">
-        {/*the filtering interface*/}
-
         {/* the actual list of issues */}
         <div className="issue-list-body">
-          <IssueFilter issueCount={rows.length} />
           {/*adding new items*/}
           <div className="issues">
             <a href={urls.createIssue()} className="issue issue-addNew media">

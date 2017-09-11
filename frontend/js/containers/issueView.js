@@ -16,6 +16,7 @@ import { SplitUIView } from "../components/main";
 
 import IssueDetail from "./issueDetail";
 import IssueList from "./issueList";
+import IssueFilter from "./issueFilter";
 
 import { filterByFilterOptions, filterByBoundary } from "../issueSelector";
 import { IssueMap } from "./maps";
@@ -36,6 +37,7 @@ class IssueContainer extends React.Component {
   render() {
     let map = null;
     let content = null;
+    let filterInterface = null;
     // for selected issue
     if (this.isDetailView()) {
       content = <IssueDetail issue_id={this.props.issue_id} />;
@@ -54,8 +56,17 @@ class IssueContainer extends React.Component {
           issues={this.props.filteredIssues}
         />
       );
+      filterInterface = (
+        <IssueFilter issueCount={this.props.geoFilteredIssues.length} />
+      );
     }
-    return <SplitUIView map={map} issue_view={content} />;
+    return (
+      <SplitUIView
+        map={map}
+        issue_view={content}
+        filter_interface={filterInterface}
+      />
+    );
   }
 }
 

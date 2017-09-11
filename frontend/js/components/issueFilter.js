@@ -5,7 +5,7 @@ import classNames from "classnames";
 
 import ToucanIcon, { getIconClassForIssueType } from "./icons/issueType";
 
-class IssueFilter extends React.Component {
+class IssueFilterForm extends React.Component {
   handleToggle(prop_name, value, enable, e) {
     e.preventDefault();
     if (enable) {
@@ -103,17 +103,48 @@ class IssueFilter extends React.Component {
     input_textual = input_textual.join(", ");
 
     return (
+      <div className="filter fullscreen-sm" id="issueFilter">
+        <div className="fullscreen-header flex-container">
+          <div className="flex-col">
+            <a href="#" className="fullscreen-close">
+              <span className="icon icon-close" /> Filter
+            </a>
+          </div>
+          <div className="flex-col text-right">
+            <a href="#">Reset</a>
+          </div>
+        </div>
+        <div className="fullscreen-content">{items}</div>
+        <div className="fullscreen-footer">
+          <button className="btn btn-primary btn-block">Show results</button>
+        </div>
+      </div>
+    );
+  }
+}
+
+IssueFilterForm.propTypes = {
+  addIssueFilter: PropTypes.func.isRequired,
+  removeIssueFilter: PropTypes.func.isRequired,
+  resetIssueFilter: PropTypes.func.isRequired,
+  toggleFilterForm: PropTypes.func.isRequired
+};
+
+class IssueFilter extends React.Component {
+  render() {
+    let {
+      issueCount = 0,
+      toggleFilterForm,
+      resetIssueFilter,
+      showFilterForm = false
+    } = this.props;
+    return (
       <div className="issue-list-form">
         {/* header for triggering issue list form */}
         <div className="issue-sortandfilter">
           <div className="flex-container">
             <div className="flex-col">
-              <a
-                href="#"
-                className="dropdown-toggle"
-                data-toggle="collapse"
-                data-target="#issueFilter"
-              >
+              <a href="#" onClick={this.props.toggleFilterForm}>
                 <span className="icon icon-filter" />
                 Filter
               </a>
@@ -137,42 +168,15 @@ class IssueFilter extends React.Component {
           </div>
         </div>
 
-        {/* The actual form  */}
-        <div className="filter collapse fullscreen-sm" id="issueFilter">
-          <div className="fullscreen-header flex-container">
-            <div className="flex-col">
-              <a
-                href="#"
-                className="fullscreen-close"
-                data-toggle="collapse"
-                data-target="#issueFilter"
-              >
-                <span className="icon icon-close" /> Filter
-              </a>
-            </div>
-            <div className="flex-col text-right">
-              <a href="#">Reset</a>
-            </div>
-          </div>
-          <div className="fullscreen-content">{items}</div>
-          <div className="fullscreen-footer">
-            <button
-              className="btn btn-primary btn-block"
-              data-toggle="collapse"
-              data-target="#issueFilter"
-            >
-              Show results
-            </button>
-          </div>
-        </div>
+        {showFilterForm ? <IssueFilterForm {...this.props} /> : null}
       </div>
     );
   }
 }
 
 IssueFilter.propTypes = {
-  addIssueFilter: PropTypes.func.isRequired,
-  removeIssueFilter: PropTypes.func.isRequired,
+  toggleFilterForm: PropTypes.func.isRequired,
+  showFilterForm: PropTypes.bool.isRequired,
   resetIssueFilter: PropTypes.func.isRequired,
   issueCount: PropTypes.number.isRequired
 };
