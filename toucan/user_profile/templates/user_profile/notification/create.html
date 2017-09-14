@@ -6,11 +6,15 @@
 {% endblock %}
 
 {% block content %}
-    <div id="issueMap" style="height:300px"></div>
+<div class="form-group">
+    <div id="issueMap"></div>
+</div>
     <form method="post">
         {% csrf_token %}
         {% bootstrap_form form %}
-        <button type="submit" class="btn btn-primary">{% trans 'Save'%}</button>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">{% trans 'Save'%}</button>
+        </div>
     </form>
 {% endblock content %}
 

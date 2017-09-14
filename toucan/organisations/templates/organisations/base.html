@@ -3,14 +3,12 @@
 {% load i18n %}
 
 {% block main %}
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12 col-md-8 col-md-offset-2">
-            <h1>{% block organisation_page_title %}{% trans 'Organisations' %}{% endblock %}</h1>
-            {% block organisation_details %}{% endblock %}
-            {% block organisation_page_controls %}{% endblock %}
-            {% block organisation_main %}{% endblock %}
-        </div>
-    </div>
+
+
+<div class="toucan-form">
+  <h1 class="settings-title">{% block organisation_page_title %}{% trans 'Organisations' %}{% endblock %}</h1>
+  {% block organisation_details %}{% endblock %}
+  {% block organisation_page_controls %}{% endblock %}
+  {% block organisation_main %}{% endblock %}
 </div>
 {% endblock %}
