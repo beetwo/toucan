@@ -34,13 +34,20 @@ class UserInformationApi(APIView):
             'canComment': False,
             'links': [
                 {
+                    'key': 'settings',
                     'name': _('Settings and Profile'),
                     'url': reverse('user_profile:personal_profile', request=request)
                 },
                 {
+                    'key': 'logout',
                     'name': _('Logout'),
                     'url': reverse('account_logout', request=request)
                 },
+                {
+                    'key': 'support',
+                    'name': _('Support'),
+                    'url': reverse('help:start', request=request)
+                }
             ]
         }
 
@@ -54,6 +61,7 @@ class UserInformationApi(APIView):
             })
         if request.user.is_staff:
             response['links'].insert(1, {
+                'key': 'admin',
                 'name': _('Administration Interface'),
                 'url': reverse('admin:index', request=request)
             })

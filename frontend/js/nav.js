@@ -8,10 +8,20 @@ const ToucanLogo = require("../assets/toucan_logo.png");
 
 const Nav = ({ location, current_user }) => {
   const user = current_user.user || {};
-  const links = current_user.links || [];
   let active =
     (location.pathname.split("/")[1] === "orgs" && "orgs") || "needs";
 
+  const links = current_user.links || [];
+  const keyed_links = links.reduce(
+    (prev, link) => ({ ...prev, [link.key]: link }),
+    {}
+  );
+  // the actual links
+  const settings_link = keyed_links.settings;
+  const logout_link = keyed_links.logout;
+  const support_link = keyed_links.support;
+
+  console.log(settings_link);
   return (
     <NavBar>
       <NavBar.Header>
@@ -29,30 +39,29 @@ const Nav = ({ location, current_user }) => {
 
       <NavBar.Nav>
         <li className={active === "needs" ? "active" : ""}>
-          <Link to="/">
-            <i className="fa fa-globe" /> Needs
-          </Link>
+          <Link to="/">Needs</Link>
         </li>
         <li className={active === "orgs" ? "active" : ""}>
-          <Link to="/orgs/">
-            <i className="fa fa-address-card-o" /> Organisations
-          </Link>
+          <Link to="/orgs/">Organisations</Link>
         </li>
+        {/* this one comes from the server and might not be available at first render*/}
+        {settings_link ? (
+          <li>
+            <a href={settings_link.url}>Profile and Settings</a>
+          </li>
+        ) : null}
       </NavBar.Nav>
       <NavBar.Nav className="navbar-right">
-        <NavBar.Dropdown
-          text={
-            <span>
-              <i className="fa  fa-user" /> {user.username || "urxn"}
-            </span>
-          }
-        >
-          {links.map(link =>
-            <NavBar.Item key={link.url} href={link.url}>
-              {link.name}
-            </NavBar.Item>
-          )}
-        </NavBar.Dropdown>
+        {support_link ? (
+          <NavBar.Item key={support_link.url} href={support_link.url}>
+            Support
+          </NavBar.Item>
+        ) : null}
+        {logout_link ? (
+          <NavBar.Item key={logout_link.url} href={logout_link.url}>
+            Logout
+          </NavBar.Item>
+        ) : null}
       </NavBar.Nav>
     </NavBar>
   );
