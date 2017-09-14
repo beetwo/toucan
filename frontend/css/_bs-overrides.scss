@@ -1,4 +1,5 @@
 @import './bs-themes/flatly/variables';
+@import 'variables';
 .navbar-brand {
   padding: 10px $navbar-padding-horizontal;
 }
@@ -31,12 +32,16 @@ h4, h5, h6 {
   font-size: 80%;
   padding: $padding-base-vertical/4 $padding-base-horizontal;
 }
-.nav.navbar-nav li {
-  border-bottom: 3px solid transparent;
-  &.nav-issues.active {
-    border-color: $c-issues;
-  }
+@include screen-sm-min {
+  .nav.navbar-nav li {
+    border-bottom: 3px solid transparent;
+    &.nav-issues.active {
+      border-color: $c-issues;
+    }
 
+  }
+}
+.nav.navbar-nav li {
   &.nav-orgs {
     &:hover {
       a {
@@ -65,6 +70,30 @@ h4, h5, h6 {
       a {
         color: $c-text;
       }
+    }
+  }
+}
+.navbar-main {
+  font-size: 22px;
+  line-height: 1;
+  li {
+    margin-bottom: $padding-base-vertical/2;
+  }
+  @include screen-sm-min {
+    font-size: $font-size-base;
+    li {
+      margin-bottom: 0;
+    }
+  }
+}
+@include screen-sm-max {
+  .navbar-secondary {
+    border-top: 1px solid $c-lightgrey;
+    li:first-child {
+      float: left;
+    }
+    li:last-child {
+      float: right;
     }
   }
 }

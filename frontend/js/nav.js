@@ -37,28 +37,30 @@ const Nav = ({ location, current_user }) => {
         <NavBar.Toggle />
       </NavBar.Header>
 
-      <NavBar.Nav>
-        <li className={active === "needs" ? "active" : ""}>
+      <NavBar.Nav className="navbar-main">
+        <li className={active === "needs" ? "nav-issues active" : "nav-issues"}>
           <Link to="/">Needs</Link>
         </li>
-        <li className={active === "orgs" ? "active" : ""}>
+        <li className={active === "orgs" ? "nav-orgs active" : "nav-orgs"}>
           <Link to="/orgs/">Organisations</Link>
         </li>
         {/* this one comes from the server and might not be available at first render*/}
         {settings_link ? (
-          <li>
+          <li className="nav-settings">
             <a href={settings_link.url}>Profile and Settings</a>
           </li>
         ) : null}
       </NavBar.Nav>
-      <NavBar.Nav className="navbar-right">
+      <NavBar.Nav className="navbar-secondary navbar-right">
         {support_link ? (
-          <NavBar.Item key={support_link.url} href={support_link.url}>
+          <NavBar.Item className="nav-muted" key={support_link.url} href={support_link.url}>
+          <span className="icon icon-support icon-lg"></span>
             Support
           </NavBar.Item>
         ) : null}
         {logout_link ? (
-          <NavBar.Item key={logout_link.url} href={logout_link.url}>
+          <NavBar.Item className="nav-muted" key={logout_link.url} href={logout_link.url}>
+          <span className="icon icon-logout icon-lg"></span>
             Logout
           </NavBar.Item>
         ) : null}
