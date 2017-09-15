@@ -141,17 +141,17 @@ class IssueFilter extends React.Component {
         <div className="filter collapse fullscreen-sm" id="issueFilter">
           <div className="fullscreen-header flex-container">
             <div className="flex-col">
+                Filter <a href="#" className="filter-reset">Reset</a>
+            </div>
+            <div className="flex-col text-right">
               <a
                 href="#"
-                className="fullscreen-close"
+                className="text-cancel"
                 data-toggle="collapse"
                 data-target="#issueFilter"
               >
-                <span className="icon icon-close" /> Filter
+              Close
               </a>
-            </div>
-            <div className="flex-col text-right">
-              <a href="#">Reset</a>
             </div>
           </div>
           <div className="fullscreen-content">{items}</div>

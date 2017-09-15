@@ -79,14 +79,6 @@
       color: $c-yellow;
     }
   }
-  .filter-reset {
-    color: $c-turquoise;
-    margin-left: $padding;
-    &:hover {
-      color: $c-turquoise;
-      text-decoration: underline;
-    }
-  }
 }
 
 .issue-list-body {
