@@ -21,7 +21,6 @@ const Nav = ({ location, current_user }) => {
   const logout_link = keyed_links.logout;
   const support_link = keyed_links.support;
 
-  console.log(settings_link);
   return (
     <NavBar>
       <NavBar.Header>
@@ -38,10 +37,10 @@ const Nav = ({ location, current_user }) => {
       </NavBar.Header>
 
       <NavBar.Nav className="navbar-main">
-        <li className={active === "needs" ? "nav-issues active" : "nav-issues"}>
+        <li className={cn("nav-issues", { active: active === "needs" })}>
           <Link to="/">Needs</Link>
         </li>
-        <li className={active === "orgs" ? "nav-orgs active" : "nav-orgs"}>
+        <li className={cn("nav-orgs", { active: active === "orgs" })}>
           <Link to="/orgs/">Organisations</Link>
         </li>
         {/* this one comes from the server and might not be available at first render*/}
@@ -53,14 +52,22 @@ const Nav = ({ location, current_user }) => {
       </NavBar.Nav>
       <NavBar.Nav className="navbar-secondary navbar-right">
         {support_link ? (
-          <NavBar.Item className="nav-muted" key={support_link.url} href={support_link.url}>
-          <span className="icon icon-support icon-lg"></span>
+          <NavBar.Item
+            className="nav-muted"
+            key={support_link.url}
+            href={support_link.url}
+          >
+            <span className="icon icon-support icon-lg" />
             Support
           </NavBar.Item>
         ) : null}
         {logout_link ? (
-          <NavBar.Item className="nav-muted" key={logout_link.url} href={logout_link.url}>
-          <span className="icon icon-logout icon-lg"></span>
+          <NavBar.Item
+            className="nav-muted"
+            key={logout_link.url}
+            href={logout_link.url}
+          >
+            <span className="icon icon-logout icon-lg" />
             Logout
           </NavBar.Item>
         ) : null}
