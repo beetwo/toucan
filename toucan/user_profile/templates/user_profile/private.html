@@ -97,29 +97,33 @@
         {% for ns in notification_settings%}
         <div class="notification">
           <div class="row">
-            <div class="col-sm-4">
-              {{ ns.created|date:'SHORT_DATETIME_FORMAT' }}
-            </div>
-            <div class="col-sm-4">
-              <strong>
-                {% trans 'Issue types' %}
-              </strong>
-              {% for it in ns.issue_types.all %}
-              <span>{{ it.name }}</span>
-              {% empty %}
-              <span>{% trans 'all' %}</span>
-              {% endfor %}
-            </div>
-            <div class="col-sm-4">
-              <strong>
-              {% trans 'Organisations' %}
-              </strong>
-                {% for org in ns.organisations.all %}
-                <span>{{ org.name }}</span>
+            <div class="col-sm-12">
+              <p>
+                {{ ns.created|date:'SHORT_DATETIME_FORMAT' }}
+              </p>
+              <p>
+                <strong>
+                  {% trans 'Issue types' %}
+                </strong>
+                {% for it in ns.issue_types.all %}
+                <span class="badge badge-issue">{{ it.name }}</span>
                 {% empty %}
                 <span>{% trans 'all' %}</span>
                 {% endfor %}
-              </div>
+              </p>
+              <p>
+
+                <strong>
+                  {% trans 'Organisations' %}
+                </strong>
+                {% for org in ns.organisations.all %}
+                <span class="badge badge-member">{{ org.name }}</span>
+                {% empty %}
+                <span>{% trans 'all' %}</span>
+                {% endfor %}
+
+              </p>
+            </div>
             </div>
             <div class="row">
               <div class="col-sm-12">
@@ -135,12 +139,14 @@
           
           {% endfor %}
       {% else %}
+      <div class="form-group">
       <p class="alert alert-info">
           {% blocktrans %}
               You have no notifications configured.
               Add your first notification rule to be notified when something happens around you.
           {% endblocktrans %}
       </p>
+      </div>
       {% endif %}
 
       <div style="margin-bottom: 3em">
