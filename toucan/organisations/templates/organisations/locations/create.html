@@ -6,6 +6,9 @@
 {% block extra-head %}
 {{ block.super }}
 {% render_bundle 'b2MapSelector' %}
+<style>
+.leaflet-container { width: 100%; height: 100%;}
+</style>
 {% endblock %}
 
 {% block organisation_page_title %}{% trans 'Add a new location' %}{% endblock %}
