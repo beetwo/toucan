@@ -3,8 +3,10 @@
 {% load i18n %}
 {% block content %}
 <form method="post">
+  <div class="form-group">
     <p>{% trans 'Are you sure that you want to delete this notification rule?' %}</p>
     {% csrf_token %}
-    <button type="submit" class="btn btn-danger">{% trans 'Yes, delete'%}</button>
+    <button type="submit" class="btn btn-danger btn-xs-block">{% trans 'Yes, delete'%}</button>
+  </div>
 </form>
 {% endblock %}

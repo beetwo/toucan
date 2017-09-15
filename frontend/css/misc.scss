@@ -145,3 +145,10 @@ ul {
 form {
   margin: $padding-base-vertical 0;
 }
+
+.notification-delete {
+  margin-left: $padding-base-vertical;
+  &:hover, &:active {
+    color: $brand-danger !important;
+  }
+}
