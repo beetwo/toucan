@@ -4,11 +4,16 @@
 {% block main %}
 
 <div class="toucan-form">
-  <h1 class="settings-title">
-    {% block profile-title %}
-    {% trans 'Profile for' %} {{ user.username }}
-    {% endblock %}
-  </h1>
+  <div class="form-header-sticky">
+    <a class="pull-right text-cancel" href="/">
+      {% trans 'Close' %}
+    </a>
+    <h1 class="form-title">
+      {% block profile-title %}
+      {% trans 'Profile for' %} {{ user.username }}
+      {% endblock %}
+    </h1>
+  </div>
   {% block profile-title-body %}{% endblock %}
   {% block content %}{% endblock content %}
 </div>

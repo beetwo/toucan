@@ -1,4 +1,5 @@
 @import './bs-themes/flatly/variables';
+@import 'variables';
 .navbar-brand {
   padding: 10px $navbar-padding-horizontal;
 }
@@ -30,6 +31,12 @@ h4, h5, h6 {
 .btn-xs {
   font-size: 80%;
   padding: $padding-base-vertical/4 $padding-base-horizontal;
+}
+.btn-xs-block {
+  @include screen-xs-max {
+    display: block;
+    width: 100%;
+  }
 }
 .nav.navbar-nav li {
   border-bottom: 3px solid transparent;
@@ -67,4 +74,7 @@ h4, h5, h6 {
       }
     }
   }
+}
+.badge-member {
+  background-color: $c-darkblue;
 }

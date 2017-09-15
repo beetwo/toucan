@@ -1,4 +1,4 @@
-{% extends 'organisations/base.html' %}
+{% extends 'organisations/edit.html' %}
 {% load i18n bootstrap3 %}
 
 {% block organisation_page_title %}
@@ -13,7 +13,7 @@
   {#                {% include 'organisations/apply_warning.html' %}#}
   {#            {% endif %}#}
   {% buttons %}
-  <button type="submit" class="btn btn-primary">
+  <button type="submit" class="btn btn-primary btn-xs-block">
     {% block submit-button-text %}
     {% trans 'Save' %}
     {% endblock %}

@@ -13,12 +13,12 @@
 
 {% block main %}
 <div class="toucan-form">
-<div class="form-header-sticky">
-  <a href="/" class="pull-right text-cancel">
-    {% trans 'Cancel' %}
-  </a>
-  <h1 class="form-title">{% block issue_heading_title %}Issues{% endblock %}</h1>
-</div>
-          {% block content %}{% endblock content %}
+  <div class="form-header-sticky">
+    <a href="/" class="pull-right text-cancel">
+      {% trans 'Cancel' %}
+    </a>
+    <h1 class="form-title">{% block issue_heading_title %}Issues{% endblock %}</h1>
+  </div>
+  {% block content %}{% endblock content %}
 </div>
 {% endblock %}

@@ -1,4 +1,4 @@
-{% extends 'organisations/base.html' %}
+{% extends 'organisations/edit.html' %}
 {% load i18n bootstrap3 %}
 
 {% block organisation_page_title %}
@@ -6,59 +6,59 @@
 {% endblock %}
 
 {% block organisation_main %}
-<hr />
 
-<div class="row">
-    <div class="col-sm-12">
-        <form class="form-inline" method="post">
-            {% csrf_token %}
-            {% bootstrap_form form layout="inline" %}
-            {% buttons submit='Invite'  layout='inline' %}{% endbuttons %}
-{#            {% buttons %}#}
-{#            <button type="submit" class="btn btn-primary">#}
-{#                {% trans 'Invite' %}#}
-{#            </button>#}
-{#            {% endbuttons %}#}
-        </form>
-    </div>
+<div class="profile-section">
+  <form class="form-inline" method="post">
+    {% csrf_token %}
+    {% bootstrap_form form layout="inline" %}
+    {% buttons %}
+    <button type="submit" class="btn btn-primary btn-xs-block">
+      {% trans 'Invite' %}
+    </button>
+    {% endbuttons %}
+  </form>
 </div>
 <hr />
-<h2>{% trans 'Your previous invitations' %}</h2>
-<table class="table table-condensed table-bordered table-striped">
-    <thead>
+<div class="profile-section">
+  <h2>{% trans 'Your previous invitations' %}</h2>
+  <div class="form-group">
+    <table class="table table-condensed table-bordered">
+      <thead>
         <tr>
-            <th>{% trans 'Email' %}</th>
-            <th>{% trans 'Sent' %}</th>
-            <th>{% trans 'Accepted' %}</th>
+          <th>{% trans 'Email' %}</th>
+          <th>{% trans 'Sent' %}</th>
+          <th>{% trans 'Accepted' %}</th>
         </tr>
-    </thead>
-    <tbody>
+      </thead>
+      <tbody>
         {% for invite in open_invitations %}
         <tr>
-            <td>
-                {{ invite.email }}
-            </td>
-            <td>
-                {% if invite.invitation_sent %}
-                    {{ invite.invitation_sent|timesince }} {% trans 'ago' %}
-                {% endif %}
-            </td>
-            <td>
-                {% if invite.user %}
-                    <a class="btn btn-sm" href="{% url 'user_profile:public_profile' username=invite.user.username  %}">
-                        <i class="fa fa-user"></i> {{ invite.user.username }}
-                    </a>
-                {% else %}
-                {% endif %}
-            </td>
+          <td>
+            {{ invite.email }}
+          </td>
+          <td>
+            {% if invite.invitation_sent %}
+            {{ invite.invitation_sent|timesince }} {% trans 'ago' %}
+            {% endif %}
+          </td>
+          <td>
+            {% if invite.user %}
+            <a class="btn btn-sm" href="{% url 'user_profile:public_profile' username=invite.user.username  %}">
+              <i class="fa fa-user"></i> {{ invite.user.username }}
+            </a>
+            {% else %}
+            {% endif %}
+          </td>
         </tr>
         {% empty %}
         <tr>
-            <td colspan="3" class="text-muted">
-                {% trans 'It seems that you have not invited anyone yet.' %}
-            </td>
+          <td colspan="3" class="text-muted">
+            {% trans 'It seems that you have not invited anyone yet.' %}
+          </td>
         </tr>
         {% endfor %}
-    </tbody>
-</table>
+      </tbody>
+    </table>
+  </div>
+</div>
 {% endblock %}

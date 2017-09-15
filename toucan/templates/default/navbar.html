@@ -1,7 +1,7 @@
 {% load i18n %}
 {% load static from staticfiles %}
 {% with namespaces=request.resolver_match.namespaces %}
-<nav class="navbar navbar-default navbar-static-top">
+<nav class="navbar navbar-default navbar-static-top hidden-xs">
 
     <div class="container-fluid">
         {% url 'home' as home %}
@@ -25,12 +25,12 @@
             {# react will just replace the content of this dom node #}
             <div id="react-navbar">
                 <ul class="nav navbar-nav">
-                    <li>
-                        <a href="{{ home }}">
-                            <i class="fa fa-arrow-left"></i>
-                            {% trans 'Return to Toucan' %}
-                        </a>
-                    </li>
+                    <!--<li>-->
+                        <!--<a href="{{ home }}">-->
+                            <!--<i class="fa fa-arrow-left"></i>-->
+                            <!--{% trans 'Return to Toucan' %}-->
+                        <!--</a>-->
+                    <!--</li>-->
                 </ul>
             </div>
             {# purely django controlled nav #}

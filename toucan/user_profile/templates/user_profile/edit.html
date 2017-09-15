@@ -1,19 +1,29 @@
-{% extends 'user_profile/base.html' %}
+{% extends 'default/base.html' %}
+{% block body-classes %}form-settings form-blue{% endblock %}
 {% load i18n bootstrap3 %}
+{% block main %}
 
-{% block profile-title %}
-    {{ block.super }}
-{% endblock %}
+<div class="toucan-form">
+  <div class="form-header-sticky">
+    <a href="/toucan/profile/" class="pull-right text-cancel">
+      {% trans 'Cancel' %}
+    </a>
+    <h1 class="form-title">
+      {% block profile-title %}
+      {% trans 'Profile for' %} {{ user.username }}
+      {% endblock %}
+    </h1>
+  </div>
+  <form method="post" action="">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      {% buttons %}
+      <button type="submit" class="btn btn-primary btn-xs-block">
+          {% trans 'Save' %}
+      </button>
+      {% endbuttons %}
+  </form>
+</div>
+{% endblock main %}
 
-{% block content %}
 
-<form method="post" action="">
-    {% csrf_token %}
-    {% bootstrap_form form %}
-    {% buttons %}
-    <button type="submit" class="btn btn-sm btn-info">
-        {% trans 'Save' %}
-    </button>
-    {% endbuttons %}
-</form>
-{% endblock content %}

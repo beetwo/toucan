@@ -34,18 +34,20 @@ div.toolbar {
   .text-muted {
     color: $c-darkgrey;
   }
-  .settings-title {
+  .settings-title, .form-title {
     color: $c-turquoise;
   }
 }
 
-.settings-title, .form-title {
-  font-size: 21px;
-  margin: 0;
-  margin-bottom: $padding-base-vertical*2;
-}
 .settings-title {
   padding: 0 $grid-gutter-width/2;
+}
+.form-title {
+  margin: 0;
+}
+.settings-title, .form-title {
+  font-size: 21px;
+  margin-bottom: $padding-base-vertical*2;
 }
 .toucan-form {
   margin: 0 auto;
@@ -132,8 +134,12 @@ ul {
     margin-bottom: 0;
   }
   @include screen-sm-max {
-    margin-top: -21px;
     box-shadow: 0 3px 3px rgba(0,0,0, .1);
+  }
+}
+.form-blue {
+  .form-header-sticky {
+    background-color: $c-lightblue;
   }
 }
 form {

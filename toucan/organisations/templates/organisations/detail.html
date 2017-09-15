@@ -6,36 +6,33 @@
 {% endblock %}
 
 {% block organisation_details %}
+  {% if organisation.logo %}
+      <p>
+      {% thumbnail '250x250' organisation.logo crop=0 %}
+      </p>
+  {% endif %}
 
-{{ organisation.description|linebreaks}}
+  {{ organisation.description|linebreaks}}
 
-<dl>
+  <dl>
     {% if organisation.homepage %}
     <dt>{% trans 'Homepage' %}</dt>
     <dd>{{ organisation.homepage|urlize }}</dd>
     {% endif %}
-</dl>
+  </dl>
+
 
 
 {% endblock %}
 
 {% block organisation_page_controls %}
 
-    {% if organisation.logo %}
-        <p>
-        {% thumbnail '250x250' organisation.logo crop=0 %}
-        </p>
-    {% endif %}
 
     {% if can_edit_details %}
-    <br />
-    <p class="text-right">
-        <a href="{% url 'organisations:edit' %}"
-            class="btn btn-primary">
-            {% trans 'Edit organisation details' %}
-            <i class="fa fa-edit"></i>
-        </a>
-    </p>
+    <a href="{% url 'organisations:edit' %}"
+      class="btn btn-primary btn-sm ">
+      {% trans 'Edit organisation details' %}
+    </a>
     {% endif %}
 
 {% endblock %}
@@ -45,85 +42,73 @@
 
 
 {% with memberships=organisation.active_memberships %}
-<hr />
 
-<div class="row">
-    <div class="col-sm-12">
-        <h2>{% trans 'Members' %} ({{ memberships|length }})</h2>
-        <hr />
-        <table class="table table-striped">
-            <tbody>
-            {% for membership in memberships %}
-            {% with u=membership.user %}
-                <tr>
-                    <td>
-{#                        <a href="#">Image?</a>#}
-                    </td>
-                    <td>
-                        <a href="{% url 'user_profile:public_profile' username=u.username %}">
-                            {{ u.username }}
-                            {% if u == user %}&nbsp;<i class="fa fa-user"></i>{% endif %}
-                        </a>
-                    </td>
-                    <td>
-                        <span class="label label-default">
-                        {{ membership.get_role_display|capfirst }}
-                        </span>
-                    </td>
-                </tr>
-            {% endwith %}
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+<div class="profile-section">
+  <h2>{% trans 'Members' %} <span class="text-muted">({{ memberships|length }})</span></h2>
+  <div class="form-group form-group-setting">
+  {% for membership in memberships %}
+  <div class="row row-padded">
+      {% with u=membership.user %}
+      <div class="col-xs-6">
+        <a href="{% url 'user_profile:public_profile' username=u.username %}">
+          {% if u == user %}&nbsp;<i class="fa fa-user"></i>{% endif %}
+          {{ u.username }}
+        </a>
+      </div>
+      <div class="col-xs-6 text-right">
+        <span class="badge badge-member">
+          {{ membership.get_role_display|capfirst }}
+        </span>
+      </div>
+      {% endwith %}
+  </div>
+      {% endfor %}
+  </div>
+  <div class="form-group">
+
+      {% if is_member %}
+          {% if can_invite %}
+          <a class="btn btn-primary btn-sm" href="{% url 'invite_to_org' organisation_id=organisation.pk %}">
+            {% trans 'Invite new members' %}
+          </a>
+          {% endif %}
+      {% endif %}
+  </div>
 </div>
 
 
 
-<div class="row">
 
-    {% if is_member %}
-        {% if can_invite %}
-        <p class="text-right">
-            <a class="btn btn-primary" href="{% url 'invite_to_org' organisation_id=organisation.pk %}">
-                {% trans 'Invite new members' %} <i class="fa fa-envelope"></i>
-            </a>
-        </p>
-        {% endif %}
-    {% endif %}
-</div>
-
-<div id="'locations">
+<div id="locations" class="profile-section">
 
 <h2>{% trans 'Locations' %}</h2>
 
-<hr />
 
-<table class="table table-striped">
-    <tbody>
-    {% for location in locations %}
-    <tr>
-        <td>
-            {% if location.name %}<b>{{ location.name }}</b><br />{% endif %}
-            {{ location.city }}
-        </td>
-        <td>
-            {% if can_edit_locations %}
-                <a class='btn btn-sm btn-primary' href="{% url 'organisations:locations:edit' pk=location.pk %}">Edit</a>
-                <a class='btn btn-sm btn-default' href="{% url 'organisations:locations:delete' pk=location.pk %}">Delete</a>
-            {% endif %}
-        </td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
+
+
+{% for location in locations %}
+<div class="form-group form-group-setting">
+  <div class="row row-padded">
+    <div class="col-sm-6">
+      {% if location.name %}<b>{{ location.name }}</b><br />{% endif %}
+      {{ location.city }}
+    </div>
+    <div class="col-sm-6 text-right">
+      {% if can_edit_locations %}
+      <a class='btn btn-sm btn-primary' href="{% url 'organisations:locations:edit' pk=location.pk %}">Edit</a>
+      <a class='btn btn-sm btn-default' href="{% url 'organisations:locations:delete' pk=location.pk %}">Delete</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endfor %}
 
 {% if can_edit_locations %}
-    <p class="text-right">
-        <a class="btn btn-primary" href="{% url 'organisations:locations:add' %}">
-            {% trans 'Add Location' %} <i class="fa fa-globe"></i>
-        </a>
-    </p>
+  <div class="form-group">
+    <a class="btn btn-primary btn-sm" href="{% url 'organisations:locations:add' %}">
+      {% trans 'Add Location' %}
+    </a>
+  </div>
 {% endif %}
 </div>
 
