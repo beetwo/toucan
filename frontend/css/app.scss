@@ -25,7 +25,7 @@ body {
 }
 @include screen-sm-max {
   .app-container {
-    overflow-y: auto;
+    /*overflow-y: auto;*/
   }
 
   .map-container {
@@ -42,8 +42,13 @@ body {
     background-color: #fff;
     z-index: 999;
   }
+  .filter-container {
+    background-color: #fff;
+    position: sticky;
+    top: 25px;
+  }
   .modal-open {
-    .issues-container {
+    .issues-container, .filter-container {
       position: static;
     }
   }
