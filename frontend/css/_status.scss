@@ -23,7 +23,7 @@
   font-size: 12px;
 }
 .badge-inprogress {
-  background-color: $c-inprogress;
+  background-color: saturate( $c-inprogress - 10, 10 );
 }
 .badge-resolved {
   background-color: $c-resolved;
