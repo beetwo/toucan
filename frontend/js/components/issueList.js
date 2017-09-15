@@ -11,6 +11,8 @@ import { Link } from "react-router-dom";
 import Map from "./map";
 import IssueFilter from "../containers/issueFilter";
 
+import camelCase from "lodash/camelCase";
+
 function CommentCount({ count }) {
   return (
     <span className={classNames("comments", { "text-muted": count === 0 })}>
@@ -44,7 +46,13 @@ const IssueListItem = ({ issue }) => {
         <div className="issue-details">
           {/* conditional display this when issue.status is inprogress */}
           <div className="pull-right">
-            <div className="badge badge-status badge-inprogress">
+            <div
+              className={classNames(
+                "badge",
+                "badge-status",
+                "badge-" + camelCase(issue.status)
+              )}
+            >
               {issue.status}
             </div>
           </div>

@@ -6,7 +6,7 @@
   }
 }
 .text-inprogress {
-  color: darken( $c-inprogress, 5% ) !important;
+  color: darken($c-inprogress, 5%) !important;
   &:hover {
     color: #fff !important;
     background-color: $c-inprogress !important;
@@ -22,8 +22,8 @@
 .badge-status {
   font-size: 12px;
 }
-.badge-inprogress {
-  background-color: saturate( $c-inprogress - 10, 10 );
+.badge-inProgress {
+  background-color: saturate($c-inprogress - 10, 10);
 }
 .badge-resolved {
   background-color: $c-resolved;
