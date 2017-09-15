@@ -27,6 +27,7 @@
   width: 100%;
 }
 .issue-details {
+  width: 100%;
   clear: both;
   float: left;
   color: $c-darkgrey;
@@ -35,7 +36,23 @@
 .issue-organisation {
   color: $c-darkblue;
 }
-.issue-date {}
+.issue-date {
+  white-space: nowrap;
+}
+.issue-resolved {
+  color: $c-darkgrey;
+  background-color: $c-lightgrey + 10;
+  .badge {
+    background-color: $c-lightgrey - 30;
+    color: $c-lightgrey + 10;
+  }
+  .icon, .issue-organisation, .icon-comment {
+    color: $c-lightgrey - 30 !important;
+  }
+  &:hover {
+    background-color: $c-lightgrey + 5;
+  }
+}
 
 .comments {
   .icon {
