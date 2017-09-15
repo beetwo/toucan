@@ -1,13 +1,36 @@
 {% extends './base.html' %}
 {% load bootstrap3 i18n %}
 
+{% load render_bundle from webpack_loader %}
+
+{% block extra-head %}
+{{ block.super }}
+{% render_bundle 'b2MapSelector' %}
+{% endblock %}
+
 {% block organisation_page_title %}{% trans 'Add a new location' %}{% endblock %}
 
 
 {% block locations_main %}
-    <form method="post">
-        {% csrf_token %}
-    {% bootstrap_form form %}
+<form method="post">
+    {% csrf_token %}
+    {% bootstrap_field form.name %}
+    {% bootstrap_field form.city %}
+
+    {# the point field needs some special rendering #}
+    {% if form.errors.point %}
+    <div class="form-group has-error">
+        {%  for error in form.errors.point %}
+        <div class="help-block">
+            {{ error }}
+        </div>
+    {% endfor %}
+    </div>
+    {% endif %}
+
+    <div id="locationMap"></div>
+    {{ form.location }}
+
 
     {% buttons %}
         <button type="submit" class="btn btn-primary">
@@ -19,3 +42,43 @@
 
     </form>
 {% endblock locations_main %}
+
+
+
+{% block before-body-close %}
+{{ block.super }}
+<script type="application/javascript">
+(function(){
+
+var position = false;
+
+{% if initial_point %}
+  {% with p=initial_point.get_coords %}
+  position = {
+      lng: {{ p.0 }},
+      lat: {{ p.1 }}
+  };
+  {% endwith %}
+{% endif %}
+
+var mapContainer = document.getElementById('locationMap'),
+    location_field = document.getElementById('id_location');
+
+
+$(location_field).hide();
+
+function cb(e) {
+    location_field.value = 'POINT(' + e.lng + ' ' + e.lat + ')'
+};
+
+var props = {
+    editable: true,
+    position: position,
+    onPositionChange: cb
+};
+
+render_map(mapContainer, props);
+
+})();
+</script>
+{% endblock %}
