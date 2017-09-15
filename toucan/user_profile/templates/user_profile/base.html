@@ -5,8 +5,10 @@
 
 <div class="toucan-form">
   <div class="form-header-sticky">
-    <a class="pull-right text-cancel" href="/">
-      {% trans 'Close' %}
+    <a class="pull-right text-cancel" href="{% block close-link-href %}/{% endblock %}">
+        {% block close-text %}
+        {% trans 'Close' %}
+        {% endblock %}
     </a>
     <h1 class="form-title">
       {% block profile-title %}

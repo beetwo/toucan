@@ -1,1 +1,7 @@
 {% extends '../base.html' %}
+{% load i18n %}
+{% block close-link-href %}{% url 'user_profile:personal_profile' %}{% endblock %}
+{% block close-text %}
+    {% trans 'Cancel' %}
+{% endblock %}
+
