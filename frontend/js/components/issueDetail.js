@@ -25,23 +25,24 @@ function HtmlBody(props) {
 }
 
 function RawTextBody(props) {
-  return (
-    <div style={{ whiteSpace: "pre-line" }}>
-      {props.text}
-    </div>
-  );
+  return <div style={{ whiteSpace: "pre-line" }}>{props.text}</div>;
 }
 function Pickup(props) {
-  if (props.pickup === true){
+  if (props.pickup === true) {
     return (
-    <div className="issue-pickup">
-      <span className='icon icon-lg icon-pickup'></span> I can pick it up myself.
-    </div>
-    )
+      <div className="issue-pickup">
+        <span className="icon icon-lg icon-pickup" /> I can pick it up myself.
+      </div>
+    );
   } else {
     return null;
   }
 }
+
+const OrganisationLink = ({ org_id, children }) => {
+  return <Link to={`/orgs/${org_id}/`}>{children}</Link>;
+};
+
 class IssueDetailMain extends React.Component {
   render() {
     let { issue, children } = this.props;
@@ -58,6 +59,7 @@ class IssueDetailMain extends React.Component {
       default:
         body = <RawTextBody text={description} />;
     }
+
     return (
       <div className="issue-detail-main" ref="scrollbar">
         <div className="issue-detail-content">
@@ -68,13 +70,14 @@ class IssueDetailMain extends React.Component {
           </div>
           <div className="issue-detail-lead media">
             <div className="media-left media-middle">
-              <ToucanIcon issue_type={issue_type} className="icon-xl icon-issue" />
+              <ToucanIcon
+                issue_type={issue_type}
+                className="icon-xl icon-issue"
+              />
             </div>
             <div className="media-body">
               <h1 className="issue-detail-title">
-                <div className="issue-detail-label">
-                  {issue_type.name}
-                </div>
+                <div className="issue-detail-label">{issue_type.name}</div>
                 {issue.title}
               </h1>
             </div>
@@ -82,14 +85,14 @@ class IssueDetailMain extends React.Component {
 
           <div className="flex-container flex-container--bordered">
             <div className="flex-col">
-              {issue.organisation
-                ? <div className="issue-detail-organisation">
-                    <div className="issue-detail-label">Organisation</div>
-                    <UserLink username={issue.organisation.short_name}>
-                      {issue.organisation.name}
-                    </UserLink>
-                  </div>
-                : null}
+              {issue.organisation ? (
+                <div className="issue-detail-organisation">
+                  <div className="issue-detail-label">Organisation</div>
+                  <OrganisationLink org_id={issue.organisation.id}>
+                    {issue.organisation.name}
+                  </OrganisationLink>
+                </div>
+              ) : null}
             </div>
             <div className="flex-col">
               <div className="issue-detail-status">
@@ -148,21 +151,21 @@ class IssueDetailMain extends React.Component {
                   <TimeAgo date={issue.created} />
                 </span>
               </div>
-              <div className="comment-body">
-                {body}
-              </div>
+              <div className="comment-body">{body}</div>
             </div>
             {children}
           </div>
-          {this.props.canComment
-            ? <CommentForm
-                onComment={this.props.onComment}
-                status={issue.status}
-                users={this.props.mentions}
-              />
-            : <p className="text-center text-muted">
-                <em>Please login to comment.</em>
-              </p>}
+          {this.props.canComment ? (
+            <CommentForm
+              onComment={this.props.onComment}
+              status={issue.status}
+              users={this.props.mentions}
+            />
+          ) : (
+            <p className="text-center text-muted">
+              <em>Please login to comment.</em>
+            </p>
+          )}
         </div>
       </div>
     );
