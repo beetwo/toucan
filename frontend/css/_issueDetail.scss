@@ -24,6 +24,14 @@
 .issue-detail-status, .issue-detail-organisation, .issue-detail-lead {
   padding: $padding;
 }
+.issue-pickup {
+  padding: 0 $padding;
+  margin: $padding 0;
+  color: $c-darkgrey;
+  .icon {
+    font-size: 35px;
+  }
+}
 .issue-detail-title {
   font-size: 20px;
   margin: 0;

@@ -31,7 +31,17 @@ function RawTextBody(props) {
     </div>
   );
 }
-
+function Pickup(props) {
+  if (props.pickup === true){
+    return (
+    <div className="issue-pickup">
+      <span className='icon icon-lg icon-pickup'></span> I can pick it up myself.
+    </div>
+    )
+  } else {
+    return null;
+  }
+}
 class IssueDetailMain extends React.Component {
   render() {
     let { issue, children } = this.props;
@@ -50,14 +60,12 @@ class IssueDetailMain extends React.Component {
     }
     return (
       <div className="issue-detail-main" ref="scrollbar">
-        <div className="issue-detail-header">
+        <div className="issue-detail-content">
           <div className="issue-detail-close pull-right">
             <Link to="/">
               <span className="icon icon-close" />
             </Link>
           </div>
-        </div>
-        <div className="issue-detail-content">
           <div className="issue-detail-lead media">
             <div className="media-left media-middle">
               <ToucanIcon issue_type={issue_type} className="icon-xl icon-issue" />
@@ -131,6 +139,7 @@ class IssueDetailMain extends React.Component {
               </div>
             </div>
           </div>
+          <Pickup pickup={issue.pick_up} />
           <div className="issue-detail-comments">
             <div className="comment comment-primary">
               <div className="comment-header">
