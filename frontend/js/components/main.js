@@ -37,11 +37,11 @@ class SplitUIView extends React.Component {
         })}
       >
         <div className="map-container">{map}</div>
-        <div className="issues-container">
+        <div className="filter-container">
           <MapHandle />
           {filter_interface}
-          {issue_view}
         </div>
+        <div className="issues-container">{issue_view}</div>
       </div>
     );
   }
