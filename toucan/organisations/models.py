@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from location_field.models.spatial import LocationField
+from django.contrib.gis.db.models import PointField
 from model_utils.models import TimeStampedModel
 
 from toucan.notifications.fields import NotificationTypeField
@@ -154,7 +154,8 @@ class Membership(TimeStampedModel):
 class Location(models.Model):
     name = models.CharField(max_length=255, blank=True)
     city = models.CharField(max_length=255, verbose_name='Address')
-    location = LocationField()
+    location = PointField(verbose_name=_('location'))
+
     org = models.ForeignKey(Organisation, null=True)
 
     can_assign_issue = models.BooleanField(default=True, verbose_name=_('Issue assignable'))
