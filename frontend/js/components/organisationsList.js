@@ -38,11 +38,6 @@ class OrganisationsList extends React.Component {
     const { organisations } = this.props;
     const org_list = (
       <div className="issue-list">
-        <div className="issue-list-mapHandle">
-          <a href="#" className="mapHandle">
-            &nbsp;
-          </a>
-        </div>
         <div className="issue-list-form">
           <div className="issue-sortandfilter">
             <div className="flex-container">
