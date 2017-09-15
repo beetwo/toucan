@@ -22,7 +22,13 @@ function CommentCount({ count }) {
 
 const IssueListItem = ({ issue }) => {
   return (
-    <Link to={`/issue/${issue.id}/`} key={issue.id} className={classNames("issue media", {'issue-resolved' : issue.status === 'resolved'})}>
+    <Link
+      to={`/issue/${issue.id}/`}
+      key={issue.id}
+      className={classNames("issue media", {
+        "issue-resolved": issue.status === "resolved"
+      })}
+    >
       <div className="issue-icon media-left media-middle">
         {issue.issue_types.map(it => {
           return <ToucanIcon key={it.slug} issue_type={it} />;
@@ -38,7 +44,9 @@ const IssueListItem = ({ issue }) => {
         <div className="issue-details">
           {/* conditional display this when issue.status is inprogress */}
           <div className="pull-right">
-            <div className="badge badge-status badge-inprogress">{issue.status}</div>
+            <div className="badge badge-status badge-inprogress">
+              {issue.status}
+            </div>
           </div>
           <span className="issue-organisation">
             {issue.organisation ? issue.organisation.name + ", " : null}
