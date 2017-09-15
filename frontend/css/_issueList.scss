@@ -12,7 +12,8 @@
   }
 }
 .issue-title {
-  font-size: 16px;
+  font-size: 15px;
+  line-height: 1.2;
   font-weight: bold;
   float: left;
   max-width: 85%;
@@ -26,6 +27,7 @@
   width: 100%;
 }
 .issue-details {
+  width: 100%;
   clear: both;
   float: left;
   color: $c-darkgrey;
@@ -34,7 +36,23 @@
 .issue-organisation {
   color: $c-darkblue;
 }
-.issue-date {}
+.issue-date {
+  white-space: nowrap;
+}
+.issue-resolved {
+  color: $c-darkgrey;
+  background-color: $c-lightgrey + 10;
+  .badge {
+    background-color: $c-lightgrey - 30;
+    color: $c-lightgrey + 10;
+  }
+  .icon, .issue-organisation, .icon-comment {
+    color: $c-lightgrey - 30 !important;
+  }
+  &:hover {
+    background-color: $c-lightgrey + 5;
+  }
+}
 
 .comments {
   .icon {
@@ -61,6 +79,7 @@
     flex-direction: column;
     height: 100%;
     flex: 1;
+    min-height: 300px;
 }
 
 .issue-list-form, .issue-list-footer {
@@ -91,7 +110,7 @@
   border-right: none;
   background-color: $c-beige;
   color: $c-yellow;
-  padding: $padding;
+  padding: $padding/2 $padding;
   font-weight: bold;
   &:hover {
     text-decoration: none;

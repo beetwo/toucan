@@ -1,40 +1,48 @@
 import React from "react";
 import cn from "classnames";
 
-const MapHandle = props =>
-  <div className="issue-list-mapHandle">
-    <a {...props} className="mapHandle">
-      &nbsp;
-    </a>
-  </div>;
+const MapHandle = () => (
+  <div className="text-center">
+    <span className="mapHandle" />
+  </div>
+);
 
 class SplitUIView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      listExpanded: false
+      filter_opened: false
     };
-    this.toggleExpand = this.toggleExpand.bind(this);
+    this.toggleFilter = this.toggleFilter.bind(this);
   }
-  toggleExpand() {
-    this.setState(state => ({
-      listExpanded: !state.listExpanded
-    }));
+
+  toggleFilter() {
+    this.setState(state => ({ filter_opened: !state.filter_opened }));
   }
+
   render() {
-    let { map, issue_view } = this.props;
+    let { map, issue_view, filter_interface = null } = this.props;
+
+    if (filter_interface) {
+      filter_interface = React.cloneElement(filter_interface, {
+        toggleFilterForm: this.toggleFilter,
+        showFilterForm: this.state.filter_opened
+      });
+    }
+
     return (
       <div
         className={cn("app-container", {
-          listExpanded: this.state.listExpanded
+          "modal-open": this.state.filter_opened
         })}
       >
-        <div className="map-container">
-          {map}
-        </div>
+        <div className="map-container">{map}</div>
         <div className="issues-container">
-          <MapHandle onClick={this.toggleExpand} />
-          {issue_view}
+        <div className="filter-container">
+          <MapHandle />
+          {filter_interface}
+        </div>
+        {issue_view}
         </div>
       </div>
     );

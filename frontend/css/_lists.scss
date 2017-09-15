@@ -22,7 +22,6 @@
   display: inline-block;
   &:hover {
     text-decoration: none;
-    background-color: $c-lightgrey - 20;
   }
   @include screen-sm-min {
     display: none;

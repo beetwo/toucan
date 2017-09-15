@@ -9,7 +9,7 @@ from braces.views import FormValidMessageMixin
 
 from toucan.invitations.permissions import can_invite_to_org
 from .models import Location
-
+from .forms import LocationForm
 
 class OrganisationMixin(object):
 
@@ -67,6 +67,7 @@ class OrganisationEdit(OrganisationAdminRequiredMixin, OrganisationMixin, FormVa
 
 class LocationMixin(OrganisationAdminRequiredMixin, OrganisationMixin):
     model = Location
+    form_class = LocationForm
 
     def get_success_url(self):
         return reverse('organisations:detail')
@@ -74,11 +75,6 @@ class LocationMixin(OrganisationAdminRequiredMixin, OrganisationMixin):
     def get_queryset(self):
         return Location.objects.filter(org=self.organisation)
 
-    fields = [
-        'name',
-        'city',
-        'location'
-    ]
 
 
 class LocationCreate(LocationMixin, FormValidMessageMixin, CreateView):
@@ -95,6 +91,13 @@ class LocationCreate(LocationMixin, FormValidMessageMixin, CreateView):
 class LocationEdit(LocationMixin, FormValidMessageMixin, UpdateView):
     template_name = 'organisations/locations/edit.html'
     form_valid_message = _('Location updated.')
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        p = ctx['form'].initial.get('location')
+        if p:
+            ctx.update({'initial_point': p})
+        return ctx
 
 
 

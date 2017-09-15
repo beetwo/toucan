@@ -214,7 +214,7 @@ function issueFiltersSelections(state, action) {
 }
 
 const defaultFilterSelection = {
-  status: ["open"],
+  status: ["open", "in progress"],
   type: [],
   organisation: []
 };
