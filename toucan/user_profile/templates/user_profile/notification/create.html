@@ -1,14 +1,23 @@
-{% extends 'user_profile/notification/base.html' %}
+{% extends './base.html' %}
+
 {% load i18n bootstrap3 %}
+{% load render_bundle from webpack_loader %}
+
+{% block extra-head %}
+{% render_bundle 'b2MapSelector' %}
+<style>
+.leaflet-container { width: 100%; height: 100%;}
+</style>
+{% endblock %}
 
 {% block profile-title %}
     {% trans 'Create new notification rule' %}
 {% endblock %}
 
 {% block content %}
-<div class="form-group">
-    <div id="issueMap"></div>
-</div>
+    <div class="form-group">
+        <div id="issueMap"></div>
+    </div>
     <form method="post">
         {% csrf_token %}
         {% bootstrap_form form %}
@@ -19,5 +28,51 @@
 {% endblock content %}
 
 {% block before-body-close %}
-    {{ block.super }}
+{{ block.super }}
+<script>
+(function() {
+{% if form.instance.pk and form.instance.point %}
+    {% with coords=form.instance.point.get_coords %}
+    var position = {
+        lng: {{ coords.0 }},
+        lat: {{ coords.1 }}
+    };
+    {% endwith %}
+{% else %}
+    var position = false;
+{% endif %}
+
+var location_field = document.getElementById('id_point'),
+    radius_field = document.getElementById('id_point_radius'),
+    map = document.getElementById('issueMap');
+
+console.log(location_field, radius_field, map);
+function cb(e) {
+    location_field.value = 'POINT(' + e.lng + ' ' + e.lat + ')'
+};
+
+var props = {
+    position: position,
+    editable: true,
+    onPositionChange: cb,
+    radius: (parseInt(radius_field.value, 10) || 0) * 1000
+}
+
+var update_cb = render_map(map, props);
+
+// subscribe to changes in the radius field
+var handleRadiusChange = function(e) {
+    props.radius = parseInt(e.target.value, 10) * 1000;
+    update_cb(props);
+}
+
+radius_field.addEventListener('change', handleRadiusChange)
+radius_field.addEventListener('keyup', handleRadiusChange)
+
+$('select[multiple]').selectize({
+    placeholder: 'any'
+});
+
+})();
+</script>
 {% endblock %}
