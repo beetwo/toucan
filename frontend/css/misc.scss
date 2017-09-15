@@ -1,5 +1,6 @@
 @import 'colors';
 @import 'bs-themes/flatly/_variables.scss';
+@import 'variables';
 div.toolbar {
   padding: 0.5em;
 }
@@ -20,40 +21,56 @@ div.toolbar {
 
 .form-settings {
   h1 {
-    font-size: 21px;
-    margin: 0;
-    margin-bottom: $padding-base-vertical*2;
   }
 }
 .form-beige {
   background-color: $c-beige;
+  .form-title {
+    color: $c-issues;
+  }
 }
 .form-blue {
   background-color: $c-lightblue;
   .text-muted {
     color: $c-darkgrey;
   }
-  .settings-title {
+  .settings-title, .form-title {
     color: $c-turquoise;
   }
 }
+
 .settings-title {
   padding: 0 $grid-gutter-width/2;
 }
-.settings-form {
+.form-title {
+  margin: 0;
+}
+.settings-title, .form-title {
+  font-size: 21px;
+  margin-bottom: $padding-base-vertical*2;
+}
+.toucan-form {
   margin: 0 auto;
   max-width: 768px;
   .form-group {
-    padding: $grid-gutter-width/2;
+    margin-top: $grid-gutter-width/2;
+    padding: 0 $grid-gutter-width/2;
+  }
+  .form-heading {
+    padding: 0 $grid-gutter-width/2;
+  }
+  .form-group-setting {
     background-color: #fff;
+    margin-top: 0;
     margin-bottom: 0;
     border: 1px solid $c-lightgrey;
+    padding: $grid-gutter-width/2;
     @media screen and (max-width: 768px) {
       border-left: 0;
       border-right: 0;
     }
   }
-  .form-group + .form-group {
+  .form-group-setting + .form-group-setting {
     border-top: 0;
   }
   label {
@@ -75,7 +92,7 @@ div.toolbar {
 
 .form-heading {
   font-weight: bold;
-  margin-top: $padding-base-vertical*3;
+  margin-top: $padding-base-vertical*2;
   margin-bottom: $padding-base-vertical*2;
 }
 
@@ -101,6 +118,37 @@ ul {
     color: $c-organisations;
   }
 }
+.text-cancel {
+  color: $c-darkgrey;
+  &:hover {
+    color: $c-darkgrey - 50;
+  }
+}
+.form-header-sticky {
+  background-color: $c-beige;
+  padding: 15px $grid-gutter-width/2;
+  position: sticky;
+  top:0;
+  z-index: 999;
+  * {
+    margin-bottom: 0;
+  }
+  @include screen-sm-max {
+    box-shadow: 0 3px 3px rgba(0,0,0, .1);
+  }
+}
+.form-blue {
+  .form-header-sticky {
+    background-color: $c-lightblue;
+  }
+}
 form {
   margin: $padding-base-vertical 0;
+}
+
+.notification-delete {
+  margin-left: $padding-base-vertical;
+  &:hover, &:active {
+    color: $brand-danger !important;
+  }
 }

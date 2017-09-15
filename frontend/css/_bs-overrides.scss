@@ -32,6 +32,13 @@ h4, h5, h6 {
   font-size: 80%;
   padding: $padding-base-vertical/4 $padding-base-horizontal;
 }
+.btn-xs-block {
+  @include screen-xs-max {
+    display: block;
+    width: 100%;
+  }
+}
+
 @include screen-sm-min {
   .nav.navbar-nav li {
     border-bottom: 3px solid transparent;
@@ -41,6 +48,14 @@ h4, h5, h6 {
 
   }
 }
+
+.nav.navbar-nav li {
+  border-bottom: 3px solid transparent;
+  &.nav-issues.active {
+    border-color: $c-issues;
+  }
+}
+
 .nav.navbar-nav li {
   &.nav-orgs {
     &:hover {
@@ -72,6 +87,12 @@ h4, h5, h6 {
       }
     }
   }
+}
+.badge-member {
+  background-color: $c-darkblue;
+}
+.badge-issue {
+  background-color: $c-issues;
 }
 .navbar-main {
   font-size: 22px;

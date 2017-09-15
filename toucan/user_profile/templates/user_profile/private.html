@@ -11,7 +11,7 @@
 
 <div class="profile-section">
   <h2>{% trans 'Personal information' %}</h2>
-  <div class="form-group">
+  <div class="form-group form-group-setting">
     <div class="row">
       <div class="col-sm-4">
         <label>
@@ -23,7 +23,7 @@
       </div>
     </div>
   </div>
-  <div class="form-group">
+  <div class="form-group form-group-setting">
     <div class="row">
       <div class="col-sm-4">
         <label>
@@ -48,7 +48,7 @@
 
     <div class="profile-section">
       <h2>{% trans 'Mentioning settings' %}</h2>
-      <div class="form-group">
+      <div class="form-group form-group-setting">
         <div class="row">
           <div class="col-sm-7">
             {% trans 'Notification when mentioned' %}
@@ -61,7 +61,7 @@
           </div>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group form-group-setting">
         <div class="row">
           <div class="col-sm-7">
             {% trans 'Notification when your organisation is mentioned' %}
@@ -88,7 +88,7 @@
           You can configure Toucan to notify you of new issues within a defined geographic radius.
       </p>
       <p>
-        <a href="{% url 'user_profile:notification_create' %}">
+        <a class="btn btn-primary btn-sm" href="{% url 'user_profile:notification_create' %}">
           {% trans '+ Add notification rule' %}
         </a>
       </p>
@@ -97,52 +97,56 @@
         {% for ns in notification_settings%}
         <div class="notification">
           <div class="row">
-            <div class="col-sm-1">
-              <strong>{{ forloop.counter }}.</strong>
-            </div>
-            <div class="col-sm-2">
-              <strong>{% trans 'Issue types' %}</strong>
-              <ul>
+            <div class="col-sm-12">
+              <p>
+                {{ ns.created|date:'SHORT_DATETIME_FORMAT' }}
+              </p>
+              <p>
+                <strong>
+                  {% trans 'Issue types' %}
+                </strong>
                 {% for it in ns.issue_types.all %}
-                <li>{{ it.name }}</li>
+                <span class="badge badge-issue">{{ it.name }}</span>
                 {% empty %}
-                <li class="text-muted">{% trans 'all' %}</li>
+                <span>{% trans 'all' %}</span>
                 {% endfor %}
-              </ul>
-            </div>
-            <div class="col-sm-3">
-              <strong>{% trans 'Organisations' %}</strong>
-              <ul>
+              </p>
+              <p>
+
+                <strong>
+                  {% trans 'Organisations' %}
+                </strong>
                 {% for org in ns.organisations.all %}
-                <li>{{ org.name }}</li>
+                <span class="badge badge-member">{{ org.name }}</span>
                 {% empty %}
-                <li class="text-muted">{% trans 'all' %}</li>
+                <span>{% trans 'all' %}</span>
                 {% endfor %}
-              </div>
-              <div class="col-sm-3">
-                <strong>{{ ns.created|date:'SHORT_DATETIME_FORMAT' }}</strong>
-              </div>
-              <div class="col-sm-3">
-                <div class="text-right">
-                  <a class="btn btn-info btn-xs" href="{% url 'user_profile:notification_edit' notification_id=ns.pk %}">
-                    {% trans 'Edit' %}
-                  </a>
-                  <a class="btn btn-danger btn-xs" href="{% url 'user_profile:notification_delete' notification_id=ns.pk %}">
-                    {% trans 'Delete' %}
-                  </a>
-                </div>
+
+              </p>
+            </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <a href="{% url 'user_profile:notification_edit' notification_id=ns.pk %}">
+                  {% trans 'Edit' %}
+                </a>
+                <a class="text-danger notification-delete" href="{% url 'user_profile:notification_delete' notification_id=ns.pk %}">
+                  {% trans 'Delete' %}
+                </a>
               </div>
             </div>
           </div>
           
           {% endfor %}
       {% else %}
+      <div class="form-group">
       <p class="alert alert-info">
           {% blocktrans %}
               You have no notifications configured.
               Add your first notification rule to be notified when something happens around you.
           {% endblocktrans %}
       </p>
+      </div>
       {% endif %}
 
       <div style="margin-bottom: 3em">

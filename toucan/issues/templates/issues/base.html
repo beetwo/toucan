@@ -4,6 +4,7 @@
 
 {% block extra-head %}
 {% render_bundle 'b2MapSelector' %}
+{% render_bundle 'bootstrap' %}
 <style>
 .leaflet-container { width: 100%; height: 100%;}
 </style>
@@ -11,16 +12,13 @@
 
 
 {% block main %}
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-12 col-md-8 col-md-offset-2">
-          <h1>{% block issue_heading_title %}Issues{% endblock %}</h1>
-          <div class="text-right header-controls">
-              {% block issue_heading_controls %}
-              {% endblock %}
-          </div>
-          {% block content %}{% endblock content %}
-        </div>
-    </div>
+<div class="toucan-form">
+  <div class="form-header-sticky">
+    <a href="/" class="pull-right text-cancel">
+      {% trans 'Cancel' %}
+    </a>
+    <h1 class="form-title">{% block issue_heading_title %}Issues{% endblock %}</h1>
+  </div>
+  {% block content %}{% endblock content %}
 </div>
 {% endblock %}

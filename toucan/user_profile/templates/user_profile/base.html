@@ -3,12 +3,19 @@
 {% load i18n %}
 {% block main %}
 
-<div class="settings-form">
-  <h1 class="settings-title">
-    {% block profile-title %}
-    {% trans 'Profile for' %} {{ user.username }}
-    {% endblock %}
-  </h1>
+<div class="toucan-form">
+  <div class="form-header-sticky">
+    <a class="pull-right text-cancel" href="{% block close-link-href %}/{% endblock %}">
+        {% block close-text %}
+        {% trans 'Close' %}
+        {% endblock %}
+    </a>
+    <h1 class="form-title">
+      {% block profile-title %}
+      {% trans 'Profile for' %} {{ user.username }}
+      {% endblock %}
+    </h1>
+  </div>
   {% block profile-title-body %}{% endblock %}
   {% block content %}{% endblock content %}
 </div>

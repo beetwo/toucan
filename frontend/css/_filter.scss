@@ -50,3 +50,11 @@
   padding-top: $padding;
   padding-bottom: $padding;
 }
+.issue-sortandfilter .filter-reset, .filter-reset {
+  color: $c-turquoise;
+  margin-left: $padding;
+  &:hover {
+    color: $c-turquoise;
+    text-decoration: underline;
+  }
+}

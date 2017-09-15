@@ -4,7 +4,7 @@
 {% block content %}
    <h2>{% trans 'Membership' %}</h2>
     {% if memberships|length %}
-    <div class="form-group">
+    <div class="form-group form-group-setting">
       {% if memberships|length > 1 %}
       <div class="row row-padded">
         <div class="col-sm-6">
@@ -13,8 +13,6 @@
         <div class="col-sm-6">
           {% trans 'Membership status' %}
         </div>
-      </div>
-      <div class="row row-padded">
       </div>
       {% endif %}
       {% for membership in memberships %}
@@ -43,7 +41,7 @@
     </tbody>
     </div>
     {% else %}
-    <div class="form-group">
+    <div class="form-group form-group-setting">
         <p class="text-muted">
         {% trans 'Not a member of an organisation.' %}
         </p>

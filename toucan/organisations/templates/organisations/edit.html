@@ -7,19 +7,14 @@
 
 <div class="toucan-form">
   <div class="form-header-sticky">
-    <a href="/toucan/profile/" class="pull-right text-cancel">
-      {% trans 'Close' %}
+    <a href="/toucan/organisation/" class="pull-right text-cancel">
+      {% trans 'Cancel' %}
     </a>
     <h1 class="form-title">{% block organisation_page_title %}{% trans 'Organisations' %}{% endblock %}</h1>
   </div>
-  <div class="profile-section">
-    <div class="form-group">
-      {% block organisation_details %}{% endblock %}
-    </div>
-    <div class="form-group">
-      {% block organisation_page_controls %}{% endblock %}
-    </div>
-  </div>
+  {% block organisation_details %}{% endblock %}
+  {% block organisation_page_controls %}{% endblock %}
   {% block organisation_main %}{% endblock %}
 </div>
 {% endblock %}
+
