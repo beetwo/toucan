@@ -45,11 +45,12 @@ render(
           <Route
             exact
             path="/issue/:IssueID/"
-            render={props =>
+            render={props => (
               <IssueContainer
                 history={props.history}
                 issue_id={props.match.params.IssueID}
-              />}
+              />
+            )}
           />
           <Route
             exact
@@ -66,7 +67,11 @@ render(
               />
             </Switch>
           </Route>
-          <Route exact path="/detail/:username/" component={UserDetail} />
+          <Route
+            exact
+            path="/detail/:username/"
+            render={props => <UserDetail {...props.match.params} />}
+          />
         </Switch>
       </AppShell>
     </Router>

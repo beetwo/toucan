@@ -9,7 +9,7 @@ import Remarkable from "remarkable";
 
 import { CommentList, CommentForm } from "./comments";
 import DateDisplay from "./date";
-import UserLink from "./userLink";
+import { UserLink, OrganisationLink } from "./links";
 import Status from "./status";
 import { HiddenMedium, VisibleMedium } from "./responsive";
 import Loading from "./loading";
@@ -38,10 +38,6 @@ function Pickup(props) {
     return null;
   }
 }
-
-const OrganisationLink = ({ org_id, children }) => {
-  return <Link to={`/orgs/${org_id}/`}>{children}</Link>;
-};
 
 class IssueDetailMain extends React.Component {
   render() {
@@ -146,7 +142,9 @@ class IssueDetailMain extends React.Component {
           <div className="issue-detail-comments">
             <div className="comment comment-primary">
               <div className="comment-header">
-                <UserLink username={issue.creator.username} />,{" "}
+                <UserLink username={issue.creator.username}>
+                  {issue.creator.username}
+                </UserLink>,{" "}
                 <span className="comment-time">
                   <TimeAgo date={issue.created} />
                 </span>

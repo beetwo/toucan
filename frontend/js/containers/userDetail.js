@@ -44,7 +44,8 @@ class UserDetail extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  let username = ownProps.match.params.username,
+  console.log(ownProps);
+  let username = ownProps.username,
     userInformation = state.userInformationByUsername[username] || false;
 
   return {
@@ -54,7 +55,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  let username = ownProps.match.params.username;
+  let username = ownProps.username;
   return {
     fetchUserInformation: () => {
       dispatch(loadUserInformation(username));

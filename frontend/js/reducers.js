@@ -417,6 +417,8 @@ function map(
           ...state,
           org_list: getBoundsFromPoints(location_coordinates)
         };
+      } else {
+        return state;
       }
     case SET_GEOLOCATION:
       return {
