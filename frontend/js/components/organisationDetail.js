@@ -41,16 +41,18 @@ const Membership = ({ membership }) => {
 };
 
 const ContactDetail = ({ type, value }) => {
-  <div className="org-detail-contact">
-    <div className="media">
-      <div className="media-left media-middle">
-        <div className={`icon icon-contact-${type} icon-xl`} />
+  return (
+    <div className="org-detail-contact">
+      <div className="media">
+        <div className="media-left media-middle">
+          <div className={`icon icon-contact-${type} icon-xl`} />
+        </div>
+        <a href="#" className="media-body media-middle">
+          {value}
+        </a>
       </div>
-      <a href="#" className="media-body media-middle">
-        {value}
-      </a>
     </div>
-  </div>;
+  );
 };
 
 const OrganisationContactDetails = ({ org }) => {
