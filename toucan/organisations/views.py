@@ -54,7 +54,11 @@ class OrganisationEdit(OrganisationAdminRequiredMixin, OrganisationMixin, FormVa
         'name',
         'logo',
         'description',
-        'homepage'
+        'location_description',
+        'homepage',
+        'email',
+        'phone',
+
     ]
     form_valid_message = _('Organisation details updated')
 

@@ -14,7 +14,10 @@ class OrganisationDetails extends React.Component {
       members,
       description,
       homepage,
-      profile_url
+      profile_url,
+      phone,
+      email,
+      location_description
     } = this.props;
 
     let items = [

@@ -4,6 +4,8 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.gis.db.models import PointField
+from phonenumber_field.modelfields import PhoneNumberField
+
 from model_utils.models import TimeStampedModel
 
 from toucan.notifications.fields import NotificationTypeField
@@ -39,7 +41,12 @@ class Organisation(TimeStampedModel):
     )
 
     logo = models.ImageField(blank=True)
+
     description = models.TextField(blank=True)
+
+    location_description = models.CharField(max_length=100, verbose_name=_('location description'), blank=True)
+    phone = PhoneNumberField(blank=True, verbose_name=_('telephone number'))
+    email = models.EmailField(blank=True, verbose_name=_('email'))
     homepage = models.URLField(blank=True)
 
     objects = models.Manager()

@@ -38,7 +38,8 @@ class SimpleOrganisationSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'name',
-            'short_name'
+            'short_name',
+            'location_description'
         ]
 
 class OrganisationSerializer(SimpleOrganisationSerializer):
@@ -46,10 +47,31 @@ class OrganisationSerializer(SimpleOrganisationSerializer):
     logo = serializers.ImageField()
     locations = OrganisationLocationSerializer(many=True, read_only=True, source='location_set')
 
+    edit_url = serializers.SerializerMethodField()
+    invite_url = serializers.SerializerMethodField()
+
+    def is_member(self, org):
+        user = self.context['request'].user
+        return Membership.objects.filter(active=True, org=org, user=user).exists()
+
+    def get_edit_url(self, org):
+        if self.is_member(org):
+            return reverse('organisations:edit')
+
+    def get_invite_url(self, org):
+        if self.is_member(org):
+            return reverse('invite_to_org', kwargs={'organisation_id': org.pk})
+
     class Meta(SimpleOrganisationSerializer.Meta):
         fields = SimpleOrganisationSerializer.Meta.fields + [
             'logo',
-            'locations'
+            'description',
+            'phone',
+            'email',
+            'homepage',
+            'edit_url',
+            'invite_url',
+            'locations',
         ]
 
 
