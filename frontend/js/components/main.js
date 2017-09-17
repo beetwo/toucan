@@ -22,7 +22,7 @@ class SplitUIView extends React.Component {
 
   render() {
     let { map, issue_view, filter_interface = null } = this.props;
-
+    console.log(filter_interface);
     if (filter_interface) {
       filter_interface = React.cloneElement(filter_interface, {
         toggleFilterForm: this.toggleFilter,
@@ -38,11 +38,11 @@ class SplitUIView extends React.Component {
       >
         <div className="map-container">{map}</div>
         <div className="issues-container">
-        <div className="filter-container">
-          <MapHandle />
-          {filter_interface}
-        </div>
-        {issue_view}
+          <div className="filter-container">
+            <MapHandle />
+            {filter_interface}
+          </div>
+          {issue_view}
         </div>
       </div>
     );

@@ -12,9 +12,7 @@ const OrgListItem = ({ org }) => {
       <div className="flex-container flex-vCenter">
         <div className="flex-col col-lg">
           <div className="issue-basics">
-            <span className="issue-title">
-              {org.name}
-            </span>
+            <span className="issue-title">{org.name}</span>
           </div>
           <div className="org-details">
             <span className="icon icon-pin org-pin" />
@@ -36,30 +34,19 @@ const OrgListItem = ({ org }) => {
 class OrganisationsList extends React.Component {
   render() {
     const { organisations } = this.props;
+
     const org_list = (
       <div className="issue-list">
         <div className="issue-list-form">
           <div className="issue-sortandfilter">
             <div className="flex-container">
-              <div className="flex-col">
-                <a
-                  href="#"
-                  className="dropdown-toggle"
-                  data-toggle="collapse"
-                  data-target="#orgFilter"
-                >
-                  <span className="icon icon-filter" />
-                  Filter
-                </a>
-                <a className="filter-reset" href="#">
-                  Reset
-                </a>
-              </div>
+              <div className="flex-col" />
               <div className="flex-col text-right">
-                <span className="text-muted">Sort by: </span>
-                <a href="#">
-                  Nearest <span className="icon icon-chevron" />
-                </a>
+                {organisations.length ? (
+                  <span className="text-subdued">
+                    {organisations.length} Organisations
+                  </span>
+                ) : null}
               </div>
             </div>
           </div>
