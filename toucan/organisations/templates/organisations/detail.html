@@ -45,8 +45,8 @@
 
 <div class="profile-section">
   <h2>{% trans 'Members' %} <span class="text-muted">({{ memberships|length }})</span></h2>
-  <div class="form-group form-group-setting">
   {% for membership in memberships %}
+  <div class="form-group form-group-setting">
   <div class="row row-padded">
       {% with u=membership.user %}
       <div class="col-xs-6">
@@ -62,8 +62,8 @@
       </div>
       {% endwith %}
   </div>
-      {% endfor %}
   </div>
+      {% endfor %}
   <div class="form-group">
 
       {% if is_member %}
