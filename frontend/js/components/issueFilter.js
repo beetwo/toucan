@@ -150,14 +150,7 @@ class IssueFilter extends React.Component {
       showFilterForm = false
     } = this.props;
 
-    const { isDefault, selections } = this.props.filterOptions;
-    let selectedFilterCount = 0;
-    if (!isDefault) {
-      selectedFilterCount = Object.values(selections).reduce(
-        (pc, selection) => pc + selection.length,
-        0
-      );
-    }
+    const { isDefault, selectedFiltersCount } = this.props.filterOptions;
 
     return (
       <div className="issue-list-form">
@@ -175,7 +168,7 @@ class IssueFilter extends React.Component {
                   onClick={this.props.resetIssueFilter}
                   href="#"
                 >
-                  Reset <sub>{selectedFilterCount}</sub>
+                  Reset <sub>{selectedFiltersCount}</sub>
                 </a>
               )}
             </div>

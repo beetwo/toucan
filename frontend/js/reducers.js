@@ -242,16 +242,22 @@ function issueFilters(
     case REMOVE_ISSUES_FILTER:
       let selections = issueFiltersSelections(state.selections, action);
       let isDefault = isEqual(defaultFilterSelection, selections);
+      const selectedFiltersCount = Object.values(selections).reduce(
+        (pc, selection) => pc + selection.length,
+        0
+      );
       return {
         ...state,
         selections,
-        isDefault
+        isDefault,
+        selectedFiltersCount
       };
     case RESET_ISSUES_FILTER:
       return {
         ...state,
         selections: defaultFilterSelection,
-        isDefault: true
+        isDefault: true,
+        selectedFiltersCount: 2
       };
     default:
       return state;
