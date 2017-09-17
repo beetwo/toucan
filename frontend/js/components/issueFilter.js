@@ -5,7 +5,7 @@ import classNames from "classnames";
 
 import ToucanIcon, { getIconClassForIssueType } from "./icons/issueType";
 
-class IssueFilterForm extends React.Component {
+class Modal extends React.Component {
   componentDidMount() {
     document.getElementsByTagName("body")[0].classList.add("modal-open");
   }
@@ -14,8 +14,90 @@ class IssueFilterForm extends React.Component {
     document.getElementsByTagName("body")[0].classList.remove("modal-open");
   }
 
-  handleToggle(prop_name, value, enable, e) {
-    e.preventDefault();
+  render() {
+    return this.props.children;
+  }
+}
+
+const IssueFilterOption = ({ option, active, toggle, showIcon = false }) => {
+  return (
+    <div
+      className={classNames("filter-item", { "is-active": active })}
+      key={option.value}
+      onClick={() => toggle(option.value, !active)}
+    >
+      <div className="filter-check text-center">
+        {active && <span className="icon icon-lg icon-check" />}
+      </div>
+      <div className="filter-title">
+        {showIcon ? (
+          <ToucanIcon
+            issue_type={option.value}
+            className="filter-icon icon-issue icon-lg"
+          />
+        ) : null}
+        {option.name}&nbsp;
+      </div>
+    </div>
+  );
+};
+
+class OptionGroup extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      expanded: this.props.expanded || false
+    };
+    this.toggleOptions = this.toggleOptions.bind(this);
+  }
+
+  toggleOptions() {
+    this.setState(state => ({ expanded: !state.expanded }));
+  }
+  render() {
+    const { name, key, options } = this.props.option_group;
+    const { selection } = this.props;
+
+    return (
+      <div className="filter-section">
+        <div className="filter-head flex-container flex-vCenter" key={key}>
+          <div className="flex-col">
+            <h5 className="filter-heading">{name}</h5>
+          </div>
+          <div className="flex-col text-right">
+            <a className="filter-toggle" href="#" onClick={this.toggleOptions}>
+              Toggle {name} <span className="icon icon-chevron" />
+            </a>
+          </div>
+        </div>
+        {this.state.expanded ? (
+          <div className="filter-body">
+            {options.map(o => (
+              <IssueFilterOption
+                option={o}
+                key={`${key}-${o.value}`}
+                active={selection.includes(o.value)}
+                toggle={this.props.handleToggle}
+                showIcon={key === "type"}
+              />
+            ))}
+          </div>
+        ) : null}
+      </div>
+    );
+  }
+}
+
+class IssueFilterForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      expanded: ["status", "type"]
+    };
+  }
+
+  handleToggle(prop_name, value, enable) {
+    // e.preventDefault();
     if (enable) {
       this.props.addIssueFilter(prop_name, value);
     } else {
@@ -24,99 +106,27 @@ class IssueFilterForm extends React.Component {
   }
 
   render() {
-    let opts = this.props.filterOptions;
-    let items = [];
+    const { selections, options } = this.props.filterOptions;
 
-    Object.keys(opts.options).forEach(k => {
-      let section = [];
-      let body = [];
-      let item = [];
-      let choices = opts.options[k];
-      let selections = opts.selections[k] || [];
-      if (choices.length === 0) {
-        return;
-      }
-      // push the top level
-      item.push(
-        <div
-          className="filter-head flex-container flex-vCenter"
-          key={"option-group-" + k}
-        >
-          <div className="flex-col">
-            <h5 className="filter-heading">
-              {k.charAt(0).toUpperCase() + k.slice(1)}
-            </h5>
-          </div>
-          <div className="flex-col text-right">
-            <a
-              className="filter-toggle"
-              href="#"
-              data-toggle="collapse"
-              data-target={"#issueFilter-" + k}
-            >
-              Toggle {k} <span className="icon icon-chevron" />
-            </a>
-          </div>
-        </div>
+    let option_groups = options.map(og => {
+      return (
+        <OptionGroup
+          key={og.key}
+          handleToggle={this.handleToggle.bind(this, og.key)}
+          option_group={og}
+          selection={selections[og.key] || []}
+          expanded={og.key !== "organisation"}
+        />
       );
-      // create select links
-      let choice_items = choices.map(c => {
-        let active = selections.indexOf(c) > -1;
-        return (
-          <div
-            className={classNames("filter-item", { "is-active": active })}
-            key={k + "-choice-" + c}
-            onClick={this.handleToggle.bind(this, k, c, !active)}
-          >
-            <div className="filter-check text-center">
-              {active && <span className="icon icon-lg icon-check" />}
-            </div>
-            <div className="filter-title">
-              {k === "type" && (
-                <ToucanIcon
-                  key={c}
-                  issue_type={c}
-                  className="filter-icon icon-issue icon-lg"
-                />
-              )}
-              {c}&nbsp;
-            </div>
-          </div>
-        );
-      });
-      body.push(
-        <div
-          className={classNames("filter-body collapse", {
-            in: k !== "organisation"
-          })}
-          id={"issueFilter-" + k}
-        >
-          {choice_items}
-        </div>
-      );
-      item.push(body);
-      section.push(
-        <div className="filter-section" key={`filter-section-${k}`}>
-          {item}
-        </div>
-      );
-      // and push those too
-      Array.prototype.push.apply(items, section);
     });
 
-    let input_textual = [];
-    for (let k in opts.selections) {
-      Array.prototype.push.apply(input_textual, opts.selections[k] || []);
-    }
-    input_textual = input_textual.join(", ");
-    
     const { isDefault, selectedFiltersCount } = this.props.filterOptions;
 
     return (
       <div className="filter fullscreen-sm" id="issueFilter">
         <div className="fullscreen-header flex-container">
           <div className="flex-col">
-            Filter {isDefault ? null : (<span>({selectedFiltersCount})</span>)}
+            Filter {isDefault ? null : <span>({selectedFiltersCount})</span>}
             {isDefault ? null : (
               <a
                 className="filter-reset"
@@ -137,7 +147,7 @@ class IssueFilterForm extends React.Component {
             </a>
           </div>
         </div>
-        <div className="fullscreen-content">{items}</div>
+        <div className="fullscreen-content">{option_groups}</div>
         <div className="fullscreen-footer">
           <button
             className="btn btn-primary btn-block"
@@ -184,7 +194,8 @@ class IssueFilter extends React.Component {
             <div className="flex-col">
               <a href="#" onClick={this.toggleFilterForm}>
                 <span className="icon icon-filter" />
-                Filter {isDefault ? null : (<span>({selectedFiltersCount})</span>)}
+                Filter{" "}
+                {isDefault ? null : <span>({selectedFiltersCount})</span>}
               </a>
               {isDefault ? null : (
                 <a
@@ -209,10 +220,12 @@ class IssueFilter extends React.Component {
         </div>
 
         {this.state.show_filter_form ? (
-          <IssueFilterForm
-            {...this.props}
-            toggleFilterForm={this.toggleFilterForm}
-          />
+          <Modal>
+            <IssueFilterForm
+              {...this.props}
+              toggleFilterForm={this.toggleFilterForm}
+            />
+          </Modal>
         ) : null}
       </div>
     );
