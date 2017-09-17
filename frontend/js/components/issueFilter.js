@@ -149,6 +149,16 @@ class IssueFilter extends React.Component {
       resetIssueFilter,
       showFilterForm = false
     } = this.props;
+
+    const { isDefault, selections } = this.props.filterOptions;
+    let selectedFilterCount = 0;
+    if (!isDefault) {
+      selectedFilterCount = Object.values(selections).reduce(
+        (pc, selection) => pc + selection.length,
+        0
+      );
+    }
+
     return (
       <div className="issue-list-form">
         {/* header for triggering issue list form */}
@@ -159,13 +169,15 @@ class IssueFilter extends React.Component {
                 <span className="icon icon-filter" />
                 Filter
               </a>
-              <a
-                className="filter-reset"
-                onClick={this.props.resetIssueFilter}
-                href="#"
-              >
-                Reset
-              </a>
+              {isDefault ? null : (
+                <a
+                  className="filter-reset"
+                  onClick={this.props.resetIssueFilter}
+                  href="#"
+                >
+                  Reset <sub>{selectedFilterCount}</sub>
+                </a>
+              )}
             </div>
             <div className="flex-col text-right">
               <span className="text-subdued">

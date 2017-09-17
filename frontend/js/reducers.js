@@ -26,6 +26,7 @@ import {
 
 import { defaultMapBounds } from "./globals";
 import uniq from "lodash/uniq";
+import isEqual from "lodash/isEqual";
 import flattenDeep from "lodash/flattenDeep";
 import { getBoundsFromPoints } from "./components/map/utils";
 
@@ -226,7 +227,8 @@ function issueFilters(
       type: [],
       organisation: []
     },
-    selections: defaultFilterSelection
+    selections: defaultFilterSelection,
+    isDefault: true
   },
   action
 ) {
@@ -238,14 +240,18 @@ function issueFilters(
       };
     case ADD_ISSUES_FILTER:
     case REMOVE_ISSUES_FILTER:
+      let selections = issueFiltersSelections(state.selections, action);
+      let isDefault = isEqual(defaultFilterSelection, selections);
       return {
         ...state,
-        selections: issueFiltersSelections(state.selections, action)
+        selections,
+        isDefault
       };
     case RESET_ISSUES_FILTER:
       return {
         ...state,
-        selections: defaultFilterSelection
+        selections: defaultFilterSelection,
+        isDefault: true
       };
     default:
       return state;
