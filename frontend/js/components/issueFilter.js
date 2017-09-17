@@ -6,6 +6,14 @@ import classNames from "classnames";
 import ToucanIcon, { getIconClassForIssueType } from "./icons/issueType";
 
 class IssueFilterForm extends React.Component {
+  componentDidMount() {
+    document.getElementsByTagName("body")[0].classList.add("modal-open");
+  }
+
+  componentWillUnmount() {
+    document.getElementsByTagName("body")[0].classList.remove("modal-open");
+  }
+
   handleToggle(prop_name, value, enable, e) {
     e.preventDefault();
     if (enable) {
@@ -142,13 +150,20 @@ IssueFilterForm.propTypes = {
 };
 
 class IssueFilter extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      show_filter_form: false
+    };
+    this.toggleFilterForm = this.toggleFilterForm.bind(this);
+  }
+
+  toggleFilterForm() {
+    this.setState(state => ({ show_filter_form: !state.show_filter_form }));
+  }
+
   render() {
-    let {
-      issueCount = 0,
-      toggleFilterForm,
-      resetIssueFilter,
-      showFilterForm = false
-    } = this.props;
+    let { issueCount = 0, toggleFilterForm, resetIssueFilter } = this.props;
 
     const { isDefault, selectedFiltersCount } = this.props.filterOptions;
 
@@ -158,7 +173,7 @@ class IssueFilter extends React.Component {
         <div className="issue-sortandfilter">
           <div className="flex-container">
             <div className="flex-col">
-              <a href="#" onClick={this.props.toggleFilterForm}>
+              <a href="#" onClick={this.toggleFilterForm}>
                 <span className="icon icon-filter" />
                 Filter
               </a>
@@ -184,15 +199,18 @@ class IssueFilter extends React.Component {
           </div>
         </div>
 
-        {showFilterForm ? <IssueFilterForm {...this.props} /> : null}
+        {this.state.show_filter_form ? (
+          <IssueFilterForm
+            {...this.props}
+            toggleFilterForm={this.toggleFilterForm}
+          />
+        ) : null}
       </div>
     );
   }
 }
 
 IssueFilter.propTypes = {
-  toggleFilterForm: PropTypes.func.isRequired,
-  showFilterForm: PropTypes.bool.isRequired,
   resetIssueFilter: PropTypes.func.isRequired,
   issueCount: PropTypes.number.isRequired
 };
