@@ -50,13 +50,6 @@ h4, h5, h6 {
 }
 
 .nav.navbar-nav li {
-  border-bottom: 3px solid transparent;
-  &.nav-issues.active {
-    border-color: $c-issues;
-  }
-}
-
-.nav.navbar-nav li {
   &.nav-orgs {
     &:hover {
       a {
