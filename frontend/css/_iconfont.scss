@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'toucan';
-  src:  url('fonts/toucan.eot?xpry4d');
-  src:  url('fonts/toucan.eot?xpry4d#iefix') format('embedded-opentype'),
-    url('fonts/toucan.ttf?xpry4d') format('truetype'),
-    url('fonts/toucan.woff?xpry4d') format('woff'),
-    url('fonts/toucan.svg?xpry4d#toucan') format('svg');
+  src:  url('fonts/toucan.eot?x8mc9s');
+  src:  url('fonts/toucan.eot?x8mc9s#iefix') format('embedded-opentype'),
+    url('fonts/toucan.ttf?x8mc9s') format('truetype'),
+    url('fonts/toucan.woff?x8mc9s') format('woff'),
+    url('fonts/toucan.svg?x8mc9s#toucan') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -51,7 +51,7 @@
 .icon-w-camp-management:before {
   content: "\e915";
 }
-.icon-w-core-relief-items:before {
+.icon-w-core-relief-item:before {
   content: "\e916";
 }
 .icon-w-education:before {
@@ -117,7 +117,7 @@
 .icon-camp-management:before {
   content: "\e907";
 }
-.icon-core-relief-items:before {
+.icon-core-relief-item:before {
   content: "\e908";
 }
 .icon-education:before {

@@ -109,22 +109,31 @@ class IssueFilterForm extends React.Component {
       Array.prototype.push.apply(input_textual, opts.selections[k] || []);
     }
     input_textual = input_textual.join(", ");
+    
+    const { isDefault, selectedFiltersCount } = this.props.filterOptions;
 
     return (
       <div className="filter fullscreen-sm" id="issueFilter">
         <div className="fullscreen-header flex-container">
           <div className="flex-col">
+            Filter {isDefault ? null : (<span>({selectedFiltersCount})</span>)}
+            {isDefault ? null : (
+              <a
+                className="filter-reset"
+                onClick={this.props.resetIssueFilter}
+                href="#"
+              >
+                Reset
+              </a>
+            )}
+          </div>
+          <div className="flex-col text-right">
             <a
               href="#"
               onClick={this.props.toggleFilterForm}
-              className="fullscreen-close"
+              className="text-cancel"
             >
-              <span className="icon icon-close" /> Filter
-            </a>
-          </div>
-          <div className="flex-col text-right">
-            <a href="#" onClick={this.props.resetIssueFilter}>
-              Reset
+              Close
             </a>
           </div>
         </div>
@@ -175,7 +184,7 @@ class IssueFilter extends React.Component {
             <div className="flex-col">
               <a href="#" onClick={this.toggleFilterForm}>
                 <span className="icon icon-filter" />
-                Filter
+                Filter {isDefault ? null : (<span>({selectedFiltersCount})</span>)}
               </a>
               {isDefault ? null : (
                 <a
@@ -183,7 +192,7 @@ class IssueFilter extends React.Component {
                   onClick={this.props.resetIssueFilter}
                   href="#"
                 >
-                  Reset <sub>{selectedFiltersCount}</sub>
+                  Reset
                 </a>
               )}
             </div>
