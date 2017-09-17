@@ -51,8 +51,8 @@
       {% with u=membership.user %}
       <div class="col-xs-6">
         <a href="{% url 'user_profile:public_profile' username=u.username %}">
-          {% if u == user %}&nbsp;<i class="fa fa-user"></i>{% endif %}
           {{ u.username }}
+          {% if u == user %}&nbsp;<i class="fa fa-user"></i>{% endif %}
         </a>
       </div>
       <div class="col-xs-6 text-right">
