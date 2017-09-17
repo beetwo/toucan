@@ -9,7 +9,7 @@ from braces.views import FormValidMessageMixin
 
 from toucan.invitations.permissions import can_invite_to_org
 from .models import Location
-from .forms import LocationForm
+from .forms import LocationForm, OrganisationEditForm
 
 class OrganisationMixin(object):
 
@@ -50,17 +50,8 @@ class OrganisationDetail(LoginRequiredMixin, OrganisationMixin, DetailView):
 class OrganisationEdit(OrganisationAdminRequiredMixin, OrganisationMixin, FormValidMessageMixin, UpdateView):
 
     template_name = 'organisations/update.html'
-    fields = [
-        'name',
-        'logo',
-        'description',
-        'location_description',
-        'homepage',
-        'email',
-        'phone',
-
-    ]
     form_valid_message = _('Organisation details updated')
+    form_class = OrganisationEditForm
 
     def get_success_url(self):
         return reverse('organisations:detail')

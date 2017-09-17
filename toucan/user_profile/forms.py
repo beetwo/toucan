@@ -2,16 +2,21 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from phonenumber_field.formfields import PhoneNumberField
+from phonenumber_field.widgets import PhoneNumberPrefixWidget
 
 from ..organisations.models import Organisation
 from .models import Profile, NotificationSettings
 from allauth.account.forms import LoginForm
 
+
+phone_number_help_text = _('Please enter your mobile phone number in international format. E.g. "+431234526"')
+
+
 class BaseUserProfileSignupForm(forms.Form):
 
     phone = PhoneNumberField(
         label=_('Your mobile phone number'),
-        help_text=_('Please enter your mobile phone number starting with the country code. E.g. "+431234526"'),
+        help_text=phone_number_help_text,
         required=False
     )
 
@@ -76,3 +81,16 @@ class ToucanLoginForm(LoginForm):
         if field_name == 'remember':
             return True
         return super().get_initial_for_field(field, field_name)
+
+
+class PhoneNumberUpdateForm(forms.ModelForm):
+
+    class Meta:
+        model = Profile
+        fields = [
+            'phone_number'
+        ]
+
+        help_texts = {
+            'phone_number': phone_number_help_text
+        }

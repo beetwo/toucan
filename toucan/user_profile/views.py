@@ -7,7 +7,7 @@ from braces.views import FormValidMessageMixin
 
 from ..organisations.models import Membership, Organisation
 from .models import Profile, NotificationSettings
-from .forms import NotificationSettingsForm
+from .forms import NotificationSettingsForm, PhoneNumberUpdateForm
 
 
 class PublicProfile(DetailView):
@@ -72,12 +72,11 @@ class UpdateMentionNotificationSettingsView(LoginRequiredMixin, FormValidMessage
 
 
 class UpdatePhoneNumber(LoginRequiredMixin, FormValidMessageMixin, UpdateView):
-    fields = [
-        'phone_number'
-    ]
+
 
     template_name = 'user_profile/edit_phone.html'
     form_valid_message = _('Phone number updated.')
+    form_class =  PhoneNumberUpdateForm
 
     def get_success_url(self):
         return reverse(
