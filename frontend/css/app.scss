@@ -48,6 +48,7 @@ body {
     top: 25px;
   }
   .modal-open {
+    overflow: hidden;
     .issues-container, .filter-container {
       position: static;
     }
