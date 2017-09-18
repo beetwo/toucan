@@ -91,9 +91,6 @@ class OptionGroup extends React.Component {
 class IssueFilterForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      expanded: ["status", "type"]
-    };
   }
 
   handleToggle(prop_name, value, enable) {
@@ -107,15 +104,15 @@ class IssueFilterForm extends React.Component {
 
   render() {
     const { selections, options } = this.props.filterOptions;
-
     let option_groups = options.map(og => {
+      const selection = selections[og.key] || [];
       return (
         <OptionGroup
           key={og.key}
           handleToggle={this.handleToggle.bind(this, og.key)}
           option_group={og}
-          selection={selections[og.key] || []}
-          expanded={og.key !== "organisation"}
+          selection={selection}
+          expanded={selection.length || og.key !== "organisation"}
         />
       );
     });
