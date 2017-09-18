@@ -172,14 +172,14 @@ function usersByIssueID(state = {}, action) {
 function issueFiltersOptions(state = [], action) {
   switch (action.type) {
     case RECEIVE_ISSUES:
-      let orgs = {};
+      let organisations = {};
       let issueTypes = {};
       let issueStatus = {};
 
       action.issues.forEach(issue => {
         let { organisation, issue_types, status } = issue;
         if (organisation) {
-          orgs[organisation.id] = {
+          organisations[organisation.id] = {
             name: organisation.name,
             value: organisation.id
           };
@@ -199,7 +199,7 @@ function issueFiltersOptions(state = [], action) {
           });
         }
       });
-      const sortByName = (a, b) => a.name > b.name;
+      const sortByName = (a, b) => a.name.localeCompare(b.name);
       return [
         {
           name: "Status",
@@ -214,7 +214,7 @@ function issueFiltersOptions(state = [], action) {
         {
           name: "Organisation",
           key: "organisation",
-          options: Object.values(orgs).sort(sortByName)
+          options: Object.values(organisations).sort(sortByName)
         }
       ];
     default:
