@@ -169,25 +169,54 @@ function usersByIssueID(state = {}, action) {
   }
 }
 
-function issueFiltersOptions(state = {}, action) {
+function issueFiltersOptions(state = [], action) {
   switch (action.type) {
     case RECEIVE_ISSUES:
-      let issues_with_orgs = action.issues.filter(i => {
-        return i.organisation !== null;
+      let organisations = {};
+      let issueTypes = {};
+      let issueStatus = {};
+
+      action.issues.forEach(issue => {
+        let { organisation, issue_types, status } = issue;
+        if (organisation) {
+          organisations[organisation.id] = {
+            name: organisation.name,
+            value: organisation.id
+          };
+        }
+        if (status) {
+          issueStatus[status] = {
+            name: status,
+            value: status
+          };
+        }
+        if (issue_types) {
+          issue_types.forEach(it => {
+            issueTypes[it.slug] = {
+              name: it.name,
+              value: it.slug
+            };
+          });
+        }
       });
-      let org_names = uniq(issues_with_orgs.map(i => i.organisation.name));
-      return {
-        ...state,
-        status: uniq(action.issues.map(i => i.status)),
-        type: uniq(
-          flattenDeep(
-            action.issues.map(i =>
-              i.issue_types.map(issue_type => issue_type.slug)
-            )
-          )
-        ),
-        organisation: org_names
-      };
+      const sortByName = (a, b) => a.name.localeCompare(b.name);
+      return [
+        {
+          name: "Status",
+          key: "status",
+          options: Object.values(issueStatus).sort(sortByName)
+        },
+        {
+          name: "Type",
+          key: "type",
+          options: Object.values(issueTypes).sort(sortByName)
+        },
+        {
+          name: "Organisation",
+          key: "organisation",
+          options: Object.values(organisations).sort(sortByName)
+        }
+      ];
     default:
       return state;
   }
