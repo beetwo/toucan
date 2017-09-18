@@ -24,7 +24,10 @@ class IssueDetailContainer extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if (this.props.issue_id !== newProps.issue_id) {
+    if (
+      this.props.issue_id !== newProps.issue_id ||
+      newProps.issue.didInvalidate
+    ) {
       newProps.loadIssue();
     }
   }
