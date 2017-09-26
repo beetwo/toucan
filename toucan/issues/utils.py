@@ -11,7 +11,7 @@ EntityRange = namedtuple('EntityRange', ['key', 'length', 'offset'])
 def parse_draft_struct(ds):
     blocks = ds.get('blocks', [])
     em = ds.get('entityMap', {})
-    print(blocks)
+
     bs = []
     for b in blocks:
         if 'data' in b:
