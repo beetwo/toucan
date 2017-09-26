@@ -27,11 +27,11 @@ let issueTrackerApp = combineReducers({
 let middleware = [thunkMiddleware];
 
 // some more middleware in development mode
-if (process.env.NODE_ENV !== "production") {
-  const createLogger = require("redux-logger");
-  const loggerMiddleware = createLogger();
-  middleware = [...middleware, loggerMiddleware];
-}
+// if (process.env.NODE_ENV !== "production") {
+const createLogger = require("redux-logger");
+const loggerMiddleware = createLogger();
+middleware = [...middleware, loggerMiddleware];
+// }
 
 // and create the store
 let store = createStore(issueTrackerApp, applyMiddleware(...middleware));
