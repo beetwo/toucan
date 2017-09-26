@@ -1,7 +1,6 @@
 from django.contrib.gis.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
-from django.contrib.postgres.fields import JSONField
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 from django.contrib.sites.models import Site
@@ -11,8 +10,6 @@ from model_utils import Choices
 from model_utils.models import TimeStampedModel
 
 from ttp import ttp
-
-from .utils import parse_draft_struct, draft_struct_to_comment
 
 
 TwitterParser = ttp.Parser()

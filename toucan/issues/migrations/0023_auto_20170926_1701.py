@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 from django.db import migrations
-from toucan.issues.utils import parse_draft_struct
+from toucan.issues.utils import draft_struct_to_comment
 
 def renderComments(apps, schema_editor):
     # We can't import the Person model directly as it may be a newer
@@ -13,7 +13,7 @@ def renderComments(apps, schema_editor):
 
     for c in comments:
         if c.draft_struct:
-            comment_text = parse_draft_struct(c.draft_struct)
+            comment_text = draft_struct_to_comment(c.draft_struct)
             if c.comment != comment_text:
                 c.comment = comment_text
                 c.save()
