@@ -169,18 +169,13 @@ class IssueComment(AbstractIssueRelatedModel):
     issue = models.ForeignKey(Issue, related_name='comments')
     comment = models.TextField(blank=False, verbose_name=_('comment'))
 
-    draft_struct = JSONField(default=dict, blank=True)
-
     def get_mentions(self):
         text = self.get_comment()
         results = TwitterParser.parse(text)
         return results.users
 
     def get_comment(self):
-        if self.comment:
-            return self.comment
-        else:
-            return draft_struct_to_comment(self.draft_struct)
+        return self.comment
 
     def get_attachments(self):
         from toucan.media.models import MediaFile

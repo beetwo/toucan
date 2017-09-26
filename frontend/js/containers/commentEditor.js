@@ -10,6 +10,7 @@ class SimpleCommentEditor extends React.Component {
   render() {
     return (
       <textarea
+        placeholder="Leave a comment"
         onChange={e => this.props.onStateChange(e.target.value)}
         value={this.props.editorState}
       />
