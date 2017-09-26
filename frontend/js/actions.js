@@ -174,7 +174,7 @@ export function postComment(issue_id, comment) {
   return (dispatch, getState) => {
     let url = `/api/issue/${issue_id}/comment/`;
     let data = {
-      draft_struct: comment.draft_struct,
+      comment: comment.comment,
       attachments: comment.attachments || []
     };
     jsonPost(url, data).then(response => dispatch(invalidateIssue(issue_id)));

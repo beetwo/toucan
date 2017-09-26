@@ -2,12 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import Icon from "react-fa";
 import CommentEditor from "../containers/commentEditor";
-import DraftEditor, {
-  convertToRaw,
-  convertFromRaw,
-  EditorState,
-  ContentState
-} from "draft-js";
+
 import concat from "lodash/concat";
 import isEmpty from "lodash/isEmpty";
 import without from "lodash/without";
@@ -33,7 +28,7 @@ export class CommentForm extends React.Component {
 
   _getInitialState() {
     return {
-      editorState: CommentEditor.getEmptyEditorState(),
+      editorState: "",
       attachments: [],
       files: [],
       isEmpty: true
@@ -52,13 +47,12 @@ export class CommentForm extends React.Component {
   postComment() {
     let comment = {
       id: Date.now(),
-      draft_struct: convertToRaw(this.state.editorState.getCurrentContent()),
+      comment: this.state.editorState,
       user: {
         username: "You"
       },
       attachments: this.state.attachments
     };
-    console.warn(comment);
     this.props.onComment(comment);
     this.resetEditorState();
   }
@@ -92,15 +86,14 @@ export class CommentForm extends React.Component {
   }
 
   handleFileSelectorClick = () => {
-    console.log(this, this.dropzone);
     this.dropzone.open();
   };
 
   render() {
-    let noText = !this.state.editorState.getCurrentContent().hasText(),
+    let noText = this.state.editorState == "",
       noAttachments = this.state.attachments.length === 0,
       isEmpty = noText && noAttachments;
-
+    console.warn(noText, noAttachments, isEmpty);
     let uploadControl = (
       <ToucanUploader
         onAdded={this.handleAttachmentAdded}
@@ -188,15 +181,17 @@ export class Comment extends React.Component {
           </span>
         </div>
         <div className="comment-body" style={{ whiteSpace: "pre-line" }}>
-          {isEmptyComment
-            ? <em>No comment was added.</em>
-            : <CommentView comment={comment.comment} />}
+          {isEmptyComment ? (
+            <em>No comment was added.</em>
+          ) : (
+            <CommentView comment={comment.comment} />
+          )}
         </div>
-        {hasAttachments
-          ? <div className="panel-footer">
-              <Attachments attachments={comment.attachments} />
-            </div>
-          : null}
+        {hasAttachments ? (
+          <div className="panel-footer">
+            <Attachments attachments={comment.attachments} />
+          </div>
+        ) : null}
       </div>
     );
   }
@@ -290,11 +285,7 @@ export class CommentList extends React.Component {
       }
       return null;
     });
-    return (
-      <div>
-        {items}
-      </div>
-    );
+    return <div>{items}</div>;
   }
 }
 

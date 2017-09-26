@@ -1,112 +1,25 @@
-import Editor from "draft-js-plugins-editor";
-import createMentionPlugin, {
-  defaultSuggestionsFilter
-} from "draft-js-mention-plugin";
-import createLinkifyPlugin from "draft-js-linkify-plugin";
+import React from "react";
 
 import PropTypes from "prop-types";
 
-import React from "react";
-import {
-  EditorState,
-  ContentState,
-  convertToRaw,
-  convertFromRaw
-} from "draft-js";
-
-import "draft-js/dist/Draft.css";
-import "../../css/editor_styles.css";
-import "draft-js-mention-plugin/lib/plugin.css";
-
-import isEmpty from "lodash/isEmpty";
-import uniq from "lodash/uniq";
-
-class CommentEditor extends React.Component {
+class SimpleCommentEditor extends React.Component {
   constructor(props) {
     super(props);
-
-    let initial_suggestions = this.props.mention_suggestions.map(u => {
-      return { name: u };
-    });
-
-    this.mentionPlugin = createMentionPlugin(
-      {
-        // mentionPrefix: "@"
-      }
-    );
-
-    this.state = {
-      mentions: initial_suggestions,
-      suggestions: []
-    };
-
-    this.editor = null;
-    this.minLengthSearch = props.minLengthSearch || 3;
-    this.focus = this.focus.bind(this);
-    this.onSearchChange = this.onSearchChange.bind(this);
-  }
-
-  static getEmptyEditorState() {
-    return EditorState.createEmpty();
-  }
-
-  focus() {
-    this.editor.focus();
-  }
-
-  onSearchChange({ value }) {
-    if (value.length === 0) {
-      this.setState({
-        suggestions: this.state.mentions
-      });
-    } else if (value.length < this.minLengthSearch) {
-      this.setState({
-        suggestions: defaultSuggestionsFilter(value, this.state.mentions)
-      });
-    } else if (value.length >= this.minLengthSearch) {
-      let url = "/api/mentions/?search=" + encodeURIComponent(value);
-      fetch(url, { credentials: "same-origin" })
-        .then(response => response.json())
-        .then(data => {
-          let slugs = uniq(data.map(mention => mention.slug));
-          let mentions = slugs.map(slug => {
-            return {
-              name: slug
-            };
-          });
-          this.setState({
-            suggestions: mentions
-          });
-        });
-    }
   }
 
   render() {
-    const { MentionSuggestions } = this.mentionPlugin;
-    const plugins = [this.mentionPlugin];
-
     return (
-      <div className="b2editor" onClick={this.focus}>
-        <Editor
-          editorState={this.props.editorState}
-          onChange={this.props.onStateChange}
-          plugins={plugins}
-          ref={e => (this.editor = e)}
-          placeholder="Add comment"
-        />
-        <MentionSuggestions
-          onSearchChange={this.onSearchChange}
-          suggestions={this.state.suggestions}
-        />
-      </div>
+      <textarea
+        onChange={e => this.props.onStateChange(e.target.value)}
+        value={this.props.editorState}
+      />
     );
   }
 }
 
-CommentEditor.propTypes = {
-  editorState: PropTypes.object,
-  onStateChange: PropTypes.func,
-  mention_suggestions: PropTypes.array.isRequired
+SimpleCommentEditor.propTypes = {
+  onStateChange: PropTypes.func.isRequired,
+  editorState: PropTypes.string
 };
 
-export default CommentEditor;
+export default SimpleCommentEditor;
