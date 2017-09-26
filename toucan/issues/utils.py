@@ -1,6 +1,9 @@
 from collections import namedtuple
 
-Block = namedtuple('Block', ['depth', 'entityRanges', 'inlineStyleRanges',  'key', 'text', 'type'])
+Block = namedtuple('Block', ['depth', 'entityRanges',
+                             'inlineStyleRanges',  'key', 'text', 'type'])
+BlockV2 = namedtuple('BlockV2', Block._fields + ('data',))
+
 Entity = namedtuple('Entity', ['mutability', 'type', 'data', 'key'])
 EntityRange = namedtuple('EntityRange', ['key', 'length', 'offset'])
 
@@ -8,9 +11,16 @@ EntityRange = namedtuple('EntityRange', ['key', 'length', 'offset'])
 def parse_draft_struct(ds):
     blocks = ds.get('blocks', [])
     em = ds.get('entityMap', {})
+    print(blocks)
+    bs = []
+    for b in blocks:
+        if 'data' in b:
+            bs.append(BlockV2(**b))
+        else:
+            bs.append(Block(**b))
 
     return (
-        [Block(**b) for b in blocks],
+        bs,
         [Entity(key=k, **e) for k, e in em.items()]
     )
 
@@ -44,6 +54,7 @@ def decorate_block(block, entity_ranges):
 
     return ''.join(parts)
 
+
 def draft_struct_to_comment(ds):
 
     blocks, entities = parse_draft_struct(ds)
@@ -55,8 +66,8 @@ def draft_struct_to_comment(ds):
     for b in blocks:
         ers = [
             (
-               EntityRange(**er),
-               entities_by_key[str(er['key'])]
+                EntityRange(**er),
+                entities_by_key[str(er['key'])]
             ) for er in b.entityRanges
         ]
         text = b.text
