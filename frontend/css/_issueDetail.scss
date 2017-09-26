@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  flex:1;
+  flex: 1;
 }
 .issue-detail-main {
   display: flex;
@@ -21,7 +21,9 @@
 .issue-detail-lead {
   margin-bottom: $padding;
 }
-.issue-detail-status, .issue-detail-organisation, .issue-detail-lead {
+.issue-detail-status,
+.issue-detail-organisation,
+.issue-detail-lead {
   padding: $padding;
 }
 .issue-pickup {
@@ -52,7 +54,7 @@
 }
 
 .issueDetailBottom {
-    padding-top: 1em;
+  padding-top: 1em;
 }
 .issue-detail-close {
   margin-right: $padding;
@@ -79,11 +81,16 @@
   }
 }
 .issue-detail footer {
-    flex: none;
+  flex: none;
 }
 
 .issue-detail-form {
   padding: 0 $padding;
   margin: $padding 0;
   margin-left: 20px;
+
+  textarea {
+    width: 100%;
+    height: 10rem;
+  }
 }
