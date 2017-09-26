@@ -226,13 +226,9 @@ class CommentSerializer(serializers.ModelSerializer):
 
     user = UserSerializer(read_only=True)
 
-    comment = serializers.SerializerMethodField()
-
     attachments = SimpleImageSerializer(
         many=True, read_only=True, source='get_attachments')
 
-    def get_comment(self, comment):
-        return comment.get_comment()
 
     class Meta:
         model = IssueComment
@@ -241,7 +237,6 @@ class CommentSerializer(serializers.ModelSerializer):
             'user',
             'created',
             'modified',
-            'draft_struct',
             'comment',
             'attachments',
         ]
