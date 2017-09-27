@@ -4492,6 +4492,12 @@ react-fa@^4.0.1:
   dependencies:
     font-awesome "^4.3.0"
 
+react-ga@^2.3.4:
+  version "2.3.4"
+  resolved "https://registry.yarnpkg.com/react-ga/-/react-ga-2.3.4.tgz#2011c2bbcd99f19850816405a91e3ed6fba5da98"
+  dependencies:
+    object-assign "^4.1.1"
+
 react-hot-loader@next:
   version "3.0.0-beta.7"
   resolved "https://registry.yarnpkg.com/react-hot-loader/-/react-hot-loader-3.0.0-beta.7.tgz#d5847b8165d731c4d5b30d86d5d4716227a0fa83"

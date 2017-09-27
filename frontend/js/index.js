@@ -13,7 +13,7 @@ import OrgContainer from "./containers/organisations";
 import UserDetail from "./containers/userDetail";
 
 import { Route, Link, Switch, withRouter } from "react-router-dom";
-
+import Analytics from "./analytics";
 import { Router } from "./history";
 
 require("../css/app.scss");
@@ -27,11 +27,13 @@ let issueTrackerApp = combineReducers({
 let middleware = [thunkMiddleware];
 
 // some more middleware in development mode
-// if (process.env.NODE_ENV !== "production") {
-const createLogger = require("redux-logger");
-const loggerMiddleware = createLogger();
-middleware = [...middleware, loggerMiddleware];
-// }
+if (process.env.NODE_ENV !== "production") {
+  const createLogger = require("redux-logger");
+  const loggerMiddleware = createLogger();
+  middleware = [...middleware, loggerMiddleware];
+}
+
+console.log(process.env);
 
 // and create the store
 let store = createStore(issueTrackerApp, applyMiddleware(...middleware));
@@ -73,6 +75,7 @@ render(
             render={props => <UserDetail {...props.match.params} />}
           />
         </Switch>
+        <Route component={Analytics} />
       </AppShell>
     </Router>
   </Provider>,

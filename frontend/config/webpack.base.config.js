@@ -12,14 +12,16 @@ module.exports = opts => {
     NODE_ENV,
     STATS_FILE,
     BUILD_ROOT,
-    MAPBOX_API_KEY
+    MAPBOX_API_KEY,
+    GA_TRACKING_ID
   } = opts;
 
   let plugins = [
     new webpack.DefinePlugin({
       "process.env": {
         NODE_ENV: JSON.stringify(NODE_ENV),
-        MAPBOX_API_KEY: JSON.stringify(MAPBOX_API_KEY)
+        MAPBOX_API_KEY: JSON.stringify(MAPBOX_API_KEY),
+        GA_TRACKING_ID: JSON.stringify(GA_TRACKING_ID)
       }
     }),
     new webpack.ProvidePlugin({
