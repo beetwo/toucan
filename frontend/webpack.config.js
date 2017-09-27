@@ -25,7 +25,8 @@ let OPTIONS = {
   CDN_PATH: process.env.CDN_PATH,
   HMR: process.env.HMR,
   STATS_FILE: "webpack-stats.json",
-  MAPBOX_API_KEY: process.env.MAPBOX_API_KEY
+  MAPBOX_API_KEY: process.env.MAPBOX_API_KEY,
+  GA_TRACKING_ID: process.env.GA_TRACKING_ID
 };
 
 module.exports = (() => {

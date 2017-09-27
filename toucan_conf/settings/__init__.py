@@ -17,7 +17,8 @@ from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
 
 # BASE_DIR is where manage.py resides
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE_DIR = os.path.dirname(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__))))
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -92,6 +93,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'toucan.utils.context_processors.analytics'
             ],
         },
     },
@@ -186,6 +188,9 @@ CHANNEL_LAYERS = {
     },
 }
 
+# GA tracking
+GA_TRACKING_ID = os.environ.get('GA_TRACKING_ID', False)
+
 # configure invitation system
 INVITATION_REQUIRED = True
 INVITATION_VALID_DAYS = 30
@@ -196,10 +201,5 @@ try:
     from .secrets import *
 except ImportError:
     import warnings
-    warnings.warn('No secrets file found in settings folder. Default settings assumed -- some things might be broken.')
-
-
-
-
-
-
+    warnings.warn(
+        'No secrets file found in settings folder. Default settings assumed -- some things might be broken.')
