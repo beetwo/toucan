@@ -55,7 +55,7 @@ def parse_mentions(message):
                     'organisation_mention': True,
                     'organisation_pk': org.pk,
                 })
-    return
+    return users
 
 
 def send_comment_notification(channel_message):

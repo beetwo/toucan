@@ -27,8 +27,13 @@ def issue_created(*args, **kwargs):
     
     notifications_to_send = []
     issue_types = set(issue.issue_types.values_list('pk', flat=True))
+    user_ids = set()
 
     for notification in notification_qs:
+
+        # check if the user has already been added to the notification recipients
+        if notification.user_id in user_ids:
+            continue
 
         # filter by organisations
         if notification.org_count > 0 and issue.organisation not in notification.organisations.all():
@@ -42,7 +47,12 @@ def issue_created(*args, **kwargs):
             if not issue_types.intersection(notification_issue_types):
                 continue
 
+        # add the user to the set of notified users
+        user_ids.add(notification.user_id)
+
+        # queue for sending
         notifications_to_send.append(notification)
+
 
     for n in notifications_to_send:
         n.send(issue)

@@ -18,7 +18,7 @@ def send_sms_notification(phone_number, msg):
     )
 
     return client.send_message({
-        'from': 'b2it',
+        'from': 'Toucan',
         'to': phone_number,
         'text': msg
     })
