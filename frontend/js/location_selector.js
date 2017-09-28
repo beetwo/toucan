@@ -11,9 +11,10 @@ import { defaultIssueLocation } from "./globals";
 
 require("leaflet/dist/leaflet.css");
 
-// default markers seem to be broken
-// https://github.com/Leaflet/Leaflet/issues/4968
-const MarkerIcon = L.icon({
+// L.Icon.Default.imagePath = ".";
+delete L.Icon.Default.prototype._getIconUrl;
+
+L.Icon.Default.mergeOptions({
   iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
   iconUrl: require("leaflet/dist/images/marker-icon.png"),
   shadowUrl: require("leaflet/dist/images/marker-shadow.png")
@@ -54,6 +55,7 @@ class B2SelectorMap extends React.Component {
 
   onPositionChange(latLng) {
     if (this.props.editable) {
+      console.log(latLng);
       this.setPosition(latLng);
     }
   }
@@ -67,8 +69,7 @@ class B2SelectorMap extends React.Component {
       let marker_props = {
         ref: "marker",
         draggable: this.props.editable,
-        onDragEnd: e => this.onPositionChange(e.target.getLatLng()),
-        icon: MarkerIcon
+        onDragEnd: e => this.onPositionChange(e.target.getLatLng())
       };
       marker = <Marker {...marker_props} position={position} />;
 
