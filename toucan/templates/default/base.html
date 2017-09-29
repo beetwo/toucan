@@ -25,7 +25,9 @@
 <body class="{% block body-classes %}{% endblock %}">
     {% block body %}
         {% block navbar %}
+          {% if user.is_staff %}
             {% include './navbar.html' %}
+          {% endif %}
         {% endblock navbar %}
         {% if messages %}
         <div class="container-fluid" id="message-container">
