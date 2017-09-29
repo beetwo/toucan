@@ -12,7 +12,7 @@ const LocationDetail = ({ location }) => {
         <div className="icon icon-contact-address icon-xl" />
       </div>
       <a href="#" className="media-body media-middle">
-        {location.name} <br />
+        <strong>{location.name}</strong> <br />
         {location.city}
       </a>
     </div>
