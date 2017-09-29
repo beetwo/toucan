@@ -208,7 +208,7 @@ export class StatusChange extends React.Component {
     if (sc.status === "open") {
       txt = (
         <span>
-          <span className="label label-danger">re-opened</span>
+          <span className="label label-open">re-opened</span>
           <span> this issue.</span>
         </span>
       );
@@ -216,14 +216,14 @@ export class StatusChange extends React.Component {
       txt = (
         <span>
           <span>marked this issue as </span>
-          <span className="label label-success">resolved</span>
+          <span className="label label-resolved">resolved</span>
         </span>
       );
     } else if (sc.status === "in_progress") {
       txt = (
         <span>
           <span>marked this issue as </span>
-          <span className="label label-warning">in progress</span>
+          <span className="label label-inProgress">in progress</span>
         </span>
       );
     }
