@@ -38,11 +38,14 @@
 .comment-marked {
   color: $c-darkgrey;
 }
-.comment-attachments {
-  margin-top: $padding-base-vertical;
-}
-.gallery a {
-  margin-right: $padding-base-horizontal;
+.comment-attachments {}
+
+.gallery {
+  a {
+    display: inline-block;
+    margin-right: $padding-base-horizontal;
+    margin-top: $padding-base-vertical;
+  }
 }
 
 .mentionMenu {
