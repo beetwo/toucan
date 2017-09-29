@@ -56,6 +56,7 @@
     "react-dropzone": "^3.7.0",
     "react-fa": "^4.0.1",
     "react-ga": "^2.3.4",
+    "react-githubish-mentions": "^1.0.5",
     "react-hot-loader": "next",
     "react-images": "^0.5.1",
     "react-leaflet": "^1.6.3",

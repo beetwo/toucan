@@ -1,4 +1,5 @@
-.comments {}
+.comments {
+}
 .comment {
   padding: $padding;
   background-color: $c-lightgrey;
@@ -29,4 +30,14 @@
 }
 .comment-footer {
   margin-top: $padding/2;
+}
+
+.mentionMenu {
+  background-color: white;
+
+  .mentionMenuItem {
+    &.active {
+      background-color: blue;
+    }
+  }
 }

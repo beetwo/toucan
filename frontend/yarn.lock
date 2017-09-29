@@ -4436,6 +4436,13 @@ react-ga@^2.3.4:
   dependencies:
     object-assign "^4.1.1"
 
+react-githubish-mentions@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/react-githubish-mentions/-/react-githubish-mentions-1.0.5.tgz#2ec1ac4e4d49d892de3ea36f7b8eb58016752141"
+  dependencies:
+    react-portal-hoc "^0.4.1"
+    textarea-caret "git://github.com/mattkrick/textarea-caret-position.git#ede461f40712238c505e4a1861fc68de6e7731ad"
+
 react-hot-loader@next:
   version "3.0.0-beta.7"
   resolved "https://registry.yarnpkg.com/react-hot-loader/-/react-hot-loader-3.0.0-beta.7.tgz#d5847b8165d731c4d5b30d86d5d4716227a0fa83"
@@ -4483,6 +4490,10 @@ react-motion@^0.4.3:
   dependencies:
     performance-now "^0.2.0"
     raf "^3.1.0"
+
+react-portal-hoc@^0.4.1:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/react-portal-hoc/-/react-portal-hoc-0.4.2.tgz#6e25a74b39596be3b3f3322bdbeb8ea2e26fcb5e"
 
 react-proxy@^1.1.7:
   version "1.1.8"
@@ -5387,6 +5398,10 @@ tar@^2.0.0, tar@~2.2.1:
 tcomb@^2.5.1:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/tcomb/-/tcomb-2.7.0.tgz#10d62958041669a5d53567b9a4ee8cde22b1c2b0"
+
+"textarea-caret@git://github.com/mattkrick/textarea-caret-position.git#ede461f40712238c505e4a1861fc68de6e7731ad":
+  version "3.0.2"
+  resolved "git://github.com/mattkrick/textarea-caret-position.git#ede461f40712238c505e4a1861fc68de6e7731ad"
 
 thunky@^0.1.0:
   version "0.1.0"
