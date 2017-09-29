@@ -2,7 +2,7 @@
 {% load bootstrap3 %}
 
 {% block content %}
-    <h1>Request access to Toucan</h1>
+    <h1 class="text-center">Request access to Toucan</h1>
     <hr />
     <p class="text-center">
         Toucan is currently invitation only.
@@ -30,10 +30,10 @@
     <form method="post" novalidate>
         {% csrf_token %}
         {% bootstrap_form form %}
-        <p class="text-center">
-            <button type="submit" class="btn btn-primary">
-                Send
-            </button>
-        </p>
+      <p class="text-center">
+        <button type="submit" class="btn btn-primary btn-xs-block">
+          Send
+        </button>
+      </p>
     </form>
 {% endblock content %}
