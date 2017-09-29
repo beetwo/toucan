@@ -14,10 +14,10 @@ const OrgListItem = ({ org }) => {
           <div className="issue-basics">
             <span className="issue-title">{org.name}</span>
           </div>
-          {org.city ? (
+          {org.location_description ? (
             <div className="org-details">
               <span className="icon icon-pin org-pin" />
-              <span className="org-location">{org.city}</span>
+              <span className="org-location">{org.location_description}</span>
             </div>
           ) : null}
         </div>
