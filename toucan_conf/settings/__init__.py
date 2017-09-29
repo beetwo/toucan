@@ -191,6 +191,9 @@ CHANNEL_LAYERS = {
 # GA tracking
 GA_TRACKING_ID = os.environ.get('GA_TRACKING_ID', False)
 
+# Mapbox api key
+MAPBOX_TOKEN = os.environ.get('MAPBOX_API_KEY', False)
+
 # configure invitation system
 INVITATION_REQUIRED = True
 INVITATION_VALID_DAYS = 30
