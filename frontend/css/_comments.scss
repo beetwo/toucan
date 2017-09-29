@@ -38,6 +38,12 @@
 .comment-marked {
   color: $c-darkgrey;
 }
+.comment-attachments {
+  margin-top: $padding-base-vertical;
+}
+.gallery a {
+  margin-right: $padding-base-horizontal;
+}
 
 .mentionMenu {
   background-color: white;

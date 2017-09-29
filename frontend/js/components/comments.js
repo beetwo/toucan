@@ -187,7 +187,7 @@ export class Comment extends React.Component {
           )}
         </div>
         {hasAttachments ? (
-          <div className="panel-footer">
+          <div className="comment-attachments">
             <Attachments attachments={comment.attachments} />
           </div>
         ) : null}
