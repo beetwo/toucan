@@ -229,7 +229,7 @@ export class StatusChange extends React.Component {
     }
 
     return (
-      <p className="text-right text-muted">
+      <p className="text-right comment-marked">
         <UserLink username={sc.user.username} />&nbsp;
         {txt}
       </p>
