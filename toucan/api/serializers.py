@@ -27,6 +27,7 @@ class OrganisationLocationSerializer(serializers.ModelSerializer):
         model = Location
         fields = [
             'id',
+            'name',
             'city',
             'location'
         ]

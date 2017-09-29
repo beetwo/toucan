@@ -1,5 +1,8 @@
 @import './bs-themes/flatly/variables';
 @import 'variables';
+a:active, a:focus {
+  text-decoration: none;
+}
 .navbar-brand {
   padding: 10px $navbar-padding-horizontal;
 }

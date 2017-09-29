@@ -22,10 +22,13 @@
 .badge-status {
   font-size: 12px;
 }
-.badge-inProgress {
+.label-open {
+  background-color: $c-open;
+}
+.badge-inProgress, .label-inProgress {
   background-color: saturate($c-inprogress - 10, 10);
 }
-.badge-resolved {
+.badge-resolved, .label-resolved {
   background-color: $c-resolved;
 }
 

@@ -9,6 +9,9 @@
 }
 .comment-header {
   font-size: 14px;
+  a {
+    color: $c-darkblue;
+  }
 }
 .comment-time {
   color: $c-darkgrey;
@@ -24,12 +27,16 @@
   display: inline-block;
   margin-right: 5px;
   &:hover {
-    color: $c-yellow;
-    text-decoration: none;
+    color: $c-darkgrey - 40;
+    text-decoration: underline;
   }
 }
 .comment-footer {
   margin-top: $padding/2;
+}
+
+.comment-marked {
+  color: $c-darkgrey;
 }
 
 .mentionMenu {
@@ -46,4 +53,5 @@
       color: #fff;
     }
   }
-}
+  
+
