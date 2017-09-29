@@ -154,9 +154,7 @@ form {
     color: $brand-danger !important;
   }
 }
-.password-reset {
-  float: right;
-}
-.password-reset + .alert{
-  clear: both;
+.password-reset, .login-signup {
+  text-align: center;
+  margin-top: 30px;
 }

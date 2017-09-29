@@ -25,9 +25,6 @@
       <div class="{% if socialaccount_providers %}col-md-7 col-lg-7 {% else %} col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 {% endif %}">
         <form class="login" method="POST" action="{% url 'account_login' %}">
           {% csrf_token %}
-          <span class="password-reset">
-            <a href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-          </span>
           {% bootstrap_form form %}
           {% if redirect_field_value %}
           <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
@@ -35,8 +32,11 @@
           <div class="form-actions">
             <button class="btn btn-info btn-block btn-lg" type="submit">{% trans "Sign In" %}</button>
           </div>
+          <div class="password-reset">
+            <a href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+          </div>
         </form>
-        <p style="margin-top: 30px;">
+        <p class="login-signup" >
             Not yet a member? <a href="{% url 'account_signup' %}">Request Access</a>
         </p>
       </div>
