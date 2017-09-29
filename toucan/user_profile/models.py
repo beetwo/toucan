@@ -10,6 +10,8 @@ from ..issues.models import Issue, IssueType
 from ..notifications.fields import NotificationTypeField
 from ..organisations.models import Organisation
 
+from toucan.utils.staticmap import get_url_for_geographic_notification
+
 
 class Subscription(TimeStampedModel):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='subscriptions')
@@ -58,6 +60,9 @@ class NotificationSettings(TimeStampedModel):
     )
 
     enabled = models.BooleanField(default=True)
+
+    def get_preview_image_url(self):
+        return get_url_for_geographic_notification(self)
 
     def send(self, issue):
         if self.notification_type == 'email':

@@ -19,10 +19,6 @@ div.toolbar {
 }
 
 
-.form-settings {
-  h1 {
-  }
-}
 .form-beige {
   background-color: $c-beige;
   .form-title {
@@ -149,6 +145,9 @@ form {
   margin: $padding-base-vertical 0;
 }
 
+.notification-map {
+  margin-bottom: $padding-base-vertical;
+}
 .notification-delete {
   margin-left: $padding-base-vertical;
   &:hover, &:active {

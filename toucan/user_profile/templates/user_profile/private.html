@@ -82,7 +82,7 @@
 
     </div>
     <div class="profile-section">
-      <h2>Geographic notifications</h4>
+      <h2>Geographic notifications</h2>
 
       <p class="text-muted">
           You can configure Toucan to notify you of new issues within a defined geographic radius.
@@ -97,7 +97,10 @@
         {% for ns in notification_settings%}
         <div class="notification">
           <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-3">
+              <img class="notification-map" src="{{ ns.get_preview_image_url }}" alt="map" width="138" height="138"/>
+            </div>
+            <div class="col-sm-9">
               <p>
                 {{ ns.created|date:'SHORT_DATETIME_FORMAT' }}
               </p>
@@ -112,7 +115,6 @@
                 {% endfor %}
               </p>
               <p>
-
                 <strong>
                   {% trans 'Organisations' %}
                 </strong>
@@ -123,19 +125,17 @@
                 {% endfor %}
 
               </p>
-            </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-12">
+              <p class="notification-controls">
                 <a href="{% url 'user_profile:notification_edit' notification_id=ns.pk %}">
                   {% trans 'Edit' %}
                 </a>
                 <a class="text-danger notification-delete" href="{% url 'user_profile:notification_delete' notification_id=ns.pk %}">
                   {% trans 'Delete' %}
                 </a>
-              </div>
+              </p>
             </div>
           </div>
+        </div>
           
           {% endfor %}
       {% else %}
