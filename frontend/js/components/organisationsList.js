@@ -14,12 +14,12 @@ const OrgListItem = ({ org }) => {
           <div className="issue-basics">
             <span className="issue-title">{org.name}</span>
           </div>
-          <div className="org-details">
-            <span className="icon icon-pin org-pin" />
-            <span className="org-location">
-              {org.location || "Athens, Greece"}
-            </span>
-          </div>
+          {org.city ? (
+            <div className="org-details">
+              <span className="icon icon-pin org-pin" />
+              <span className="org-location">{org.city}</span>
+            </div>
+          ) : null}
         </div>
         <div className="flex-col">
           <div className="org-logo">
