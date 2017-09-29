@@ -1,21 +1,22 @@
-@import 'bs-themes/flatly/variables';
-@import 'colors';
-@import 'variables';
-@import 'helpers';
-@import 'flexGrid';
-@import 'fullscreen';
-@import 'navbar';
-@import 'iconfont';
-@import 'icons';
-@import 'lists';
-@import 'filter';
-@import 'issueList';
-@import 'issueDetail';
-@import 'orgList';
-@import 'orgDetail';
-@import 'userLink';
-@import 'comments';
-@import 'status';
+@import "bs-themes/flatly/variables";
+@import "colors";
+@import "variables";
+@import "helpers";
+@import "flexGrid";
+@import "fullscreen";
+@import "navbar";
+@import "iconfont";
+@import "icons";
+@import "lists";
+@import "filter";
+@import "issueList";
+@import "issueDetail";
+@import "orgList";
+@import "orgDetail";
+@import "userLink";
+@import "comments";
+@import "status";
+@import "attachments";
 
 html,
 body {
@@ -49,7 +50,8 @@ body {
   }
   .modal-open {
     overflow: hidden;
-    .issues-container, .filter-container {
+    .issues-container,
+    .filter-container {
       position: static;
     }
   }
@@ -100,7 +102,8 @@ body {
     flex-grow: 1;
     @include screen-sm-max {
       &.listExpanded {
-        .issues-container, .org-container {
+        .issues-container,
+        .org-container {
           flex-grow: 4;
         }
       }
@@ -142,7 +145,6 @@ body {
   }
 }
 
-
 nav.navbar {
   margin-bottom: 0;
 }
@@ -156,8 +158,6 @@ nav.navbar {
   width: 120px;
   height: auto;
 }
-
-
 
 /* currently not used*/
 .marker-cluster {

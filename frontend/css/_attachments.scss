@@ -1,0 +1,16 @@
+.image-upload {
+  border: 2px solid $c-lightgrey;
+  padding: $padding-base-vertical;
+  border-radius: $border-radius-base;
+  margin-bottom: 5px;
+  img {
+    max-width: 100%;
+    height: auto;
+    width: 150px;
+    margin-bottom: 5px;
+  }
+}
+.attachment-name {
+  font-size: 12px;
+  color: $c-darkgrey;
+}

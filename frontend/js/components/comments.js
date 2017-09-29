@@ -136,8 +136,7 @@ export class CommentForm extends React.Component {
               disabled={isEmpty}
               className="btn btn-info btn-sm"
             >
-              Send
-              <span className="icon icon-send icon-lg" />
+              Send <span className="icon icon-send icon-lg" />
             </button>
           </p>
         </Dropzone>
