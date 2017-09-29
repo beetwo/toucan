@@ -1,7 +1,7 @@
 {% load i18n %}
 {% load static from staticfiles %}
 {% with namespaces=request.resolver_match.namespaces %}
-<nav class="navbar navbar-default navbar-static-top hidden-xs">
+<nav class="navbar navbar-default navbar-static-top">
 
     <div class="container-fluid">
         {% url 'home' as home %}
@@ -47,38 +47,28 @@
             {# navbar right #}
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
-                    <li class="dropdown {% if 'user_profile' in namespaces %}active{% endif %}">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-user"></i>&nbsp;
-                                {{ user.username }}
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="{% url 'account_logout' %}">
-                                        {% trans 'Logout' %}
-                                    </a>
-                                </li>
-                                {% if user.is_staff %}
-                                <li>
-                                    <a href="{% url 'admin:index' %}">
-                                        {% trans 'Administration Interface' %}
-                                    </a>
-                                </li>
-                                {% endif %}
+                <li class="nav-muted">
+                  <a href="{% url 'account_logout' %}">
+                    {% trans 'Logout' %}
+                  </a>
+                </li>
+                {% if user.is_staff %}
+                <li class="nav-muted">
+                  <a href="{% url 'admin:index' %}">
+                    {% trans 'Administration Interface' %}
+                  </a>
+                </li>
+                {% endif %}
 
-                                {% if debug %}
-                                <li class="divider"></li>
-                                <li>
-                                    <a href="{% url 'generate_notifications' %}">
-                                        Generate Notifications
-                                    </a>
-                                </li>
-                                {% endif %}
-                            </ul>
-                    </li>
+                {% if debug %}
+                <li class="nav-muted">
+                  <a href="{% url 'generate_notifications' %}">
+                    Generate Notifications
+                  </a>
+                </li>
+                {% endif %}
                 {% else %}
-                    <li>
+                    <li class="nav-muted">
                       <a href="{% url 'account_login' %}">
                         <i class="fa fa-user"></i>&nbsp;
                         {% trans 'Login' %}
