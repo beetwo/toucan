@@ -93,7 +93,7 @@ export class CommentForm extends React.Component {
     let noText = this.state.editorState == "",
       noAttachments = this.state.attachments.length === 0,
       isEmpty = noText && noAttachments;
-    console.warn(noText, noAttachments, isEmpty);
+
     let uploadControl = (
       <ToucanUploader
         onAdded={this.handleAttachmentAdded}
@@ -133,7 +133,7 @@ export class CommentForm extends React.Component {
             &nbsp;
             <button
               type="submit"
-              disabled={isEmpty}
+              disabled={noText}
               className="btn btn-info btn-sm"
             >
               Send <span className="icon icon-send icon-lg" />
