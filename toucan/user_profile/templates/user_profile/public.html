@@ -7,17 +7,17 @@
     <div class="form-group form-group-setting">
       {% if memberships|length > 1 %}
       <div class="row row-padded">
-        <div class="col-sm-6">
+        <div class="col-xs-8">
           {% trans 'Organisation' %}
         </div>
-        <div class="col-sm-6">
+        <div class="col-xs-4">
           {% trans 'Membership status' %}
         </div>
       </div>
       {% endif %}
       {% for membership in memberships %}
       <div class="row row-padded">
-        <div class="col-xs-6">
+        <div class="col-xs-8">
           <label>
           {% trans 'Organisation' %}
         </label><br>
@@ -25,7 +25,7 @@
             {{ membership.org.name }}
           </a>
         </div>
-        <div class="col-xs-6 text-right">
+        <div class="col-xs-4">
           {% if membership.active %}
           <span class="badge badge-success">
             {% trans 'Active' %}
