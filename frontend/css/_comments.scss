@@ -1,4 +1,5 @@
-.comments {}
+.comments {
+}
 .comment {
   padding: $padding;
   background-color: $c-lightgrey;
@@ -33,6 +34,24 @@
 .comment-footer {
   margin-top: $padding/2;
 }
+
 .comment-marked {
   color: $c-darkgrey;
 }
+
+.mentionMenu {
+  background-color: white;
+  border: 1px solid $c-lightgrey - 30;
+  box-shadow: 0 2px 2px rgba(0,0,0,.1);
+  border-radius: $border-radius-base;
+  overflow: hidden;
+
+  .mentionMenuItem {
+    padding: $padding-base-vertical/2 $padding-base-vertical;
+    &.active {
+      background-color: $c-turquoise;
+      color: #fff;
+    }
+  }
+  
+
