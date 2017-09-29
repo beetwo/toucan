@@ -10,7 +10,7 @@ class UserDetails extends React.Component {
   render() {
     let { username, first_name, last_name, membership, html_url } = this.props;
     let org = membership.org;
-    console.warn(this.props);
+
     let items = [
       ["Username", username],
       [

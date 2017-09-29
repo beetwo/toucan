@@ -93,7 +93,7 @@ export class CommentForm extends React.Component {
     let noText = this.state.editorState == "",
       noAttachments = this.state.attachments.length === 0,
       isEmpty = noText && noAttachments;
-    console.warn(noText, noAttachments, isEmpty);
+
     let uploadControl = (
       <ToucanUploader
         onAdded={this.handleAttachmentAdded}

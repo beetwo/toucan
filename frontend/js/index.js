@@ -33,8 +33,6 @@ if (process.env.NODE_ENV !== "production") {
   middleware = [...middleware, loggerMiddleware];
 }
 
-console.log(process.env);
-
 // and create the store
 let store = createStore(issueTrackerApp, applyMiddleware(...middleware));
 

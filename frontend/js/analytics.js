@@ -18,7 +18,6 @@ class Analytics extends React.Component {
     const next_url = history.createHref(location);
     if (next_url !== this.url) {
       this.url = next_url;
-      // console.warn("Tracking url", this.url);
       GoogleAnalytics.set({ page: this.url });
       GoogleAnalytics.pageview(this.url);
     }

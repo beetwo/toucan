@@ -13,7 +13,6 @@ const MentionItem = ({ active, value }) => {
 class SimpleCommentEditor extends React.Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
     this.queryMentions = this.queryMentions.bind(this);
   }
 
