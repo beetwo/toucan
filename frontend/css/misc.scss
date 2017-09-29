@@ -154,3 +154,9 @@ form {
     color: $brand-danger !important;
   }
 }
+.password-reset {
+  float: right;
+}
+.password-reset + .alert{
+  clear: both;
+}
