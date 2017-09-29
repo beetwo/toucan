@@ -21,6 +21,6 @@ export default function ImageUploader({preview, filename, progress, finished}) {
          : <ProgressBar progress={progress || 0} />
       }
       <br />
-      <span className='text-muted'>{filename}</span>
+      <span className='attachement-name'>{filename}</span>
   </div>;
 }

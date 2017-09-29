@@ -20,6 +20,8 @@
 .comment-attachment {
   color: $c-darkgrey;
   font-size: 12px;
+  display: inline-block;
+  margin-right: 5px;
   &:hover {
     color: $c-yellow;
     text-decoration: none;
