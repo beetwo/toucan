@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -6,11 +6,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _react = require('react');
+var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactPortalHoc = require('react-portal-hoc');
+var _reactPortalHoc = require("react-portal-hoc");
 
 var _reactPortalHoc2 = _interopRequireDefault(_reactPortalHoc);
 
@@ -30,14 +30,14 @@ var MentionMenu = function MentionMenu(props) {
   var menuStyle = _extends({}, style, {
     left: left,
     top: top,
-    position: 'absolute'
+    position: "absolute"
   });
   return _react2.default.createElement(
-    'div',
+    "div",
     { style: menuStyle, className: className },
     options.map(function (option, idx) {
       return _react2.default.createElement(
-        'div',
+        "div",
         { key: idx, onClick: selectItem(idx) },
         _react2.default.createElement(Item, _extends({ active: active === idx }, option))
       );
