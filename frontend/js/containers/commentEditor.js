@@ -2,13 +2,20 @@ import React from "react";
 
 import PropTypes from "prop-types";
 import cn from "classnames";
-import { MentionWrapper, MentionMenu } from "react-githubish-mentions/lib";
 
-const MentionItem = ({ active, value }) => {
+import ReactTextareaAutocomplete from "@webscopeio/react-textarea-autocomplete";
+import "@webscopeio/react-textarea-autocomplete/dist/default-style.css";
+
+const MentionItem = ({ entity, selected }) => {
+  console.log("Itemm...", entity);
   return (
-    <div className={cn("mentionMenuItem", { active: active })}>{value}</div>
+    <div key={entity.value} className={cn("mentionMenuItem", { active: true })}>
+      {entity.value}
+    </div>
   );
 };
+
+const Loading = ({ data }) => <div>Loading</div>;
 
 class SimpleCommentEditor extends React.Component {
   constructor(props) {
@@ -29,19 +36,16 @@ class SimpleCommentEditor extends React.Component {
 
   render() {
     return (
-      <MentionWrapper
-        className="form-control"
-        placeholder="Leave a comment"
-        onChange={e => this.props.onStateChange(e.target.value)}
-        value={this.props.editorState}
-      >
-        <MentionMenu
-          className="mentionMenu"
-          trigger="@"
-          item={MentionItem}
-          resolve={this.queryMentions}
-        />
-      </MentionWrapper>
+      <ReactTextareaAutocomplete
+        loadingComponent={Loading}
+        trigger={{
+          "@": {
+            output: (item, trigger) => `@${item.value} `,
+            dataProvider: this.queryMentions,
+            component: MentionItem
+          }
+        }}
+      />
     );
   }
 }
