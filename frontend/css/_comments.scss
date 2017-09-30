@@ -38,7 +38,8 @@
 .comment-marked {
   color: $c-darkgrey;
 }
-.comment-attachments {}
+.comment-attachments {
+}
 
 .gallery {
   a {
@@ -58,6 +59,7 @@
 
   .mentionMenuItem {
     padding: $padding-base-vertical/2 $padding-base-vertical;
+    cursor: pointer;
     &.active {
       background-color: $c-turquoise;
       color: #fff;

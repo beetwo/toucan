@@ -14,6 +14,10 @@ var _reactPortalHoc = require("react-portal-hoc");
 
 var _reactPortalHoc2 = _interopRequireDefault(_reactPortalHoc);
 
+var _reactTapOrClick = require("react-tap-or-click");
+
+var _reactTapOrClick2 = _interopRequireDefault(_reactTapOrClick);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var MentionMenu = function MentionMenu(props) {
@@ -36,9 +40,10 @@ var MentionMenu = function MentionMenu(props) {
     "div",
     { style: menuStyle, className: className },
     options.map(function (option, idx) {
+      var select = selectItem(idx);
       return _react2.default.createElement(
         "div",
-        { key: idx, onClick: selectItem(idx) },
+        _extends({ key: idx }, (0, _reactTapOrClick2.default)(select)),
         _react2.default.createElement(Item, _extends({ active: active === idx }, option))
       );
     })

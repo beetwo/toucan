@@ -4568,6 +4568,10 @@ react-scrolllock@^1.0.5:
     create-react-class "^15.5.2"
     prop-types "^15.5.10"
 
+react-tap-or-click@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/react-tap-or-click/-/react-tap-or-click-0.2.1.tgz#52c1d91a1e710ffeca6191f201d9c27dcf0a27fd"
+
 react-timeago@^3.4.3:
   version "3.4.3"
   resolved "https://registry.yarnpkg.com/react-timeago/-/react-timeago-3.4.3.tgz#eb9061eefb044e4a2b09ce8c99d34645b2dbfa25"

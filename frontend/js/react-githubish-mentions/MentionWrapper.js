@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -8,15 +8,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = require('react');
+var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _textareaCaret = require('textarea-caret');
+var _textareaCaret = require("textarea-caret");
 
 var _textareaCaret2 = _interopRequireDefault(_textareaCaret);
 
-var _MentionMenu = require('./MentionMenu');
+var _MentionMenu = require("./MentionMenu");
 
 var _MentionMenu2 = _interopRequireDefault(_MentionMenu);
 
@@ -38,7 +38,7 @@ var getMenuProps = function getMenuProps(keystrokeTriggered, children) {
 };
 
 var defaultReplace = function defaultReplace(userObj, trigger) {
-  return '' + trigger + userObj.value + ' ';
+  return "" + trigger + userObj.value + " ";
 };
 
 var MentionWrapper = function (_Component) {
@@ -73,7 +73,7 @@ var MentionWrapper = function (_Component) {
                 }
 
               case 4:
-              case 'end':
+              case "end":
                 return _context.stop();
             }
           }
@@ -120,17 +120,17 @@ var MentionWrapper = function (_Component) {
 
       var keyCaught = void 0;
       if (triggerIdx !== undefined) {
-        if (e.key === 'ArrowDown') {
+        if (e.key === "ArrowDown") {
           _this.setState({
             active: Math.min(active + 1, options.length - 1)
           });
           keyCaught = true;
-        } else if (e.key === 'ArrowUp') {
+        } else if (e.key === "ArrowUp") {
           _this.setState({
             active: Math.max(active - 1, 0)
           });
           keyCaught = true;
-        } else if (e.key === 'Tab' || e.key === 'Enter') {
+        } else if (e.key === "Tab" || e.key === "Enter") {
           _this.selectItem(active)(e);
           keyCaught = true;
         }
@@ -146,7 +146,9 @@ var MentionWrapper = function (_Component) {
     };
 
     _this.selectItem = function (active) {
+      console.log("create select function");
       return function (e) {
+        console.log("Selected", e);
         var _this$state2 = _this.state,
             options = _this$state2.options,
             triggerIdx = _this$state2.triggerIdx;
@@ -155,7 +157,7 @@ var MentionWrapper = function (_Component) {
         var option = options[active];
         var mention = _this.replace(option, _this.ref.value[triggerIdx]);
         var postMention = _this.ref.value.substr(_this.ref.selectionStart);
-        var newValue = '' + preMention + mention + postMention;
+        var newValue = "" + preMention + mention + postMention;
         _this.ref.value = newValue;
         var onChange = _this.props.onChange;
 
@@ -182,12 +184,12 @@ var MentionWrapper = function (_Component) {
   }
 
   _createClass(MentionWrapper, [{
-    key: 'maybeMention',
+    key: "maybeMention",
     value: function maybeMention() {
       var _this3 = this;
 
       var textBeforeCaret = this.ref.value.slice(0, this.ref.selectionStart);
-      var triggerIdx = textBeforeCaret.lastIndexOf(' ') + 1;
+      var triggerIdx = textBeforeCaret.lastIndexOf(" ") + 1;
       var maybeTrigger = textBeforeCaret[triggerIdx];
       var keystrokeTriggered = this.triggers.indexOf(maybeTrigger);
       if (keystrokeTriggered !== -1) {
@@ -221,7 +223,7 @@ var MentionWrapper = function (_Component) {
       }
     }
   }, {
-    key: 'closeMenu',
+    key: "closeMenu",
     value: function closeMenu() {
       var _this4 = this;
 
@@ -236,13 +238,13 @@ var MentionWrapper = function (_Component) {
       }, 0);
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
       var _props = this.props,
           children = _props.children,
           component = _props.component,
           getRef = _props.getRef,
-          inputProps = _objectWithoutProperties(_props, ['children', 'component', 'getRef']);
+          inputProps = _objectWithoutProperties(_props, ["children", "component", "getRef"]);
 
       var _state = this.state,
           active = _state.active,
@@ -254,10 +256,11 @@ var MentionWrapper = function (_Component) {
           className = child.className,
           style = child.style;
 
+      console.log("re-rendering");
       return _react2.default.createElement(
-        'div',
+        "div",
         null,
-        _react2.default.createElement('textarea', _extends({}, inputProps, {
+        _react2.default.createElement("textarea", _extends({}, inputProps, {
           ref: this.inputRef,
           onBlur: this.handleBlur,
           onInput: this.handleInput,
