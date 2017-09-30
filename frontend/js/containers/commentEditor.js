@@ -2,7 +2,7 @@ import React from "react";
 
 import PropTypes from "prop-types";
 import cn from "classnames";
-import { MentionWrapper, MentionMenu } from "react-githubish-mentions/lib";
+import { MentionWrapper, MentionMenu } from "../react-githubish-mentions";
 
 const MentionItem = ({ active, value }) => {
   return (
