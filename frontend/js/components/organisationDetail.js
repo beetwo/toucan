@@ -40,14 +40,19 @@ const Membership = ({ membership }) => {
   );
 };
 
-const ContactDetail = ({ type, value }) => {
+const ContactDetail = ({ type, value, link_to = null }) => {
   return (
     <div className="org-detail-contact">
       <div className="media">
         <div className="media-left media-middle">
           <div className={`icon icon-contact-${type} icon-xl`} />
         </div>
-        <a href="#" className="media-body media-middle">
+        <a
+          href={link_to ? link_to : "#"}
+          rel="nofollow"
+          target="_blank"
+          className="media-body media-middle"
+        >
           {value}
         </a>
       </div>
@@ -64,10 +69,29 @@ const OrganisationContactDetails = ({ org }) => {
     <div>
       {" "}
       <h2 className="org-detail-subhead">Contact</h2>
-      {phone ? <ContactDetail key="phone" type="phone" value={phone} /> : null}
-      {email ? <ContactDetail key="email" type="email" value={email} /> : null}
+      {phone ? (
+        <ContactDetail
+          key="phone"
+          type="phone"
+          link_to={`tel:${phone}`}
+          value={phone}
+        />
+      ) : null}
+      {email ? (
+        <ContactDetail
+          key="email"
+          type="email"
+          link_to={`mailto:${email}`}
+          value={email}
+        />
+      ) : null}
       {homepage ? (
-        <ContactDetail key="web" type="web" value={homepage} />
+        <ContactDetail
+          key="web"
+          type="web"
+          link_to={homepage}
+          value={homepage}
+        />
       ) : null}
     </div>
   );
