@@ -2,6 +2,12 @@
 # yarn lockfile v1
 
 
+"@mcallistersean/react-githubish-mentions@^1.0.6":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@mcallistersean/react-githubish-mentions/-/react-githubish-mentions-1.2.2.tgz#fffbc413cf0106d9715f7fc5c5a0ada42422a0f6"
+  dependencies:
+    textarea-caret "git://github.com/mattkrick/textarea-caret-position.git#ede461f40712238c505e4a1861fc68de6e7731ad"
+
 "Leaflet.extra-markers@https://github.com/coryasilva/Leaflet.ExtraMarkers/archive/v1.0.6.tar.gz":
   version "1.0.6"
   resolved "https://github.com/coryasilva/Leaflet.ExtraMarkers/archive/v1.0.6.tar.gz#6d6c54877c7a87988bf95d323c622b2c8f9567da"
@@ -4418,30 +4424,25 @@ react-dom@^15.0.1:
     object-assign "^4.1.0"
     prop-types "^15.5.10"
 
-react-dropzone@^3.7.0:
-  version "3.7.3"
-  resolved "https://registry.yarnpkg.com/react-dropzone/-/react-dropzone-3.7.3.tgz#7852b6652a43afc7fa072021f3369123ea4a61e0"
+react-dropzone@^4.1.3:
+  version "4.1.3"
+  resolved "https://registry.yarnpkg.com/react-dropzone/-/react-dropzone-4.1.3.tgz#25a0292c994541158d38155d08bb96e0aa5b83b2"
   dependencies:
     attr-accept "^1.0.3"
+    prop-types "^15.5.7"
 
 react-fa@^4.0.1:
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/react-fa/-/react-fa-4.1.2.tgz#5d828916da05efc1ed58c97531f36120146f1f16"
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/react-fa/-/react-fa-4.2.0.tgz#691e056c68ff4be8763917a21f7e3eaef3be8e0f"
   dependencies:
     font-awesome "^4.3.0"
+    prop-types "^15.5.8"
 
 react-ga@^2.3.4:
   version "2.3.4"
   resolved "https://registry.yarnpkg.com/react-ga/-/react-ga-2.3.4.tgz#2011c2bbcd99f19850816405a91e3ed6fba5da98"
   dependencies:
     object-assign "^4.1.1"
-
-react-githubish-mentions@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/react-githubish-mentions/-/react-githubish-mentions-1.0.5.tgz#2ec1ac4e4d49d892de3ea36f7b8eb58016752141"
-  dependencies:
-    react-portal-hoc "^0.4.1"
-    textarea-caret "git://github.com/mattkrick/textarea-caret-position.git#ede461f40712238c505e4a1861fc68de6e7731ad"
 
 react-hot-loader@next:
   version "3.0.0-beta.7"
@@ -4490,10 +4491,6 @@ react-motion@^0.4.3:
   dependencies:
     performance-now "^0.2.0"
     raf "^3.1.0"
-
-react-portal-hoc@^0.4.1:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/react-portal-hoc/-/react-portal-hoc-0.4.2.tgz#6e25a74b39596be3b3f3322bdbeb8ea2e26fcb5e"
 
 react-proxy@^1.1.7:
   version "1.1.8"
