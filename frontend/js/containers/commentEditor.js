@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 import cn from "classnames";
 import {
   MentionWrapper,
-  MentionMenu
+  MentionMenu,
+  Portals
 } from "@mcallistersean/react-githubish-mentions";
 
 const MentionItem = ({ active, value }) => {
@@ -35,6 +36,7 @@ class SimpleCommentEditor extends React.Component {
       <MentionWrapper
         className="form-control"
         placeholder="Leave a comment"
+        portal={Portals.ReactMentionPortal}
         onChange={e => this.props.onStateChange(e.target.value)}
         value={this.props.editorState}
       >
