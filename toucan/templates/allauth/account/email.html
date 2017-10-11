@@ -1,16 +1,13 @@
-{% extends "default/auth.html" %}
+{% extends "user_profile/base.html" %}
 
 {% load i18n %}
 
 
-{% block auth-header %}
-{% trans "E-mail Addresses" %}
+{% block profile-title %}
+{% trans 'Manage your email addresses' %}
 {% endblock %}
 
-{% block auth-subheader %}
-{% endblock %}
-
-{% block auth-content %}
+{% block content %}
 {% if user.emailaddress_set.all %}
 <p class="text-muted">{% trans 'The following e-mail addresses are associated with your account:' %}</p>
 
