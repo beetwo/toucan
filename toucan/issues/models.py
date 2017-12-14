@@ -139,8 +139,12 @@ class Issue(TimeStampedModel):
         return self.created_by == user
 
     def clean(self):
+
         if all([self.location, self.point]):
             raise ValidationError({'location': _('A need can have either a location or coordinates, but not both.')})
+
+        if not any([self.location, self.point]):
+            raise ValidationError({'location': _('A need needs to be attached to a location or a single point.')})
 
     class Meta:
         verbose_name = _('issue')

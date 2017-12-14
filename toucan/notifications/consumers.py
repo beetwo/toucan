@@ -116,15 +116,15 @@ def send_comment_notification(channel_message):
     if msg_type == 'email':
 
         if is_user_mention:
-            msg = 'you '
+            msg = 'you were'
         elif is_org_mention:
-            msg = 'your organisation'
+            msg = 'your organisation was'
 
         send_email_notification(
             user.email,
             'You were mentioned: %s' % issue.title,
             '''
-                This mail is to tell you that %s were mentioned in a recent comment:
+                This mail is to tell you that %s mentioned in a recent comment:
 
                 -----------------
                 %s
