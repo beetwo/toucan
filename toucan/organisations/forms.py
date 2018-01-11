@@ -13,7 +13,7 @@ class LocationForm(forms.ModelForm):
         model = Location
         fields = [
             'name',
-            'city',
+            # 'city',
             'location'
         ]
         widgets = {
