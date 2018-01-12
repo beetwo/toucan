@@ -53,6 +53,15 @@
     background-color: $c-lightgrey + 5;
   }
 }
+.issue-inProgress {
+  color: $c-issues-muted;
+  .badge {
+    background-color: $c-issues-muted;
+  }
+  .icon, .issue-organisation, .icon-comment, .issue-date {
+    color: $c-issues-muted !important;
+  }
+}
 
 .comments {
   .icon {
