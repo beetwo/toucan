@@ -9,138 +9,151 @@ import TileLayer from "./components/map/tiles";
 import LocationControl from "./components/map/locationControl";
 import { defaultIssueLocation } from "./globals";
 
+import { getIconClassForIssueType } from "./components/icons/issueType";
+
 require("leaflet/dist/leaflet.css");
+
+// require("../css/_variables.scss");
+// require("../css/_iconfont.scss");
+// require("../css/_icons.scss");
+
+require("../css/app.scss");
 
 // L.Icon.Default.imagePath = ".";
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
-  iconUrl: require("leaflet/dist/images/marker-icon.png"),
-  shadowUrl: require("leaflet/dist/images/marker-shadow.png")
+    iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+    iconUrl: require("leaflet/dist/images/marker-icon.png"),
+    shadowUrl: require("leaflet/dist/images/marker-shadow.png")
 });
 
 class B2SelectorMap extends React.Component {
-  constructor(props) {
-    super(props);
-    this._map = null;
-    this.state = {
-      position: this.props.position,
-      zoom: 12
-    };
+    constructor(props) {
+        super(props);
+        this._map = null;
+        this.state = {
+            position: this.props.position,
+            zoom: 12
+        };
 
-    this.onPositionChange = this.onPositionChange.bind(this);
-    this.handleLocationFound = this.handleLocationFound.bind(this);
-    this.handleLocationError = this.handleLocationError.bind(this);
-  }
-
-  componentDidMount() {
-    this._map.leafletElement.locate();
-  }
-
-  handleLocationFound(e) {
-    this.setPosition(e.latlng);
-  }
-
-  handleLocationError() {
-    // this is called if the user blocks the geo location call
-  }
-
-  setPosition(position) {
-    this.setState({
-      position: position,
-      zoom: this._map.leafletElement.getZoom()
-    });
-  }
-
-  onPositionChange(latLng) {
-    if (this.props.editable) {
-      console.log(latLng);
-      this.setPosition(latLng);
+        this.onPositionChange = this.onPositionChange.bind(this);
+        this.handleLocationFound = this.handleLocationFound.bind(this);
+        this.handleLocationError = this.handleLocationError.bind(this);
     }
-  }
 
-  render() {
-    const position = this.state.position || defaultIssueLocation;
+    componentDidMount() {
+        this._map.leafletElement.locate();
+    }
 
-    let marker = null;
+    handleLocationFound(e) {
+        this.setPosition(e.latlng);
+    }
 
-    if (position && position !== defaultIssueLocation) {
-      let marker_props = {
-        ref: "marker",
-        draggable: this.props.editable,
-        onDragEnd: e => this.onPositionChange(e.target.getLatLng())
-      };
-      marker = <Marker {...marker_props} position={position} />;
+    handleLocationError() {
+        // this is called if the user blocks the geo location call
+    }
 
-      if (this.props.radius > 0) {
-        marker = (
-          <Circle center={position} radius={this.props.radius}>
-            {marker}
-          </Circle>
+    setPosition(position) {
+        this.setState({
+            position: position,
+            zoom: this._map.leafletElement.getZoom()
+        });
+    }
+
+    onPositionChange(latLng) {
+        if (this.props.editable) {
+            console.log(latLng);
+            this.setPosition(latLng);
+        }
+    }
+
+    render() {
+        const position = this.state.position || defaultIssueLocation;
+
+        let marker = null;
+
+        if (position && position !== defaultIssueLocation) {
+            let marker_props = {
+                ref: "marker",
+                draggable: this.props.editable,
+                onDragEnd: e => this.onPositionChange(e.target.getLatLng())
+            };
+            marker = <Marker {...marker_props} position={position} />;
+
+            if (this.props.radius > 0) {
+                marker = (
+                    <Circle center={position} radius={this.props.radius}>
+                        {marker}
+                    </Circle>
+                );
+            }
+        }
+        // console.warn(position, typeof position);
+        let viewport = {
+            center: position,
+            zoom: this.state.zoom
+        };
+        return (
+            <div>
+                <div style={{ height: 300 }}>
+                    <Map
+                        viewport={viewport}
+                        onClick={e => this.onPositionChange(e.latlng)}
+                        ref={m => (this._map = m)}
+                        onLocationfound={this.handleLocationFound}
+                        onLocationerror={this.handleLocationError}
+                        animate={true}
+                    >
+                        <TileLayer />
+                        {marker}
+                        <LocationControl
+                            locate={() => this._map.leafletElement.locate()}
+                        />
+                    </Map>
+                </div>
+                <div className="help-block" style={{ marginBottom: 20 }}>
+                    Specify a location for your issue by clicking the map and/or
+                    dragging the marker.
+                </div>
+            </div>
         );
-      }
     }
-    // console.warn(position, typeof position);
-    let viewport = {
-      center: position,
-      zoom: this.state.zoom
-    };
-    return (
-      <div>
-        <div style={{ height: 300 }}>
-          <Map
-            viewport={viewport}
-            onClick={e => this.onPositionChange(e.latlng)}
-            ref={m => (this._map = m)}
-            onLocationfound={this.handleLocationFound}
-            onLocationerror={this.handleLocationError}
-            animate={true}
-          >
-            <TileLayer />
-            {marker}
-            <LocationControl locate={() => this._map.leafletElement.locate()} />
-          </Map>
-        </div>
-        <div className="help-block" style={{ marginBottom: 20 }}>
-          Specify a location for your issue by clicking the map and/or dragging
-          the marker.
-        </div>
-      </div>
-    );
-  }
-  componentDidUpdate() {
-    if (this.props.onPositionChange != undefined) {
-      this.props.onPositionChange(this.state.position);
+    componentDidUpdate() {
+        if (this.props.onPositionChange != undefined) {
+            this.props.onPositionChange(this.state.position);
+        }
     }
-  }
 }
 
 B2SelectorMap.propTypes = {
-  onPositionChange: PropTypes.func,
-  position: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]).isRequired,
-  editable: PropTypes.bool,
-  radius: PropTypes.number
+    onPositionChange: PropTypes.func,
+    position: PropTypes.oneOfType([PropTypes.object, PropTypes.bool])
+        .isRequired,
+    editable: PropTypes.bool,
+    radius: PropTypes.number
 };
 
 B2SelectorMap.defaultProps = {
-  onPositionChange: () => {},
-  editable: false,
-  position: false,
-  radius: 0
+    onPositionChange: () => {},
+    editable: false,
+    position: false,
+    radius: 0
 };
 
 function render_map(element, props = {}) {
-  let cb = function(new_props) {
-    return render(<B2SelectorMap {...new_props} />, element);
-  };
-  // call it once
-  cb(props);
-  // and return as callback
-  return cb;
+    let cb = function(new_props) {
+        return render(<B2SelectorMap {...new_props} />, element);
+    };
+    // call it once
+    cb(props);
+    // and return as callback
+    return cb;
 }
 
 window.render_map = render_map;
 window.unmount_map = container => unmountComponentAtNode(container);
+
+window.getIconClassForIssueType = getIconClassForIssueType;
 
 export default render_map;

@@ -110,8 +110,21 @@ if (empty_location_input.checked) {
 
 
 // selectize the issue type selector
-$('select[multiple]').selectize({
-    maxItems: 1
+$('select#id_issue_types').selectize({
+    maxItems: 1,
+    render: {
+        option: function(item, escape) {
+            console.log(item);
+            return `<div>
+                <span class="icon ${getIconClassForIssueType(escape(item.value))}"></span> ${escape(item.text)}
+            </div>`;
+        },
+        item: function(item , escape) {
+           return `<div>
+                <span class="icon ${getIconClassForIssueType(escape(item.value))}"></span> ${escape(item.text)}
+            </div>`;
+        }
+    }
 });
 
 })();
