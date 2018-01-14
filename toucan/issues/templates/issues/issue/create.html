@@ -109,21 +109,22 @@ if (empty_location_input.checked) {
 }
 
 
+// make the issue category selector nicer
+function renderItem(item, escape_fn) {
+    const icon_class = getIconClassForIssueType(escape_fn(item.value)),
+          text = escape_fn(item.text);
+
+    return `<div>
+        <span class="icon ${icon_class}"></span> ${text}
+    </div>`
+}
+
 // selectize the issue type selector
 $('select#id_issue_types').selectize({
     maxItems: 1,
     render: {
-        option: function(item, escape) {
-            console.log(item);
-            return `<div>
-                <span class="icon ${getIconClassForIssueType(escape(item.value))}"></span> ${escape(item.text)}
-            </div>`;
-        },
-        item: function(item , escape) {
-           return `<div>
-                <span class="icon ${getIconClassForIssueType(escape(item.value))}"></span> ${escape(item.text)}
-            </div>`;
-        }
+        option: renderItem,
+        item: renderItem
     }
 });
 
