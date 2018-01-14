@@ -1,4 +1,6 @@
-{% extends 'user_profile/base.html' %} {% load i18n bootstrap3 %} {% block content %}
+{% extends 'user_profile/base.html' %}
+{% load i18n bootstrap3 imagekit %}
+{% block content %}
 <h2>{% trans 'Membership' %}</h2>
 {% if memberships|length %}
 <div class="form-group form-group-setting">
@@ -20,8 +22,11 @@
         </label>
       </p>
       <a class="text-org" href="{% url 'organisations:detail' %}">
-        {% if org.logo %} {% thumbnail '250x250' organisation.logo crop=0 %}
-        <br /> {% endif %} {{ org.name }}
+        {% if org.logo %}
+            {% thumbnail '250x250' org.logo crop=0 %}
+            <br />
+        {% endif %}
+        {{ org.name }}
       </a>
     </div>
     <div class="col-xs-4">
