@@ -1,50 +1,49 @@
-{% extends 'user_profile/base.html' %}
-{% load i18n bootstrap3 %}
+{% extends 'user_profile/base.html' %} {% load i18n bootstrap3 %} {% block content %}
+<h2>{% trans 'Membership' %}</h2>
+{% if memberships|length %}
+<div class="form-group form-group-setting">
+  {% if memberships|length > 1 %}
+  <div class="row row-padded">
+    <div class="col-xs-8">
+      {% trans 'Organisation' %}
+    </div>
+    <div class="col-xs-4">
+      {% trans 'Membership status' %}
+    </div>
+  </div>
+  {% endif %} {% for membership in memberships %} {% with org=membership.org %}
+  <div class="row row-padded">
+    <div class="col-xs-8">
+      <p>
+        <label>
+          {% trans 'Organisation' %}
+        </label>
+      </p>
+      <a class="text-org" href="{% url 'organisations:detail' %}">
+        {% if org.logo %} {% thumbnail '250x250' organisation.logo crop=0 %}
+        <br /> {% endif %} {{ org.name }}
+      </a>
+    </div>
+    <div class="col-xs-4">
 
-{% block content %}
-   <h2>{% trans 'Membership' %}</h2>
-    {% if memberships|length %}
-    <div class="form-group form-group-setting">
-      {% if memberships|length > 1 %}
-      <div class="row row-padded">
-        <div class="col-xs-8">
-          {% trans 'Organisation' %}
-        </div>
-        <div class="col-xs-4">
-          {% trans 'Membership status' %}
-        </div>
-      </div>
+      {% if membership.active %}
+      <span class="badge badge-success">
+        {% trans 'Active' %}
+      </span>
+      {% else %}
+      <span class="badge badge-default">
+        {% trans 'Inactive' %}
+      </span>
       {% endif %}
-      {% for membership in memberships %}
-      <div class="row row-padded">
-        <div class="col-xs-8">
-          <label>
-          {% trans 'Organisation' %}
-        </label><br>
-          <a class="text-org" href="{% url 'organisations:detail' %}">
-            {{ membership.org.name }}
-          </a>
-        </div>
-        <div class="col-xs-4">
-          {% if membership.active %}
-          <span class="badge badge-success">
-            {% trans 'Active' %}
-          </span>
-          {% else %}
-          <span class="badge badge-default">
-            {% trans 'Inactive' %}
-          </span>
-          {% endif %}
-        </div>
-      </div>
-      {% endfor %}
-    </tbody>
     </div>
-    {% else %}
-    <div class="form-group form-group-setting">
-        <p class="text-muted">
-        {% trans 'Not a member of an organisation.' %}
-        </p>
-    </div>
-    {% endif %}
-{% endblock %}
+  </div>
+  {% endwith %} {% endfor %}
+  </tbody>
+</div>
+{% else %}
+<div class="form-group form-group-setting">
+  <p class="text-muted">
+    {% trans 'Not a member of an organisation.' %}
+  </p>
+</div>
+{% endif %} {% endblock %}
