@@ -28,7 +28,8 @@ const IssueListItem = ({ issue }) => {
       to={`/issue/${issue.id}/`}
       key={issue.id}
       className={classNames("issue media", {
-        "issue-resolved": issue.status === "resolved"
+        "issue-resolved": issue.status === "resolved",
+        "issue-inProgress": issue.status === "in progress"
       })}
     >
       <div className="issue-icon media-left media-middle">
