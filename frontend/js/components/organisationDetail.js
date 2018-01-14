@@ -11,10 +11,10 @@ const LocationDetail = ({ location }) => {
       <div className="media-left media-middle">
         <div className="icon icon-contact-address icon-xl" />
       </div>
-      <a href="#" className="media-body media-middle">
+      <div className="media-body media-middle">
         <strong>{location.name}</strong> <br />
         {location.city}
-      </a>
+      </div>
     </div>
   );
 };
