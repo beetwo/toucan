@@ -41,8 +41,16 @@
   {{ form.point }}
   {# end point field #}
 
-   {% bootstrap_field form.pick_up_flag %}
-
+{%  with field=form.pick_up_flag %}
+      <div class="form-group">
+          <div class="checkbox">
+              <label for="{{ field.id_for_label }}">
+                {{ field }}
+                  <span class="icon icon-lg icon-pickup"></span> {{ field.label }}
+              </label>
+          </div>
+      </div>
+{% endwith %}
 
 
   {% buttons %}
