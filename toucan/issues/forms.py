@@ -19,7 +19,7 @@ class LatLngForm(forms.Form):
 
 class IssueForm(forms.ModelForm):
 
-    issue_types = forms.ModelChoiceField(IssueType.objects.all(), to_field_name='slug')
+    issue_types = forms.ModelMultipleChoiceField(IssueType.objects.all(), to_field_name='slug')
 
     def clean_issue_types(self):
         types = self.cleaned_data['issue_types']
