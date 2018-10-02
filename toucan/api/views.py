@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 
 
-from drf_multiple_model.views import MultipleModelAPIView
+from drf_multiple_model.views import ObjectMultipleModelAPIView, FlatMultipleModelAPIView
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import ListAPIView, RetrieveAPIView, ListCreateAPIView, CreateAPIView
 from rest_framework.permissions import IsAuthenticated
@@ -134,8 +134,7 @@ class CommentDetailView(RetrieveAPIView):
     queryset = IssueComment.objects.all()
 
 
-class MentionView(MultipleModelAPIView):
-    flat = True
+class MentionView(FlatMultipleModelAPIView):
 
     def get_queryList(self):
         query = self.request.query_params.get('search', '')
@@ -146,9 +145,7 @@ class MentionView(MultipleModelAPIView):
         )
 
 
-class UserOrOrgDetailView(MultipleModelAPIView):
-
-    objectify = True
+class UserOrOrgDetailView(ObjectMultipleModelAPIView):
 
     def get_queryList(self):
         unique_name = self.kwargs.get('name')
