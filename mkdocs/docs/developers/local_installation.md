@@ -1,44 +1,34 @@
-# Developing Toucan
+## Local Installation
 
-```
-This is currently just the old README.md file from the repository.
-If you follow through this and hit any walls please file an issue or 
-(even better) issue a pull request. Thanks.
-```
+*This guide assumes a working knowledge of command line usage and familiarity with python tooling*
 
-## Installation
-
-### Prerequisites
+### Prerequisites for a local installation.
 
 - [Python 3](https://www.python.org/)
+- [Pipenv](https://pipenv.readthedocs.io/en/latest/)
 - [PostgreSQL](https://www.postgresql.org/) (>=9.4)
 - [PostGIS](http://postgis.net/)
 - [Redis](http://www.redis.io)
 - [Node.js](https://nodejs.org)
 
-### Dependencies
+### Backend Dependencies
 
-The backend assumes a working python environment with the packages
-listed in requirements.txt installed.
-
-First create and activate a virtual environment by issuing the following
-commands in the project directory:
-
+To install the required packages change into the project directory and execute 
 ```
-virtualenv env
-source env/bin/activate
+pipenv install
 ```
 
-Then install the requirements into the virtual environment:
+This command creates the virtual environment and installs all dependencies. To 
+activate the created environment type:
 
 ```
-pip install -r requirements.txt
+pipenv shell
 ```
 
 Under Linux it might be necessary to install additional dev-packages
-such as `libjpeg-dev`, `zlibc`, `python-dev` and `libpg-dev` because 
-the installation of some python dependencies involve the compilation of 
-C extensions.
+such as `libjpeg-dev`, `zlibc`, `python-dev` and `libpg-dev` through your 
+distributions package manager. 
+
 
 ### Set a secret key
 

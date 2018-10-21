@@ -3,9 +3,7 @@ ENV PYTHONUNBUFFERED 1
 VOLUME /backend
 VOLUME /build
 VOLUME /code
-RUN ls -lah /backend/ && cp /backend/requirements* /code
+RUN ["cp", "/backend/Pipfile*", "/code"]
 WORKDIR /backend
 RUN pwd && ls
-RUN pip install -U pip
-RUN pip install -r /code/requirements.txt
-RUN pip install -r /code/requirements-dev.txt
+RUN ["pipenv", "install", "--system"]
