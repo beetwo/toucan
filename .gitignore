@@ -65,3 +65,5 @@ activate
 .idea/
 data/media/
 *.sqlite3
+.vscode/
+

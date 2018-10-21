@@ -1,14 +1,17 @@
 site_name: Toucan Documentation
 
+theme: readthedocs
+repo_url: https://github.com/beetwo/toucan
+edit_uri: https://github.com/beetwo/toucan/edit/master/mkdocs/docs/
+
 nav:
 - Home: 'index.md'
 - Screenshots: 'screenshots/index.md'
-- Planning: 'planning/index.md'
 - End User Guide:
     - 'Features': 'user-guide/features.md'
 - Developers:
     - 'Local Installation': 'developers/local_installation.md'
     - 'Using Docker': 'developers/using-docker.md'
+- Project Planning: 'planning/index.md'
 - About: 'about.md'
 
-theme: readthedocs

@@ -11,6 +11,9 @@ It does so by providing a map view that links to issues and conversations.
 Issues can be opened/closed/re-opened, similar to the way a technical 
 issue tracker would work.
 
+![Main View](./screenshots/issue_overview.png)
+
+
 ## Features
 
 - Map views for tracking individual issues and organization quarters
