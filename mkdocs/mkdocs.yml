@@ -2,6 +2,7 @@ site_name: Toucan Documentation
 
 nav:
 - Home: 'index.md'
+- Screenshots: 'screenshots/index.md'
 - Planning: 'planning/index.md'
 - End User Guide:
     - 'Features': 'user-guide/features.md'
