@@ -177,6 +177,8 @@ STATICFILES_DIRS = [
     ('wp', WEBPACK_BUILD_DIR),  # this needs to be last, see dev config
 ]
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'data/static/')
+
 FIXTURE_DIRS = [
     os.path.join(BASE_DIR, 'toucan/fixtures/')
 ]

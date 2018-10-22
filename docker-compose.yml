@@ -17,7 +17,8 @@ services:
 #      - "db"
     build:
       context: .
-    command: "ls -lah"
+    command: /bin/bash
+    
 #    command: python manage.py runserver 0.0.0.0:8000
 #    volumes:
 #      - ./frontend/build:/build
