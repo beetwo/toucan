@@ -152,21 +152,3 @@ MAPBOX_API_KEY=<mapbox-api-key>
 
 The API key can be found inside your mapbox account's settings.
 
-### Backend
-
-Make sure you have activated the virtual environment:
-
-```
-source env/bin/activate
-```
-
-Make sure a Redis server is running and listening on port 6379.
-
-Start the application server with development settings:
-
-```
-./manage.py runserver --settings=toucan_conf.settings.dev
-```
-
-You should be able to access the application now at 
-http://127.0.0.1:8000.

@@ -30,6 +30,7 @@ asgi_redis = "*"
 daphne = "<2"
 channels = "<2"
 "psycopg2" = "*"
+uwsgi = "*"
 
 [dev-packages]
 factory_boy = "*"

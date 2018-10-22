@@ -13,15 +13,14 @@ services:
       - 5432
 
   toucan:
-    depends_on:
-      - "db"
+#    depends_on:
+#      - "db"
     build:
       context: .
-      dockerfile: ./docker/Dockerfile.backend
-    command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - ./backend:/backend
-      - ./frontend/build:/build
+    command: "ls -lah"
+#    command: python manage.py runserver 0.0.0.0:8000
+#    volumes:
+#      - ./frontend/build:/build
     expose:
       - 8000
     environment:

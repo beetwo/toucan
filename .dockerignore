@@ -1,0 +1,7 @@
+mkdocs/
+media/
+_media/
+.vscode/
+Dockerfile
+docker/
+docker-compose*
