@@ -55,16 +55,27 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../../screenshots/">Screenshots</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
     <span class="caption-text">End User Guide</span>
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../../user-guide/features/">Features</a>
+    <a class="" href="../../user-guide/">Summary</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../user-guide/overview/">Overview Page</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../user-guide/issue_detail/">Detail Page</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../user-guide/user_settings/">User Settings</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../user-guide/organisation_settings/">Organisation Settings</a>
                 </li>
     </ul>
 	    </li>
@@ -105,6 +116,8 @@
         
             <li><a class="toctree-l4" href="#frontend-maps">Frontend Maps</a></li>
         
+            <li><a class="toctree-l4" href="#backend">Backend</a></li>
+        
         </ul>
     
 
@@ -115,6 +128,11 @@
     <a class="" href="../using-docker/">Using Docker</a>
                 </li>
     </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../screenshots/">Screenshots</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -278,6 +296,18 @@ this one to it:</p>
 </code></pre>
 
 <p>The API key can be found inside your mapbox account's settings.</p>
+<h3 id="backend">Backend</h3>
+<p>Make sure you have activated the virtual environment:</p>
+<pre><code>source env/bin/activate
+</code></pre>
+
+<p>Make sure a Redis server is running and listening on port 6379.</p>
+<p>Start the application server with development settings:</p>
+<pre><code>./manage.py runserver --settings=toucan_conf.settings.dev
+</code></pre>
+
+<p>You should be able to access the application now at 
+http://127.0.0.1:8000.</p>
               
             </div>
           </div>
@@ -288,7 +318,7 @@ this one to it:</p>
         <a href="../using-docker/" class="btn btn-neutral float-right" title="Using Docker">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../../user-guide/features/" class="btn btn-neutral" title="Features"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../user-guide/organisation_settings/" class="btn btn-neutral" title="Organisation Settings"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -316,7 +346,7 @@ this one to it:</p>
           <a href="https://github.com/beetwo/toucan/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../../user-guide/features/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../../user-guide/organisation_settings/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="../using-docker/" style="color: #fcfcfc">Next &raquo;</a></span>
