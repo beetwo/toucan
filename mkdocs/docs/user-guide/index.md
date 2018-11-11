@@ -7,7 +7,7 @@ Currently a fully configured Toucan deployment offers the following features:
 - twitter like mentions of usernames  and organisation names
 - geographic subscriptions let users be notified of new issues in a geographic range (point + radius)
 
-## The Overview Page 
-The main view is split between a map and a issue list view. 
-The map on the left hand side visualizes the locations of issues. 
-The right hand side of the 
+
+
+
+

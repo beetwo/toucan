@@ -6,12 +6,16 @@ edit_uri: https://github.com/beetwo/toucan/edit/master/mkdocs/docs/
 
 nav:
 - Home: 'index.md'
-- Screenshots: 'screenshots/index.md'
 - End User Guide:
-    - 'Features': 'user-guide/features.md'
+  - Summary: 'user-guide/index.md'
+  - 'Overview Page': 'user-guide/overview.md'
+  - 'Detail Page': 'user-guide/issue_detail.md'
+  - 'User Settings': 'user-guide/user_settings.md'
+  - 'Organisation Settings': 'user-guide/organisation_settings.md'
 - Developers:
     - 'Local Installation': 'developers/local_installation.md'
     - 'Using Docker': 'developers/using-docker.md'
+- Screenshots: 'screenshots/index.md'
 - Project Planning: 'planning/index.md'
 - About: 'about.md'
 
