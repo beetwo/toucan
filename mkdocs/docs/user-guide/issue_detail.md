@@ -1,5 +1,3 @@
-# Issue detail page
-
 ![issue detail](../screenshots/issue_detail.png)
 
 

@@ -1,5 +1,3 @@
-# The Overview Page 
-
 ![issues overview](../screenshots/issue_overview.png)
 
 This is the landing page for logged in users.
