@@ -170,6 +170,3 @@ class Location(models.Model):
 
     def __str__(self):
         return self.name if self.name else self.city
-
-    def __str__(self):
-        return self.city

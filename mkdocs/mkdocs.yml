@@ -27,7 +27,7 @@ nav:
 - Developers:
     - 'Local Installation': 'developers/local_installation.md'
     - 'Using Docker': 'developers/using-docker.md'
-- Screenshots: 'screenshots/index.md'
+- 'Videos & Screenshots': 'screenshots/index.md'
 - Project Planning: 'planning/index.md'
 - About: 'about.md'
 

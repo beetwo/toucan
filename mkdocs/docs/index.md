@@ -13,6 +13,7 @@ issue tracker would work.
 
 ![Main View](./screenshots/issue_overview.png)
 
+If you prefer to watch videos, we have some screencasts on [the video page](./screenshots/index.md)
 
 ## Features
 
