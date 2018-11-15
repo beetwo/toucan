@@ -1,6 +1,16 @@
 site_name: Toucan Documentation
 
-theme: readthedocs
+theme:
+  name: readthedocs
+
+extra_css:
+  - static/luminous-basic.min.css
+  - static/extra.css
+
+extra_javascript:
+  - static/Luminous.min.js
+  - static/extra.js
+
 repo_url: https://github.com/beetwo/toucan
 edit_uri: https://github.com/beetwo/toucan/edit/master/mkdocs/docs/
 
@@ -11,7 +21,9 @@ nav:
   - 'Overview Page': 'user-guide/overview.md'
   - 'Detail Page': 'user-guide/issue_detail.md'
   - 'User Settings': 'user-guide/user_settings.md'
+  - 'Organisation Page': 'user-guide/organisation_details.md'
   - 'Organisation Settings': 'user-guide/organisation_settings.md'
+
 - Developers:
     - 'Local Installation': 'developers/local_installation.md'
     - 'Using Docker': 'developers/using-docker.md'
