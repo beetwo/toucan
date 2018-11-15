@@ -14,6 +14,8 @@
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../../static/luminous-basic.min.css" rel="stylesheet">
+  <link href="../../static/extra.css" rel="stylesheet">
   
   <script>
     // Current page data
@@ -73,12 +75,16 @@
                     
     <a class="" href="../user_settings/">User Settings</a>
                 </li>
+                <li class="">
+                    
+    <a class="" href="../organisation_details/">Organisation Page</a>
+                </li>
                 <li class=" current">
                     
     <a class="current" href="./">Organisation Settings</a>
     <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#organisation-detail-page">Organisation Detail Page</a></li>
+    <li class="toctree-l3"><a href="#inviting-users">Inviting Users</a></li>
     
 
     </ul>
@@ -155,14 +161,17 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="organisation-detail-page">Organisation Detail Page</h1>
-<p><img alt="organisation detail_page" src="../../screenshots/organization_detail.png" /></p>
-<p>Similar to issues Toucan can also visualize the location of organizations.
-A single organisation can have multiple locations and any number of members.
-All details are visualized on this page.</p>
-<p>The details of an organisation can be edited by organisation administrators. 
-Members with administrative access to an organisation are identified with the 
-admin label in the member list.</p>
+                <p>Administrators of an organisation can edit organisation details and add users 
+to participate on Toucan. The organisation settings page can be reached from 
+the users profile editing page and looks like this. </p>
+<p><img alt="organisation settings page" src="../../screenshots/organisation_settings.png" /></p>
+<p>Organisations can define a few profile settings, such as contacvt information. 
+All these fields can be changed under <em>Edit organisation details</em>.</p>
+<h2 id="inviting-users">Inviting Users</h2>
+<p>Onboarding new members in Toucan works by inviting them to your organisation. 
+After entering their email address users will receive an email with further information. 
+This involves clicking a link in that email that will then allow them to set up their own profile.</p>
+<p><img alt="user invite" src="../../screenshots/invite.png" /></p>
               
             </div>
           </div>
@@ -173,7 +182,7 @@ admin label in the member list.</p>
         <a href="../../developers/local_installation/" class="btn btn-neutral float-right" title="Local Installation">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../user_settings/" class="btn btn-neutral" title="User Settings"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../organisation_details/" class="btn btn-neutral" title="Organisation Page"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -201,7 +210,7 @@ admin label in the member list.</p>
           <a href="https://github.com/beetwo/toucan/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../user_settings/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../organisation_details/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="../../developers/local_installation/" style="color: #fcfcfc">Next &raquo;</a></span>
@@ -210,6 +219,8 @@ admin label in the member list.</p>
 </div>
     <script>var base_url = '../..';</script>
     <script src="../../js/theme.js" defer></script>
+      <script src="../../static/Luminous.min.js" defer></script>
+      <script src="../../static/extra.js" defer></script>
       <script src="../../search/main.js" defer></script>
 
 </body>
