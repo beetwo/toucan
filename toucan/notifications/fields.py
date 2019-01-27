@@ -6,7 +6,7 @@ from model_utils.choices import Choices
 class NotificationTypeField(models.CharField):
 
     NOTIFICATION_TYPES = Choices(
-        ('sms', _('Text Message (SMS)')),
+        # ('sms', _('Text Message (SMS)')),
         ('email', _('Email'))
     )
 

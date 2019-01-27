@@ -28,23 +28,6 @@
       </div>
     </div>
   </div>
-  <div class="form-group form-group-setting">
-    <div class="row">
-      <div class="col-sm-4">
-        <label>
-          {% trans 'Telephone' %}
-        </label>
-      </div>
-      <div class="col-sm-4">
-        {{ profile.phone_number|default:'-' }}
-      </div>
-      <div class="col-sm-4">
-        <a class="" href="{% url 'user_profile:update_phone' %}">
-          Change phone number
-        </a>
-      </div>
-    </div>
-  </div>
 </div>
 
     <div class="profile-section">

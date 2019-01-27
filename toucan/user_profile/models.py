@@ -35,7 +35,7 @@ class NotificationSettings(TimeStampedModel):
     '''
 
     NOTIFICATION_TYPES = Choices(
-        ('sms', _('Text Message (SMS)')),
+        # ('sms', _('Text Message (SMS)')),
         ('email', _('Email'))
     )
 

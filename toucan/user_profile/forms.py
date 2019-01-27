@@ -14,21 +14,12 @@ phone_number_help_text = _('Please enter your mobile phone number in internation
 
 class BaseUserProfileSignupForm(forms.Form):
 
-    phone = PhoneNumberField(
-        label=_('Your mobile phone number'),
-        help_text=phone_number_help_text,
-        required=False
-    )
-
     def signup(self, request, user):
         # save phone number to profile
         profile, created = Profile.objects.get_or_create(
             user=user
         )
-        phone_number = self.cleaned_data['phone']
-        if phone_number:
-            profile.phone_number = phone_number
-            profile.save()
+
 
 
 class UserProfileSignupForm(BaseUserProfileSignupForm):

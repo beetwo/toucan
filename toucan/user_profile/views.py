@@ -73,10 +73,9 @@ class UpdateMentionNotificationSettingsView(LoginRequiredMixin, FormValidMessage
 
 class UpdatePhoneNumber(LoginRequiredMixin, FormValidMessageMixin, UpdateView):
 
-
     template_name = 'user_profile/edit_phone.html'
     form_valid_message = _('Phone number updated.')
-    form_class =  PhoneNumberUpdateForm
+    form_class = PhoneNumberUpdateForm
 
     def get_success_url(self):
         return reverse(
