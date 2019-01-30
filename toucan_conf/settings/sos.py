@@ -9,6 +9,10 @@ DEBUG = False
 
 DEFAULT_FROM_EMAIL = 'toucan@sos-kd.org'
 
+MANAGERS = [
+    ('Toucan Manager', DEFAULT_FROM_EMAIL)
+]
+
 
 STATIC_ROOT = os.path.join(BASE_DIR, '_static')
 
