@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Overview Page - Toucan Documentation</title>
+  <title>Adding an organization - Toucan Documentation</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -19,8 +19,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Overview Page";
-    var mkdocs_page_input_path = "user-guide/overview.md";
+    var mkdocs_page_name = "Adding an organization";
+    var mkdocs_page_input_path = "admins/add_org.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -61,30 +61,27 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../">Summary</a>
-                </li>
-                <li class=" current">
-                    
-    <a class="current" href="./">Overview Page</a>
-    <ul class="subnav">
-            
-    </ul>
+    <a class="" href="../../user-guide/">Summary</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../issue_detail/">Detail Page</a>
+    <a class="" href="../../user-guide/overview/">Overview Page</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../user_settings/">User Settings</a>
+    <a class="" href="../../user-guide/issue_detail/">Detail Page</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../organisation_details/">Organisation Page</a>
+    <a class="" href="../../user-guide/user_settings/">User Settings</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../organisation_settings/">Organisation Settings</a>
+    <a class="" href="../../user-guide/organisation_details/">Organisation Page</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../user-guide/organisation_settings/">Organisation Settings</a>
                 </li>
     </ul>
 	    </li>
@@ -93,9 +90,12 @@
 		
     <span class="caption-text">Administrators</span>
     <ul class="subnav">
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../../admins/add_org/">Adding an organization</a>
+    <a class="current" href="./">Adding an organization</a>
+    <ul class="subnav">
+            
+    </ul>
                 </li>
     </ul>
 	    </li>
@@ -152,14 +152,14 @@
     
       
         
-          <li>End User Guide &raquo;</li>
+          <li>Administrators &raquo;</li>
         
       
     
-    <li>Overview Page</li>
+    <li>Adding an organization</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/beetwo/toucan/edit/master/mkdocs/docs/user-guide/overview.md"
+        <a href="https://github.com/beetwo/toucan/edit/master/mkdocs/docs/admins/add_org.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -169,14 +169,36 @@
           <div role="main">
             <div class="section">
               
-                <p><img alt="issues overview" src="../../screenshots/issue_overview.png" /></p>
-<p>This is the landing page for logged in users.</p>
-<p>The view is split between a map and a issue list view. 
-The map on the right hand side visualizes the locations of issues. 
-The left hand side shows title, type, owner and organisations of the visible issues.
-Issue can be selected by clicking the issue title on the left or the markers 
-on the map. This brings the user to the issue detail page where most 
-of the user interaction happens.</p>
+                <p>There is currently no special view for adding organisations so the following steps
+have to be folowed by user with administrative right through the admin interface.</p>
+<p>Administrators can reach the Admin interface via a link at the top right of
+the profile page. They will be greeted by an interface similar to the following screenshot:</p>
+<p><img alt="admin overview" src="../../screenshots/admin_overview.png" /></p>
+<p>The actual interface might be slightly different, depending on the permissions
+your user has configured.</p>
+<p>From here the steps easy:</p>
+<ul>
+<li>
+<p>Find the section <em>Organisations</em> and either click on <em>Organisations</em> to
+  get a listing of all currently registered Organisations or use the "Add" shortcut.</p>
+</li>
+<li>
+<p>You will be presented with a form where you will be able to create a new organisation.
+  Only a few fields (such as name and short name) are required and adminitrators are
+  advised to only fill out the minimum required information.
+  Locations, Logo etc. can all be safely skipped, organisation administrators can edit
+  these properties through the main interface at a later point.</p>
+</li>
+<li>
+<p>One aspect of the form is important if you intend to invite users to the
+  organisation right away. At the end of the organisation form you will find the following fields:
+  <img alt="admin inline invitations" src="../../screenshots/admin_invitations.png" />
+  Here you are able to enter email addresses and choose the role the invited person will receive as
+  soon as he signs up. It makes sense to invite a single email address during creation and assign
+  him the <em>admin</em> role for the organisation. This way he will be able to invite additional members
+  to the organisation by himself.</p>
+</li>
+</ul>
               
             </div>
           </div>
@@ -184,10 +206,10 @@ of the user interaction happens.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../issue_detail/" class="btn btn-neutral float-right" title="Detail Page">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../developers/local_installation/" class="btn btn-neutral float-right" title="Local Installation">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../" class="btn btn-neutral" title="Summary"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../user-guide/organisation_settings/" class="btn btn-neutral" title="Organisation Settings"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -215,10 +237,10 @@ of the user interaction happens.</p>
           <a href="https://github.com/beetwo/toucan/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../../user-guide/organisation_settings/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../issue_detail/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../../developers/local_installation/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
