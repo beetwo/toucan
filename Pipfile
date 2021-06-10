@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-Django = "<2"
+Django = "<3"
 django-allauth = "*"
 django-location-field = "*"
 django-braces = "*"
